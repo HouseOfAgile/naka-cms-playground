@@ -1,0 +1,21 @@
+{
+    "name": "houseofagile/naka-cms-bundle",
+    "description": "simple cms based on blocks",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "jc",
+            "email": "jc@houseofagile.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "easycorp/easyadmin-bundle": "^3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "HouseOfAgile\\NakaCMSBundle\\": "src/"
+        }
+    }
+}

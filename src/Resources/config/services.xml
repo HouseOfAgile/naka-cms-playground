@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="hoa_naka_cms.knpu_ipsum" class="HouseOfAgile\NakaCMSBundle\KnpUIpsum" public="true" />
+        <service id="HouseOfAgile\NakaCMSBundle\KnpUIpsum" alias="hoa_naka_cms.knpu_ipsum" public="false" />
+
+        <service id="hoa_naka_cms.dashboard_controller" autowire="true" class="HouseOfAgile\NakaCMSBundle\Controller\Admin\DashboardController" public="true">
+            <!-- <service id="HouseOfAgile\NakaCMSBundle\Controller\Admin\DashboardController" autowire="true"  public="true"> -->
+            <!-- <argument type="service" id="EasyCorp\Bundle\EasyAdminBundle\Factory\AdminContextFactory" /> -->
+            <tag name="container.service_subscriber" />
+        </service>
+    </services>
+    <!-- <services>
+        
+        <service id="hoa_butinator.knpu_ipsum" class="HouseOfAgile\ButinatorBundle\KnpUIpsum" public="true" />
+        <service id="HouseOfAgile\ButinatorBundle\KnpUIpsum" alias="hoa_butinator.knpu_ipsum" public="false" />
+        <service id="hoa_butinator.basic_bot" class="HouseOfAgile\ButinatorBundle\Component\ButinatorBot\BasicButinatorBot" public="true">
+            <argument type="service" id="App\Service\MessageGenerator" />
+            <argument type="service" id="@monolog.logger" />
+        </service>
+        <service id="HouseOfAgile\ButinatorBundle\Component\ButinatorBot\BasicButinatorBot" alias="hoa_butinator.basic_bot" public="false"></service>
+    </services> -->
+</container>
