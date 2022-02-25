@@ -6,7 +6,7 @@ use EasyCorp\Bundle\EasyAdminBundle\EasyAdminBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use HouseOfAgile\NakaCMSBundle\DependencyInjection\NakaCMSExtension;
 
-class NakaCMSBundle extends EasyAdminBundle
+class NakaCMSBundle extends Bundle
 {
     /**
      * Overridden to allow for the custom extension alias.
