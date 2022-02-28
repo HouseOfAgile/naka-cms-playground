@@ -1,0 +1,215 @@
+{% extends 'naka/backend/layout/layout-full-width.html.twig' %}
+{% set form_size = 'col-12' %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block content_title %}
+	{{ 'backend.form-page.edit-block-element'|trans }}
+{% endblock content_title %}
+
+{% block head_javascript %}
+	{{ parent() }}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/codemirror.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.2/codemirror.min.css" rel="stylesheet"/>
+
+	<style>
+		#iframe-preview {
+			width: 800px;
+			height: 600px;
+			overflow: hidden;
+			border: dotted black 2px;
+		}
+
+		#outer {
+			width: 100%;
+			/* Firefox */
+			display: -moz-box;
+			-moz-box-pack: center;
+			-moz-box-align: center;
+			/* Safari and Chrome */
+			display: -webkit-box;
+			-webkit-box-pack: center;
+			-webkit-box-align: center;
+			/* W3C */
+			display: box;
+			box-pack: center;
+			box-align: center;
+		}
+
+		#inner {
+			;
+			/* width: 50%; */
+		}
+		.CodeMirror * {
+/*          ^
+*/
+  font-family: "Open Sans";
+  font-size: 12px;
+}
+	</style>
+{% endblock head_javascript %}
+
+{% block content %}
+
+	<div class="row">
+		<div class="col-5">
+			{{ form_start(form) }}
+			<div class="row m-4">
+				<div class="col-12">{{ form_label(form.name) }}</div>
+				<div class="col-12">{{ form_widget(form.name) }}</div>
+				<div class="col-8 offset-4">{{ form_help(form.name) }}</div>
+			</div>
+			<div class="row">
+
+				<div class="col-12">
+					<ul class="nav nav-tabs" id="CodeTab" role="tablist">
+						{% for codeElement in ['htmlCode','cssCode','jsCode'] %}
+							<li class="nav-item">
+								<a class="nav-link {{ loop.index0 == 0 ? ' active' : '' }}" id="{{ codeElement }}-tab" data-bs-toggle="tab" data-bs-target="#{{ codeElement }}-content" type="button" role="tab" aria-controls="{{ codeElement }}-tab" aria-selected="{{ loop.index0 == 0 ? 'true' : 'false' }}">{{ ('generator.'~codeElement)|trans}}</a>
+							</li>
+						{% endfor %}
+					</ul>
+					<div class="tab-content" id="CodeTabContent">
+						{% for codeElement in ['htmlCode','cssCode','jsCode'] %}
+							<div class="tab-pane fade {{ loop.index0 == 0 ? 'show active' : '' }}" id="{{ codeElement }}-content" role="tabpanel" aria-labelledby="{{ codeElement }}-tab">{{ form_widget(attribute(form, codeElement), { 'id': codeElement}) }}</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+
+			<div class="row text-center">
+				<div class="col-6">
+					{{ form_row(form.refresh, { 'attr' : { 'class': 'btn btn-success p-2' } }) }}
+				</div>
+				<div class="col-6">
+					{{ form_row(form.submit, { 'attr' : { 'class': 'btn btn-success p-2' } }) }}
+				</div>
+			</div>
+			{{ form_rest(form) }}
+		</div>
+		<div class="col-7">
+			<h2 class="text-center">Preview</h2>
+			<hr/>
+			<div class="text-center my-4">
+
+			<a href="#" id="iframe-button" class="btn btn-primary btn-lg" target="_new" role="button">View Iframe fullpage</a>
+			</div>
+
+			<div id="outer">
+				<div id="inner">
+					<iframe frameborder="0" id="iframe-preview" scrolling="no"></iframe>
+				</div>
+			</div>
+			<hr/>
+			{{ dump(decoratedBlockElement) }}
+		</div>
+	</div>
+
+
+
+{% endblock %}
+{% block content_extra %}{% endblock content_extra %}
+
+{# use body_javascript as it is at the end of the page so other js libraries are already loaded #}
+{% block body_javascript %}
+{{ parent() }}
+<script>
+
+	let codeElementIds = {'htmlCode':'htmlmixed', 'cssCode': 'css', 'jsCode': 'css'}
+	
+	var codeElements = [];
+	for (let key in codeElementIds) {
+		var newCodeElement = CodeMirror.fromTextArea(document.getElementById(key), {
+			autoRefresh: true,
+			lineNumbers: true,
+			height: "auto",
+			mode: codeElementIds[key]
+		});
+
+		codeElements[key]=newCodeElement;
+	}
+	
+	const getGeneratedPageURL = ({htmlCode, cssCode, jsCode}) => {
+		const getBlobURL = (code, type) => {
+			const blob = new Blob([code], {type})
+			return URL.createObjectURL(blob)
+			}
+		
+		const source = `
+		{{ include('naka/backend/layout/iframe-layout-block-element.html.twig') }}
+		`
+		return getBlobURL(source, 'text/html');
+	}
+
+	$(document).ready(function() {
+		document.addEventListener("keypress", function onEvent(event) {
+			if (event.key === "Enter" || event.key === "`") {
+				console.log('updateIframePreview');
+				updateIframePreview();			
+			}
+		});
+
+	});
+	
+	async function getDecoratedString(stringToDecorate) {
+		const _url = '{{ url('decorate_string') }}';
+		let _body = JSON.stringify({
+		stringToDecorate: stringToDecorate,
+		body: 'bar',
+		userId: 1,
+		});
+
+		const _headers = {
+		'Content-type': 'application/json; charset=UTF-8',
+		};
+		const _options = { method: 'POST', headers: _headers, body: _body };
+
+		const response = await fetch(_url, _options);
+		if (response.status >= 200 && response.status <= 204) {
+		let data = await response.json();
+		 console.log(data);
+		 console.log(data['decoratedString']);
+		 return data;
+		} else {
+		console.log(`something wrong, the server code: ${response.status}`);
+		} 
+	}
+			
+	
+	async function updateIframePreview() {
+		var dictElements = {};
+		for (let key in codeElements) {
+			codeElements[key].save();
+			codeElements[key].refresh();
+			newPromise = await getDecoratedString(document.getElementById(key).value);
+			dictElements[key] = newPromise['decoratedString'];
+		};
+{# 
+		promiseHtmlCode = await getDecoratedString(document.getElementById("htmlCode").value);
+
+		var htmlCode = await getDecoratedString(document.getElementById("htmlCode").value)['decoratedString'];
+		var cssCode = await getDecoratedString(document.getElementById("cssCode").value)['decoratedString'];
+		var jsCode = await getDecoratedString(document.getElementById("jsCode").value)['decoratedString']; #}
+		for (let key in codeElements) {
+
+		}
+		const url = getGeneratedPageURL(dictElements);
+
+		const iframe = document.querySelector('#iframe-preview');
+		const iframeUrlButton = document.querySelector('#iframe-button');
+		iframeUrlButton.href = url;
+		iframe.src = url;
+		document.getElementById('iframe-preview').src += '';
+	}
+	
+	updateIframePreview();
+
+	$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+		for (let key in codeElements) {
+			setTimeout(function() {
+				codeElements[key].refresh();
+			},100);
+		}
+	});
+</script>
+			
+{% endblock %}

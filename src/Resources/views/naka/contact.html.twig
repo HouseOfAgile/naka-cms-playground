@@ -1,0 +1,62 @@
+{% extends 'layout/base-layout.html.twig' %}
+
+{% block title %}
+	{{ 'contact.title' |trans}}
+{% endblock %}
+
+{% block content %}
+	<div class="container-fluid">
+		<div class="row g-0">
+			<div class="col-md-12">
+				<div id="map" style="height: 400px;"></div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row g-0">
+
+			<div class="col-md-12">
+				<div class="jumbotron">
+					<p>{{'contact.contact-details'|trans|raw }}</p>
+				</div>
+			</div>
+			<hr/>
+			<div class="col-md-12">
+
+				{{ form_start(form) }}
+				<div class="row m-4">
+					<div class="col-4">{{ form_label(form.name) }}</div>
+					<div class="col-8">{{ form_widget(form.name,{ 'attr': {'class': 'form-control' }}) }}</div>
+					<div class="col-8 offset-4">{{ form_help(form.name) }}</div>
+				</div>
+				<div class="row m-4">
+					<div class="col-4">{{ form_label(form.email) }}</div>
+					<div class="col-8">{{ form_widget(form.email,{ 'attr': {'class': 'form-control' }}) }}</div>
+					<div class="col-8 offset-4">{{ form_help(form.email) }}</div>
+				</div>
+				<div class="row m-4">
+					<div class="col-4">{{ form_label(form.subject) }}</div>
+					<div class="col-8">{{ form_widget(form.subject,{ 'attr': {'class': 'form-control' }}) }}</div>
+					<div class="col-8 offset-4">{{ form_help(form.subject) }}</div>
+				</div>
+				<div class="row m-4">
+					<div class="col-4">{{ form_label(form.message) }}</div>
+					<div class="col-8">{{ form_widget(form.message,{ 'attr': {'class': 'form-control' }}) }}</div>
+					<div class="col-8 offset-4">{{ form_help(form.message) }}</div>
+				</div>
+				<div class="row m-4">
+					<div class="col-4 offset-4">
+						{{ form_row(form.submit, { 'attr' : { 'class': 'btn btn-block btn-success p-2' } }) }}
+					</div>
+				</div>
+				{{ form_rest(form) }}
+
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+
+{% block javascripts_extra %}
+    {{ encore_entry_script_tags('openstreetmap') }}
+{% endblock %}

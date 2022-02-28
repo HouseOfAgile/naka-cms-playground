@@ -1,0 +1,34 @@
+{% extends 'layout/base-layout.html.twig' %}
+
+{% macro encore_absolute_link_tags(entry_point) %}
+    {% for file in encore_entry_css_files(entry_point) %}
+        <link href="{{ absolute_url(asset(file)) }}" rel="stylesheet" />
+    {% endfor %}
+{% endmacro %}
+{% macro encore_absolute_script_tags(entry_point) %}
+    {% for file in encore_entry_js_files(entry_point) %}
+        <script src="{{ absolute_url(asset(file)) }}" ></script>
+    {% endfor %}
+{% endmacro %}
+
+{% block stylesheets %}
+	{# <link href="https://cdnjs.cloudflare.com/ajax/libs/marx/3.0.7/marx.min.css" rel="stylesheet"/> #}
+	{{ _self.encore_absolute_link_tags('app') }}
+	{% if app.request.locale == 'he' %}{% endif %}
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Martel+Sans' rel='stylesheet' type='text/css'>
+
+	${ cssCode && `<link rel="stylesheet" type="text/css" href="${ getBlobURL(cssCode, 'text/css')}"/>`}
+{% endblock stylesheets %}
+
+{% block content %}
+	${htmlCode || 'xxx'}
+{% endblock content %}
+
+{% block javascripts %}
+	{{ _self.encore_absolute_script_tags('app')|replace({'</script>': '<\\/script>'})|raw }}
+{% endblock %}
+
+{% block javascripts_extra %}
+	${ jsCode || ''}
+{% endblock javascripts_extra %}

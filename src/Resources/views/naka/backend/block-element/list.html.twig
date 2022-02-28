@@ -1,0 +1,9 @@
+{% extends '@!EasyAdmin/crud/index.html.twig' %}
+
+{% block global_actions %}
+	{{ parent() }}
+	<a href="{{ url('choose_page_element_type') }}" class="btn btn-primary" role="button">
+		<i class="fa fa-scroll"></i>
+		<span>Create a new Block Element</span>
+	</a>
+{% endblock %}

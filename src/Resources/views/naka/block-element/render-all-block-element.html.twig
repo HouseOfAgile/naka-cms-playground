@@ -1,0 +1,46 @@
+{% extends 'layout/base-layout.html.twig' %}
+
+{% block stylesheets_extra %}
+	<style>
+		{% for blockElement in blockElements %}
+			{{blockElement.cssCode|raw}}
+		{% endfor %}
+	</style>
+
+{% endblock %}
+
+{% block content %}
+	{% if blockElements|length >0 %}
+		{% for blockElement in blockElements %}
+			<div class="{{ blockElement.blockElement.isFluid == true ? 'container-fluid p-0' : 'container g-0' }}">
+				{% if blockElement.blockElement.type == 'carousel' %}
+					{% include 'naka/block-element/render-block-carousel.html.twig' with { blockElement: blockElement} %}
+				{% elseif blockElement.blockElement.type == 'gallery' %}
+					{% include 'naka/block-element/render-block-gallery.html.twig' with { blockElement: blockElement} %}
+				{% else %}
+					{% include 'naka/block-element/render-block-element.html.twig' with { blockElement: blockElement} %}
+				{% endif %}
+
+			</div>
+		{% endfor %}
+	{% endif %}
+{% endblock %}
+
+{% block javascripts_extra %}
+	{% for blockElement in blockElements %}
+		{{ blockElement.jsCode|raw }}
+	{% endfor %}
+	<script>
+		$('.gallery-container').magnificPopup({
+delegate: 'a', // child items selector, by clicking on it popup will open
+type: 'image'
+// other options
+});
+
+$('.thumbnail').hover(function () {
+$(this).find('.caption').slideDown(250); // .fadeIn(250)
+}, function () {
+$(this).find('.caption').slideUp(250); // .fadeOut(205)
+});
+	</script>
+{% endblock %}

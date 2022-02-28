@@ -1,0 +1,6 @@
+{% if is_granted('ROLE_ADMIN') %}
+	<h2>blockElement
+		{{ blockElement.blockElement.id }}</h2>
+{% endif %}
+{{ blockElement.htmlCode|raw}}
+Carousel

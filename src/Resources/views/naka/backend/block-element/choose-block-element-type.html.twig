@@ -1,0 +1,31 @@
+{% extends 'naka/backend/layout/layout-form.html.twig' %}
+
+{% block form_title %}
+	Choose page Element type
+{% endblock form_title %}
+
+{% block form_explanation %}{% endblock form_explanation %}
+
+{% block form_content %}
+
+
+	{{ form_start(form) }}
+	<div class="row m-4">
+		<div class="col-4">{{ form_label(form.name) }}</div>
+		<div class="col-8">{{ form_widget(form.name) }}</div>
+		<div class="col-8 offset-4">{{ form_help(form.name) }}</div>
+	</div>
+	<div class="row m-4">
+		<div class="col-4">{{ form_label(form.blockElementType) }}</div>
+		<div class="col-8">{{ form_widget(form.blockElementType) }}</div>
+		<div class="col-8 offset-4">{{ form_help(form.blockElementType) }}</div>
+	</div>
+	<div class="row m-4">
+		<div class="col-4 offset-4">
+			{{ form_row(form.submit, { 'attr' : { 'class': 'btn btn-block btn-success p-2' } }) }}
+		</div>
+	</div>
+	{{ form_rest(form) }}
+
+
+{% endblock %}

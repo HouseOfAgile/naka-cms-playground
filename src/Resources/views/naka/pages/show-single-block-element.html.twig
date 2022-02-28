@@ -1,0 +1,16 @@
+{% extends 'layout/base-layout.html.twig' %}
+
+{% block title %}show Single block element
+{% endblock %}
+{% block stylesheets_extra %}
+	<style>
+		{{blockElement.cssCode|raw}}
+	</style>
+{% endblock %}
+{% block content %}asdd
+	{{ blockElementDecorated.htmlCode|raw }}
+
+{% endblock %}
+{% block javascripts_extra %}
+	{{ blockElement.jsCode|raw }}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'layout/base-layout.html.twig' %}
+
+{% block stylesheets_extra %}
+	<style>
+		{{blockElementType.cssCode|raw}}
+	</style>
+{% endblock %}
+{% block content %}asdd
+	{% include 'naka/fragment/show-'~ blockElementType.type ~'.html.twig' %}
+{% endblock %}
+{% block javascripts_extra %}
+	{{ blockElementType.jsCode|raw }}
+{% endblock %}

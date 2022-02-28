@@ -1,0 +1,7 @@
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+<div class="position-relative">
+  <h2 class="position-absolute top-50 start-0 admin-content">blockElement
+		{{ blockElement.blockElement.id }}: {{ blockElement.blockElement.name }}</h2>
+</div>
+{% endif %}
+{{ blockElement.htmlCode|raw}}

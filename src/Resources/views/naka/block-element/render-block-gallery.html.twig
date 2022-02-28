@@ -1,0 +1,21 @@
+{% if is_granted('ROLE_ADMIN') %}
+	<h2>blockElement
+		{{ blockElement.blockElement.id }}</h2>
+{% endif %}
+
+<div class="row gallery-container">
+	{% if blockElement.blockElement.gallery and blockElement.blockElement.gallery.pictures|length>0 %}
+		{% for picture in blockElement.blockElement.gallery.pictures %}
+			<div class="col-sm-4 {{ blockElement.blockElement.isFluid == true ? 'p-4' : 'p-1' }}">
+				<div class="thumbnail m-4">
+					<div class="caption">
+						<div class="h-100 d-flex justify-content-center align-items-center">
+							<a href="{{ vich_uploader_asset(picture)|imagine_filter('creative_dim_down') }}" class=" btn btn-dark">{{ 'thumbnail.viewLarger'|trans }}</a>
+						</div>
+					</div>
+					<img src="{{ vich_uploader_asset(picture)|imagine_filter('thumb_medium') }}" alt="{{ picture }}" class="img-fluid"/>
+				</div>
+			</div>
+		{% endfor %}
+	{% endif %}
+</div>
