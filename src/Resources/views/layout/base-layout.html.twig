@@ -1,0 +1,38 @@
+{# {% extends app.request.xmlHttpRequest ? 'partial_base.html.twig':'base.html.twig' %} #}
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<style></style>
+{% endblock %}
+
+{% block body %}
+
+	{% include '@NakaCMS/layout/navbar.html.twig' %}
+
+	<div class="main-wrapper">
+		{% block main_wrapper %}
+			{% if app.request.hasPreviousSession %}
+				{# read and display all flash messages #}
+				{% for label, messages in app.flashes %}
+					<div class="container my-4">
+						{% for message in messages %}
+							<div class="flash-{{ label }} alert alert-{{ label }}">
+								{{ message|trans }}
+							</div>
+						{% endfor %}
+					</div>
+				{% endfor %}
+			{% endif %}
+			<div class="main-content">
+				{% block main %}
+					{{ block('content') }}
+				{% endblock %}
+			</div>
+		{% endblock main_wrapper %}
+	</div>
+	{% include '@NakaCMS/layout/footer.html.twig' %}
+
+{% endblock %}
+
+{% block footer %}{% endblock %}

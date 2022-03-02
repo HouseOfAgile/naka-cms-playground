@@ -117,7 +117,6 @@ class DumperUpdater
             } else {
                 // update
                 $filesystem = new Filesystem();
-dump( $this->dataDumpDir);
                 $filePath = sprintf('%s/%s.yml', $this->dataDumpDir, $type);
                 if (!$filesystem->exists($filePath)) {
                     $this->logWarning(sprintf('We do not have a file for entity %s, skipping', $type));
@@ -125,7 +124,7 @@ dump( $this->dataDumpDir);
                 }
                 // update or create
                 $dumpedEntities = Yaml::parseFile($filePath);
-                // dump($dumpEntities);
+                dump($filePath, $dumpedEntities);
                 foreach ($dumpedEntities as $keyEntity => $dataEntity) {
                     $entity = $repository->findOneBy(['id' => $keyEntity]);
                     if (in_array($type, array_values($assetEntities))) {
@@ -268,7 +267,7 @@ dump( $this->dataDumpDir);
         $entitiesIdMapping = [];
 
         foreach ($assetEntities as $assetEntity) {
-            $entityClass = 'App\\Entity\\' . ucfirst($assetEntity);
+            $entityClass = 'HouseOfAgile\\NakaCMSBundle\\Entity\\' . ucfirst($assetEntity);
             $thisClass = new $entityClass();
             $repository = $this->entityManager->getRepository(get_class($thisClass));
             $assetEntitiesDict[$assetEntity] = $repository;
@@ -278,7 +277,7 @@ dump( $this->dataDumpDir);
         // if action is dump we dump, otherwise we udpate
 
         foreach ($assetEntitiesDict as $type => $repository) {
-            $entityClass = 'App\\Entity\\' . ucfirst($type);
+            $entityClass = 'HouseOfAgile\\NakaCMSBundle\\Entity\\' . ucfirst($type);
             $thisClass = new $entityClass();
             $repository = $this->entityManager->getRepository(get_class($thisClass));
             $dataArray = [];
@@ -319,7 +318,7 @@ dump( $this->dataDumpDir);
                     $entity = $repository->findOneBy(['id' => $keyEntity]);
 
                     if (!$entity) {
-                        $entityClass = 'App\\Entity\\' . ucfirst($type);
+                        $entityClass = 'HouseOfAgile\\NakaCMSBundle\\Entity\\' . ucfirst($type);
                         $entity = new $entityClass();
                         $this->logInfo(sprintf('Create Asset Entity %s with id %s', ucfirst($type), $keyEntity));
                     } else {

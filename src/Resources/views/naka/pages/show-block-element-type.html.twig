@@ -1,4 +1,4 @@
-{% extends 'layout/base-layout.html.twig' %}
+{% extends '@NakaCMS/layout/base-layout.html.twig' %}
 
 {% block stylesheets_extra %}
 	<style>
@@ -6,7 +6,7 @@
 	</style>
 {% endblock %}
 {% block content %}asdd
-	{% include 'naka/fragment/show-'~ blockElementType.type ~'.html.twig' %}
+	{% include '@NakaCMS/naka/fragment/show-'~ blockElementType.type ~'.html.twig' %}
 {% endblock %}
 {% block javascripts_extra %}
 	{{ blockElementType.jsCode|raw }}

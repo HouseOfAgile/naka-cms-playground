@@ -1,4 +1,4 @@
-{% extends 'layout/base-layout.html.twig' %}
+{% extends '@NakaCMS/layout/base-layout.html.twig' %}
 
 {% block stylesheets_extra %}
 	<style>
@@ -14,11 +14,11 @@
 		{% for blockElement in blockElements %}
 			<div class="{{ blockElement.blockElement.isFluid == true ? 'container-fluid p-0' : 'container g-0' }}">
 				{% if blockElement.blockElement.type == 'carousel' %}
-					{% include 'naka/block-element/render-block-carousel.html.twig' with { blockElement: blockElement} %}
+					{% include '@NakaCMS/naka/block-element/render-block-carousel.html.twig' with { blockElement: blockElement} %}
 				{% elseif blockElement.blockElement.type == 'gallery' %}
-					{% include 'naka/block-element/render-block-gallery.html.twig' with { blockElement: blockElement} %}
+					{% include '@NakaCMS/naka/block-element/render-block-gallery.html.twig' with { blockElement: blockElement} %}
 				{% else %}
-					{% include 'naka/block-element/render-block-element.html.twig' with { blockElement: blockElement} %}
+					{% include '@NakaCMS/naka/block-element/render-block-element.html.twig' with { blockElement: blockElement} %}
 				{% endif %}
 
 			</div>

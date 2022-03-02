@@ -1,0 +1,91 @@
+<html>
+	<head>
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+		<title>
+			{% block title %}{% endblock %}
+		</title>
+		{% block stylesheets %}
+			<link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+		{% endblock stylesheets %}
+		{% block head_javascript %}
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.3.0/font-awesome-animation.min.css" integrity="sha512-Po8rrCwchD03Wo+2ibHFielZ8luDAVoCyE9i6iFMPyn9+V1tIhGk5wl8iKC9/JfDah5Oe9nV8QzE8HHgjgzp3g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+		{% endblock head_javascript %}
+	</head>
+	<body>
+		{% block navbar %}
+			<div class="container-fluid py-2">
+
+				<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top text-right">
+					<span class="navbar-brand mb-0">
+						<span class="faa-parent animated-hover">
+							<i class="fas fa-feather-alt faa-flash faa-slow fa-lg"></i>
+							{{ app.request.server.get('APPLICATION_NAME') }}
+						</span>
+					</span>
+					<div class="ml-auto">
+
+						<span class="navbar-nav mb-0">
+							<a href="{{ path('admin_dashboard') }}" role="button" class="nav-item nav-link btn btn-success text-white">
+								<span class="fas fa-fast-backward"></span>
+								{{ 'main.returnToAdmin'|trans }}
+							</a>
+						</span>
+					</nav>
+				</div>
+			</div>
+		{% endblock navbar %}
+
+		{% block flash_message %}
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						{% set flashes = app.session.flashbag.all() %}
+						{% if flashes | length > 0 %}
+							{% for type, messages in flashes %}
+								{% for message in messages %}
+									<div class="alert alert-{{ type }}">{{ message }}</div>
+								{% endfor %}
+							{% endfor %}
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		{% endblock flash_message %}
+		<div class="container-fluid">
+			<h3 class="text-center my-4">
+				{{ block('content_title') }}
+			</h3>
+			{% block main %}
+				<div class="row">
+					<div class="{{ form_size is defined ? form_size : 'col-10 offset-1' }}">
+
+						{% block content_explanation_wrapper %}
+							{% if block('content_explanation') is not empty %}
+								<hr class="my-4"/>
+								<div class="lead"> {% block content_explanation %}{% endblock %}
+									</div>
+								{% endif %}
+							{% endblock content_explanation_wrapper %}
+						</div>
+						<div class="{{ form_size is defined ? form_size :'col-8 offset-2' }}">
+							{% block content %}{% endblock %}
+						</div>
+						<div class="col-12">
+
+							{% block content_extra %}{% endblock %}
+						</div>
+					</div>
+				{% endblock %}
+
+			</div>
+			{% block body_javascript %}
+				{# <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script> #}
+			{% endblock body_javascript %}
+
+		</body>
+	</html>

@@ -93,7 +93,7 @@ class BlockElementTypeCrudController extends AbstractCrudController
             'blockElementType' => $blockElementType,
         ];
 
-        return $this->render('naka/pages/show-block-element-type.html.twig', $viewParams);
+        return $this->render('@NakaCMS/naka/pages/show-block-element-type.html.twig', $viewParams);
     }
 
      

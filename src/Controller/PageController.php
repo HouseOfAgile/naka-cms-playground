@@ -2,34 +2,51 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Controller;
 
-use HouseOfAgile\NakaCMSBundle\KnpUIpsum;
+use HouseOfAgile\NakaCMSBundle\Component\PageDecorator\PageDecorator;
+use HouseOfAgile\NakaCMSBundle\Entity\Page;
+use HouseOfAgile\NakaCMSBundle\Repository\PageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/page", requirements={"_locale": "en|de|fr"}, name="page_")
+ */
 class PageController extends AbstractController
 {
+    /** @var PageDecorator */
+    private $pageDecorator;
 
-    private $knpUIpsum;
-
-    public function __construct(KnpUIpsum $knpUIpsum)
+    public function __construct(PageDecorator $pageDecorator)
     {
-        $this->knpUIpsum = $knpUIpsum;
+        $this->pageDecorator = $pageDecorator;
     }
-    
     /**
-     * @Route("/sadsad", name="naka_homepage")
+     * @Route("/{_locale<%app.supported_locales%>}/pages", name="list")
      */
-    public function homepage()
+    public function showList(PageRepository $pageRepository): Response
     {
-        $articleContent = $this->knpUIpsum->getParagraphs();
+        $pages = $pageRepository->findAll();
 
-        dd($articleContent);
-        // $homepageStaticPage = $staticPageRepository->findOneBy(['name' => 'homepage']);
 
         $viewParams = [
-            // 'homepageStaticPage' => $homepageStaticPage,
+            'pages' => $pages,
+        ];
+        return $this->render('@NakaCMS/naka/page/show-list.html.twig', $viewParams);
+    }
+
+    /**
+     * @Route("/{_locale<%app.supported_locales%>}/{slug}", name="view")
+     */
+    public function showPage(
+        Page $page
+    ): \Symfony\Component\HttpFoundation\Response {
+
+        $viewParams = [
+            'page' => $page,
+            'blockElements' => $this->pageDecorator->decorateBlockElementsForPage($page),
         ];
         // dd($viewParams);
-        return $this->render('page/homepage.html.twig', $viewParams);
+        return $this->render('@NakaCMS/naka/page/show-page.html.twig', $viewParams);
     }
 }

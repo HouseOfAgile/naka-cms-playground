@@ -71,7 +71,7 @@ class ManageInstanceCommand extends Command
         ];
         // $assetEntities is a list of entities that are with uploaded content
         $assetEntities = [
-            // 'Picture',
+            'Picture',
         ];
 
         $appEntities = [
@@ -84,7 +84,7 @@ class ManageInstanceCommand extends Command
             'Page' => [],
             'MenuItem' => [],
             'Menu' => [],
-            // 'Picture' => [],
+            'Picture' => [],
             'Gallery' => [],
             'BlockElementType' => [],
             'BlockElement' => [],

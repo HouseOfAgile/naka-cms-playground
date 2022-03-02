@@ -1,4 +1,4 @@
-{% extends 'naka/backend/layout/layout-full-width.html.twig' %}
+{% extends '@NakaCMS/naka/backend/layout/layout-full-width.html.twig' %}
 {% set form_size = 'col-12' %}
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 
@@ -135,7 +135,7 @@
 			}
 		
 		const source = `
-		{{ include('naka/backend/layout/iframe-layout-block-element.html.twig') }}
+		{{ include('@NakaCMS/naka/backend/layout/iframe-layout-block-element.html.twig') }}
 		`
 		return getBlobURL(source, 'text/html');
 	}
