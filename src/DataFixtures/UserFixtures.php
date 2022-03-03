@@ -1,9 +1,9 @@
 <?php
 
-namespace App\DataFixtures;
+namespace HouseOfAgile\NakaCMSBundle\DataFixtures;
 
-use App\Entity\AdminUser;
-use App\Entity\User;
+use HouseOfAgile\NakaCMSBundle\Entity\AdminUser;
+use HouseOfAgile\NakaCMSBundle\Entity\User;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
