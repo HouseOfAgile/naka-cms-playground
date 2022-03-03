@@ -48,6 +48,6 @@ class ContactController extends AbstractController
             'form' => $form->createView(),
             'contactBlockElements' => [],
         ];
-        return $this->render('naka/contact.html.twig', $viewParams);
+        return $this->render('@NakaCMS/contact.html.twig', $viewParams);
     }
 }

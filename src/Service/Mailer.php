@@ -43,7 +43,7 @@ class Mailer
             ->to($user->getEmail())
             // ->to(new NamedAddress($user->getEmail(), $user->getFirstName()))
             ->subject('Welcome to the Space Bar!')
-            ->htmlTemplate('email/welcome-organizer.html.twig')
+            ->htmlTemplate('@NakaCMS/email/welcome-organizer.html.twig')
             ->context([
                 // You can pass whatever data you want
                 'user' => $user,
@@ -66,7 +66,7 @@ class Mailer
             ->to($this->applicationContactEmail)
             // ->to(new NamedAddress($user->getEmail(), $user->getFirstName()))
             ->subject('New contact Message!')
-            ->htmlTemplate('email/new-contact-message.html.twig')
+            ->htmlTemplate('@NakaCMS/email/new-contact-message.html.twig')
             ->context([
                 // You can pass whatever data you want
                 'contact' => $contact,
