@@ -2,18 +2,22 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
-use HouseOfAgile\NakaCMSBundle\Repository\PageRepository;
+use App\Entity\Category;
+use App\Entity\MenuItem;
+use App\Entity\PageBlockElement;
+use App\Entity\PageGallery;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use HouseOfAgile\NakaCMSBundle\Entity\AppTrait\DefaultTranslatableTrait;
+use HouseOfAgile\NakaCMSBundle\Repository\PageRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 
 /**
- * @ORM\Entity(repositoryClass=PageRepository::class)
+ * @ORM\MappedSuperclass(repositoryClass=PageRepository::class)
  */
 class Page implements TranslatableInterface, SluggableInterface
 {
@@ -51,13 +55,13 @@ class Page implements TranslatableInterface, SluggableInterface
     /**
      * @ORM\OneToMany(targetEntity=MenuItem::class, mappedBy="page")
      */
-    private $menuItems;
+    protected $menuItems;
 
 
     /**
      * @ORM\OneToMany(targetEntity=PageBlockElement::class, mappedBy="page")
      */
-    private $pageBlockElements;
+    protected $pageBlockElements;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)

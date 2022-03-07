@@ -2,7 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Repository;
 
-use HouseOfAgile\NakaCMSBundle\Entity\PageBlockElement;
+use App\Entity\PageBlockElement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

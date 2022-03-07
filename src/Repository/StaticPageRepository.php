@@ -2,7 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Repository;
 
-use HouseOfAgile\NakaCMSBundle\Entity\StaticPage;
+use App\Entity\StaticPage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

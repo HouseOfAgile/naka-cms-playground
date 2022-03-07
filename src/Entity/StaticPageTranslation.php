@@ -7,7 +7,7 @@ use Knp\DoctrineBehaviors\Contract\Entity\TranslationInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslationTrait;
 
 /**
- * @ORM\Entity
+ * @ORM\MappedSuperclass
  */
 class StaticPageTranslation implements TranslationInterface
 {

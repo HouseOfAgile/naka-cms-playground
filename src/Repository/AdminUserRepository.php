@@ -2,7 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Repository;
 
-use HouseOfAgile\NakaCMSBundle\Entity\AdminUser;
+use App\Entity\AdminUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

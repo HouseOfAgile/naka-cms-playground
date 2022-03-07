@@ -2,7 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Repository;
 
-use HouseOfAgile\NakaCMSBundle\Entity\Menu;
+use App\Entity\Menu;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

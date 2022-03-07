@@ -2,13 +2,15 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
-use HouseOfAgile\NakaCMSBundle\Repository\GalleryRepository;
+use App\Entity\BlockElement;
+use App\Entity\Picture;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use HouseOfAgile\NakaCMSBundle\Repository\GalleryRepository;
 
 /**
- * @ORM\Entity(repositoryClass=GalleryRepository::class)
+ * @ORM\MappedSuperclass(repositoryClass=GalleryRepository::class)
  */
 class Gallery
 {
@@ -32,7 +34,7 @@ class Gallery
     /**
      * @ORM\OneToMany(targetEntity=BlockElement::class, mappedBy="gallery")
      */
-    private $blockElements;
+    protected $blockElements;
 
     public function __construct()
     {

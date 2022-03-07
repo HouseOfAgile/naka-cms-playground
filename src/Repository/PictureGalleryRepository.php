@@ -2,7 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Repository;
 
-use HouseOfAgile\NakaCMSBundle\Entity\PictureGallery;
+use App\Entity\PictureGallery;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

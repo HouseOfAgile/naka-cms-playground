@@ -2,13 +2,14 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
-use HouseOfAgile\NakaCMSBundle\Repository\PictureGalleryRepository;
+use App\Entity\Picture;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use HouseOfAgile\NakaCMSBundle\Repository\PictureGalleryRepository;
 
 /**
- * @ORM\Entity(repositoryClass=PictureGalleryRepository::class)
+ * @ORM\MappedSuperclass(repositoryClass=PictureGalleryRepository::class)
  */
 class PictureGallery
 {
@@ -22,7 +23,7 @@ class PictureGallery
     /**
      * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="pictureGallery")
      */
-    private $images;
+    protected $images;
 
     public function __construct()
     {

@@ -2,11 +2,12 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
-use HouseOfAgile\NakaCMSBundle\Entity\AppTrait\DefaultTranslatableTrait;
-use HouseOfAgile\NakaCMSBundle\Repository\StaticPageRepository;
+use App\Entity\PageBlockElement;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use HouseOfAgile\NakaCMSBundle\Entity\AppTrait\DefaultTranslatableTrait;
+use HouseOfAgile\NakaCMSBundle\Repository\StaticPageRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
@@ -14,7 +15,7 @@ use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity(repositoryClass=StaticPageRepository::class)
+ * @ORM\MappedSuperclass(repositoryClass=StaticPageRepository::class)
  * @UniqueEntity(
  *      fields={"name"},
  *      message="Static page need to have a unique name."
@@ -42,7 +43,7 @@ class StaticPage implements TranslatableInterface, SluggableInterface
      * @ORM\OneToMany(targetEntity=PageBlockElement::class, mappedBy="staticPage")
      * @ORM\OrderBy({"position" = "ASC"})
      */
-    private $pageBlockElements;
+    protected $pageBlockElements;
 
     public function __construct()
     {

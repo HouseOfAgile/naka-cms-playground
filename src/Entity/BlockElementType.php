@@ -2,15 +2,16 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
-use HouseOfAgile\NakaCMSBundle\Repository\BlockElementTypeRepository;
+use App\Entity\BlockElement;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use HouseOfAgile\NakaCMSBundle\Repository\BlockElementTypeRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 /**
- * @ORM\Entity(repositoryClass=BlockElementTypeRepository::class)
+ * @ORM\MappedSuperclass(repositoryClass=BlockElementTypeRepository::class)
  */
 class BlockElementType implements TimestampableInterface
 {
@@ -46,7 +47,7 @@ class BlockElementType implements TimestampableInterface
     /**
      * @ORM\OneToMany(targetEntity=BlockElement::class, mappedBy="type")
      */
-    private $blockElements;
+    protected $blockElements;
 
     public function __construct()
     {

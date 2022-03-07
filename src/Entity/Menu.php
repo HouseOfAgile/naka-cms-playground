@@ -2,13 +2,14 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
-use HouseOfAgile\NakaCMSBundle\Repository\MenuRepository;
+use App\Entity\MenuItem;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use HouseOfAgile\NakaCMSBundle\Repository\MenuRepository;
 
 /**
- * @ORM\Entity(repositoryClass=MenuRepository::class)
+ * @ORM\MappedSuperclass(repositoryClass=MenuRepository::class)
  */
 class Menu
 {

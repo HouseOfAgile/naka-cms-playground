@@ -6,7 +6,7 @@ use HouseOfAgile\NakaCMSBundle\Repository\AdminUserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=AdminUserRepository::class)
+ * @ORM\MappedSuperclass(repositoryClass=AdminUserRepository::class)
  */
 class AdminUser extends BaseUser
 {

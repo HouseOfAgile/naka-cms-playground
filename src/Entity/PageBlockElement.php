@@ -2,12 +2,15 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
-use HouseOfAgile\NakaCMSBundle\Repository\PageBlockElementRepository;
+use App\Entity\BlockElement;
+use App\Entity\Page;
+use App\Entity\StaticPage;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use HouseOfAgile\NakaCMSBundle\Repository\PageBlockElementRepository;
 
 /**
- * @ORM\Entity(repositoryClass=PageBlockElementRepository::class)
+ * @ORM\MappedSuperclass(repositoryClass=PageBlockElementRepository::class)
  */
 class PageBlockElement
 {

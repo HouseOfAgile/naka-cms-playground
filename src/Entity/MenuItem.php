@@ -2,13 +2,15 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
-use HouseOfAgile\NakaCMSBundle\Repository\MenuItemRepository;
+use App\Entity\Menu;
+use App\Entity\Page;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use HouseOfAgile\NakaCMSBundle\Repository\MenuItemRepository;
 
 /**
- * @ORM\Entity(repositoryClass=MenuItemRepository::class)
+ * @ORM\MappedSuperclass(repositoryClass=MenuItemRepository::class)
  */
 class MenuItem
 {
@@ -47,7 +49,7 @@ class MenuItem
     /**
      * @ORM\ManyToMany(targetEntity=Menu::class, mappedBy="menuItems")
      */
-    private $menus;
+    protected $menus;
 
     /**
      * @ORM\Column(type="NakaMenuItemType", nullable=true)

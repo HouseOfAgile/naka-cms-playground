@@ -2,19 +2,23 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
-use HouseOfAgile\NakaCMSBundle\Repository\PictureRepository;
+use App\Entity\BlockElement;
+use App\Entity\Gallery;
+use App\Entity\PageGallery;
+use App\Entity\PictureGallery;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use HouseOfAgile\NakaCMSBundle\Repository\PictureRepository;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Entity\File as EmbeddedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
-use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 /**
- * @ORM\Entity(repositoryClass=PictureRepository::class)
+ * @ORM\MappedSuperclass(repositoryClass=PictureRepository::class)
  * @Vich\Uploadable
  */
 class Picture implements TimestampableInterface
@@ -57,12 +61,12 @@ class Picture implements TimestampableInterface
     /**
      * @ORM\ManyToMany(targetEntity=BlockElement::class, mappedBy="pictures")
      */
-    private $blockElements;
+    protected $blockElements;
 
     /**
      * @ORM\ManyToMany(targetEntity=Gallery::class, mappedBy="pictures")
      */
-    private $galleries;
+    protected $galleries;
 
     // /**
     //  * @ORM\OneToMany(targetEntity=NakaEvent::class, mappedBy="coverPicture")

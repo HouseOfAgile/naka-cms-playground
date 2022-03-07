@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
-use HouseOfAgile\NakaCMSBundle\Entity\AppTrait\DefaultTranslatableTrait;
-use HouseOfAgile\NakaCMSBundle\Repository\CategoryRepository;
+use App\Entity\Page;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use HouseOfAgile\NakaCMSBundle\Entity\AppTrait\DefaultTranslatableTrait;
+use HouseOfAgile\NakaCMSBundle\Repository\CategoryRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TreeNodeInterface;
@@ -17,7 +18,7 @@ use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 use Knp\DoctrineBehaviors\Model\Tree\TreeNodeTrait;
 
 /**
- * @ORM\Entity(repositoryClass=CategoryRepository::class)
+ * @ORM\MappedSuperclass(repositoryClass=CategoryRepository::class)
  */
 class Category implements TranslatableInterface, TreeNodeInterface
 {
@@ -36,7 +37,7 @@ class Category implements TranslatableInterface, TreeNodeInterface
     /**
      * @ORM\ManyToMany(targetEntity=Page::class, mappedBy="category")
      */
-    private $pages;
+    protected $pages;
 
     public function __construct()
     {

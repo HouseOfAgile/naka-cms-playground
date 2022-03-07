@@ -2,15 +2,19 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
-use HouseOfAgile\NakaCMSBundle\Repository\BlockElementRepository;
+use App\Entity\BlockElementType;
+use App\Entity\Gallery;
+use App\Entity\PageBlockElement;
+use App\Entity\Picture;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use HouseOfAgile\NakaCMSBundle\Repository\BlockElementRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 /**
- * @ORM\Entity(repositoryClass=BlockElementRepository::class)
+ * @ORM\MappedSuperclass(repositoryClass=BlockElementRepository::class)
  */
 class BlockElement implements TimestampableInterface
 {
@@ -59,7 +63,7 @@ class BlockElement implements TimestampableInterface
     /**
      * @ORM\OneToMany(targetEntity=PageBlockElement::class, mappedBy="blockElement")
      */
-    private $pageBlockElements;
+    protected $pageBlockElements;
 
     /**
      * @ORM\Column(type="json", nullable=true)
