@@ -4,7 +4,6 @@ namespace HouseOfAgile\NakaCMSBundle\Service;
 
 use HouseOfAgile\NakaCMSBundle\Entity\BaseUser;
 use HouseOfAgile\NakaCMSBundle\Entity\Contact;
-use HouseOfAgile\NakaCMSBundle\Entity\User;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;

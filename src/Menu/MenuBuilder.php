@@ -3,7 +3,7 @@
 namespace HouseOfAgile\NakaCMSBundle\Menu;
 
 use HouseOfAgile\NakaCMSBundle\DBAL\Types\NakaMenuItemType;
-use HouseOfAgile\NakaCMSBundle\Entity\MenuItem;
+use App\Entity\MenuItem;
 use HouseOfAgile\NakaCMSBundle\Repository\MenuRepository;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
