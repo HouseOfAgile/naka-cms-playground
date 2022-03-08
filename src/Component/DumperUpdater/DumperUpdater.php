@@ -93,7 +93,7 @@ class DumperUpdater
         $entitiesIdMapping = [];
 
         foreach ($appEntities as $appEntityName => $appEntityAttributes) {
-            $entityClass = 'HouseOfAgile\\NakaCMSBundle\\Entity\\' . ucfirst($appEntityName);
+            $entityClass = 'App\\Entity\\' . ucfirst($appEntityName);
             $thisClass = new $entityClass();
             $repository = $this->entityManager->getRepository(get_class($thisClass));
             $appEntitiesDict[$appEntityName] = $repository;
@@ -103,7 +103,7 @@ class DumperUpdater
         // if action is dump we dump, otherwise we udpate
 
         foreach ($appEntitiesDict as $type => $repository) {
-            $entityClass = 'HouseOfAgile\\NakaCMSBundle\\Entity\\' . ucfirst($type);
+            $entityClass = 'App\\Entity\\' . ucfirst($type);
             $thisClass = new $entityClass();
             $repository = $this->entityManager->getRepository(get_class($thisClass));
             $dataArray = [];
@@ -136,7 +136,7 @@ class DumperUpdater
                         continue;
                     } else {
                         if (!$entity) {
-                            $entityClass = 'HouseOfAgile\\NakaCMSBundle\\Entity\\' . ucfirst($type);
+                            $entityClass = 'App\\Entity\\' . ucfirst($type);
                             $entity = new $entityClass();
                             $this->logInfo(sprintf('Create Entity %s with id %s', ucfirst($type), $keyEntity));
                         } else {
@@ -267,7 +267,7 @@ class DumperUpdater
         $entitiesIdMapping = [];
 
         foreach ($assetEntities as $assetEntity) {
-            $entityClass = 'HouseOfAgile\\NakaCMSBundle\\Entity\\' . ucfirst($assetEntity);
+            $entityClass = 'App\\Entity\\' . ucfirst($assetEntity);
             $thisClass = new $entityClass();
             $repository = $this->entityManager->getRepository(get_class($thisClass));
             $assetEntitiesDict[$assetEntity] = $repository;
@@ -277,7 +277,7 @@ class DumperUpdater
         // if action is dump we dump, otherwise we udpate
 
         foreach ($assetEntitiesDict as $type => $repository) {
-            $entityClass = 'HouseOfAgile\\NakaCMSBundle\\Entity\\' . ucfirst($type);
+            $entityClass = 'App\\Entity\\' . ucfirst($type);
             $thisClass = new $entityClass();
             $repository = $this->entityManager->getRepository(get_class($thisClass));
             $dataArray = [];
@@ -318,7 +318,7 @@ class DumperUpdater
                     $entity = $repository->findOneBy(['id' => $keyEntity]);
 
                     if (!$entity) {
-                        $entityClass = 'HouseOfAgile\\NakaCMSBundle\\Entity\\' . ucfirst($type);
+                        $entityClass = 'App\\Entity\\' . ucfirst($type);
                         $entity = new $entityClass();
                         $this->logInfo(sprintf('Create Asset Entity %s with id %s', ucfirst($type), $keyEntity));
                     } else {

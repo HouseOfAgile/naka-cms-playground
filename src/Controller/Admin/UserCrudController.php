@@ -2,7 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
-use HouseOfAgile\NakaCMSBundle\Entity\User;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 
 class UserCrudController extends BaseUserCrudController
@@ -17,9 +17,9 @@ class UserCrudController extends BaseUserCrudController
     {
         $crud = parent::configureCrud($crud);
         $crud
-        ->setEntityLabelInSingular('Spitzmuehle User')
-        ->setEntityLabelInPlural('Spitzmuehle Users')
-        ->overrideTemplate('crud/index', 'naka/backend/user/list.html.twig');
+        ->setEntityLabelInSingular(sprintf('%s User',$this->applicationName))
+        ->setEntityLabelInPlural(sprintf('%s Users',$this->applicationName))
+        ->overrideTemplate('crud/index', '@NakaCMS/naka/backend/user/list.html.twig');
 
         return $crud;
     }

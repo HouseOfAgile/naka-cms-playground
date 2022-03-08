@@ -77,8 +77,8 @@ class ManageInstanceCommand extends Command
         $appEntities = [
             'PageTranslation' => [],
             'PageGallery' => [],
-            // 'User' => [],
-            // 'AdminUser' => [],
+            'User' => [],
+            'AdminUser' => [],
             'StaticPageTranslation' => [],
             'StaticPage' => [],
             'Page' => [],

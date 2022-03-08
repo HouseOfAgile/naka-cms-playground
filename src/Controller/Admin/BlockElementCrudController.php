@@ -2,7 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
-use HouseOfAgile\NakaCMSBundle\Entity\BlockElement;
+use App\Entity\BlockElement;
 use HouseOfAgile\NakaCMSBundle\Form\ChooseBlockElementTypeType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;

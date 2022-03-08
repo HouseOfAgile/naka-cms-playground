@@ -27,13 +27,16 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
 
     /** @var Mailer */
     private $mailer;
+    protected $applicationName;
 
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
-        Mailer $mailer
+        Mailer $mailer,
+        $applicationName
     ) {
         $this->passwordEncoder = $passwordEncoder;
         $this->mailer = $mailer;
+        $this->applicationName = $applicationName;
     }
 
     public static function getEntityFqcn(): string

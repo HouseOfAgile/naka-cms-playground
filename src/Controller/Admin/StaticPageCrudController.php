@@ -3,7 +3,7 @@
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
 use HouseOfAgile\NakaCMSBundle\Admin\Field\TranslationField;
-use HouseOfAgile\NakaCMSBundle\Entity\StaticPage;
+use App\Entity\StaticPage;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;

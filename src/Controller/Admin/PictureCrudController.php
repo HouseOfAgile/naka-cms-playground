@@ -2,7 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
-use HouseOfAgile\NakaCMSBundle\Entity\Picture;
+use App\Entity\Picture;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
@@ -25,7 +25,7 @@ class PictureCrudController extends AbstractCrudController
         $id = IdField::new('id');
 
         $image = ImageField::new('image.name')
-            ->setTemplatePath('admin/fields/vich_image.html.twig');
+            ->setTemplatePath('@NakaCMS/admin/fields/vich_image.html.twig');
         $imageFile = Field::new('imageFile')->setFormType(VichImageType::class);
         $name = TextField::new('image.name');
 
