@@ -2,7 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
-use HouseOfAgile\NakaCMSBundle\Entity\BlockElementType;
+use App\Entity\BlockElementType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;

@@ -3,7 +3,7 @@
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
 use HouseOfAgile\NakaCMSBundle\DBAL\Types\NakaMenuItemType;
-use HouseOfAgile\NakaCMSBundle\Entity\MenuItem;
+use App\Entity\MenuItem;
 use HouseOfAgile\NakaCMSBundle\Form\DictItemType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;

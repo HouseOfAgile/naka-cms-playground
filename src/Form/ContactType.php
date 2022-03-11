@@ -2,7 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Form;
 
-use HouseOfAgile\NakaCMSBundle\Entity\Contact;
+use App\Entity\Contact;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
