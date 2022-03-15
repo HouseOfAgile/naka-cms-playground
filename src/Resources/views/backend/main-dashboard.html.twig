@@ -1,0 +1,21 @@
+{% extends '@!EasyAdmin/page/content.html.twig' %}
+{% block page_title %}
+	{{ 'backend.dashboard.title'|trans({'%applicationName%': application_name}) }}
+
+{% endblock page_title %}
+{% block global_actions %}{% endblock %}
+{% block content_help %}{% endblock content_help %}
+{% block main %}
+	<div class="row">
+		<div class="col-8 offset-2">
+			<div class="p-2 mb-4 bg-light rounded-3">
+				<div class="container-fluid py-2">
+					<div class="col-md-10 offset-1">
+						{{ is_granted('ROLE_ADMIN') ? 'backend.dashboardAdmin.generalHelp' | trans | raw :'backend.dashboardManager.generalHelp' | trans | raw }}</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+{% endblock %}

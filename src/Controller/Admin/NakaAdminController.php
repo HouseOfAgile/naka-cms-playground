@@ -3,8 +3,6 @@
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
 use App\Controller\Admin\AdminDashboardController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,9 +17,10 @@ class NakaAdminController extends AdminDashboardController
      */
     public function adminDashboard(Request $request): Response
     {
+
         $viewParams = [
             'dummy' => true,
         ];
-        return $this->render('@NakaCMS/naka/backend/dashboard.html.twig', $viewParams);
+        return $this->render('@NakaCMS/backend/main-dashboard.html.twig', $viewParams);
     }    
 }
