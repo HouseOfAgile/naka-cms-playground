@@ -2,8 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
-use HouseOfAgile\NakaCMSBundle\Entity\AdminUser;
-use HouseOfAgile\NakaCMSBundle\Entity\BaseUser;
+use App\Entity\AdminUser;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 
