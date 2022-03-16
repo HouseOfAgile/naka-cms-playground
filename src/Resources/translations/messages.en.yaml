@@ -5,7 +5,12 @@ backend.dashboardAdmin.generalHelp: 'This is the general backend for administrat
 backend.dashboardManager.generalHelp: 'This backend give you the ability to manage the specifics of this NakaCMS instance.'
 
 backend.menu.websiteInfo: Website Info
+backend.menu.websiteAsset: Website Asset
+
 backend.websiteInfo.title: 'Website info for %applicationName%'
 backend.websiteInfo.thereIsNoWebsiteInfo: 'There is no website info yet'
 backend.websiteInfo.youNeedAWebsiteInfo: 'You should create and configure one'
 backend.websiteInfo.configureWebsiteInfo: 'Configure Website Info now'
+
+backend.websiteAsset.generalHelpForAdmin: 'Here you can add assets that will be available for all people granted access to the admin. This could be pdf, word documents or images.'
+backend.websiteAsset.generalHelpForManager: 'Here you can find a list of assets that gives you information on the website.'

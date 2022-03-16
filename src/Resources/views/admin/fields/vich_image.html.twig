@@ -1,6 +1,7 @@
 {% if field.value %}
+	{% set assetVar = assetVar | default('imageFile') %}
 	<a href="#" data-bs-toggle="modal" data-bs-target="#imageModal{{ field.uniqueId }}">
-		<img src="{{ vich_uploader_asset(entity.instance, 'imageFile')|imagine_filter('thumb') }}">
+		<img src="{{ vich_uploader_asset(entity.instance, assetVar)|imagine_filter('thumb') }}">
 	</a>
 	<div class="modal fade" id="imageModal{{ field.uniqueId }}" tabindex="-1" aria-labelledby="modal for {{ entity.instance }}" aria-hidden="true">
 		<div class="modal-dialog modal-lg modal-fullscreen-lg-down">
@@ -11,7 +12,7 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<img src="{{ vich_uploader_asset(entity.instance, 'imageFile')|imagine_filter('creative_dim_down') }}">
+					<img src="{{ vich_uploader_asset(entity.instance, assetVar)|imagine_filter('creative_dim_down') }}">
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

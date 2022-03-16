@@ -68,17 +68,11 @@ class Picture implements TimestampableInterface
      */
     protected $galleries;
 
-    // /**
-    //  * @ORM\OneToMany(targetEntity=NakaEvent::class, mappedBy="coverPicture")
-    //  */
-    // private $nakaEvents;
-
     public function __construct()
     {
         $this->image = new EmbeddedFile();
         $this->blockElements = new ArrayCollection();
         $this->galleries = new ArrayCollection();
-        // $this->nakaEvents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,7 +88,7 @@ class Picture implements TimestampableInterface
     public function dumpConfig(): array
     {
         $config =  [
-            'id' => $this->id,
+            'id' => $this->getId(),
             // 'originalName' => $this->image->getOriginalName(),
             // 'name' => $this->image->getName(),
             // 'mimeType' => $this->image->getMimeType(),
