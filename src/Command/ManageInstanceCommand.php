@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace HouseOfAgile\NakaCMSBundle\Command;
 
+use App\DataDumper\DataDumperParameter;
+use Exception;
 use HouseOfAgile\NakaCMSBundle\Component\DumperUpdater\DumperUpdater;
 use HouseOfAgile\NakaCMSBundle\Helper\LoggerCommandTrait;
 use Symfony\Component\Console\Command\Command;
@@ -56,43 +58,16 @@ class ManageInstanceCommand extends Command
             $this->io
         );
 
-        $appEntitiesAliases = [
-            'pageTranslations' => ['class' => 'PageTranslation', 'method' => 'translation'],
-            'staticPageTranslations' => ['class' => 'StaticPageTranslation', 'method' => 'translation'],
-            'nakaEventTranslations' => ['class' => 'NakaEventTranslation', 'method' => 'translation'],
-            'menuItems' => 'MenuItem',
-            'pageBlockElements' => 'PageBlockElement',
-            'blockElement' => 'BlockElement',
-            'blockElementType' => 'BlockElementType',
-            'staticPage' => 'StaticPage',
-            'page' => 'Page',
-            'pictures' => 'Picture',
-            'gallery' => 'Gallery',
-        ];
-        // $assetEntities is a list of entities that are with uploaded content
-        $assetEntities = [
-            'Picture',
-        ];
+        if (class_exists(DataDumperParameter::class)) {
 
-        $appEntities = [
-            'PageTranslation' => [],
-            'PageGallery' => [],
-            'User' => [],
-            'AdminUser' => [],
-            'StaticPageTranslation' => [],
-            'StaticPage' => [],
-            'Page' => [],
-            'MenuItem' => [],
-            'Menu' => [],
-            'Picture' => [],
-            'Gallery' => [],
-            'BlockElementType' => [],
-            'BlockElement' => [],
-            'PageBlockElement' => [],
-            // 'Contact' => [],
-            // 'NakaEventTranslation' => [],
-            // 'NakaEvent' => ['beginDate' => 'DateTime', 'endDate' => 'DateTime',],
-        ];
+            $appEntitiesAliases = DataDumperParameter::APP_ENTITIES_ALIASES;;
+            // $assetEntities is a list of entities that are with uploaded content
+            $assetEntities = DataDumperParameter::ASSET_ENTITIES;
+
+            $appEntities = DataDumperParameter::APP_ENTITIES;
+        } else {
+            throw new Exception('App\Entity\DataDumperParameter Class not Present');
+        }
 
         $dumpOrUpdate = $input->getArgument('mainAction') == 'dump';
         $contentOrAsset = $input->getArgument('typeOfContent') == 'content';

@@ -47,11 +47,6 @@ class Page implements TranslatableInterface, SluggableInterface
      */
     private $category;
 
-    // /**
-    //  * @ORM\OneToMany(targetEntity=WorkshopEvent::class, mappedBy="page")
-    //  */
-    // private $workshopEvents;
-
     /**
      * @ORM\OneToMany(targetEntity=MenuItem::class, mappedBy="page")
      */
@@ -71,7 +66,6 @@ class Page implements TranslatableInterface, SluggableInterface
     public function __construct()
     {
         $this->category = new ArrayCollection();
-        // $this->workshopEvents = new ArrayCollection();
         $this->menuItems = new ArrayCollection();
         $this->pageBlockElements = new ArrayCollection();
     }
@@ -173,36 +167,6 @@ class Page implements TranslatableInterface, SluggableInterface
 
         return $this;
     }
-
-    // /**
-    //  * @return Collection|WorkshopEvent[]
-    //  */
-    // public function getWorkshopEvents(): Collection
-    // {
-    //     return $this->workshopEvents;
-    // }
-
-    // public function addWorkshopEvent(WorkshopEvent $workshopEvent): self
-    // {
-    //     if (!$this->workshopEvents->contains($workshopEvent)) {
-    //         $this->workshopEvents[] = $workshopEvent;
-    //         $workshopEvent->setPage($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeWorkshopEvent(WorkshopEvent $workshopEvent): self
-    // {
-    //     if ($this->workshopEvents->removeElement($workshopEvent)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($workshopEvent->getPage() === $this) {
-    //             $workshopEvent->setPage(null);
-    //         }
-    //     }
-
-    //     return $this;
-    // }
 
     /**
      * @return Collection|MenuItem[]

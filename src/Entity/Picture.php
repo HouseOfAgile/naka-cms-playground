@@ -220,34 +220,4 @@ class Picture implements TimestampableInterface
 
         return $this;
     }
-
-    /**
-     * @return Collection|NakaEvent[]
-     */
-    public function getNakaEvents(): Collection
-    {
-        return $this->nakaEvents;
-    }
-
-    // public function addNakaEvent(NakaEvent $nakaEvent): self
-    // {
-    //     if (!$this->nakaEvents->contains($nakaEvent)) {
-    //         $this->nakaEvents[] = $nakaEvent;
-    //         $nakaEvent->setCoverPicture($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeNakaEvent(NakaEvent $nakaEvent): self
-    // {
-    //     if ($this->nakaEvents->removeElement($nakaEvent)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($nakaEvent->getCoverPicture() === $this) {
-    //             $nakaEvent->setCoverPicture(null);
-    //         }
-    //     }
-
-    //     return $this;
-    // }
 }

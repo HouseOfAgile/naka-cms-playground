@@ -22,6 +22,6 @@ class NakaSuperAdminController extends SuperAdminDashboardController
         $viewParams = [
             'dummy' => true,
         ];
-        return $this->render('@NakaCMS/naka/backend/dashboard.html.twig', $viewParams);
+        return $this->render('@NakaCMS/backend/main-dashboard.html.twig', $viewParams);
     }
 }

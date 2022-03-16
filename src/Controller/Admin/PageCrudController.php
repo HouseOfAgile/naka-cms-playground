@@ -52,18 +52,17 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         $enabled = BooleanField::new('enabled')->setLabel('is it Enabled');
         $pageGallery = AssociationField::new('pageGallery', 'admin.form.page.pageGallery');
         $pageBlockElements = AssociationField::new('pageBlockElements', 'admin.form.page.pageBlockElements');
-        $workshopEvents = AssociationField::new('workshopEvents', 'admin.form.page.workshopEvents');
         $category = AssociationField::new('category', 'admin.form.page.category');
 
 
         if (Crud::PAGE_INDEX === $pageName) {
             return [$id, $name, $slug, $enabled, $pageGallery, $pageBlockElements];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $slug, $enabled, $pageGallery, $workshopEvents, $category];
+            return [$id, $name, $slug, $enabled, $pageGallery, $category];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$name, $translations, $enabled, $pageGallery, $workshopEvents, $category, $pageBlockElements];
+            return [$name, $translations, $enabled, $pageGallery, $category, $pageBlockElements];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$name, $translations, $enabled, $pageGallery, $workshopEvents, $category, $pageBlockElements];
+            return [$name, $translations, $enabled, $pageGallery, $category, $pageBlockElements];
         }
     }
 
