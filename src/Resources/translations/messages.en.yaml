@@ -6,6 +6,7 @@ backend.dashboardManager.generalHelp: 'This backend give you the ability to mana
 
 backend.menu.websiteInfo: Website Info
 backend.menu.websiteAsset: Website Asset
+backend.menu.translations: 'Translations'
 
 backend.websiteInfo.title: 'Website info for %applicationName%'
 backend.websiteInfo.thereIsNoWebsiteInfo: 'There is no website info yet'
