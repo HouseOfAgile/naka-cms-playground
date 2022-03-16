@@ -1,0 +1,56 @@
+{% extends '@!EasyAdmin/page/content.html.twig' %}
+{% block page_title %}
+	{{ 'backend.websiteInfo.title'|trans({'%applicationName%': application_name})|raw }}
+{% endblock page_title %}
+{% block main %}
+	{% if websiteInfo %}
+		<div class="col-10 offset-1 py-5">
+			<table class="table table-dark table-hover">
+				<thead>
+					<tr>
+						<th scope="col">title</th>
+						<th scope="col">catchPhrase</th>
+						<th scope="col">locales</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for translation in websiteInfo.translations %}
+						<tr>
+							<td>{{ translation.title }}</td>
+							<td>{{ translation.catchPhrase }}</td>
+							<td>{{ translation.locale }}</td>
+						</tr>
+					{% endfor %}
+
+				</tbody>
+			</table>
+		</div>
+		<div class="col-6 offset-3 ">
+			<a href="{{ ea_url().setController('HouseOfAgile\\NakaCMSBundle\\Controller\\Admin\\WebsiteInfoCrudController').setAction('edit').setEntityId(websiteInfo.id) }}" class="btn btn-success d-flex justify-content-center p-4" role="button">
+				<i class="fa fa-info"></i>
+				<span>{{ 'backend.websiteInfo.configureWebsiteInfo' | trans }}</span>
+			</a>
+		</div>
+	{% else %}
+		<div class="row">
+			<div class="col-8 offset-2 p-4">
+				<div class="p-2 mb-4 bg-light rounded-3">
+					<div class="container-fluid py-2">
+						<div class="col-md-10 offset-1">
+							<p>{{'backend.websiteInfo.thereIsNoWebsiteInfo' | trans | raw }}</p>
+							{{ is_granted('ROLE_ADMIN') ? ('<p>'~('backend.websiteInfo.youNeedAWebsiteInfo' | trans)~'</p>') | raw : '' }}</div>
+					</div>
+				</div>
+				<div class="col-6 offset-3 ">
+					<a href="{{ ea_url().setController('HouseOfAgile\\NakaCMSBundle\\Controller\\Admin\\WebsiteInfoCrudController').setAction('new') }}" class="btn btn-success d-flex justify-content-center p-4" role="button">
+
+						<span>
+							<i class="fa fa-info"></i>
+							{{ 'backend.websiteInfo.configureWebsiteInfo' | trans }}</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+
+{% endblock main %}
