@@ -2,10 +2,11 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Component\DumperUpdater;
 
-use HouseOfAgile\NakaCMSBundle\Helper\LoggerCommandTrait;
-use HouseOfAgile\NakaCMSBundle\Service\UploaderHelper;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use HouseOfAgile\NakaCMSBundle\Helper\LoggerCommandTrait;
+use HouseOfAgile\NakaCMSBundle\Service\UploaderHelper;
 use League\Flysystem\FilesystemOperator;
 use Psr\Log\LoggerInterface;
 use ReflectionProperty;
@@ -274,6 +275,11 @@ class DumperUpdater
             $entitiesIdMapping[$assetEntity] = [];
         }
 
+        // we clean the assets directory in case of dump
+        if ($dumpOrUpdate) {
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->assetDir);
+        }
         // if action is dump we dump, otherwise we udpate
 
         foreach ($assetEntitiesDict as $type => $repository) {
@@ -284,21 +290,23 @@ class DumperUpdater
 
             if ($dumpOrUpdate) {
                 // dump
-                // delete assets directory
-                $filesystem = new Filesystem();
                 try {
-                    $filesystem->remove($this->assetDir);
 
                     foreach ($repository->findAll() as $entityItem) {
-                        $pathAsset = $this->projectDir . '/public' . $this->vichUploaderHelper->asset($entityItem, 'imageFile');
+                        $fileAttributeName = method_exists($entityItem, 'getImageFile') ? 'imageFile' : (method_exists($entityItem, 'getAssetFile') ? 'assetFile' : false);
+                        if (!$fileAttributeName) {
+                            throw new Exception('We do not recognize this asset entity');
+                        }
+
+                        $pathAsset = $this->projectDir . '/public' . $this->vichUploaderHelper->asset($entityItem, $fileAttributeName);
                         // copy asset and get path
-                        dump($entityItem);
                         $newPathAsset = $this->assetDir . '/' . basename($pathAsset);
                         $filesystem->copy(
                             $pathAsset,
                             $newPathAsset,
                             true
                         );
+
                         $dataArray[$entityItem->getId()] = $entityItem->dumpConfig();
                         $dataArray[$entityItem->getId()]['imagePath'] = $newPathAsset;
                     }
@@ -325,7 +333,6 @@ class DumperUpdater
                         $this->logInfo(sprintf('Update Asset Entity %s with id %s', ucfirst($type), $keyEntity));
                     }
 
-
                     $fixtureImageFile =  new File($dataEntity['imagePath']);
 
 
@@ -333,8 +340,12 @@ class DumperUpdater
                         ->uploadPicture($fixtureImageFile, UploaderHelper::PAGE_PICTURE);
 
                     $uploadedFile = new UploadedFile($imageFilePath, basename($imageFilePath), null, null, true);
+                    if (method_exists($entity, 'setImageFile')) {
+                        $entity->setImageFile($uploadedFile);
+                    } elseif (method_exists($entity, 'setAssetFile')) {
+                        $entity->setAssetFile($uploadedFile);
+                    }
 
-                    $entity->setImageFile($uploadedFile);
                     // foreach ($dataEntity as $keyAttr => $valAttr) {
                     // }
                     $this->entityManager->persist($entity);
@@ -344,7 +355,7 @@ class DumperUpdater
                     $entitiesIdMapping[$type][$dataEntity['id']] = $entity->getId();
                 }
             }
-            $this->logSuccess(sprintf('We updated all data from files'));
+            $this->logSuccess(sprintf('We updated all assets of type %s', $type));
         }
 
         return true;
