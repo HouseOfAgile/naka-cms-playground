@@ -17,6 +17,7 @@ class Mailer
 
     /** @var LoggerInterface */
     protected $logger;
+    protected $applicationName;
     protected $applicationSenderEmail;
     protected $applicationContactEmail;
 
@@ -24,25 +25,27 @@ class Mailer
         MailerInterface $mailer,
         Environment $twig,
         LoggerInterface $generalLogger,
+        $applicationName,
         $applicationSenderEmail,
         $applicationContactEmail
     ) {
         $this->mailer = $mailer;
         $this->twig = $twig;
         $this->logger = $generalLogger;
+        $this->applicationName = $applicationName;
         $this->applicationSenderEmail = $applicationSenderEmail;
         $this->applicationContactEmail = $applicationContactEmail;
     }
 
-    public function sendWelcomeMessageToOrganizer(BaseUser $user)
+    public function sendWelcomeMessageToEditor(BaseUser $user)
     {
         $email = (new TemplatedEmail())
             // ->from(new NamedAddress('alienmailcarrier@example.com', 'The Space Bar'))
             ->from($this->applicationSenderEmail)
             ->to($user->getEmail())
             // ->to(new NamedAddress($user->getEmail(), $user->getFirstName()))
-            ->subject('Welcome to the Space Bar!')
-            ->htmlTemplate('@NakaCMS/email/welcome-organizer.html.twig')
+            ->subject(sprintf('Welcome to %s!', $this->applicationName))
+            ->htmlTemplate('@NakaCMS/email/welcome-editor.html.twig')
             ->context([
                 // You can pass whatever data you want
                 'user' => $user,
@@ -50,7 +53,7 @@ class Mailer
 
         $this->mailer->send($email);
         $this->logger->info(sprintf(
-            'Welcome email has been send to organizer %s with email %s',
+            'Welcome email has been send to editor %s with email %s',
             $user,
             $user->getEmail()
         ));

@@ -70,7 +70,6 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
         // @todo Move roles definitions to some configuration file
         $rolesSuperAdmin = ChoiceField::new('roles')
             ->setChoices([
-                'Event Organizer' => 'ROLE_ORGANIZER',
                 'Content Editor' => 'ROLE_EDITOR',
                 'Administrator' => 'ROLE_ADMIN',
                 'Super Administrator' => 'ROLE_SUPER_ADMIN',
@@ -79,7 +78,6 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
             ->setPermission('ROLE_SUPER_ADMIN');
 
         $roles = ChoiceField::new('roles')->setChoices([
-            'Event Organizer' => 'ROLE_ORGANIZER',
             'Content Editor' => 'ROLE_EDITOR',
             'Administrator' => 'ROLE_ADMIN',
         ])->allowMultipleChoices()
@@ -117,7 +115,7 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
     {
         return [
             BeforeEntityPersistedEvent::class => 'encodePassword',
-            AfterEntityPersistedEvent::class => 'welcomeNewOrganizer',
+            AfterEntityPersistedEvent::class => 'welcomeNewEditor',
             BeforeEntityUpdatedEvent::class => 'encodePassword',
         ];
     }
@@ -133,12 +131,12 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
     }
 
 
-    public function welcomeNewOrganizer($event)
+    public function welcomeNewEditor($event)
     {
         $user = $event->getEntityInstance();
         if ($user instanceof BaseUser) {
-            if (in_array('ROLE_ORGANIZER', $user->getRoles(), true)) {
-                $this->mailer->sendWelcomeMessageToOrganizer($user);
+            if (in_array('ROLE_EDITOR', $user->getRoles(), true)) {
+                $this->mailer->sendWelcomeMessageToEditor($user);
             }
         }
     }
