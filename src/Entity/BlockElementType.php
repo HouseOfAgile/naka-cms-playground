@@ -45,7 +45,7 @@ class BlockElementType implements TimestampableInterface
     private $cssCode;
 
     /**
-     * @ORM\OneToMany(targetEntity=BlockElement::class, mappedBy="type")
+     * @ORM\OneToMany(targetEntity=BlockElement::class, mappedBy="blockElementType")
      */
     protected $blockElements;
 

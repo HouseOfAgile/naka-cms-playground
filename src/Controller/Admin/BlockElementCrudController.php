@@ -3,7 +3,6 @@
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
 use App\Entity\BlockElement;
-use HouseOfAgile\NakaCMSBundle\Form\ChooseBlockElementTypeType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -57,8 +56,8 @@ class BlockElementCrudController extends AbstractCrudController
             'form.blockElement.type'
         );
 
-        $createdAt = DateTimeField::new('createdAt')->setTemplatePath('@NakaCMS/naka/backend/fields/common/field_human_date.html.twig');
-        $updatedAt = DateTimeField::new('updatedAt')->setTemplatePath('@NakaCMS/naka/backend/fields/common/field_human_date.html.twig');
+        // $createdAt = DateTimeField::new('createdAt')->setTemplatePath('@NakaCMS/naka/backend/fields/common/field_human_date.html.twig');
+        // $updatedAt = DateTimeField::new('updatedAt')->setTemplatePath('@NakaCMS/naka/backend/fields/common/field_human_date.html.twig');
 
         $panelCodeElement = FormField::addPanel(
             'form.blockElement.codeElement'
@@ -83,7 +82,7 @@ class BlockElementCrudController extends AbstractCrudController
         $isFluid = BooleanField::new('isFluid');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $name, $createdAt, $updatedAt, $blockElementType];
+            return [$id, $name, $blockElementType];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $name, $blockElementType, $htmlCode, $cssCode, $jsCode, $gallery, $isFluid];
         } elseif (Crud::PAGE_NEW === $pageName) {

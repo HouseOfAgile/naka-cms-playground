@@ -14,7 +14,7 @@ use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 /**
- * @ORM\MappedSuperclass(repositoryClass=BlockElementRepository::class)
+ * @ORM\MappedSuperclass
  */
 class BlockElement implements TimestampableInterface
 {

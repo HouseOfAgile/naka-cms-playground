@@ -55,6 +55,7 @@ class Page implements TranslatableInterface, SluggableInterface
 
     /**
      * @ORM\OneToMany(targetEntity=PageBlockElement::class, mappedBy="page")
+     * @ORM\OrderBy({"position": "ASC"})
      */
     protected $pageBlockElements;
 

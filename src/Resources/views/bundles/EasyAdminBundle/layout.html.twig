@@ -30,19 +30,27 @@ gtag('config', '{{ ga_id }}');
 
 {% block header_custom_menu %}
 	<div class=" btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+		<div class="m-2 p-1">
+			<a href="{{ path('app_homepage') }}" class="btn btn-success" role="button">
+				<i class="fas fa-home"></i>
+				Frontend
+			</a>
+		</div>
 
-
-		{% if is_granted('ROLE_SUPER_ADMIN') %}
+		{% if is_granted('ROLE_ADMIN') %}
 			<div class="m-2 p-1">
 				<a href="{{ path('admin_dashboard') }}" class="btn btn-success" role="button">
 					<i class="fas fa-screwdriver"></i>
-					admin
+					Admin
 				</a>
 			</div>
+		{% endif %}
+		{% if is_granted('ROLE_SUPER_ADMIN') %}
+
 			<div class="m-2 p-1">
 				<a href="{{ path('superadmin_dashboard') }}" class="btn btn-danger" role="button">
 					<i class="fas fa-tools"></i>
-					superadmin
+					Superadmin
 				</a>
 			</div>
 		{% endif %}

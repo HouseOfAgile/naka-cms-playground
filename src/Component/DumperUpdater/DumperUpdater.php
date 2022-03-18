@@ -109,12 +109,17 @@ class DumperUpdater
             $repository = $this->entityManager->getRepository(get_class($thisClass));
             $dataArray = [];
             if ($dumpOrUpdate) {
-                // dump data
-                foreach ($repository->findAll() as $entityItem) {
-                    $dataArray[$entityItem->getId()] = $entityItem->dumpConfig();
+                if (!in_array($type, array_values($assetEntities))) {
+                    // dump data
+                    foreach ($repository->findAll() as $entityItem) {
+                        $dataArray[$entityItem->getId()] = $entityItem->dumpConfig();
+                    }
+                    $this->dumpFile($dataArray, $type);
+                    $this->logSuccess(sprintf('Configuration has been dumped for static instances definition (%s)', $type));
+                } else {
+
+                    $this->logWarning(sprintf('Not dumping Asset entity: %s', $type));
                 }
-                $this->dumpFile($dataArray, $type);
-                $this->logSuccess(sprintf('Configuration has been dumped for static instances definition (%s)', $type));
             } else {
                 // update
                 $filesystem = new Filesystem();
@@ -125,12 +130,9 @@ class DumperUpdater
                 }
                 // update or create
                 $dumpedEntities = Yaml::parseFile($filePath);
-                dump($filePath, $dumpedEntities);
                 foreach ($dumpedEntities as $keyEntity => $dataEntity) {
                     $entity = $repository->findOneBy(['id' => $keyEntity]);
                     if (in_array($type, array_values($assetEntities))) {
-                        dump($type);
-                        dump($assetEntities);
                         $this->logInfo(sprintf('We have an asset entity'));
                         $entitiesIdMapping[$type][$dataEntity['id']] = $entity->getId();
 

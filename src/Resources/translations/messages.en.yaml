@@ -15,3 +15,11 @@ backend.websiteInfo.configureWebsiteInfo: 'Configure Website Info now'
 
 backend.websiteAsset.generalHelpForAdmin: 'Here you can add assets that will be available for all people granted access to the admin. This could be pdf, word documents or images.'
 backend.websiteAsset.generalHelpForManager: 'Here you can find a list of assets that gives you information on the website.'
+
+thumbnail.viewLarger: "View Larger"
+
+contact.contact-details: |
+    <h2>Contact</h2>
+    <p>Add here your contact details</p>
+
+form.contact.submit: 'Send your message'

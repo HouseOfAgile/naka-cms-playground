@@ -7,7 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use HouseOfAgile\NakaCMSBundle\Component\ContentDumper\ContentDumper;
 use HouseOfAgile\NakaCMSBundle\Controller\Admin\BlockElementCrudController;
-use HouseOfAgile\NakaCMSBundle\Entity\BlockElement;
+use App\Entity\BlockElement;
 use HouseOfAgile\NakaCMSBundle\Form\BlockElementType;
 use HouseOfAgile\NakaCMSBundle\Form\ChooseBlockElementTypeType;
 use Symfony\Component\Form\ClickableInterface;

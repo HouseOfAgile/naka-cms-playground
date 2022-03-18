@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use HouseOfAgile\NakaCMSBundle\Repository\PageBlockElementRepository;
 
 /**
- * @ORM\MappedSuperclass(repositoryClass=PageBlockElementRepository::class)
+ * @ORM\MappedSuperclass
  */
 class PageBlockElement
 {

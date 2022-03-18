@@ -51,7 +51,8 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         );
         $enabled = BooleanField::new('enabled')->setLabel('is it Enabled');
         $pageGallery = AssociationField::new('pageGallery', 'admin.form.page.pageGallery');
-        $pageBlockElements = AssociationField::new('pageBlockElements', 'admin.form.page.pageBlockElements');
+        $pageBlockElements = AssociationField::new('pageBlockElements', 'admin.form.page.pageBlockElements')
+            ->setFormTypeOption('by_reference', false);
         $category = AssociationField::new('category', 'admin.form.page.category');
 
 
