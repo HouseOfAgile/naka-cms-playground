@@ -27,6 +27,7 @@
 {% endblock %}
 
 {% block javascripts_extra %}
+	{{ parent() }}
 	{% for blockElement in blockElements %}
 		{{ blockElement.jsCode|raw }}
 	{% endfor %}

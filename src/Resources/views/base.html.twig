@@ -11,15 +11,33 @@
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
+			<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
 		{% endblock %}
 
 		{% block javascripts %}
 			{{ encore_entry_script_tags('app') }}
+
 		{% endblock %}
 		{% block stylesheets_extra %}{% endblock %}
 	</head>
 	<body>
 		{% block body %}{% endblock %}
-		{% block javascripts_extra %}{% endblock %}
+		{% block javascripts_extra %}
+		<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+
+			<script>
+
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#000"
+    },
+    "button": {
+      "background": "#f1d600"
+    }
+  },
+  "theme": "classic"
+});
+</script>{% endblock %}
 	</body>
 </html>
