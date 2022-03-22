@@ -18,7 +18,7 @@ class ContactType extends AbstractType
             ->add('email')
             ->add('subject')
             ->add('message', TextareaType::class, ['attr' => array('rows' => '6')])
-            ->add('submit', SubmitType::class, ['label' => 'form.contact.submit',]);
+            ->add('submit', SubmitType::class, ['label' => 'form.contact.submit']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

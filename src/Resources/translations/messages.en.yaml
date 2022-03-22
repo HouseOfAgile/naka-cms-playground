@@ -1,20 +1,22 @@
 # Some translations that are common
 frontend.goToAdmin: "Go to Admin"
 backend.dashboard.title: "Welcome in the %applicationName% backend"
-backend.dashboardAdmin.generalHelp: 'This is the general backend for administration of the system.<br/>You can manage pages, menus and the various blocks they contains.'
-backend.dashboardManager.generalHelp: 'This backend give you the ability to manage the specifics of this NakaCMS instance.'
+backend.dashboardAdmin.generalHelp: "This is the general backend for administration of the system.<br/>You can manage pages, menus and the various blocks they contains."
+backend.dashboardManager.generalHelp: "This backend give you the ability to manage the specifics of this NakaCMS instance."
 
 backend.menu.websiteInfo: Website Info
+backend.menu.openingHours: Opening Hours
 backend.menu.websiteAsset: Website Asset
-backend.menu.translations: 'Translations'
+backend.menu.translations: "Translations"
 
-backend.websiteInfo.title: 'Website info for %applicationName%'
-backend.websiteInfo.thereIsNoWebsiteInfo: 'There is no website info yet'
-backend.websiteInfo.youNeedAWebsiteInfo: 'You should create and configure one'
-backend.websiteInfo.configureWebsiteInfo: 'Configure Website Info now'
+backend.websiteInfo.title: "Website info for %applicationName%"
+backend.websiteInfo.thereIsNoWebsiteInfo: "There is no website info yet"
+backend.websiteInfo.youNeedAWebsiteInfo: "You should create and configure one"
+backend.websiteInfo.configureWebsiteInfo: "Configure Website Info now"
+backend.websiteInfo.editOpeningHours: "Edit Opening Hours"
 
-backend.websiteAsset.generalHelpForAdmin: 'Here you can add assets that will be available for all people granted access to the admin. This could be pdf, word documents or images.'
-backend.websiteAsset.generalHelpForManager: 'Here you can find a list of assets that gives you information on the website.'
+backend.websiteAsset.generalHelpForAdmin: "Here you can add assets that will be available for all people granted access to the admin. This could be pdf, word documents or images."
+backend.websiteAsset.generalHelpForManager: "Here you can find a list of assets that gives you information on the website."
 
 thumbnail.viewLarger: "View Larger"
 
@@ -22,4 +24,14 @@ contact.contact-details: |
     <h2>Contact</h2>
     <p>Add here your contact details</p>
 
-form.contact.submit: 'Send your message'
+form.contact.submit: "Send your message"
+form.editOpeningHours.detailedHelp: |
+    <p>Here you can edit the opening hours, you need to follow a specific format.</p>
+    <p>You can have one entry for each day of the week with several range and an unilimted amont of exceptions.</p>
+    <p>The exceptions contains the day the office should be closed.</p>
+    <div class="py-1"><strong>"monday":["09:00-12:00","13:00-18:00"]</strong> means the office will be open between 9:00 and 12:00 and then open again at 13:00 and then close at 18:00.</div>
+    <div class="py-1"><strong>"exceptions":{"2024-11-11":["09:00-12:00"],"2024-12-25":[]}</strong> means the office will be close on 2024-11-11 between 9:00 and 12:00 and will be close al day on 2024-12-25.</div>
+    <div class="py-1"><strong>"exceptions":{"01-01":[],"12-25":['09:00-12:00']}</strong> means the office will be close on each 1st of January and each 25th of December between 9:00 and 12:00.</div>
+form.openingHours.updateOpeningHours: "Update Opening Hours"
+
+flash.openingHours.openingHoursUpdated: "Opening hours have been updated !"

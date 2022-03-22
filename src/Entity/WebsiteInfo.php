@@ -20,8 +20,25 @@ class WebsiteInfo implements TranslatableInterface
      */
     private $id;
 
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $openingHours = [];
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getOpeningHours(): ?array
+    {
+        return $this->openingHours;
+    }
+
+    public function setOpeningHours(?array $openingHours): self
+    {
+        $this->openingHours = $openingHours;
+
+        return $this;
     }
 }
