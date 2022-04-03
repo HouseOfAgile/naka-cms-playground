@@ -16,12 +16,15 @@
 		<div class="row g-0">
 
 			<div class="col-md-12">
+				{% include '@NakaCMS/opening-hours/show-opening-hours.html.twig' with {'openingHours': openingHours } %}
+			</div>
+			<div class="col-md-10 offset-1">
 				<div class="jumbotron">
 					<p>{{'contact.contact-details'|trans|raw }}</p>
 				</div>
 			</div>
-			<hr/>
-			<div class="col-md-12">
+			<hr class="col-md-10 offset-1"/>
+			<div class="col-md-10 offset-1">
 
 				{{ form_start(form) }}
 				<div class="row m-4">
@@ -58,5 +61,5 @@
 
 
 {% block javascripts_extra %}
-    {{ encore_entry_script_tags('openstreetmap') }}
+	{{ encore_entry_script_tags('openstreetmap') }}
 {% endblock %}

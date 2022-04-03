@@ -30,10 +30,12 @@ class WebsiteInfoController extends AdminDashboardController
     /**
      * @Route("/opening-hours", name="website_info_view_opening_hours")
      */
-    public function viewOpeningHours(Request $request, WebsiteInfoRepository $websiteInfoRepository): Response
-    {
+    public function viewOpeningHours(
+        Request $request,
+        OpeningHoursManager $openingHoursManager
+    ): Response {
         $viewParams = [
-            'websiteInfo' => $websiteInfoRepository->find(1),
+            'openingHours' => $openingHoursManager->getOpeningHoursData(),
         ];
 
         return $this->render('@NakaCMS/backend/website-info/show-opening-hours.html.twig', $viewParams);
@@ -57,12 +59,13 @@ class WebsiteInfoController extends AdminDashboardController
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $data = $form->getData();
-                $openingHoursArray = json_decode($data['openingHours'],true);
+                $openingHoursArray = json_decode($data['openingHours'], true);
                 $openingHoursManager->setOpeningHoursData($openingHoursArray);
                 // $em = $this->getDoctrine()->getManager();
                 // $em->persist($newBlockElement);
                 // $em->flush();
                 $this->addFlash('success', sprintf('flash.openingHours.openingHoursUpdated'));
+                return $this->redirectToRoute('website_info_view_opening_hours', []);
             } else {
                 $this->addFlash('error', sprintf('There was an error during updating of the opening hours'));
             }

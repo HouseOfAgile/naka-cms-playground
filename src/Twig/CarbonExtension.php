@@ -21,6 +21,7 @@ class CarbonExtension extends AbstractExtension
     {
         return [
             new TwigFilter('carbon', [$this, 'carbonDate']),
+            new TwigFilter('carbonWeekDay', [$this, 'carbonWeekDay']),
         ];
     }
 
@@ -34,7 +35,7 @@ class CarbonExtension extends AbstractExtension
             case 'human':
                 return $dt->diffForHumans();
                 break;
-            case 'onlyWeekdDay':
+            case 'onlyWeekDay':
                 return $dt->dayName;
                 break;
                 // get month name and year if not in the current year
@@ -47,5 +48,11 @@ class CarbonExtension extends AbstractExtension
                 return $dt->toDayDateTimeString();
                 break;
         }
+    }
+
+    public function carbonWeekDay($weekday)
+    {
+        $locale = $this->requestStack->getCurrentRequest()->getLocale();
+        return Carbon::create($weekday)->locale($locale)->dayName;
     }
 }

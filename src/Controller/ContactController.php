@@ -2,6 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Controller;
 
+use HouseOfAgile\NakaCMSBundle\Component\OpeningHours\OpeningHoursManager;
 use HouseOfAgile\NakaCMSBundle\Form\ContactType;
 use HouseOfAgile\NakaCMSBundle\Service\Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,6 +17,7 @@ class ContactController extends AbstractController
      */
     public function contact(
         Request $request,
+        OpeningHoursManager $openingHoursManager,
         Mailer $mailer
     ): Response {
 
@@ -47,6 +49,7 @@ class ContactController extends AbstractController
         $viewParams = [
             'form' => $form->createView(),
             'contactBlockElements' => [],
+            'openingHours' => $openingHoursManager->getOpeningHoursData(),
         ];
         return $this->render('@NakaCMS/contact.html.twig', $viewParams);
     }

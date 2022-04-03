@@ -1,0 +1,15 @@
+{% extends '@!EasyAdmin/page/content.html.twig' %}
+{% block page_title %}
+	{{ 'backend.websiteInfo.title'|trans({'%applicationName%': application_name})|raw }}
+{% endblock page_title %}
+{% block main %}
+	{% include '@NakaCMS/opening-hours/show-opening-hours.html.twig' with {'openingHours': openingHours } %}
+	<div class="row">
+		<div class="col-4 offset-4">
+			<a href="{{ path('website_info_edit_opening_hours') }}" role="button" class="nav-item nav-link btn btn-success text-white">
+				<i class="fa-solid fa-screwdriver-wrench"></i>
+				{{ 'form.openingHours.updateOpeningHours'|trans }}
+			</a>
+		</div>
+	</div>
+{% endblock main %}

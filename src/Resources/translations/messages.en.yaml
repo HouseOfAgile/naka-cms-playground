@@ -35,3 +35,8 @@ form.editOpeningHours.detailedHelp: |
 form.openingHours.updateOpeningHours: "Update Opening Hours"
 
 flash.openingHours.openingHoursUpdated: "Opening hours have been updated !"
+
+openingHours.title: 'Opening Hours'
+openingHours.day: 'Day'
+openingHours.hours: 'Hours'
+openingHours.closed: 'Closed'
