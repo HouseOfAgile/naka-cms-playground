@@ -21,7 +21,7 @@ class WebsiteInfoTranslation implements TranslationInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=true)
      */
     private $title;
 
@@ -35,10 +35,15 @@ class WebsiteInfoTranslation implements TranslationInterface
         return $this->id;
     }
 
+    public function __construct()
+    {
+        $this->locale = 'en';
+    }
+    
     public function __toString()
     {
         return sprintf(
-            'StaticPageTranslation #%s %s',
+            'WebsiteInfoTranslation #%s %s',
             $this->id,
             substr($this->getTitle(), 0, 39)
         );

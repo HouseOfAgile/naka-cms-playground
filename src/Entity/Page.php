@@ -79,6 +79,11 @@ class Page implements TranslatableInterface, SluggableInterface
             substr($this->getTitle(), 0, 39)
         );
     }
+    
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     /**
      * dumpConfig: return array with main config
@@ -108,10 +113,7 @@ class Page implements TranslatableInterface, SluggableInterface
         return $this->getDefaultEnglishTranslation($this, 'content');
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+
 
     public function getEnabled(): ?bool
     {

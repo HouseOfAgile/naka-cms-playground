@@ -45,6 +45,11 @@ class PageTranslation implements TranslationInterface
         );
     }
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+    
     /**
      * dumpConfig: return array with main config
      *
@@ -62,10 +67,7 @@ class PageTranslation implements TranslationInterface
         return $config;
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+
 
     public function getTitle(): ?string
     {

@@ -24,10 +24,35 @@ class WebsiteInfo implements TranslatableInterface
      * @ORM\Column(type="json", nullable=true)
      */
     private $openingHours = [];
+    
+    public function __toString()
+    {
+        return sprintf(
+            'WebsiteInfo #%s',
+            $this->id,
+        );
+    }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+    /**
+     * dumpConfig: return array with main config
+     *
+     * @return array
+     */
+    public function dumpConfig(): array
+    {
+        $config =  [
+            'id' => $this->id,
+            'openingHours' => json_encode($this->getOpeningHours()),
+            'websiteInfoTranslations' => array_map(function ($pt) {
+                return $pt->getId();
+            }, $this->getTranslations()->toArray()),
+        ];
+
+        return $config;
     }
 
     public function getOpeningHours(): ?array
@@ -41,4 +66,5 @@ class WebsiteInfo implements TranslatableInterface
 
         return $this;
     }
+
 }

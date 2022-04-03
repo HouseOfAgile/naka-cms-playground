@@ -156,7 +156,7 @@ class DumperUpdater
                                         // We get the alias here if it is an alias
                                         if (is_array($appEntitiesAliases[$keyAttr])) {
                                             $relatedEntity = $appEntitiesAliases[$keyAttr]['class'];
-                                            $addMethod = 'add' . ucfirst($appEntitiesAliases[$keyAttr]['method']);
+                                            $addMethod = ucfirst($appEntitiesAliases[$keyAttr]['method']);
                                         } else {
                                             $relatedEntity = $appEntitiesAliases[$keyAttr];
                                             $addMethod = 'add' . ucfirst($appEntitiesAliases[$keyAttr]);
@@ -169,7 +169,6 @@ class DumperUpdater
                                         $entity->{$addMethod}($linkedEntity);
                                         $this->logInfo(sprintf('<-> Add OneToMany from entity %s to entity %s', $entity, $linkedEntity));
                                     } else {
-                                        dump($keyAttr);
                                         if (in_array($keyAttr, array_keys($appEntitiesDict))) {
                                             $linkedEntity = $appEntitiesDict[$keyAttr]->findOneBy(['id' => $refId]);
                                             $addMethod = substr($keyAttr, -1) === 's' ? substr($keyAttr, 0, -1) : $keyAttr;
@@ -214,6 +213,15 @@ class DumperUpdater
                                                             'none',
                                                         $valAttr->format('Y-m-d H:i:s')
                                                     ));
+                                                    break;
+                                                case 'Json':
+                                                    $valAttr = json_decode($valAttr, true);
+                                                    // $this->logInfo(sprintf(
+                                                    //     'Set %s:: previous: %s => new: %s',
+                                                    //     $keyAttr,
+                                                    //     $entity->{'get' . ucfirst($keyAttr)}(),
+                                                    //     json_encode($valAttr)
+                                                    // ));
                                                     break;
                                                 default:
                                                     $this->logInfo(sprintf(
