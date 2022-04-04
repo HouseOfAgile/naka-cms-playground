@@ -1,5 +1,7 @@
 # Some translations that are common
 frontend.goToAdmin: "Go to Admin"
+main.returnToAdmin: "Return to Admin"
+
 backend.dashboard.title: "Welcome in the %applicationName% backend"
 backend.dashboardAdmin.generalHelp: "This is the general backend for administration of the system.<br/>You can manage pages, menus and the various blocks they contains."
 backend.dashboardManager.generalHelp: "This backend give you the ability to manage the specifics of this NakaCMS instance."
@@ -18,6 +20,39 @@ backend.websiteInfo.editOpeningHours: "Edit Opening Hours"
 backend.websiteAsset.generalHelpForAdmin: "Here you can add assets that will be available for all people granted access to the admin. This could be pdf, word documents or images."
 backend.websiteAsset.generalHelpForManager: "Here you can find a list of assets that gives you information on the website."
 
+backend.form.page.mainPageTranslationsPanel: "Main page translations"
+backend.form.page.mainPageTranslationsPanel.help: |
+    <p>Translations for the page profived internationalized translation for the page details in the various supported languages.</p>
+    <p>The content will give an insight on the page, and will be used for SEO.</p>
+backend.form.page.category: "Category of the page"
+backend.form.page.pageBlockElements: "All related PageBlock Elements"
+backend.form.page.pageBlockElements.help: "Here you can select the pageblock you want to have on that page, you can later change and order them through the config layout Page."
+backend.form.page.pageGallery: "Related Gallery"
+
+backend.form.page.pageConfigurationPanel: "Page Configuration"
+backend.form.page.pageConfigurationPanel.help: "Here you can select the blocks on that page, connect a gallery, set the category"
+
+backend.form.addPageToMenu.title: "Add a page to a menu"
+backend.form.addPageToMenu.detailedHelp: |
+    <p>There are various menu available in Naka. You can add a page to a menu by selecting the menu you want your page to be in.</p>
+
+    
+backend.form.chooseMenuForPage.menu: "Select the menu you wantr to add this page to"
+
+backend.form.blockElementType.type: "The type of this block element"
+backend.form.blockElementType.htmlCode: "The html code of that block element"
+backend.form.blockElementType.cssCode: "The css code of that block element"
+backend.form.blockElementType.jsCode: "The javascript code for that block element"
+
+backend.crud.pageBlockElement.relatedToPage: "Related to page"
+backend.crud.pageBlockElement.relatedToStaticPage: "Related to static page"
+backend.crud.pageBlockElement.notLinkedToAnyPage: "Not linked to any page"
+backend.crud.pageBlockElement.page: "Linked Page"
+backend.crud.pageBlockElement.relatedPage: "Related Page"
+backend.crud.pageBlockElement.staticPage: "Linked StaticPage"
+backend.crud.pageBlockElement.blockElement: "From BlockElement"
+backend.formPage.editBlockElement.title: Edition of a block element
+
 thumbnail.viewLarger: "View Larger"
 
 contact.contact-details: |
@@ -33,10 +68,9 @@ form.editOpeningHours.detailedHelp: |
     <div class="py-1"><strong>"exceptions":{"2024-11-11":["09:00-12:00"],"2024-12-25":[]}</strong> means the office will be close on 2024-11-11 between 9:00 and 12:00 and will be close al day on 2024-12-25.</div>
     <div class="py-1"><strong>"exceptions":{"01-01":[],"12-25":['09:00-12:00']}</strong> means the office will be close on each 1st of January and each 25th of December between 9:00 and 12:00.</div>
 form.openingHours.updateOpeningHours: "Update Opening Hours"
-
 flash.openingHours.openingHoursUpdated: "Opening hours have been updated !"
 
-openingHours.title: 'Opening Hours'
-openingHours.day: 'Day'
-openingHours.hours: 'Hours'
-openingHours.closed: 'Closed'
+openingHours.title: "Opening Hours"
+openingHours.day: "Day"
+openingHours.hours: "Hours"
+openingHours.closed: "Closed"
