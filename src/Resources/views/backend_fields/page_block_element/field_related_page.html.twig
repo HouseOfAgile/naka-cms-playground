@@ -1,0 +1,7 @@
+{% if entity.instance.page is not null %}
+	{{ 'backend.crud.pageBlockElement.relatedToPage'| trans }} <a href="{{ ea_url().unsetAll().setEntityId(entity.instance.page.id).setController('HouseOfAgile\\NakaCMSBundle\\Controller\\Admin\\PageCrudController').setAction('detail') }}" class="">{{ entity.instance.page }}</a>
+{% elseif entity.instance.staticPage is not null %}
+	{{ 'backend.crud.pageBlockElement.relatedToStaticPage'| trans }} <a href="{{ ea_url().unsetAll().setEntityId(entity.instance.staticPage.id).setController('HouseOfAgile\\NakaCMSBundle\\Controller\\Admin\\StaticPageCrudController').setAction('detail') }}" class="">{{ entity.instance.staticPage }}</a>
+	{% else %}
+	<div class="text-warning">{{ 'backend.crud.pageBlockElement.notLinkedToAnyPage'| trans }}</div>
+{% endif %}

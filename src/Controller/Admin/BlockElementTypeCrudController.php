@@ -55,19 +55,19 @@ class BlockElementTypeCrudController extends AbstractCrudController
         // $name = TextField::new('name');
         $type = TextField::new(
             'type',
-            'admin.form.blockElementType.type'
+            'backend.form.blockElementType.type'
         );
         $htmlCode = CodeEditorField::new(
             'htmlCode',
-            'admin.form.blockElementType.htmlCode'
+            'backend.form.blockElementType.htmlCode'
         );
         $cssCode = CodeEditorField::new(
             'cssCode',
-            'admin.form.blockElementType.cssCode'
+            'backend.form.blockElementType.cssCode'
         );
         $jsCode = CodeEditorField::new(
             'jsCode',
-            'admin.form.blockElementType.jsCode'
+            'backend.form.blockElementType.jsCode'
         );
 
 

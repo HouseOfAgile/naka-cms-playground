@@ -10,7 +10,6 @@
 	</a>
 {% endblock header_logo %}
 
-
 {# {% block head_javascript %}
 	{{ parent() }}
 	{{ encore_entry_script_tags('app') }}
@@ -36,7 +35,11 @@ gtag('config', '{{ ga_id }}');
 				Frontend
 			</a>
 		</div>
-
+		<div class="m-2 p-1">
+			<a href="{{ naka_doc }}" target="_new" class="btn btn-info" role="button">
+				<i class="fa fa-fw fa-question-circle"></i> DOCS
+			</a>
+		</div>
 		{% if is_granted('ROLE_ADMIN') %}
 			<div class="m-2 p-1">
 				<a href="{{ path('admin_dashboard') }}" class="btn btn-success" role="button">

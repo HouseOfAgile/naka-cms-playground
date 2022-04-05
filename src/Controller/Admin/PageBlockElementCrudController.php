@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 
 class PageBlockElementCrudController extends AbstractCrudController
 {
@@ -21,14 +22,16 @@ class PageBlockElementCrudController extends AbstractCrudController
     {
         $id = IdField::new('id');
 
-        $page = AssociationField::new('page', 'admin.form.pageBlockElement.page');
-        $staticPage = AssociationField::new('staticPage', 'admin.form.pageBlockElement.staticPage');
-        $blockElement = AssociationField::new('blockElement', 'admin.form.pageBlockElement.blockElement');
+        $page = AssociationField::new('page', 'backend.crud.pageBlockElement.page');
+        $relatedPage = TextareaField::new('relatedPage', 'backend.crud.pageBlockElement.relatedPage')
+            ->setTemplatePath('@NakaCMS/backend_fields/page_block_element/field_related_page.html.twig');
+        $staticPage = AssociationField::new('staticPage', 'backend.crud.pageBlockElement.staticPage');
+        $blockElement = AssociationField::new('blockElement', 'backend.crud.pageBlockElement.blockElement');
         $position = IntegerField::new('position')->setLabel('Position?');
 
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $page, $staticPage, $blockElement, $position];
+            return [$id, $relatedPage, $blockElement, $position];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $page, $staticPage,  $blockElement, $position];
         } elseif (Crud::PAGE_NEW === $pageName) {

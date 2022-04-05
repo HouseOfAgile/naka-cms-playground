@@ -1,0 +1,23 @@
+{% extends '@!EasyAdmin/page/content.html.twig' %}
+{% block page_title %}
+	{{ 'backend.form.addPageToMenu.title'|trans }}
+{% endblock page_title %}
+{% block main %}
+	{{ form_start(form) }}
+	<div class="row m-4">
+		<div class="col-12 p-4 bg-light m-4">{{ 'backend.form.addPageToMenu.detailedHelp'|trans|raw }}</div>
+	</div>
+
+	<div class="row m-4">
+		<div class="col-4 offset-2">{{ form_label(form.menu) }}</div>
+		<div class="col-4">{{ form_widget(form.menu) }}</div>
+		<div class="col-12">{{ form_help(form.menu) }}</div>
+	</div>
+	<div class="row m-4">
+		<div class="col-4 offset-4">
+			{{ form_row(form.submit, { 'attr' : { 'class': 'btn  btn-success btn-block px-4 py-2' } }) }}
+		</div>
+	</div>
+	{{ form_end(form) }}
+
+{% endblock main %}
