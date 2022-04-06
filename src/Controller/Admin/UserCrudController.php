@@ -12,14 +12,14 @@ class UserCrudController extends BaseUserCrudController
         return User::class;
     }
 
-  
+
     public function configureCrud(Crud $crud): Crud
     {
         $crud = parent::configureCrud($crud);
         $crud
-        ->setEntityLabelInSingular(sprintf('%s User',$this->applicationName))
-        ->setEntityLabelInPlural(sprintf('%s Users',$this->applicationName))
-        ->overrideTemplate('crud/index', '@NakaCMS/naka/backend/user/list.html.twig');
+            ->setEntityLabelInSingular(sprintf('%s User', $this->applicationName))
+            ->setEntityLabelInPlural(sprintf('%s Users', $this->applicationName))
+            ->overrideTemplate('crud/index', '@NakaCMS/naka/backend/user/list.html.twig');
 
         return $crud;
     }

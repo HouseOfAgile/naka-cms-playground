@@ -39,7 +39,7 @@ class WebsiteAssetCrudController extends AbstractCrudController
                 ->remove(Crud::PAGE_INDEX, Action::EDIT);
         }
 
-        return $actions->add(Crud::PAGE_INDEX, Action::DETAIL);
+        return $actions;
     }
 
     public function configureFields(string $pageName): iterable

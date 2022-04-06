@@ -29,11 +29,7 @@ class BlockElementTypeCrudController extends AbstractCrudController
         return BlockElementType::class;
     }
 
-    public function configureCrud(Crud $crud): Crud
-    {
-        return $crud
-            ->showEntityActionsAsDropdown(false);
-    }
+
 
     public function configureActions(Actions $actions): Actions
     {
