@@ -11,7 +11,7 @@
 
 
 			<ul class="navbar-nav ms-auto">
-				<li class="nav-item  dropdown">
+				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="dropdown-language" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 						{{ app.request.locale|locale_name(app.request.locale)|u.title }}
 					</a>
@@ -24,13 +24,13 @@
 					</div>
 				</li>
 			</ul>
+		</div>
 
-			{% if is_granted('ROLE_ADMIN') %}
+	</div>
+						{% if is_granted('ROLE_ADMIN') %}
 				<a href="{{ path('admin_dashboard') }}" role="button" class="nav-item nav-link btn btn-success text-white">
 					<i class="fa-solid fa-screwdriver-wrench"></i>
 					{{ 'frontend.goToAdmin'|trans }}
 				</a>
 			{% endif %}
-		</div>
-	</div>
 </nav>

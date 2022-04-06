@@ -1,15 +1,12 @@
-{% extends '@NakaCMS/naka/backend/layout/layout-form.html.twig' %}
-
-{% block form_title %}
-	Configure new page block
-{% endblock form_title %}
-
-{% block form_explanation %}{% endblock form_explanation %}
-
-{% block form_content %}
-
-
+{% extends '@!EasyAdmin/page/content.html.twig' %}
+{% block page_title %}
+	{{ 'backend.form.chooseBlockToAdd.title'|trans }}
+{% endblock page_title %}
+{% block main %}
 	{{ form_start(form) }}
+	<div class="row m-4">
+		<div class="col-12 p-4 bg-light m-4">{{ 'backend.form.chooseBlockToAdd.detailedHelp'|trans|raw }}</div>
+	</div>
 	<div class="row m-4">
 		<div class="col-4">{{ form_label(form.name) }}</div>
 		<div class="col-8">{{ form_widget(form.name) }}</div>
@@ -22,10 +19,9 @@
 	</div>
 	<div class="row m-4">
 		<div class="col-4 offset-4">
-			{{ form_row(form.submit, { 'attr' : { 'class': 'btn btn-block btn-success p-2' } }) }}
+			{{ form_row(form.submit, { 'attr' : { 'class': 'btn  btn-success btn-block px-4 py-2' } }) }}
 		</div>
 	</div>
-	{{ form_rest(form) }}
+	{{ form_end(form) }}
 
-
-{% endblock %}
+{% endblock main %}

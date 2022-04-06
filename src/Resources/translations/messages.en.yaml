@@ -36,7 +36,6 @@ backend.form.addPageToMenu.title: "Add a page to a menu"
 backend.form.addPageToMenu.detailedHelp: |
     <p>There are various menu available in Naka. You can add a page to a menu by selecting the menu you want your page to be in.</p>
 
-    
 backend.form.chooseMenuForPage.menu: "Select the menu you wantr to add this page to"
 
 backend.form.blockElementType.type: "The type of this block element"
@@ -44,6 +43,7 @@ backend.form.blockElementType.htmlCode: "The html code of that block element"
 backend.form.blockElementType.cssCode: "The css code of that block element"
 backend.form.blockElementType.jsCode: "The javascript code for that block element"
 
+backend.form.menu.menuItems: "List of items in that menu"
 backend.crud.pageBlockElement.relatedToPage: "Related to page"
 backend.crud.pageBlockElement.relatedToStaticPage: "Related to static page"
 backend.crud.pageBlockElement.notLinkedToAnyPage: "Not linked to any page"
@@ -51,8 +51,15 @@ backend.crud.pageBlockElement.page: "Linked Page"
 backend.crud.pageBlockElement.relatedPage: "Related Page"
 backend.crud.pageBlockElement.staticPage: "Linked StaticPage"
 backend.crud.pageBlockElement.blockElement: "From BlockElement"
-backend.formPage.editBlockElement.title: Edition of a block element
 
+backend.crud.menu.generalHelp: |
+    <p>A menu can have many menu items, which could be of any type among page, route, uri.</p>
+    <p>Some menu cannot be renamed, such as:</p>
+    <ul>
+        <li>mainMenu: the menu on top in the navbar</li>
+        <li>footerMenu: the menu that is usually in the footer</li>
+    <ul>
+backend.formPage.editBlockElement.title: Edition of a block element
 thumbnail.viewLarger: "View Larger"
 
 contact.contact-details: |

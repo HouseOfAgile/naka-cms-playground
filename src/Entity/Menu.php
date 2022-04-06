@@ -26,10 +26,17 @@ class Menu
     private $name;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isFixed;
+    
+    /**
      * @ORM\ManyToMany(targetEntity=MenuItem::class, inversedBy="menus")
      */
     private $menuItems;
 
+
+    
     public function __construct()
     {
         $this->menuItems = new ArrayCollection();
@@ -75,6 +82,18 @@ class Menu
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getIsFixed(): ?bool
+    {
+        return $this->isFixed;
+    }
+
+    public function setIsFixed(?bool $isFixed): self
+    {
+        $this->isFixed = $isFixed;
 
         return $this;
     }

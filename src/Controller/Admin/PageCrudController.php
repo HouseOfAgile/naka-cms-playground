@@ -29,16 +29,21 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
 
     public function configureActions(Actions $actions): Actions
     {
-        $pageId = fn(Page $page): array => [
+        $pageId = fn (Page $page): array => [
             'page' => $page->getId(),
         ];
+        $addBlockToPage = Action::new('addBlockToPage', 'Add Block to Page', 'fa fa-plus')
+            ->linkToRoute('add_block_to_page', $pageId)
+            ->addCssClass('btn btn-success');
         $addPageToMenu = Action::new('addPageToMenu', 'Add Page to Menu', 'fa fa-plus')
             ->linkToRoute('add_page_to_menu', $pageId)
             ->addCssClass('btn btn-info');
+
         return $actions
+            ->add(Crud::PAGE_INDEX, $addBlockToPage)
             ->add(Crud::PAGE_INDEX, $addPageToMenu)
             // ->add(Crud::PAGE_INDEX, $viewPerformanceStrategy)
-            ;
+        ;
     }
 
     public function configureFields(string $pageName): iterable
@@ -77,13 +82,11 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         $pageConfigurationPanel = FormField::addPanel('backend.form.page.pageConfigurationPanel')
             ->setHelp('backend.form.page.pageConfigurationPanel.help');
         // no pageGallery for now on page level
-            $pageGallery = AssociationField::new('pageGallery', 'backend.form.page.pageGallery')
-        ->setHelp('backend.form.page.pageGallery.help');
-        ;
+        $pageGallery = AssociationField::new('pageGallery', 'backend.form.page.pageGallery')
+            ->setHelp('backend.form.page.pageGallery.help');;
         $pageBlockElements = AssociationField::new('pageBlockElements', 'backend.form.page.pageBlockElements')
             ->setFormTypeOption('by_reference', false)
-            ->setHelp('backend.form.page.pageBlockElements.help');
-            ;
+            ->setHelp('backend.form.page.pageBlockElements.help');;
         $category = AssociationField::new('category', 'backend.form.page.category');
 
 

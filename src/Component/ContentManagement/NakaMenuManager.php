@@ -1,6 +1,6 @@
 <?php
 
-namespace HouseOfAgile\NakaCMSBundle\Component\Menu;
+namespace HouseOfAgile\NakaCMSBundle\Component\ContentManagement;
 
 use App\Entity\Menu;
 use App\Entity\MenuItem;
@@ -63,7 +63,11 @@ class NakaMenuManager
             $menuItem = new MenuItem();
             $menuItem->setPage($page);
             $menuItem->setType(NakaMenuItemType::TYPE_PAGE);
-            $menuItem->setName($page->getName());
+            if ($page->getName()) {
+                $menuItem->setName($page->getName());
+            } else {
+                $menuItem->setName($page->getTitle());
+            };
             $this->entityManager->persist($menuItem);
             $this->entityManager->flush();
         }
