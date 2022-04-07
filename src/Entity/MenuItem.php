@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use HouseOfAgile\NakaCMSBundle\Repository\MenuItemRepository;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\MappedSuperclass(repositoryClass=MenuItemRepository::class)
@@ -60,6 +61,12 @@ class MenuItem
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $uri;
+
+        /**
+     * @Gedmo\SortablePosition
+     * @ORM\Column(type="integer")
+     */
+    private $position;
 
     public function __construct()
     {
@@ -218,6 +225,18 @@ class MenuItem
     public function setUri(?string $uri): self
     {
         $this->uri = $uri;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }

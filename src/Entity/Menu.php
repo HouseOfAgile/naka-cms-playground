@@ -32,6 +32,7 @@ class Menu
     
     /**
      * @ORM\ManyToMany(targetEntity=MenuItem::class, inversedBy="menus")
+     * @ORM\OrderBy({"position": "ASC"})
      */
     private $menuItems;
 
