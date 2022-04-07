@@ -36,7 +36,17 @@ backend.form.addPageToMenu.title: "Add a page to a menu"
 backend.form.addPageToMenu.detailedHelp: |
     <p>There are various menu available in Naka. You can add a page to a menu by selecting the menu you want your page to be in.</p>
 
-backend.form.chooseMenuForPage.menu: "Select the menu you wantr to add this page to"
+backend.form.chooseMenuForPage.menu: "Select the menu you want to add this page to"
+backend.form.chooseBlockToAdd.title: "Choose the type of block to add to the page %page%"
+backend.form.chooseBlockToAdd.detailedHelp: |
+    <p>You need to choose the type of the block you want to add to the page.</p>
+    <p>Each blocks have various type and presets that you can later on change.</p>
+
+
+backend.form.chooseBlockToAdd.name: "Name of that block"
+backend.form.chooseBlockElementType.blockElementType: "The type of the block"
+backend.form.chooseBlockElementType.blockElementType.help: |
+    there are various exisiting standard block that you can choose from, you will then have a standard block content that you can adapt to your need.
 
 backend.form.blockElementType.type: "The type of this block element"
 backend.form.blockElementType.htmlCode: "The html code of that block element"

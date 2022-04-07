@@ -1,8 +1,10 @@
-{% extends '@!EasyAdmin/page/content.html.twig' %}
-{% block page_title %}
+{% extends '@NakaCMS/naka/backend/layout/layout-form.html.twig' %}
+{% block form_title %}
 	{{ 'backend.form.chooseBlockToAdd.title'|trans }}
-{% endblock page_title %}
-{% block main %}
+{% endblock form_title %}
+{% block form_explanation %}{% endblock form_explanation %}
+
+{% block form_content %}
 	{{ form_start(form) }}
 	<div class="row m-4">
 		<div class="col-12 p-4 bg-light m-4">{{ 'backend.form.chooseBlockToAdd.detailedHelp'|trans|raw }}</div>
@@ -24,4 +26,4 @@
 	</div>
 	{{ form_end(form) }}
 
-{% endblock main %}
+{% endblock form_content %}

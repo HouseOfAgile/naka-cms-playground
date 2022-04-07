@@ -3,6 +3,7 @@
 namespace HouseOfAgile\NakaCMSBundle\Component\ContentManagement;
 
 use App\Entity\BlockElement;
+use App\Entity\BlockElementType;
 use App\Entity\Menu;
 use App\Entity\MenuItem;
 use App\Entity\Page;
@@ -33,17 +34,26 @@ class PageBlockManager
         $this->pageBlockElementRepository = $pageBlockElementRepository;
     }
 
-
-    public function addBlockToPage(BlockElement $blockElement, Page $page): bool
+    public function createBlockElementFromBlockElementType(BlockElementType $blockElementType, $name): BlockElement
     {
-        $menuItem = $this->getOrCreateMenuItemForPage($page);
-        if (!$menu->getMenuItems()->contains($menuItem)) {
-            $menu->addMenuItem($menuItem);
-            $this->entityManager->persist($menu);
-            $this->entityManager->flush();
-            return true;
-        } else {
-            return false;
-        }
+        $newBlockElement = new BlockElement;
+        $newBlockElement->setName($name);
+        $newBlockElement->copyFromBlockElementType($blockElementType);
+        $this->entityManager->persist($newBlockElement);
+        $this->entityManager->flush();
+        return $newBlockElement;
+    }
+
+    public function addBlockToPage(BlockElementType $blockElementType, $name, Page $page): BlockElement
+    {
+        $lastPosition =  $page->findPosition('max');
+        $blockElement = $this->createBlockElementFromBlockElementType($blockElementType, $name);
+        $pageBlockElement = new PageBlockElement;
+        $pageBlockElement->setBlockElement($blockElement);
+        $pageBlockElement->setPosition($lastPosition);
+        $page->addPageBlockElement($pageBlockElement);
+        $this->entityManager->persist($pageBlockElement);
+        $this->entityManager->flush();
+        return $blockElement;
     }
 }

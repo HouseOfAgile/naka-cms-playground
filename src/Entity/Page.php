@@ -79,11 +79,34 @@ class Page implements TranslatableInterface, SluggableInterface
             substr($this->getTitle(), 0, 39)
         );
     }
-    
+
     public function getId(): ?int
     {
         return $this->id;
     }
+
+    public function findPosition($operator): ?int
+    {
+        $result = array_map(
+            function ($o) {
+                return $o->getPosition();
+            },
+            $this->getPageBlockElements()->toArray()
+        );
+        switch ($operator) {
+            case 'max':
+                return max($result);
+                break;
+            case 'min':
+                return min($result);
+                break;
+            default:
+                return false;
+                break;
+        }
+    }
+
+
 
     /**
      * dumpConfig: return array with main config

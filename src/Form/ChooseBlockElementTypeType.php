@@ -26,7 +26,8 @@ class ChooseBlockElementTypeType extends AbstractType
             'choice_label' => function ($type) {
                 return $type->getName();
             },
-            'label' => 'form.chooseBlockElementType.blockElementType',
+            'label' => 'backend.form.chooseBlockElementType.blockElementType',
+            'help' => 'backend.form.chooseBlockElementType.blockElementType.help',
         ]);
         if ($options['add_submit']) {
             $builder->add('submit', SubmitType::class);

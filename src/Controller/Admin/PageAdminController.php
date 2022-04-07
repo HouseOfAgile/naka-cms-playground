@@ -77,10 +77,13 @@ class PageAdminController extends AdminDashboardController
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $data = $form->getData();
-                dd($data);
-                $blockElement = $data['blockElement'];
-                $result = $pageBlockManager->addBlockToPage($blockElement, $page);
-                if ($result) {
+
+                $blockElement = $pageBlockManager->addBlockToPage(
+                    $data['blockElementType'],
+                    $data['name'],
+                    $page
+                );
+                if ($blockElement) {
                     $this->addFlash('success', sprintf('Block \'%s\' has been added to Page \'%s\'', $blockElement, $page));
                 } else {
                     $this->addFlash('warning', sprintf('Block \'%s\' cannot be added to \'%s\'', $page));

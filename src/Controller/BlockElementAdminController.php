@@ -3,11 +3,12 @@
 namespace HouseOfAgile\NakaCMSBundle\Controller;
 
 use App\Controller\Admin\SuperAdminDashboardController;
+use App\Entity\BlockElement;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use HouseOfAgile\NakaCMSBundle\Component\ContentDumper\ContentDumper;
+use HouseOfAgile\NakaCMSBundle\Component\ContentManagement\PageBlockManager;
 use HouseOfAgile\NakaCMSBundle\Controller\Admin\BlockElementCrudController;
-use App\Entity\BlockElement;
 use HouseOfAgile\NakaCMSBundle\Form\BlockElementType;
 use HouseOfAgile\NakaCMSBundle\Form\ChooseBlockElementTypeType;
 use Symfony\Component\Form\ClickableInterface;
@@ -34,8 +35,10 @@ class BlockElementAdminController extends SuperAdminDashboardController
     /**
      * @Route("/choose-block-element-type", name="choose_page_element_type")
      */
-    public function chooseBlockElementType(Request $request): Response
-    {
+    public function chooseBlockElementType(
+        Request $request,
+        PageBlockManager $pageBlockManager
+    ): Response {
         $form = $this->createForm(ChooseBlockElementTypeType::class, null, [
             'add_submit' => true,
         ]);
@@ -44,14 +47,10 @@ class BlockElementAdminController extends SuperAdminDashboardController
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $data = $form->getData();
-                $thisBlockElementType = $data['blockElementType'];
-                $name = $data['name'];
-                $newBlockElement = new BlockElement;
-                $newBlockElement->setName($name);
-                $newBlockElement->copyFromBlockElementType($thisBlockElementType);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($newBlockElement);
-                $em->flush();
+                $newBlockElement = $pageBlockManager->createBlockElementFromBlockElementType(
+                    $data['blockElementType'],
+                    $data['name']
+                );
                 $this->addFlash('success', sprintf('Block Element %s has been created!', $newBlockElement->getId()));
                 return $this->redirToAction();
             } else {
