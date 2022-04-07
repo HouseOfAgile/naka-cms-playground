@@ -12,7 +12,9 @@
 {% block content %}
 	{% if blockElements|length >0 %}
 		{% for blockElement in blockElements %}
+
 			<div class="{{ blockElement.blockElement.isFluid == true ? 'container-fluid p-0' : 'container g-0' }}">
+			{% include '@NakaCMS/admin/component/design_helper.html.twig' with { blockElement: blockElement} %}
 				{% if blockElement.blockElement.type == 'carousel' %}
 					{% include '@NakaCMS/naka/block-element/render-block-carousel.html.twig' with { blockElement: blockElement} %}
 				{% elseif blockElement.blockElement.type == 'gallery' %}
