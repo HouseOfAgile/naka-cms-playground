@@ -46,7 +46,7 @@ class PageBlockManager
 
     public function addBlockToPage(BlockElementType $blockElementType, $name, Page $page): BlockElement
     {
-        $lastPosition =  $page->findPosition('max') + 1;
+        $lastPosition =  $page->findPosition('max');
         $blockElement = $this->createBlockElementFromBlockElementType($blockElementType, $name);
         $pageBlockElement = new PageBlockElement;
         $pageBlockElement->setBlockElement($blockElement);

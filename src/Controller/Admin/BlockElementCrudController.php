@@ -50,7 +50,14 @@ class BlockElementCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $id = IdField::new('id');
+        $panelSetting = FormField::addPanel(
+            'form.panelSetting.codeElement'
+        )
+            ->setHelp('form.panelSetting.codeElement.help')
+            ->addCssClass('col-12');
+            
         $name = TextField::new('name');
+
         $blockElementType = AssociationField::new(
             'blockElementType',
             'form.blockElement.type'
@@ -86,9 +93,9 @@ class BlockElementCrudController extends AbstractCrudController
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $name, $blockElementType, $htmlCode, $cssCode, $jsCode, $gallery, $isFluid];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$name, $blockElementType,  $panelCodeElement, $htmlCode, $cssCode, $jsCode, $gallery, $isFluid];
+            return [$panelSetting, $name, $blockElementType,  $panelCodeElement, $htmlCode, $cssCode, $jsCode, $gallery, $isFluid];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$name, $blockElementType,  $panelCodeElement, $htmlCode, $cssCode, $jsCode, $gallery, $isFluid];
+            return [$panelSetting, $name, $blockElementType,  $panelCodeElement, $htmlCode, $cssCode, $jsCode, $gallery, $isFluid];
         }
     }
 

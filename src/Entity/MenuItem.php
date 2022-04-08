@@ -68,9 +68,9 @@ class MenuItem implements TranslatableInterface
      */
     private $uri;
 
-        /**
+    /**
      * @Gedmo\SortablePosition
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $position;
 
@@ -92,6 +92,10 @@ class MenuItem implements TranslatableInterface
             'type' => $this->getType(),
             'route' => $this->getRoute(),
             'orderId' => $this->getOrderId(),
+            'position' => $this->getPosition(),
+            'menuItemTranslations' => array_map(function ($mi) {
+                return $mi->getId();
+            }, $this->getTranslations()->toArray()),
         ];
         if ($this->getPage() != null) {
             $config['page'] = $this->getPage()->getId();
@@ -245,7 +249,7 @@ class MenuItem implements TranslatableInterface
         return $this->position;
     }
 
-    public function setPosition(int $position): self
+    public function setPosition(?int $position): self
     {
         $this->position = $position;
 

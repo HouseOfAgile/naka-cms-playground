@@ -87,22 +87,26 @@ class Page implements TranslatableInterface, SluggableInterface
 
     public function findPosition($operator): ?int
     {
-        $result = array_map(
-            function ($o) {
-                return $o->getPosition();
-            },
-            $this->getPageBlockElements()->toArray()
-        );
-        switch ($operator) {
-            case 'max':
-                return max($result);
-                break;
-            case 'min':
-                return min($result);
-                break;
-            default:
-                return false;
-                break;
+        if (count($this->getPageBlockElements()) > 0) {
+            $result = array_map(
+                function ($o) {
+                    return $o->getPosition();
+                },
+                $this->getPageBlockElements()->toArray()
+            );
+            switch ($operator) {
+                case 'max':
+                    return max($result)+1;
+                    break;
+                case 'min':
+                    return min($result);
+                    break;
+                default:
+                    return false;
+                    break;
+            }
+        } else {
+            return 1;
         }
     }
 
