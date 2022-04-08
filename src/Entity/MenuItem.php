@@ -7,14 +7,20 @@ use App\Entity\Page;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use HouseOfAgile\NakaCMSBundle\Repository\MenuItemRepository;
 use Gedmo\Mapping\Annotation as Gedmo;
+use HouseOfAgile\NakaCMSBundle\Entity\AppTrait\DefaultTranslatableTrait;
+use HouseOfAgile\NakaCMSBundle\Repository\MenuItemRepository;
+use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 
 /**
  * @ORM\MappedSuperclass(repositoryClass=MenuItemRepository::class)
  */
-class MenuItem
+class MenuItem implements TranslatableInterface
 {
+    use TranslatableTrait;
+    use DefaultTranslatableTrait;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -104,12 +110,17 @@ class MenuItem
         );
     }
 
+    public function getTitle()
+    {
+        return $this->getDefaultEnglishTranslation($this, 'title');
+    }
+
     public function getTranslatedName(): ?string
     {
         if ($this->page) {
             return $this->getPage()->getTitle();
         } else {
-            return $this->getName();
+            return $this->getTitle();
         }
     }
 

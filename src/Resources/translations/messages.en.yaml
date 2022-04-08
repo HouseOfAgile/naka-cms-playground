@@ -42,12 +42,12 @@ backend.form.chooseBlockToAdd.detailedHelp: |
     <p>You need to choose the type of the block you want to add to the page.</p>
     <p>Each blocks have various type and presets that you can later on change.</p>
 
-
 backend.form.chooseBlockToAdd.name: "Name of that block"
 backend.form.chooseBlockElementType.blockElementType: "The type of the block"
 backend.form.chooseBlockElementType.blockElementType.help: |
     there are various exisiting standard block that you can choose from, you will then have a standard block content that you can adapt to your need.
 
+backend.form.position.help: "Set the position of this element, the lower will be in front, the higher will be in the end."
 backend.form.blockElementType.type: "The type of this block element"
 backend.form.blockElementType.htmlCode: "The html code of that block element"
 backend.form.blockElementType.cssCode: "The css code of that block element"
