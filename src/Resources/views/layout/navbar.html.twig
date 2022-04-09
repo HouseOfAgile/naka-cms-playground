@@ -27,10 +27,16 @@
 		</div>
 
 	</div>
-						{% if is_granted('ROLE_ADMIN') %}
-				<a href="{{ path('admin_dashboard') }}" role="button" class="nav-item nav-link btn btn-success text-white">
-					<i class="fa-solid fa-screwdriver-wrench"></i>
-					{{ 'frontend.goToAdmin'|trans }}
-				</a>
-			{% endif %}
+	{% if is_granted('ROLE_ADMIN') %}
+		<div class="btn-group mx-2" role="group" aria-label="Basic example">
+			<a href="{{ path('admin_dashboard') }}" role="button" class="nav-item nav-link btn btn-success text-white">
+				<i class="fa-solid fa-screwdriver-wrench"></i>
+				{{ 'frontend.goToAdmin'|trans }}
+			</a>
+			<a href="{{ path('logout') }}" role="button" class="nav-item nav-link btn btn-danger text-white">
+				<i class="fa fa-sign-out-alt"></i>
+			</a>
+		</div>
+
+	{% endif %}
 </nav>

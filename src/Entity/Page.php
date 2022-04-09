@@ -110,7 +110,10 @@ class Page implements TranslatableInterface, SluggableInterface
         }
     }
 
-
+    private function shouldRegenerateSlugOnUpdate(): bool
+    {
+        return false;
+    }
 
     /**
      * dumpConfig: return array with main config
