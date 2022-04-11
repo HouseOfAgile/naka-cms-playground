@@ -4,6 +4,7 @@ namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
 use App\Entity\Menu;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -17,7 +18,21 @@ class MenuCrudController extends AbstractCrudController
     {
         return Menu::class;
     }
+    
+    public function configureActions(Actions $actions): Actions
+    {
+        $menuId = fn (Menu $menu): array => [
+            'menu' => $menu->getId(),
+        ];
+        $configureMenu = Action::new('configureMenu', 'Configure Menu', 'fa fa-wheel')
+            ->linkToRoute('configure_menu', $menuId)
+            ->addCssClass('btn btn-success');
 
+        return $actions
+            ->add(Crud::PAGE_INDEX, $configureMenu)
+            // ->add(Crud::PAGE_INDEX, $viewPerformanceStrategy)
+        ;
+    }
     public function configureFields(string $pageName): iterable
     {
         $id = IdField::new('id');
@@ -46,13 +61,13 @@ class MenuCrudController extends AbstractCrudController
     {
         $crud = parent::configureCrud($crud);
         $crud
-            ->setFormThemes(
-                [
-                    '@A2lixTranslationForm/bootstrap_4_layout.html.twig',
-                    '@EasyAdmin/crud/form_theme.html.twig',
-                    // '@FOSCKEditor/Form/ckeditor_widget.html.twig',
-                ]
-            )
+            // ->setFormThemes(
+            //     [
+            //         '@A2lixTranslationForm/bootstrap_4_layout.html.twig',
+            //         '@EasyAdmin/crud/form_theme.html.twig',
+            //         // '@FOSCKEditor/Form/ckeditor_widget.html.twig',
+            //     ]
+            // )
             ->overrideTemplates([
                 'crud/edit' => '@NakaCMS/admin/crud/menu/form_menu.html.twig',
                 'crud/new' => '@NakaCMS/admin/crud/menu/form_menu.html.twig',

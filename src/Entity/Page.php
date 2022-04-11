@@ -52,7 +52,6 @@ class Page implements TranslatableInterface, SluggableInterface
      */
     protected $menuItems;
 
-
     /**
      * @ORM\OneToMany(targetEntity=PageBlockElement::class, mappedBy="page")
      * @ORM\OrderBy({"position": "ASC"})

@@ -1,0 +1,37 @@
+{% form_theme form with [
+    '@NakaCMS/admin/form-theme/drag_n_drop.html.twig'
+] %}
+
+
+{% extends '@!EasyAdmin/page/content.html.twig' %}
+
+
+{% block page_title %}
+	{{ 'backend.form.configureMenu.title'|trans }}
+{% endblock page_title %}
+{% block main %}
+	{{ form_start(form) }}
+	<div class="row m-4">
+		<div class="col-12 p-4 bg-light m-4">{{ 'backend.form.configureMenu.detailedHelp'|trans|raw }}</div>
+	</div>
+
+	<div class="sortable">
+		{% for menuItem in form.items %}
+			<div class="row m-4 sortable-item">
+				<div class="col-12">{{ form_widget(menuItem) }}</div>
+			</div>
+		{% endfor %}
+	</div>
+
+	<div class="row m-4">
+		<div class="col-4 offset-4">
+			{{ form_row(form.submit, { 'attr' : { 'class': 'btn  btn-success btn-block px-4 py-2' } }) }}
+		</div>
+	</div>
+	{{ form_end(form) }}
+
+{% endblock main %}
+
+{% block body_javascript %}
+	{{ encore_entry_script_tags('dragndrop') }}
+{% endblock body_javascript %}

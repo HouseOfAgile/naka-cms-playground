@@ -1,0 +1,28 @@
+{% block _naksa_menu_menuItems_widget %}
+	asd
+{% endblock %}
+asd
+{% block sortable_block_widget %}
+	<div class="d-flex justify-content-evenly m-5 p-5 border">
+
+		<div class="align-end">
+			<span class="fa-stack fa-2x">
+				<i class="fa fa-circle fa-stack-2x"></i>
+				<strong class="fa-stack-1x text-light">{{ data|default('?') }}</strong>
+			</span>
+		</div>
+		<div {{ block('widget_attributes') }} {% if value is not empty %} value="{{ value }}" {% endif %}>
+			{{name}}
+
+
+		</div>
+		<div class="align-end">
+			<p>
+				<i class="fa fa-3x fa-chevron-up"></i>
+			</p>
+			<p>
+				<i class="fa fa-3x fa-chevron-down"></i>
+			</p>
+		</div>
+	</div>
+{% endblock %}
