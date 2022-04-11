@@ -20,13 +20,14 @@ class CategoryCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setFormThemes(
-                [
-                    '@A2lixTranslationForm/bootstrap_4_layout.html.twig',
-                    '@EasyAdmin/crud/form_theme.html.twig',
-                    // '@FOSCKEditor/Form/ckeditor_widget.html.twig',
-                ]
-            );
+            // ->setFormThemes(
+            //     [
+            //         '@A2lixTranslationForm/bootstrap_4_layout.html.twig',
+            //         '@EasyAdmin/crud/form_theme.html.twig',
+            //         // '@FOSCKEditor/Form/ckeditor_widget.html.twig',
+            //     ]
+            // )
+            ;
     }
 
     public function configureFields(string $pageName): iterable
