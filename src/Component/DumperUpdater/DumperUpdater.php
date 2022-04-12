@@ -316,6 +316,12 @@ class DumperUpdater
                             $newPathAsset,
                             true
                         );
+                        $this->logInfo(sprintf(
+                            'moving asset from %s to %s',
+                            $pathAsset,
+                            $newPathAsset
+                        ));
+
 
                         $dataArray[$entityItem->getId()] = $entityItem->dumpConfig();
                         $dataArray[$entityItem->getId()]['imagePath'] = $newPathAsset;
