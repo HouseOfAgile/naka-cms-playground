@@ -2,13 +2,16 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
-use HouseOfAgile\NakaCMSBundle\Admin\Field\TranslationField;
 use App\Entity\StaticPage;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Form\Type\TextEditorType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use HouseOfAgile\NakaCMSBundle\Admin\Field\TranslationField;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class StaticPageCrudController extends AbstractCrudController
@@ -27,7 +30,7 @@ class StaticPageCrudController extends AbstractCrudController
                 'label' => 'Title',
             ],
             'content' => [
-                'field_type' => TextareaType::class,
+                'field_type' => CKEditorType::class,
                 'required' => true,
                 'label' => 'Content',
             ],

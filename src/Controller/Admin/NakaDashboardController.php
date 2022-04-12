@@ -47,6 +47,7 @@ class NakaDashboardController extends AbstractDashboardController
             ->addFormTheme('@NakaCMS/admin/a2lix_bootstrap_5_layout.html.twig')
             ->addFormTheme('@EasyAdmin/crud/form_theme.html.twig')
             ->addFormTheme('@NakaCMS/admin/crud/form_theme.html.twig')
+            ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig')
             ->overrideTemplates([
                 'crud/index' => '@NakaCMS/admin/crud/index.html.twig',
             ])

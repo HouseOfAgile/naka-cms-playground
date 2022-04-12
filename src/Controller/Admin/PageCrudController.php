@@ -15,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use HouseOfAgile\NakaCMSBundle\Admin\Field\TranslationField;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -54,6 +55,11 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
                 'required' => true,
                 'label' => 'Title',
             ],
+            'content' => [
+                'field_type' => CKEditorType::class,
+                'required' => true,
+                'label' => 'Content',
+            ],
             // 'text' => [
             //     'field_type' => CKEditorType::class,
             //     'required' => true,
@@ -79,6 +85,8 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
             ->hideOnIndex()
             ->hideOnDetail()
             ->hideOnForm();
+        $isStatic = BooleanField::new('isStatic')->setLabel('is it a static page')
+            ->hideOnIndex();
         $pageConfigurationPanel = FormField::addPanel('backend.form.page.pageConfigurationPanel')
             ->setHelp('backend.form.page.pageConfigurationPanel.help');
         // no pageGallery for now on page level
@@ -95,9 +103,9 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $name, $slug, $enabled, $category];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$name, $mainPageTranslationsPanel, $translations, $pageConfigurationPanel, $category, $pageBlockElements, $enabled];
+            return [$name, $mainPageTranslationsPanel, $translations, $pageConfigurationPanel, $category, $pageBlockElements, $enabled, $isStatic];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$name, $mainPageTranslationsPanel, $translations,$slug, $pageConfigurationPanel, $category, $pageBlockElements, $enabled];
+            return [$name, $mainPageTranslationsPanel, $translations, $slug, $pageConfigurationPanel, $category, $pageBlockElements, $enabled, $isStatic];
         }
     }
 

@@ -38,6 +38,11 @@ class Page implements TranslatableInterface, SluggableInterface
     private $enabled;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isStatic;
+
+    /**
      * @ORM\OneToOne(targetEntity=PageGallery::class, cascade={"persist", "remove"})
      */
     private $pageGallery;
@@ -95,7 +100,7 @@ class Page implements TranslatableInterface, SluggableInterface
             );
             switch ($operator) {
                 case 'max':
-                    return max($result)+1;
+                    return max($result) + 1;
                     break;
                 case 'min':
                     return min($result);
@@ -123,6 +128,7 @@ class Page implements TranslatableInterface, SluggableInterface
     {
         $config =  [
             'id' => $this->id,
+            'isStatic' => $this->getIsStatic(),
             'enabled' => $this->getEnabled(),
             'pageTranslations' => array_map(function ($pt) {
                 return $pt->getId();
@@ -152,6 +158,18 @@ class Page implements TranslatableInterface, SluggableInterface
     public function setEnabled(?bool $enabled): self
     {
         $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function getIsStatic(): ?bool
+    {
+        return $this->isStatic;
+    }
+
+    public function setIsStatic(?bool $isStatic): self
+    {
+        $this->isStatic = $isStatic;
 
         return $this;
     }
