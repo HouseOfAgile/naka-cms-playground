@@ -47,6 +47,11 @@ class PageController extends AbstractController
             'blockElements' => $this->pageDecorator->decorateBlockElementsForPage($page),
         ];
         // dd($viewParams);
-        return $this->render('@NakaCMS/naka/page/show-page.html.twig', $viewParams);
+        if ($page->getIsStatic()){
+            return $this->render('@NakaCMS/naka/page/show-static-page.html.twig', $viewParams);
+        } else {
+
+            return $this->render('@NakaCMS/naka/page/show-page.html.twig', $viewParams);
+        }
     }
 }

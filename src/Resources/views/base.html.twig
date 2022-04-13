@@ -20,7 +20,7 @@
 		{% endblock %}
 		{% block stylesheets_extra %}{% endblock %}
 	</head>
-	<body>
+	<body data-aos-easing="ease-out-back" data-aos-duration="1000" data-aos-delay="0">
 		{% block body %}{% endblock %}
 		{% block javascripts_extra %}
 		<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
@@ -38,6 +38,8 @@ window.cookieconsent.initialise({
   },
   "theme": "classic"
 });
-</script>{% endblock %}
+</script>
+			{{ encore_entry_script_tags('appBottom') }}
+{% endblock %}
 	</body>
 </html>
