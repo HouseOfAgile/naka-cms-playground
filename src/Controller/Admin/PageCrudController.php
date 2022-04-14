@@ -70,17 +70,18 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         $id = IdField::new('id');
         $slug = TextField::new('slug');
         // panels can also define their icon, CSS class and help message
-
+        $pageDetailsPanel = FormField::addPanel('backend.form.page.pageDetailsPanel')
+            ->setHelp('backend.form.page.pageDetailsPanel.help');
         $mainPageTranslationsPanel = FormField::addPanel('backend.form.page.mainPageTranslationsPanel')
             ->setHelp('backend.form.page.mainPageTranslationsPanel.help');
         $translations = TranslationField::new('translations', 'Translations', $fieldsConfig)
             ->setRequired(false)
             ->hideOnIndex();
-        $name = TextField::new('title')->hideOnForm()->setLabel('Title')->setFormTypeOptions(
-            [
-                'default_locale' => 'en',
-            ]
-        );
+
+        $name = TextField::new('name')
+        ->setLabel('Name')
+        ->setHelp('Internal name to be used in Menus and elsewhere');
+
         $enabled = BooleanField::new('enabled')->setLabel('is it Enabled')
             ->hideOnIndex()
             ->hideOnDetail()
@@ -103,9 +104,9 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $name, $slug, $enabled, $category];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$name, $mainPageTranslationsPanel, $translations, $pageConfigurationPanel, $category, $pageBlockElements, $enabled, $isStatic];
+            return [$pageDetailsPanel, $name, $mainPageTranslationsPanel, $translations, $pageConfigurationPanel, $category, $pageBlockElements, $enabled, $isStatic];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$name, $mainPageTranslationsPanel, $translations, $slug, $pageConfigurationPanel, $category, $pageBlockElements, $enabled, $isStatic];
+            return [$pageDetailsPanel, $name, $mainPageTranslationsPanel, $translations, $slug, $pageConfigurationPanel, $category, $pageBlockElements, $enabled, $isStatic];
         }
     }
 

@@ -33,6 +33,11 @@ class Page implements TranslatableInterface, SluggableInterface
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=64, nullable=true)
+     */
+    private $name;
+
+    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $enabled;
@@ -63,10 +68,6 @@ class Page implements TranslatableInterface, SluggableInterface
      */
     protected $pageBlockElements;
 
-    /**
-     * @ORM\Column(type="string", length=64, nullable=true)
-     */
-    private $name;
 
     public function __construct()
     {
@@ -128,6 +129,7 @@ class Page implements TranslatableInterface, SluggableInterface
     {
         $config =  [
             'id' => $this->id,
+            'name' => $this->getName(),
             'isStatic' => $this->getIsStatic(),
             'enabled' => $this->getEnabled(),
             'pageTranslations' => array_map(function ($pt) {
@@ -179,7 +181,7 @@ class Page implements TranslatableInterface, SluggableInterface
      */
     public function getSluggableFields(): array
     {
-        return ['title'];
+        return ['name','title'];
     }
 
     public function getPageGallery(): ?PageGallery

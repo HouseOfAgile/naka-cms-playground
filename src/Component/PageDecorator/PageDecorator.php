@@ -33,14 +33,9 @@ class PageDecorator
         $this->contentDumper = $contentDumper;
     }
 
-    public function decorateBlockElementsForStaticPage(?StaticPage $staticPage)
-    {
-        return $staticPage ? $this->decoratePageBlockElements($staticPage->getPageBlockElements()):[];
-    }
-
     public function decorateBlockElementsForPage(Page $page)
     {
-        return $this->decoratePageBlockElements($page->getPageBlockElements());
+        return $page  ? $this->decoratePageBlockElements($page->getPageBlockElements()):[];
     }
 
     public function decoratePageBlockElements($pageBlockElements)

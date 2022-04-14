@@ -1,4 +1,4 @@
-{% if is_granted('ROLE_ADMIN') %}
+{% if is_granted('ROLE_SUPER_ADMIN') %}
 	<div class="helper-tag position-relative">blockElement
 		{{ blockElement.blockElement.id }}
 		<a href="{{ ea_url().setController('HouseOfAgile\\NakaCMSBundle\\Controller\\Admin\\BlockElementCrudController').setDashboard('App\\Controller\\Admin\\AdminDashboardController').setAction('edit').setEntityId(blockElement.blockElement.id) }}" class="" role="button" target="_new">
