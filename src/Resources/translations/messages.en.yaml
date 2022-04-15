@@ -20,6 +20,8 @@ backend.websiteInfo.editOpeningHours: "Edit Opening Hours"
 backend.websiteAsset.generalHelpForAdmin: "Here you can add assets that will be available for all people granted access to the admin. This could be pdf, word documents or images."
 backend.websiteAsset.generalHelpForManager: "Here you can find a list of assets that gives you information on the website."
 
+backend.form.page.pageDetailsPanel: "Page Details"
+backend.form.page.pageDetailsPanel.help: "Details for page"
 backend.form.page.mainPageTranslationsPanel: "Main page translations"
 backend.form.page.mainPageTranslationsPanel.help: |
     <p>Translations for the page profived internationalized translation for the page details in the various supported languages.</p>
@@ -72,9 +74,9 @@ backend.crud.menu.generalHelp: |
 backend.formPage.editBlockElement.title: Edition of a block element
 thumbnail.viewLarger: "View Larger"
 
-contact.contact-details: |
-    <h2>Contact</h2>
-    <p>Add here your contact details</p>
+contact.contactTitle: Contact Us
+contact.contactDetails: |
+    <p>Would you like to make your next appointment for prophylaxis and tooth cleaning? Do you need dental treatment? Do you have questions about one of our services? Call us during our office hours or write to us using our contact form. We will be happy to help you and advise you on our range of services.</p>
 
 form.contact.submit: "Send your message"
 form.editOpeningHours.detailedHelp: |
@@ -91,3 +93,5 @@ openingHours.title: "Opening Hours"
 openingHours.day: "Day"
 openingHours.hours: "Hours"
 openingHours.closed: "Closed"
+openingHours.weAreOpen: "We are open"
+openingHours.weAreClosed: "We are closed"

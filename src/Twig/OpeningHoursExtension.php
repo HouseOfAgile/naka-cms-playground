@@ -20,11 +20,17 @@ class OpeningHoursExtension extends AbstractExtension
     {
         return [
             new TwigFunction('openingStatus', [$this, 'openingStatus']),
+            new TwigFunction('openingStatusBool', [$this, 'openingStatusBool']),
         ];
     }
 
     public function openingStatus()
     {
         return $this->openingHoursManager->getOpeningStatus();
+    }
+
+    public function openingStatusBool()
+    {
+        return $this->openingHoursManager->getOpeningStatusBool();
     }
 }

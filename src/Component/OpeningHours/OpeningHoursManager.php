@@ -5,18 +5,27 @@ namespace HouseOfAgile\NakaCMSBundle\Component\OpeningHours;
 use DateTime;
 use HouseOfAgile\NakaCMSBundle\Component\WebsiteInfo\WebsiteInfoService;
 use Spatie\OpeningHours\OpeningHours;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class OpeningHoursManager
 {
     /** @var WebsiteInfoService */
     protected $websiteInfoService;
 
+    /** @var TranslatorInterface */
+    protected $translator;
+
     protected $openingHoursData;
     protected $openingHours;
+    protected $now;
+    protected $openingStatus;
 
-    public function __construct(WebsiteInfoService $websiteInfoService)
-    {
+    public function __construct(
+        WebsiteInfoService $websiteInfoService,
+        TranslatorInterface $translator
+    ) {
         $this->websiteInfoService = $websiteInfoService;
+        $this->translator = $translator;
 
         if ($this->websiteInfoService->isOpeningHoursSet()) {
             // if ($this->websiteInfoService->getWebsiteInfo()) {
@@ -39,6 +48,8 @@ class OpeningHoursManager
             ];
         }
         $this->openingHours = OpeningHours::create($this->openingHoursData);
+        $this->now = new DateTime('now');
+        $this->openingStatus = $this->openingHours->currentOpenRange($this->now);
     }
 
     public function getOpeningHoursData()
@@ -57,31 +68,33 @@ class OpeningHoursManager
         return $this->openingHours;
     }
 
+    public function getOpeningStatusBool()
+    {
+
+        return $this->openingStatus;
+    }
+
     public function getOpeningStatus($completeStatus = false)
     {
-        $now = new DateTime('now');
-
-        $inRange = $this->openingHours->currentOpenRange($now);
-
-        if ($inRange) {
+        if ($this->openingStatus) {
             if ($completeStatus) {
                 return sprintf(
                     'We are open since %s, we will be close on %s',
-                    $inRange->start(),
-                    $inRange->end()
+                    $this->openingStatus->start(),
+                    $this->openingStatus->end()
                 );
             } else {
-                return sprintf('We are open');
+                return $this->translator->trans('openingHours.weAreOpen');
             }
         } else {
             if ($completeStatus) {
                 return sprintf(
                     'We are close since %s, we will be re-open on %s',
-                    $this->openingHours->previousClose($now)->format('l H:i'),
-                    $this->openingHours->nextOpen($now)->format('l H:i'),
+                    $this->openingHours->previousClose($this->now)->format('l H:i'),
+                    $this->openingHours->nextOpen($this->now)->format('l H:i'),
                 );
             } else {
-                return sprintf('We are close');
+                return $this->translator->trans('openingHours.weAreClosed');
             }
         }
     }

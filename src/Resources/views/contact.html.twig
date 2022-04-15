@@ -14,38 +14,67 @@
 	</div>
 	<div class="container">
 		<div class="row g-0">
+			<div class="col-md-6">
+				<div class="h-100 d-flex justify-content-center align-items-center text-center my-4">
+					<ul class="list-unstyled mb-0 ">
+						<li>
+							<i class="fas fa-map-marker-alt fa-4x my-3 zsh-text-color"></i>
+							<p>Kollwitzstra&szlig;e 77, 10435 Berlin</p>
+						</li>
 
-			<div class="col-md-12">
+						<li>
+							<i class="fas fa-phone mt-4 fa-4x my-3 zsh-text-color"></i>
+							<p>+49 030-44055511</p>
+						</li>
+
+						<li>
+							<i class="fas fa-envelope mt-4 fa-4x my-3 zsh-text-color"></i>
+							<p>info@zahnarztpraxis-hartfiel.de</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-6">
 				{% include '@NakaCMS/opening-hours/show-opening-hours.html.twig' with {'openingHours': openingHours } %}
 			</div>
-			<div class="col-md-10 offset-1">
-				<div class="jumbotron">
-					<p>{{'contact.contact-details'|trans|raw }}</p>
-				</div>
-			</div>
-			<hr class="col-md-10 offset-1"/>
-			<div class="col-md-10 offset-1">
 
+
+		</div>
+	</div>
+	<div class="container my-4">
+		<div class="row g-0">
+			<div class="col-md-12">
+					<h2 class="display-4 my-3 text-center">{{'contact.contactTitle'|trans|raw }}</h2>
+				</div>
+
+			<div class="col-md-4">
+				<img class="img-fluid" src="{{ '/images/logo/transparent/logo_zahnartztpraxi_serpil_hartfiel_transparent_circle_600x600.png'| imagine_filter('logo_resize') }}"/>
+			</div>
+			<div class="col-md-8">
+				<div class="jumbotron">
+					<div class="lead my-3">{{'contact.contactDetails'|trans|raw }}</div>
+				</div>
+				<hr/>
 				{{ form_start(form) }}
 				<div class="row m-4">
-					<div class="col-4">{{ form_label(form.name) }}</div>
-					<div class="col-8">{{ form_widget(form.name,{ 'attr': {'class': 'form-control' }}) }}</div>
-					<div class="col-8 offset-4">{{ form_help(form.name) }}</div>
+					<div class="col-3">{{ form_label(form.name) }}</div>
+					<div class="col-9">{{ form_widget(form.name,{ 'attr': {'class': 'form-control' }}) }}</div>
+					<div class="col-9 offset-3">{{ form_help(form.name) }}</div>
 				</div>
 				<div class="row m-4">
-					<div class="col-4">{{ form_label(form.email) }}</div>
-					<div class="col-8">{{ form_widget(form.email,{ 'attr': {'class': 'form-control' }}) }}</div>
-					<div class="col-8 offset-4">{{ form_help(form.email) }}</div>
+					<div class="col-3">{{ form_label(form.email) }}</div>
+					<div class="col-9">{{ form_widget(form.email,{ 'attr': {'class': 'form-control' }}) }}</div>
+					<div class="col-9 offset-3">{{ form_help(form.email) }}</div>
 				</div>
 				<div class="row m-4">
-					<div class="col-4">{{ form_label(form.subject) }}</div>
-					<div class="col-8">{{ form_widget(form.subject,{ 'attr': {'class': 'form-control' }}) }}</div>
-					<div class="col-8 offset-4">{{ form_help(form.subject) }}</div>
+					<div class="col-3">{{ form_label(form.subject) }}</div>
+					<div class="col-9">{{ form_widget(form.subject,{ 'attr': {'class': 'form-control' }}) }}</div>
+					<div class="col-9 offset-3">{{ form_help(form.subject) }}</div>
 				</div>
 				<div class="row m-4">
-					<div class="col-4">{{ form_label(form.message) }}</div>
-					<div class="col-8">{{ form_widget(form.message,{ 'attr': {'class': 'form-control' }}) }}</div>
-					<div class="col-8 offset-4">{{ form_help(form.message) }}</div>
+					<div class="col-3">{{ form_label(form.message) }}</div>
+					<div class="col-9">{{ form_widget(form.message,{ 'attr': {'class': 'form-control' }}) }}</div>
+					<div class="col-9 offset-3">{{ form_help(form.message) }}</div>
 				</div>
 				<div class="row m-4">
 					<div class="col-4 offset-4">

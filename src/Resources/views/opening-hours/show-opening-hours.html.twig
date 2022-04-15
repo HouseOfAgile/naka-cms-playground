@@ -1,7 +1,19 @@
 {% block content %}
 	<div class="row">
 		<div class="col-10 offset-1">
-			<h2 class="text-center mt-4 p-2">{{ 'openingHours.title' | trans}}</h2>
+			<h2 class="text-center display-4 mt-4 p-2">{{ 'openingHours.title' | trans}}</h2>
+			<h4 class="text-center lead mt-2 p-2">
+				{% if openingStatusBool() %}
+					<span class="my-3 text-success">
+						<i class="fas fa-calendar-check fa-2x"></i> {{ openingStatus() }}
+					</span>
+				{% else %}
+					<span class="my-3 text-danger">
+						<i class="fas fa-calendar-times fa-2x"></i> {{ openingStatus() }}
+					</span>
+
+				{% endif %}
+			</h4>
 		</div>
 		<div class="col-10 offset-1">
 			<table class="table table-hover text-center">
