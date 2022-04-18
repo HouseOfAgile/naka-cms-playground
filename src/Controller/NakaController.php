@@ -3,9 +3,7 @@
 namespace HouseOfAgile\NakaCMSBundle\Controller;
 
 use HouseOfAgile\NakaCMSBundle\Component\PageDecorator\PageDecorator;
-use HouseOfAgile\NakaCMSBundle\Menu\MenuBuilder;
 use HouseOfAgile\NakaCMSBundle\Repository\PageRepository;
-use HouseOfAgile\NakaCMSBundle\Repository\StaticPageRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -33,10 +31,10 @@ class NakaController extends BaseController
     public function homepage(
         PageRepository $pageRepository
     ) {
-        $homepageStaticPage = $pageRepository->findOneBy(['name' => 'homepage']);
+        $homePage = $pageRepository->findOneBy(['name' => 'homepage']);
         $viewParams = [
-            'homepageStaticPage' => $homepageStaticPage,
-            'blockElements' => $this->pageDecorator->decorateBlockElementsForPage($homepageStaticPage),
+            'homePage' => $homePage,
+            'blockElements' => $this->pageDecorator->decorateBlockElementsForPage($homePage),
         ];
         return $this->render('@NakaCMS/naka/homepage.html.twig', $viewParams);
     }

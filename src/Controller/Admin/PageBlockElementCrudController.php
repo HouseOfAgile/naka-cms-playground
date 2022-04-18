@@ -25,7 +25,6 @@ class PageBlockElementCrudController extends AbstractCrudController
         $page = AssociationField::new('page', 'backend.crud.pageBlockElement.page');
         $relatedPage = TextareaField::new('relatedPage', 'backend.crud.pageBlockElement.relatedPage')
             ->setTemplatePath('@NakaCMS/backend_fields/page_block_element/field_related_page.html.twig');
-        $staticPage = AssociationField::new('staticPage', 'backend.crud.pageBlockElement.staticPage');
         $blockElement = AssociationField::new('blockElement', 'backend.crud.pageBlockElement.blockElement');
         $position = IntegerField::new('position')->setLabel('Position?');
 
@@ -33,11 +32,11 @@ class PageBlockElementCrudController extends AbstractCrudController
         if (Crud::PAGE_INDEX === $pageName) {
             return [$id, $relatedPage, $blockElement, $position];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $page, $staticPage,  $blockElement, $position];
+            return [$id, $page,  $blockElement, $position];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$page, $staticPage, $blockElement, $position];
+            return [$page, $blockElement, $position];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$page, $staticPage, $blockElement, $position];
+            return [$page, $blockElement, $position];
         }
     }
 }

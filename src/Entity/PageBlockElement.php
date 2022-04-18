@@ -4,7 +4,6 @@ namespace HouseOfAgile\NakaCMSBundle\Entity;
 
 use App\Entity\BlockElement;
 use App\Entity\Page;
-use App\Entity\StaticPage;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use HouseOfAgile\NakaCMSBundle\Repository\PageBlockElementRepository;
@@ -37,11 +36,6 @@ class PageBlockElement
      */
     private $position;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=StaticPage::class, inversedBy="pageBlockElements")
-     */
-    private $staticPage;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -69,7 +63,6 @@ class PageBlockElement
             'position' => $this->getPosition(),
             'blockElement' => $this->getBlockElement() ? $this->getBlockElement()->getId() : null,
             'page' => $this->getPage() ? $this->getPage()->getId() : null,
-            'staticPage' => $this->getStaticPage() ? $this->getStaticPage()->getId() : null,
         ];
 
         return $config;
@@ -107,18 +100,6 @@ class PageBlockElement
     public function setPosition(int $position): self
     {
         $this->position = $position;
-
-        return $this;
-    }
-
-    public function getStaticPage(): ?StaticPage
-    {
-        return $this->staticPage;
-    }
-
-    public function setStaticPage(?StaticPage $staticPage): self
-    {
-        $this->staticPage = $staticPage;
 
         return $this;
     }

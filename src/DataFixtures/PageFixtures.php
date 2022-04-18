@@ -8,8 +8,6 @@ use HouseOfAgile\NakaCMSBundle\Factory\PageFactory;
 use HouseOfAgile\NakaCMSBundle\Factory\PageGalleryFactory;
 use HouseOfAgile\NakaCMSBundle\Factory\PageTranslationFactory;
 use HouseOfAgile\NakaCMSBundle\Factory\PictureFactory;
-use HouseOfAgile\NakaCMSBundle\Factory\StaticPageFactory;
-use HouseOfAgile\NakaCMSBundle\Factory\StaticPageTranslationFactory;
 use HouseOfAgile\NakaCMSBundle\Factory\WorkshopEventFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -26,16 +24,6 @@ class PageFixtures extends BaseFixture implements DependentFixtureInterface
 
     protected function loadData(ObjectManager $manager)
     {
-
-        $staticPageTranslations = array_map(function ($locale) {
-            return StaticPageTranslationFactory::new(['locale' => $locale]);
-        }, $this->allLocales);
-
-        StaticPageFactory::createOne([
-            'name' => 'homepage',
-            'translations' => $staticPageTranslations,
-        ]);
-
 
         $pageTranslations = array_map(function ($locale) {
             return PageTranslationFactory::new(['locale' => $locale]);

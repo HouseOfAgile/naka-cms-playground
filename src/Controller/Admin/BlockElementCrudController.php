@@ -25,13 +25,17 @@ class BlockElementCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
+        // $crud = parent::configureCrud($crud);
+
         return $crud
             ->showEntityActionsAsDropdown(false)
-            ->overrideTemplate('crud/index', '@NakaCMS/naka/backend/block-element/list.html.twig');
+            ->overrideTemplate('crud/index', '@NakaCMS/backend/block-element/list.html.twig')
+            ;
     }
 
     public function configureActions(Actions $actions): Actions
     {
+        
         $blockElementId = function (BlockElement $blockElement): array {
             return [
                 'blockElement' => $blockElement->getId(),
@@ -42,7 +46,7 @@ class BlockElementCrudController extends AbstractCrudController
         // dd($routeParameters);
         $editBlockElement = Action::new('editBlockElement', 'Edit Block Element', 'fa fa-pen')
             ->linkToRoute('edit_page_element_redir', $blockElementId)
-            ->addCssClass('text-warning');
+            ->addCssClass('btn btn-warning text-white');
         return $actions
             ->add(Crud::PAGE_INDEX, $editBlockElement);
     }

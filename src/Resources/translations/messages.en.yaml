@@ -57,11 +57,9 @@ backend.form.blockElementType.jsCode: "The javascript code for that block elemen
 
 backend.form.menu.menuItems: "List of items in that menu"
 backend.crud.pageBlockElement.relatedToPage: "Related to page"
-backend.crud.pageBlockElement.relatedToStaticPage: "Related to static page"
 backend.crud.pageBlockElement.notLinkedToAnyPage: "Not linked to any page"
 backend.crud.pageBlockElement.page: "Linked Page"
 backend.crud.pageBlockElement.relatedPage: "Related Page"
-backend.crud.pageBlockElement.staticPage: "Linked StaticPage"
 backend.crud.pageBlockElement.blockElement: "From BlockElement"
 
 backend.crud.menu.generalHelp: |

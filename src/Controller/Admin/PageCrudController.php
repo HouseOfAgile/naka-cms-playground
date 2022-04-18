@@ -35,10 +35,10 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         ];
         $addBlockToPage = Action::new('addBlockToPage', 'Add Block to Page', 'fa fa-plus')
             ->linkToRoute('add_block_to_page', $pageId)
-            ->addCssClass('btn btn-success');
+            ->addCssClass('btn btn-success text-white');
         $addPageToMenu = Action::new('addPageToMenu', 'Add Page to Menu', 'fa fa-plus')
             ->linkToRoute('add_page_to_menu', $pageId)
-            ->addCssClass('btn btn-info');
+            ->addCssClass('btn btn-info text-white');
 
         return $actions
             ->add(Crud::PAGE_INDEX, $addBlockToPage)

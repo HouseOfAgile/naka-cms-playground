@@ -68,7 +68,7 @@ class BlockElementAdminController extends SuperAdminDashboardController
         ];
         // return $this->render('naka/pages/show-block-element-type.html.twig', $viewParams);
 
-        return $this->render('@NakaCMS/naka/backend/block-element/choose-block-element-type.html.twig', $viewParams);
+        return $this->render('@NakaCMS/backend/block-element/choose-block-element-type.html.twig', $viewParams);
     }
 
     /**
@@ -111,7 +111,7 @@ class BlockElementAdminController extends SuperAdminDashboardController
         ];
         // dd( $viewParams);
 
-        return $this->render('@NakaCMS/naka/backend/block-element/edit-block-element.html.twig', $viewParams);
+        return $this->render('@NakaCMS/backend/block-element/edit-block-element.html.twig', $viewParams);
     }
 
 
