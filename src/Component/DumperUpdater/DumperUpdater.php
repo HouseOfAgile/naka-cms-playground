@@ -46,6 +46,11 @@ class DumperUpdater
 
     /** @var UploaderHelper */
     protected $uploaderHelper;
+    protected $appEntitiesDict;
+    protected $entitiesIdMapping;
+
+    // use to track id change for assets
+    protected $assetIdMapping;
 
     public function __construct(
         LoggerInterface $scrappingLogger,
@@ -78,6 +83,32 @@ class DumperUpdater
         $this->setLoaderCommandIo($io);
     }
 
+    private function updateMappings(array $appEntities)
+    {
+        foreach ($appEntities as $appEntityName => $appEntityAttributes) {
+            $entityClass = 'App\\Entity\\' . ucfirst($appEntityName);
+            $thisClass = new $entityClass();
+            $repository = $this->entityManager->getRepository(get_class($thisClass));
+            $this->appEntitiesDict[$appEntityName] = $repository;
+            $this->entitiesIdMapping[$appEntityName] = [];
+            $this->assetIdMapping[$appEntityName] = [];
+        }
+    }
+
+    public function manageNakaCMS(array $appEntities, array $appEntitiesAliases, array $assetEntities, bool $dumpOrUpdate = false): bool
+    {
+        $this->updateMappings($assetEntities);
+        $this->updateMappings($appEntities);
+        $assetSynchronized = $this->synchronizeAssets($assetEntities, $dumpOrUpdate);
+        if ($assetSynchronized) {
+
+            $contentSynchronized = $this->synchronizeData($appEntities, $appEntitiesAliases, $assetEntities, $dumpOrUpdate);
+            return $assetSynchronized && $contentSynchronized;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * SynchronizeData: execute a dump of entities defined in AppEntities into yaml files 
      * or update existing yml file into the current database
@@ -90,23 +121,9 @@ class DumperUpdater
      */
     public function synchronizeData(array $appEntities, array $appEntitiesAliases, array $assetEntities, bool $dumpOrUpdate = false): bool
     {
-        $appEntitiesDict = [];
-        $entitiesIdMapping = [];
+        foreach ($appEntities as $type => $appEntityAttr) {
+            $repository = $this->appEntitiesDict[$type];
 
-        foreach ($appEntities as $appEntityName => $appEntityAttributes) {
-            $entityClass = 'App\\Entity\\' . ucfirst($appEntityName);
-            $thisClass = new $entityClass();
-            $repository = $this->entityManager->getRepository(get_class($thisClass));
-            $appEntitiesDict[$appEntityName] = $repository;
-            $entitiesIdMapping[$appEntityName] = [];
-        }
-
-        // if action is dump we dump, otherwise we udpate
-
-        foreach ($appEntitiesDict as $type => $repository) {
-            $entityClass = 'App\\Entity\\' . ucfirst($type);
-            $thisClass = new $entityClass();
-            $repository = $this->entityManager->getRepository(get_class($thisClass));
             $dataArray = [];
             if ($dumpOrUpdate) {
                 if (!in_array($type, array_values($assetEntities))) {
@@ -122,6 +139,8 @@ class DumperUpdater
                 }
             } else {
                 // update
+                $this->logInfo(sprintf('Working on entity %s', $type));
+
                 $filesystem = new Filesystem();
                 $filePath = sprintf('%s/%s.yml', $this->dataDumpDir, $type);
                 if (!$filesystem->exists($filePath)) {
@@ -131,13 +150,13 @@ class DumperUpdater
                 // update or create
                 $dumpedEntities = Yaml::parseFile($filePath);
                 foreach ($dumpedEntities as $keyEntity => $dataEntity) {
-                    $entity = $repository->findOneBy(['id' => $keyEntity]);
-                    if (in_array($type, array_values($assetEntities))) {
+                    if (in_array($type, array_keys($assetEntities))) {
                         $this->logInfo(sprintf('We have an asset entity'));
-                        $entitiesIdMapping[$type][$dataEntity['id']] = $entity->getId();
-
+                        // we already have the new refId for assets
                         continue;
                     } else {
+                        $entity = $repository->findOneBy(['id' => $keyEntity]);
+
                         if (!$entity) {
                             $entityClass = 'App\\Entity\\' . ucfirst($type);
                             $entity = new $entityClass();
@@ -147,7 +166,7 @@ class DumperUpdater
                         }
 
                         foreach ($dataEntity as $keyAttr => $valAttr) {
-                            $this->logInfo(sprintf('working on %s', $keyAttr));
+                            $this->logCommand(sprintf('working on %s', $keyAttr));
 
                             // this is a onetomany relation
                             if (is_array($valAttr)) {
@@ -162,15 +181,15 @@ class DumperUpdater
                                             $addMethod = 'add' . ucfirst($appEntitiesAliases[$keyAttr]);
                                         }
                                         // we get the new id if it has changed
-                                        $newRefId = $entitiesIdMapping[$relatedEntity][$refId];
+                                        $newRefId = $this->entitiesIdMapping[$relatedEntity][$refId];
 
-                                        $linkedEntity = $appEntitiesDict[$relatedEntity]->findOneBy(['id' => $newRefId]);
+                                        $linkedEntity = $this->appEntitiesDict[$relatedEntity]->findOneBy(['id' => $newRefId]);
 
                                         $entity->{$addMethod}($linkedEntity);
                                         $this->logInfo(sprintf('<-> Add OneToMany from entity %s to entity %s', $entity, $linkedEntity));
                                     } else {
-                                        if (in_array($keyAttr, array_keys($appEntitiesDict))) {
-                                            $linkedEntity = $appEntitiesDict[$keyAttr]->findOneBy(['id' => $refId]);
+                                        if (in_array($keyAttr, array_keys($this->appEntitiesDict))) {
+                                            $linkedEntity = $this->appEntitiesDict[$keyAttr]->findOneBy(['id' => $refId]);
                                             $addMethod = substr($keyAttr, -1) === 's' ? substr($keyAttr, 0, -1) : $keyAttr;
                                             $entity->{'add' . ucfirst($keyAttr)}($linkedEntity);
                                             $this->logInfo(sprintf('<-> Add OneToMany from entity %s to entity %s', $entity, $linkedEntity));
@@ -181,17 +200,17 @@ class DumperUpdater
                                     }
                                 }
                             } else {
-                                if (in_array($keyAttr, array_keys($appEntitiesDict)) || in_array($keyAttr, array_keys($appEntitiesAliases))) {
+                                if (in_array($keyAttr, array_keys($this->appEntitiesDict)) || in_array($keyAttr, array_keys($appEntitiesAliases))) {
                                     // In this case we need to get the updated id
                                     if (in_array($keyAttr, array_keys($appEntitiesAliases))) {
                                         $relatedEntity = $appEntitiesAliases[$keyAttr];
                                     } else {
-                                        $relatedEntity = $appEntitiesDict[$keyAttr];
+                                        $relatedEntity = $this->appEntitiesDict[$keyAttr];
                                     }
                                     if ($valAttr != null) {
-                                        $newRefId = $entitiesIdMapping[$relatedEntity][$valAttr];
+                                        $newRefId = $this->entitiesIdMapping[$relatedEntity][$valAttr];
 
-                                        $linkedEntity = $appEntitiesDict[$relatedEntity]->findOneBy(['id' => $newRefId]);
+                                        $linkedEntity = $this->appEntitiesDict[$relatedEntity]->findOneBy(['id' => $newRefId]);
 
                                         $this->logInfo(sprintf('<-> Set link from entity %s to entity %s', $entity, $linkedEntity));
                                         $entity->{'set' . ucfirst($keyAttr)}($linkedEntity);
@@ -200,7 +219,6 @@ class DumperUpdater
                                         $entity->{'set' . ucfirst($keyAttr)}(null);
                                     }
                                 } elseif ($keyAttr != 'id') {
-                                    dump($entity->{'get' . ucfirst($keyAttr)}());
                                     if ($entity->{'get' . ucfirst($keyAttr)}() !== $valAttr) {
                                         if (in_array($keyAttr, array_keys($appEntities[$type]))) {
                                             switch ($appEntities[$type][$keyAttr]) {
@@ -216,12 +234,9 @@ class DumperUpdater
                                                     break;
                                                 case 'Json':
                                                     $valAttr = json_decode($valAttr, true);
-                                                    // $this->logInfo(sprintf(
-                                                    //     'Set %s:: previous: %s => new: %s',
-                                                    //     $keyAttr,
-                                                    //     $entity->{'get' . ucfirst($keyAttr)}(),
-                                                    //     json_encode($valAttr)
-                                                    // ));
+                                                    break;
+                                                case 'DynamicContent':
+                                                    $valAttr = $this->updateDynamicContent($valAttr);
                                                     break;
                                                 default:
                                                     $this->logInfo(sprintf(
@@ -246,10 +261,10 @@ class DumperUpdater
                         $this->logInfo(sprintf('Saving entity %s on id %s', $entity, $entity->getId()));
                     }
 
-                    $entitiesIdMapping[$type][$dataEntity['id']] = $entity->getId();
+                    $this->entitiesIdMapping[$type][$dataEntity['id']] = $entity->getId();
                 }
                 $this->logSuccess(sprintf('We updated all data for entities %s', $type));
-                dump($entitiesIdMapping);
+                dump($this->entitiesIdMapping);
             }
         }
         return true;
@@ -272,19 +287,8 @@ class DumperUpdater
      * @param boolean $dumpOrUpdate
      * @return boolean
      */
-    public function synchronizeAssets(array $assetEntities, bool $dumpOrUpdate = false): bool
+    public function synchronizeAssets($assetEntities, bool $dumpOrUpdate = false): bool
     {
-        $assetEntitiesDict = [];
-        $entitiesIdMapping = [];
-
-        foreach ($assetEntities as $assetEntity) {
-            $entityClass = 'App\\Entity\\' . ucfirst($assetEntity);
-            $thisClass = new $entityClass();
-            $repository = $this->entityManager->getRepository(get_class($thisClass));
-            $assetEntitiesDict[$assetEntity] = $repository;
-            $entitiesIdMapping[$assetEntity] = [];
-        }
-
         // we clean the assets directory in case of dump
         if ($dumpOrUpdate) {
             $filesystem = new Filesystem();
@@ -292,16 +296,14 @@ class DumperUpdater
         }
         // if action is dump we dump, otherwise we udpate
 
-        foreach ($assetEntitiesDict as $type => $repository) {
+        foreach ($assetEntities as $type => $attr) {
             $entityClass = 'App\\Entity\\' . ucfirst($type);
-            $thisClass = new $entityClass();
-            $repository = $this->entityManager->getRepository(get_class($thisClass));
+            $repository = $this->appEntitiesDict[$type];
             $dataArray = [];
 
             if ($dumpOrUpdate) {
                 // dump
                 try {
-
                     foreach ($repository->findAll() as $entityItem) {
                         $fileAttributeName = method_exists($entityItem, 'getImageFile') ? 'imageFile' : (method_exists($entityItem, 'getAssetFile') ? 'assetFile' : false);
                         if (!$fileAttributeName) {
@@ -367,8 +369,12 @@ class DumperUpdater
                     $this->entityManager->persist($entity);
                     $this->entityManager->flush();
                     $this->logInfo(sprintf('Saving entity %s on id %s', $entity, $entity->getId()));
+                    // if ($entity->getId() != $dataEntity['id']) {
+                    //     die('asdasd');
+                    //     $this->assetIdMapping[$type];
+                    // }
 
-                    $entitiesIdMapping[$type][$dataEntity['id']] = $entity->getId();
+                    $this->entitiesIdMapping[$type][$dataEntity['id']] = $entity->getId();
                 }
             }
             $this->logSuccess(sprintf('We updated all assets of type %s', $type));
@@ -376,6 +382,40 @@ class DumperUpdater
 
         return true;
     }
+
+    private function updateDynamicContent($dataString)
+    {
+        preg_match_all('!%%[\s]?\'?picture-([^\'|\||%]*)\|?([^\'|%]*)\'?[\s]?%%!', $dataString, $pictureMatches);
+        if (!empty(array_filter($pictureMatches))) {
+            foreach ($pictureMatches[0] as $id => $pictureMatch) {
+
+                $oldId = $pictureMatches[1][$id];
+                if (!in_array($oldId, array_keys($this->entitiesIdMapping['Picture']))) {
+                    $this->logWarning(sprintf('We have an unknown picture ref %s', $oldId));
+                    dump($pictureMatches);
+                    return $dataString;
+                }
+
+                $newId = $this->entitiesIdMapping['Picture'][$oldId];
+                $matchRegexp = sprintf(
+                    '!%%%%[\s]?\'?picture-%s%s\'?[\s]?%%%%!',
+                    $pictureMatches[1][$id],
+                    !empty($pictureMatches[2][$id]) ? '\|' . $pictureMatches[2][$id] : ''
+                );
+                $dataString = preg_replace(
+                    $matchRegexp,
+                    sprintf(
+                        '%%%% \'picture-%s%s\' %%%%',
+                        $newId,
+                        !empty($pictureMatches[2][$id]) ? '\|' . $pictureMatches[2][$id] : ''
+                    ),
+                    $dataString
+                );
+            }
+        }
+        return $dataString;
+    }
+
 
     protected function dumpFile($arrayData, $filename)
     {

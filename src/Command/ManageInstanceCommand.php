@@ -36,12 +36,6 @@ class ManageInstanceCommand extends Command
 
         $this
             ->setDescription('Manage instances config');
-
-        $this->addArgument(
-            'typeOfContent',
-            InputArgument::REQUIRED,
-            'Working with content or assets [content or assets]'
-        );
         $this->addArgument(
             'mainAction',
             InputArgument::REQUIRED,
@@ -70,13 +64,8 @@ class ManageInstanceCommand extends Command
         }
 
         $dumpOrUpdate = $input->getArgument('mainAction') == 'dump';
-        $contentOrAsset = $input->getArgument('typeOfContent') == 'content';
 
-        if ($contentOrAsset) {
-            $synchronizationStatus = $this->dumperUpdater->synchronizeData($appEntities, $appEntitiesAliases, $assetEntities, $dumpOrUpdate);
-        } else {
-            $synchronizationStatus = $this->dumperUpdater->synchronizeAssets($assetEntities, $dumpOrUpdate);
-        }
+        $synchronizationStatus = $this->dumperUpdater->manageNakaCMS($appEntities, $appEntitiesAliases, $assetEntities, $dumpOrUpdate);
 
         return $synchronizationStatus ? Command::SUCCESS : Command::FAILURE;
     }
