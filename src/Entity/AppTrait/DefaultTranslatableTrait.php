@@ -5,7 +5,7 @@ namespace HouseOfAgile\NakaCMSBundle\Entity\AppTrait;
 trait DefaultTranslatableTrait
 {
     /**
-     * Return translation based on locale, or default translation (english here)
+     * Return translation based on locale, or default translation (english first, then german)
      * @param $entity
      * @param $field
      * @param bool $showDefault

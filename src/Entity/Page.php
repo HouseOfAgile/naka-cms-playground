@@ -150,8 +150,6 @@ class Page implements TranslatableInterface, SluggableInterface
         return $this->getDefaultEnglishTranslation($this, 'content');
     }
 
-
-
     public function getEnabled(): ?bool
     {
         return $this->enabled;
@@ -181,7 +179,7 @@ class Page implements TranslatableInterface, SluggableInterface
      */
     public function getSluggableFields(): array
     {
-        return ['name','title'];
+        return ['name', 'title'];
     }
 
     public function getPageGallery(): ?PageGallery

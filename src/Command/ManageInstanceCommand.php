@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HouseOfAgile\NakaCMSBundle\Command;
 
-use App\DataDumper\DataDumperParameter;
+use App\NakaData\DataDumperParameter;
 use Exception;
 use HouseOfAgile\NakaCMSBundle\Component\DumperUpdater\DumperUpdater;
 use HouseOfAgile\NakaCMSBundle\Helper\LoggerCommandTrait;
