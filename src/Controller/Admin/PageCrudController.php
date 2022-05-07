@@ -79,8 +79,8 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
             ->hideOnIndex();
 
         $name = TextField::new('name')
-        ->setLabel('Name')
-        ->setHelp('Internal name to be used in Menus and elsewhere');
+            ->setLabel('Name')
+            ->setHelp('Internal name to be used in Menus and elsewhere');
 
         $enabled = BooleanField::new('enabled')->setLabel('is it Enabled')
             ->hideOnIndex()
