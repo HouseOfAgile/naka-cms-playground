@@ -67,12 +67,18 @@ class Picture implements TimestampableInterface
      * @ORM\ManyToMany(targetEntity=Gallery::class, mappedBy="pictures")
      */
     protected $galleries;
+    
+    /**
+     * @ORM\OneToMany(targetEntity=Staff::class, mappedBy="staffPicture")
+     */
+    protected $staff;
 
     public function __construct()
     {
         $this->image = new EmbeddedFile();
         $this->blockElements = new ArrayCollection();
         $this->galleries = new ArrayCollection();
+        $this->staff = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -216,6 +222,36 @@ class Picture implements TimestampableInterface
     {
         if ($this->galleries->removeElement($gallery)) {
             $gallery->removePicture($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Staff>
+     */
+    public function getStaff(): Collection
+    {
+        return $this->staff;
+    }
+
+    public function addStaff(Staff $staff): self
+    {
+        if (!$this->staff->contains($staff)) {
+            $this->staff[] = $staff;
+            $staff->setStaffPicture($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStaff(Staff $staff): self
+    {
+        if ($this->staff->removeElement($staff)) {
+            // set the owning side to null (unless already changed)
+            if ($staff->getStaffPicture() === $this) {
+                $staff->setStaffPicture(null);
+            }
         }
 
         return $this;

@@ -2,6 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
+use App\Entity\Picture;
 use Doctrine\ORM\Mapping as ORM;
 use HouseOfAgile\NakaCMSBundle\Entity\AppTrait\DefaultTranslatableTrait;
 use HouseOfAgile\NakaCMSBundle\Repository\StaffRepository;
@@ -46,6 +47,11 @@ class Staff implements TranslatableInterface, SluggableInterface
      */
     private $isActive;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Picture::class, inversedBy="staff", fetch="EAGER")
+     */
+    protected $staffPicture;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +83,10 @@ class Staff implements TranslatableInterface, SluggableInterface
                 return $st->getId();
             }, $this->getTranslations()->toArray()),
         ];
+
+        if ($this->getStaffPicture() != null) {
+            $config['staffPicture'] = $this->getStaffPicture()->getId();
+        }
 
         return $config;
     }
@@ -148,6 +158,18 @@ class Staff implements TranslatableInterface, SluggableInterface
     public function setIsActive(?bool $isActive): self
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getStaffPicture(): ?Picture
+    {
+        return $this->staffPicture;
+    }
+
+    public function setStaffPicture(?Picture $staffPicture): self
+    {
+        $this->staffPicture = $staffPicture;
 
         return $this;
     }

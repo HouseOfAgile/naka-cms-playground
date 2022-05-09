@@ -1,7 +1,7 @@
 {% extends '@NakaCMS/layout/base-layout.html.twig' %}
 
 {% block title %}
-	{{ 'contact.staff' |trans}}
+	{{ 'team.title' |trans}}
 {% endblock %}
 
 {% block content %}
@@ -11,36 +11,42 @@
 		<div class="container-fluid bg-light">
 			<div class="container">
 				<div class="text-center p-4">
-				<div class="display-4">
-				{{ 'team.title' | trans }}
-				</div>
+					<div class="display-4">
+						{{ 'team.title' | trans }}
+					</div>
 
-				<div class="row py-4">
-					{% for dentist in dentists %}
-						<div class="{{ nbColDentistBox }} mb-4">
-							<div class="row team-member d-flex justify-content-around  bg-white rounded border border-2 my-4 mx-2 p-4">
-								<div class="col-6 d-flex justify-content-center py-5">
-									<div class="team-img">
-										<img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t1.jpg" alt="wrapkit" class="img-fluid rounded-circle"/>
+					<div class="row py-4">
+						{% for dentist in dentists %}
+							<div class="{{ nbColDentistBox }} mb-4">
+								<div class="row team-member d-flex justify-content-around  bg-white rounded border border-2 my-4 mx-2 p-4">
+									<div class="col-6 d-flex justify-content-center py-5">
+										<div class="team-img">
+											{% if dentist.staffPicture %}
+												<img src="{{ vich_uploader_asset(dentist.staffPicture)|imagine_filter('squared_thumbnail_medium') }}" alt="{{ dentist.staffPicture }}" class="img-fluid rounded-circle"/>
+											{% else %}
+												<img src="{{ '/images/logo/transparent/logo_zahnartztpraxi_serpil_hartfiel_transparent_circle_600x600.png'|imagine_filter('squared_thumbnail_medium')}}" alt="wrapkit" class="img-fluid rounded-circle"/>
+											{% endif %}
+
+										</div>
 									</div>
-								</div>
-								<div class="col-6">
-									<div class="team-presentation py-5">
-										<i class="fa fa-quote-left fa-2x fa-pull-left fa-border" aria-hidden="true"></i>{{ dentist.presentation|raw }}
-									</div>
-									<div class="team-title">
-										<h5>{{ dentist.fullName }}</h5>
-										<span>{{ dentist.staffRole }}</span>
+									<div class="col-6">
+										<div class="team-presentation py-5">
+											<i class="fa fa-quote-left fa-2x fa-pull-left fa-border" aria-hidden="true"></i>
+											{{ dentist.presentation|raw }}
+										</div>
+										<div class="team-title">
+											<h5>{{ dentist.fullName }}</h5>
+											<span>{{ dentist.staffRole }}</span>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					{% endfor %}
+						{% endfor %}
+					</div>
 				</div>
-			</div>
-		{% endif %}
+			{% endif %}
 
-	{% endblock %}
+		{% endblock %}
 
 
-	{% block javascripts_extra %}{% endblock %}
+		{% block javascripts_extra %}{% endblock %}

@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -44,6 +45,7 @@ class StaffCrudController extends AbstractCrudController implements EventSubscri
 
         $firstName = TextField::new('firstName');
         $lastName = TextField::new('lastName');
+        $staffPicture = AssociationField::new('staffPicture');
         $staffSettingsPanel = FormField::addPanel('backend.form.staff.staffSettingsPanel');
         $businessRole = TextField::new('businessRole')->setFormType(BusinessRoleType::class);
 
@@ -64,7 +66,7 @@ class StaffCrudController extends AbstractCrudController implements EventSubscri
         } elseif (Crud::PAGE_NEW === $pageName) {
             return [$staffSettingsPanel, $businessRole, $staffDetailsPanel, $firstName, $lastName, $staffTranslationsPanel, $translations, $isActive];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$staffSettingsPanel, $businessRole, $staffDetailsPanel, $firstName, $lastName, $staffTranslationsPanel, $translations, $slug, $isActive];
+            return [$staffSettingsPanel, $businessRole, $staffDetailsPanel, $firstName, $lastName, $staffPicture , $staffTranslationsPanel, $translations, $slug, $isActive];
         }
     }
     public static function getSubscribedEvents()

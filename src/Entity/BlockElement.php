@@ -89,7 +89,8 @@ class BlockElement implements TimestampableInterface
     public function __toString()
     {
         return sprintf(
-            'BlockElement %s [%s]',
+            'BlockElement %s %s [%s]',
+            $this->getId(),
             $this->getName() ?? $this->getId(),
             // @todo fix this
             $this->getBlockElementType() ? $this->getBlockElementType()->getType(): 'unset'
