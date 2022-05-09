@@ -101,7 +101,6 @@ class DumperUpdater
         $this->updateMappings($appEntities);
         $assetSynchronized = $this->synchronizeAssets($assetEntities, $dumpOrUpdate);
         if ($assetSynchronized) {
-
             $contentSynchronized = $this->synchronizeData($appEntities, $appEntitiesAliases, $assetEntities, $dumpOrUpdate);
             return $assetSynchronized && $contentSynchronized;
         } else {
@@ -126,7 +125,7 @@ class DumperUpdater
 
             $dataArray = [];
             if ($dumpOrUpdate) {
-                if (!in_array($type, array_values($assetEntities))) {
+                if (!in_array($type, array_keys($assetEntities))) {
                     // dump data
                     foreach ($repository->findAll() as $entityItem) {
                         $dataArray[$entityItem->getId()] = $entityItem->dumpConfig();
