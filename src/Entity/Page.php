@@ -81,7 +81,7 @@ class Page implements TranslatableInterface, SluggableInterface
         return sprintf(
             'Page #%s %s',
             $this->id,
-            substr($this->getTitle(), 0, 39)
+            $this->getTitle() ? substr($this->getTitle(), 0, 39) : $this->getName()
         );
     }
 

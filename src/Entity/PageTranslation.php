@@ -74,7 +74,7 @@ class PageTranslation implements TranslationInterface
         return $this->title;
     }
 
-    public function setTitle(string $title): void
+    public function setTitle(?string $title): void
     {
         $this->title = $title;
     }
