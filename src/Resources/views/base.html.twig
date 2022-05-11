@@ -17,6 +17,11 @@
 		{% block javascripts %}
 			{{ encore_entry_script_tags('app') }}
 
+			{% set ga_id = 'google-analytics'| nakaParameter %}
+			{% if ga_id %}
+				{% include '@NakaCMS/fragment/_google_analytics.html.twig' %}
+			{% endif %}
+
 		{% endblock %}
 		{% block stylesheets_extra %}{% endblock %}
 	</head>
