@@ -31,6 +31,33 @@ class NakaParameter
      */
     private $help;
 
+
+    /**
+     * dumpConfig: return array with main config
+     *
+     * @return array
+     */
+    public function dumpConfig(): array
+    {
+        $config =  [
+            'id' => $this->id,
+            'path' => $this->getPath(),
+            'value' => $this->getValue(),
+            'help' => $this->getHelp(),
+        ];
+
+        return $config;
+    }
+
+    public function __toString()
+    {
+        return sprintf(
+            'NakaParameter #%s %s [%s]',
+            $this->id,
+            $this->path,
+            $this->value ?? 'unset'
+        );
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -59,7 +86,7 @@ class NakaParameter
 
         return $this;
     }
-    
+
     public function getHelp(): ?string
     {
         return $this->help;
