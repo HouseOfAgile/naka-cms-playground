@@ -52,6 +52,11 @@ class Staff implements TranslatableInterface, SluggableInterface
      */
     protected $staffPicture;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $doctolibUrl;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -79,6 +84,7 @@ class Staff implements TranslatableInterface, SluggableInterface
             'lastName' => $this->getLastName(),
             'businessRole' => $this->getBusinessRole(),
             'isActive' => $this->getIsActive(),
+            'doctolibUrl' => $this->getDoctolibUrl(),
             'staffTranslations' => array_map(function ($st) {
                 return $st->getId();
             }, $this->getTranslations()->toArray()),
@@ -170,6 +176,18 @@ class Staff implements TranslatableInterface, SluggableInterface
     public function setStaffPicture(?Picture $staffPicture): self
     {
         $this->staffPicture = $staffPicture;
+
+        return $this;
+    }
+
+    public function getDoctolibUrl(): ?string
+    {
+        return $this->doctolibUrl;
+    }
+
+    public function setDoctolibUrl(?string $doctolibUrl): self
+    {
+        $this->doctolibUrl = $doctolibUrl;
 
         return $this;
     }
