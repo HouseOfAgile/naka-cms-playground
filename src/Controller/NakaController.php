@@ -22,7 +22,7 @@ class NakaController extends BaseController
      */
     public function indexNoLocale(): Response
     {
-        return $this->redirectToRoute('app_homepage', ['_locale' => 'en']);
+        return $this->redirectToRoute('app_homepage', ['_locale' => 'de']);
     }
 
     /**

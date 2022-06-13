@@ -8,6 +8,7 @@
 {% block stylesheets %}
 	{{ parent() }}
 	{% block lexik_stylesheets %}
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="{{ asset('bundles/lexiktranslation/ng-table/ng-table.min.css') }}">
 		<link rel="stylesheet" href="{{ asset('css/lexik.css') }}">
 
@@ -33,7 +34,6 @@
 		</div>
 	{% endblock lexik_flash_message %}
 {% endblock flash_message %}
-
 
 
 {% block content %}
