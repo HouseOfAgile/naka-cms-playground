@@ -7,16 +7,17 @@
 				<p class="small text-muted">{{ 'footer.main-text' | trans }}</p>
 				<div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
 					<strong>{{ application_name }}</strong>, 2021 -
-					{{ 'now'|date('Y') }}, v.{{ application_version }}
-					[{{ app.environment }}]<br/>
-					<small class="text-muted">Made with
-						<i class="fa fa-plug text-primary"></i>
-						by House of Agile agency</small>
+					{{ 'now'|date('Y') }}, v.{{ application_version }}{{ app.environment == 'dev' ? (' - [' ~ app.environment ~ ']') :'' }}<br/>
+					{% if trademarkOn is defined and trademarkOn %}
+						<small class="text-muted">Made with
+							<i class="fa fa-plug text-primary"></i>
+							by House of Agile agency</small>
+					{% endif %}
 				</div>
 			</div>
 			<div class="col-lg-3 offset-3 col-md-6">
 				<div class="ms-5">
-					<h5 class="text-white mb-3">{{ 'footer.quick-links' | trans }}</h5>
+					<h5 class="text-white mb-3">{{ 'footer.quickLinks' | trans }}</h5>
 					{{ knp_menu_render('footer') }}
 				</div>
 			</div>

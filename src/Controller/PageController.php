@@ -46,7 +46,9 @@ class PageController extends AbstractController
             'page' => $page,
             'blockElements' => $this->pageDecorator->decorateBlockElementsForPage($page),
         ];
-        // dd($viewParams);
+        if (in_array(strtolower($page->getSlug()), ['impressum', 'privacy-policy'])){
+            $viewParams['trademarkOn'] = true;
+        }
         if ($page->getIsStatic()){
             return $this->render('@NakaCMS/naka/page/show-static-page.html.twig', $viewParams);
         } else {

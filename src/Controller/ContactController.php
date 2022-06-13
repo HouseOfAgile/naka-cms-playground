@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ContactController extends AbstractController
 {
     /**
-     * @Route("/contact", name="app_contact")
+     * @Route("/{_locale<%app.supported_locales%>}/contact", name="app_contact")
      */
     public function contact(
         Request $request,
