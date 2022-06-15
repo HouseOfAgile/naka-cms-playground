@@ -9,6 +9,7 @@ use App\Entity\PageGallery;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use HouseOfAgile\NakaCMSBundle\DBAL\Types\NakaPageType;
 use HouseOfAgile\NakaCMSBundle\Entity\AppTrait\DefaultTranslatableTrait;
 use HouseOfAgile\NakaCMSBundle\Repository\PageRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
@@ -38,14 +39,14 @@ class Page implements TranslatableInterface, SluggableInterface
     private $name;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="NakaPageType", nullable=true)
      */
-    private $enabled;
+    private $pageType;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $isStatic;
+    private $enabled;
 
     /**
      * @ORM\OneToOne(targetEntity=PageGallery::class, cascade={"persist", "remove"})
@@ -130,7 +131,7 @@ class Page implements TranslatableInterface, SluggableInterface
         $config =  [
             'id' => $this->id,
             'name' => $this->getName(),
-            'isStatic' => $this->getIsStatic(),
+            'pageType' => $this->getPageType(),
             'enabled' => $this->getEnabled(),
             'pageTranslations' => array_map(function ($pt) {
                 return $pt->getId();
@@ -150,6 +151,18 @@ class Page implements TranslatableInterface, SluggableInterface
         return $this->getDefaultEnglishTranslation($this, 'content');
     }
 
+    public function getPageType()
+    {
+        return $this->pageType;
+    }
+
+    public function setPageType($pageType): self
+    {
+        $this->pageType = $pageType;
+
+        return $this;
+    }
+
     public function getEnabled(): ?bool
     {
         return $this->enabled;
@@ -158,18 +171,6 @@ class Page implements TranslatableInterface, SluggableInterface
     public function setEnabled(?bool $enabled): self
     {
         $this->enabled = $enabled;
-
-        return $this;
-    }
-
-    public function getIsStatic(): ?bool
-    {
-        return $this->isStatic;
-    }
-
-    public function setIsStatic(?bool $isStatic): self
-    {
-        $this->isStatic = $isStatic;
 
         return $this;
     }
