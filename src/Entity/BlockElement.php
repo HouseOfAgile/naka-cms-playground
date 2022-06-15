@@ -125,15 +125,6 @@ class BlockElement implements TimestampableInterface
         return $config;
     }
 
-    public function copyFromBlockElementType(BlockElementType $blockElementType)
-    {
-        $this->blockElementType = $blockElementType;
-        $this->htmlCode = $blockElementType->getHtmlCode();
-        $this->cssCode = $blockElementType->getCssCode();
-        $this->jsCode = $blockElementType->getJsCode();
-        return $this;
-    }
-
     public function getId(): ?int
     {
         return $this->id;

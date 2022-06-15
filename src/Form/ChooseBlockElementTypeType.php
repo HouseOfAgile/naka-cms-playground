@@ -21,7 +21,7 @@ class ChooseBlockElementTypeType extends AbstractType
             'class' => BlockElementType::class,
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('u')
-                    ->orderBy('u.id', 'ASC');
+                    ->orderBy('u.id', 'DESC');
             },
             'choice_label' => function ($type) {
                 return $type->getName();

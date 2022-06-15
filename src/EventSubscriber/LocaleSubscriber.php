@@ -3,16 +3,24 @@
 namespace HouseOfAgile\NakaCMSBundle\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Routing\RouterInterface;
 
 class LocaleSubscriber implements EventSubscriberInterface
 {
     private $defaultLocale;
 
-    public function __construct(string $defaultLocale = 'en')
+    /** @var RouterInterface */
+    private $router;
+
+
+    public function __construct(string $defaultLocale = 'en',
+    RouterInterface $router)
     {
         $this->defaultLocale = $defaultLocale;
+        $this->router = $router;
     }
 
     public function onKernelRequest(RequestEvent $event)
