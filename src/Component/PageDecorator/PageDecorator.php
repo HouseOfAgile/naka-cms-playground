@@ -37,6 +37,7 @@ class PageDecorator
         foreach ($pageBlockElements as $pageBlockElement) {
             $decoratedBlockElements[] = $this->contentDumper->decorateBlockElement($pageBlockElement->getBlockElement());
         }
+        // dd($decoratedBlockElements);
         return $decoratedBlockElements;
     }
 }

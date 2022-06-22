@@ -349,6 +349,7 @@ class DumperUpdater
                     } else {
                         $this->logInfo(sprintf('Update Asset Entity %s with id %s', ucfirst($type), $keyEntity));
                     }
+                    $this->logInfo(sprintf('Asset File is in %s', $dataEntity['imagePath']));
 
                     $fixtureImageFile =  new File($dataEntity['imagePath']);
 
