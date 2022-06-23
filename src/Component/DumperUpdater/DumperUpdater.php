@@ -218,7 +218,10 @@ class DumperUpdater
                                         $entity->{'set' . ucfirst($keyAttr)}(null);
                                     }
                                 } elseif ($keyAttr != 'id') {
-                                    if ($entity->{'get' . ucfirst($keyAttr)}() !== $valAttr) {
+                                    // if key is slug, we do not try to getSlug form entity as it is not yet generated
+                                    if ($keyAttr == 'slug') {
+                                        $entity->{'set' . ucfirst($keyAttr)}($valAttr);
+                                    } elseif ($entity->{'get' . ucfirst($keyAttr)}() !== $valAttr) {
                                         if (in_array($keyAttr, array_keys($appEntities[$type]))) {
                                             switch ($appEntities[$type][$keyAttr]) {
                                                 case 'DateTime':

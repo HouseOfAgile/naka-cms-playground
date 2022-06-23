@@ -131,6 +131,7 @@ class Page implements TranslatableInterface, SluggableInterface
         $config =  [
             'id' => $this->id,
             'name' => $this->getName(),
+            'slug' => $this->getSlug(),
             'pageType' => $this->getPageType(),
             'enabled' => $this->getEnabled(),
             'pageTranslations' => array_map(function ($pt) {
