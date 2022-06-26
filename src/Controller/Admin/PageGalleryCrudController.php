@@ -3,10 +3,13 @@
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
 use App\Entity\PageGallery;
-use HouseOfAgile\NakaCMSBundle\Form\PictureType;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use HouseOfAgile\NakaCMSBundle\Form\PictureType;
 
 class PageGalleryCrudController extends AbstractCrudController
 {
@@ -17,21 +20,24 @@ class PageGalleryCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        return [
-            IdField::new('id')->hideOnForm(),
-            // CollectionField::new('images', 'Images')
-            // ->allowAdd()
-            // ->allowDelete()
-            // ->setEntryIsComplex(true)
-            // ->setEntryType(OfferType::class)
-            // ->setFormType(PageGalleryType::class)
-            // ->setFormTypeOptions([
-            //     'by_reference' => 'false'
-            // ]),
-            CollectionField::new('images')
-                ->allowAdd()
-                ->allowDelete()
-                ->setEntryType(PictureType::class)
-        ];
+
+        $id = IdField::new('id');
+        $name = TextField::new('name');
+        $images = AssociationField::new('images')->setFormTypeOptions([
+            'by_reference' => false,
+        ]);
+        // $images = CollectionField::new('images')
+        //     ->allowAdd()
+        //     ->allowDelete()
+        //     ->setEntryType(PictureType::class);
+        if (Crud::PAGE_INDEX === $pageName) {
+            return [$id, $name, $images];
+        } elseif (Crud::PAGE_DETAIL === $pageName) {
+            return [$id, $name, $images];
+        } elseif (Crud::PAGE_NEW === $pageName) {
+            return [$name, $images];
+        } elseif (Crud::PAGE_EDIT === $pageName) {
+            return [$name, $images];
+        }
     }
 }

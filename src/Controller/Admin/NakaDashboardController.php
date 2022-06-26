@@ -65,7 +65,8 @@ class NakaDashboardController extends AbstractDashboardController
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
 
-            ->update(Crud::PAGE_INDEX, Action::DELETE, fn (Action $action) => $action->addCssClass('btn btn-warning text-white'))->update(Crud::PAGE_INDEX, Action::EDIT, fn (Action $action) => $action->addCssClass('btn btn-danger text-white'))
+            ->update(Crud::PAGE_INDEX, Action::DELETE, fn (Action $action) => $action->addCssClass('btn btn-danger text-white'))
+            ->update(Crud::PAGE_INDEX, Action::EDIT, fn (Action $action) => $action->addCssClass('btn btn-warning text-white'))
             ->update(Crud::PAGE_INDEX, Action::DETAIL, fn (Action $action) => $action->addCssClass('btn btn-info text-white'))
             // ->update(Crud::PAGE_INDEX, Action::BATCH_DELETE, fn (Action $action) => $action->addCssClass('text-white'))
             // We remove new by default and add it when needed on CRUD level

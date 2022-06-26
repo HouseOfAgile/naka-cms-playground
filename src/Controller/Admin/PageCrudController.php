@@ -105,9 +105,9 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $name, $slug, $enabled, $category];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$pageDetailsPanel, $name, $pageType, $mainPageTranslationsPanel, $translations, $pageConfigurationPanel, $category, $pageBlockElements, $enabled];
+            return [$pageDetailsPanel, $name, $pageType, $pageGallery,$mainPageTranslationsPanel, $translations, $pageConfigurationPanel, $category, $pageBlockElements, $enabled];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$pageDetailsPanel, $name, $pageType, $mainPageTranslationsPanel, $translations, $slug, $pageConfigurationPanel, $category, $pageBlockElements, $enabled];
+            return [$pageDetailsPanel, $name, $pageType, $pageGallery, $mainPageTranslationsPanel, $translations, $slug, $pageConfigurationPanel, $category, $pageBlockElements, $enabled];
         }
     }
 

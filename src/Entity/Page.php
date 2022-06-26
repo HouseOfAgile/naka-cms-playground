@@ -133,6 +133,7 @@ class Page implements TranslatableInterface, SluggableInterface
             'name' => $this->getName(),
             'slug' => $this->getSlug(),
             'pageType' => $this->getPageType(),
+            'pageGallery' => $this->getPageGallery() ? $this->getPageGallery()->getId() : null,
             'enabled' => $this->getEnabled(),
             'pageTranslations' => array_map(function ($pt) {
                 return $pt->getId();

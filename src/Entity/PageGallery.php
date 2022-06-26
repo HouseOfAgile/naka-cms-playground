@@ -21,6 +21,11 @@ class PageGallery
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $name;
+
+    /**
      * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="pageGallery",cascade={"persist"})
      */
     protected $images;
@@ -38,12 +43,12 @@ class PageGallery
     public function dumpConfig(): array
     {
         $config =  [
-            'id' => $this->id,
+            'id' => $this->getId(),
+            'name' => $this->getName(),
         ];
-        return $config;
 
         if (count($this->getImages()) > 0) {
-            $config['images'] = array_map(function ($image) {
+            $config['galleryImages'] = array_map(function ($image) {
                 return $image->getId();
             }, $this->getImages()->toArray());
         }
@@ -52,12 +57,28 @@ class PageGallery
 
     public function __toString()
     {
-        return (string)'PageGallery ' . $this->id;
+        return sprintf(
+            '%s [PageGallery %s]',
+            $this->getName() ? $this->getName() . ' ' : '',
+            $this->getId(),
+        );
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     /**

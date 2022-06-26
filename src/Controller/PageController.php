@@ -48,6 +48,7 @@ class PageController extends AbstractController
             'page' => $page,
             'blockElements' => $this->pageDecorator->decorateBlockElementsForPage($page),
         ];
+        // show generatorName only on some pages
         if (in_array(strtolower($page->getSlug()), ['impressum', 'privacy-policy'])){
             $viewParams['trademarkOn'] = true;
         }
