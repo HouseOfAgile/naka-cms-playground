@@ -1,2 +1,15 @@
+
+form.contact.name: Name
+form.contact.email: Email
+form.contact.subject: Thema
+form.contact.message: Nachricht
 form.contact.submit: "Nachricht senden"
+
 common.readMore: 'Mehr Erfahren'
+
+openingHours.title: 'Öffnungszeiten'
+openingHours.day: "Tag"
+openingHours.hours: "Stunden"
+openingHours.closed: "abgeschlossen"
+openingHours.weAreOpen: "Wir sind offen"
+openingHours.weAreClosed: "Wir haben geschlossen"

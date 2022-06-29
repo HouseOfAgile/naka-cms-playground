@@ -1,6 +1,15 @@
 # Some translations that are common
 frontend.goToAdmin: "Go to Admin"
 main.returnToAdmin: "Return to Admin"
+
+
+form.contact.name: Name
+form.contact.email: Email
+form.contact.subject: Subject
+form.contact.message: Message
+form.contact.submit: "Send your message"
+
+
 common.readMore: 'Read More'
 backend.dashboard.title: "Welcome in the %applicationName% backend"
 backend.dashboardAdmin.generalHelp: "This is the general backend for administration of the system.<br/>You can manage pages, menus and the various blocks they contains."
@@ -82,9 +91,8 @@ thumbnail.viewLarger: "View Larger"
 
 contact.contactTitle: Contact Us
 contact.contactDetails: |
-    <p>Would you like to make your next appointment for prophylaxis and tooth cleaning? Do you need dental treatment? Do you have questions about one of our services? Call us during our office hours or write to us using our contact form. We will be happy to help you and advise you on our range of services.</p>
+    <p>Do you have questions about one of our services? Call us during our office hours or write to us using our contact form. We will be happy to help you and advise you on our range of services.</p>
 
-form.contact.submit: "Send your message"
 form.editOpeningHours.detailedHelp: |
     <p>Here you can edit the opening hours, you need to follow a specific format.</p>
     <p>You can have one entry for each day of the week with several range and an unilimted amont of exceptions.</p>
@@ -93,6 +101,7 @@ form.editOpeningHours.detailedHelp: |
     <div class="py-1"><strong>"exceptions":{"2024-11-11":["09:00-12:00"],"2024-12-25":[]}</strong> means the office will be close on 2024-11-11 between 9:00 and 12:00 and will be close al day on 2024-12-25.</div>
     <div class="py-1"><strong>"exceptions":{"01-01":[],"12-25":['09:00-12:00']}</strong> means the office will be close on each 1st of January and each 25th of December between 9:00 and 12:00.</div>
 form.openingHours.updateOpeningHours: "Update Opening Hours"
+
 flash.openingHours.openingHoursUpdated: "Opening hours have been updated !"
 
 openingHours.title: "Opening Hours"
