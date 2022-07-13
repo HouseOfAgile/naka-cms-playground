@@ -29,7 +29,7 @@ class MenuItemCrudController extends AbstractCrudController
             'title' => [
                 'field_type' => TextareaType::class,
                 'required' => true,
-                'label' => 'Title',
+                'label' => 'Menu item translation',
             ],
         ];
 

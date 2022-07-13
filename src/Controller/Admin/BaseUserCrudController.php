@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use HouseOfAgile\NakaCMSBundle\Entity\BaseUser;
@@ -49,8 +50,8 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
     {
         return $crud
             ->setEntityLabelInSingular('User')
-            ->setEntityLabelInPlural('User')
-            ->setSearchFields(['username', 'email', 'roles', 'id'])
+            ->setEntityLabelInPlural('Users')
+            ->setSearchFields(['firstName', 'email', 'roles', 'id'])
             ->setPaginatorPageSize(30);
     }
 
@@ -64,7 +65,12 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
 
     public function configureFields(string $pageName): iterable
     {
-        $firstName = TextField::new('firstName');
+        $panel = FormField::addTab('User Details');
+        $panel3 = FormField::addTab('User Detailss');
+        
+        $firstName = TextField::new('firstName')
+            ->setHelp('backend.form.user.firstName.help');
+
         $email = TextField::new('email')->setHelp('backend.form.user.email.help');
 
         // @todo Move roles definitions to some configuration file
@@ -107,7 +113,7 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
         } elseif (Crud::PAGE_NEW === $pageName) {
             return [$firstName, $password, $email, $roles];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$firstName, $password, $email, $roles, $rolesSuperAdmin];
+            return [$panel, $firstName, $password,$panel3,  $email, $roles, $rolesSuperAdmin];
         }
     }
 

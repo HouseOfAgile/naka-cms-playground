@@ -32,6 +32,9 @@ backend.websiteAsset.generalHelpForManager: "Here you can find a list of assets 
 
 backend.form.page.pageDetailsPanel: "Page Details"
 backend.form.page.pageDetailsPanel.help: "Details for page"
+backend.form.page.pageConfigurationTab: 'Page configuration'
+backend.form.page.pageConfigurationTab.help: 'General configuration for the page'
+
 backend.form.page.mainPageTranslationsPanel: "Main page translations"
 backend.form.page.mainPageTranslationsPanel.help: |
     <p>Translations for the page profived internationalized translation for the page details in the various supported languages.</p>
@@ -72,6 +75,8 @@ backend.form.staff.staffDetailsPanel: 'Staff details'
 backend.form.staff.staffTranslationsPanel: 'Staff content'
 backend.form.staff.staffTranslationsPanel.help: 'This will control the content associated with the staff, more specifically the one used in the team page'
 
+backend.form.user.firstName.help: 'Set the first name of that user, it should be unique'
+backend.form.user.roles.help: ''
 
 backend.crud.pageBlockElement.relatedToPage: "Related to page"
 backend.crud.pageBlockElement.notLinkedToAnyPage: "Not linked to any page"

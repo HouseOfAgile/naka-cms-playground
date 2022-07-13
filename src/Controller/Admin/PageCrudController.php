@@ -74,8 +74,13 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         // panels can also define their icon, CSS class and help message
         $pageDetailsPanel = FormField::addPanel('backend.form.page.pageDetailsPanel')
             ->setHelp('backend.form.page.pageDetailsPanel.help');
-        $mainPageTranslationsPanel = FormField::addPanel('backend.form.page.mainPageTranslationsPanel')
+
+        $pageConfigurationTab = FormField::addTab('backend.form.page.pageConfigurationTab')
+            ->setHelp('backend.form.page.pageConfigurationTab.help');
+
+        $pageTranslationsTab = FormField::addTab('backend.form.page.mainPageTranslationsPanel')
             ->setHelp('backend.form.page.mainPageTranslationsPanel.help');
+
         $translations = TranslationField::new('translations', 'Translations', $fieldsConfig)
             ->setRequired(false)
             ->hideOnIndex();
@@ -101,13 +106,24 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
 
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $name, $slug, $enabled, $pageBlockElements];
+            return [$id, $name, $slug, $pageType, $enabled, $pageBlockElements];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $name, $slug, $enabled, $category];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$pageDetailsPanel, $name, $pageType, $pageGallery,$mainPageTranslationsPanel, $translations, $pageConfigurationPanel, $category, $pageBlockElements, $enabled];
+            return [
+                $pageConfigurationTab, $pageDetailsPanel, $name, $pageType, $pageGallery,  $pageBlockElements, $enabled,
+                $pageConfigurationPanel, $category,
+                $pageTranslationsTab, $translations,
+
+            ];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$pageDetailsPanel, $name, $pageType, $pageGallery, $mainPageTranslationsPanel, $translations, $slug, $pageConfigurationPanel, $category, $pageBlockElements, $enabled];
+            return [
+
+                $pageConfigurationTab, $pageDetailsPanel, $name, $pageType, $pageGallery,  $pageBlockElements, $enabled,
+                $pageConfigurationPanel, $category,
+                $pageTranslationsTab, $translations,
+
+            ];
         }
     }
 
