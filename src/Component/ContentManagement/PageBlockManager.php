@@ -11,6 +11,7 @@ use App\Entity\PageBlockElement;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use HouseOfAgile\NakaCMSBundle\DBAL\Types\NakaMenuItemType;
+use HouseOfAgile\NakaCMSBundle\Repository\BlockElementRepository;
 use HouseOfAgile\NakaCMSBundle\Repository\MenuItemRepository;
 use HouseOfAgile\NakaCMSBundle\Repository\MenuRepository;
 use HouseOfAgile\NakaCMSBundle\Repository\PageBlockElementRepository;
@@ -26,14 +27,17 @@ class PageBlockManager
     /** @var PageBlockElementRepository */
     protected $pageBlockElementRepository;
 
-
+    /** @var BlockElementRepository */
+    protected $blockElementRepository;
 
     public function __construct(
         EntityManagerInterface $entityManager,
-        PageBlockElementRepository $pageBlockElementRepository
+        PageBlockElementRepository $pageBlockElementRepository,
+        BlockElementRepository $blockElementRepository
     ) {
         $this->entityManager = $entityManager;
         $this->pageBlockElementRepository = $pageBlockElementRepository;
+        $this->blockElementRepository = $blockElementRepository;
     }
 
     public function createBlockElementFromBlockElementType(BlockElementType $blockElementType, $name): BlockElement
@@ -62,7 +66,7 @@ class PageBlockManager
         $newBlockElement = new BlockElement;
         $newBlockElement->setName($name);
         $newBlockElement->setBlockElementType($blockElementType);
-        $renamedKey = $name ? lcfirst(str_replace(['_',' '], '', ucwords($name))) : null;
+        $renamedKey = $name ? lcfirst(str_replace(['_', ' '], '', ucwords($name))) : null;
         return $this->renameDynamicKeysForBlockElementType($newBlockElement, $blockElementType, $renamedKey);
     }
 
@@ -75,7 +79,6 @@ class PageBlockManager
         $jsCode = $this->renameDynamicKeys($blockElementType->getjsCode(), $renamedKey);
         $blockElement->setJsCode($jsCode);
         return $blockElement;
-
     }
 
     private function renameDynamicKeys(string $content = null, string $renamedKey = null)
@@ -86,9 +89,47 @@ class PageBlockManager
         preg_match_all('!{{[\s]?\'(.*)\'[\s]?}}!', $content, $translationKeys);
         $uniqueTranslationKeys = array_unique($translationKeys[1]);
         foreach ($uniqueTranslationKeys as $translationKey) {
+            // here we replace the common part with the renamedKey
             $updatedTranslationKey = str_replace(self::TRANSLATION_COMMON_KEYS, $renamedKey, $translationKey);
             $content = preg_replace('!{{[\s]?\'' . $translationKey . '\'[\s]?}}!',  '{{ \'' . $updatedTranslationKey . '\' }}', $content);
         }
+        return $content;
+    }
+
+    public function renameSlugForAllBlocks(string $searchedSlugKey, string $renamedSlugKey = null)
+    {
+        foreach ($this->blockElementRepository->findAll() as $blockElement) {
+            $this->renameSlugKey($blockElement->getHtmlCode(), $searchedSlugKey, $renamedSlugKey);
+            $this->renameSlugKey($blockElement->getJsCode(), $searchedSlugKey, $renamedSlugKey);
+            $this->renameSlugKey($blockElement->getCssCode(), $searchedSlugKey, $renamedSlugKey);
+        }
+    }
+
+    public function renameSlugForAllBlocksOfPage(Page $page, string $renamedSlugKey = null)
+    {
+        foreach ($page->getPageBlockElements() as $pageBlockElement) {
+            /** @var PageBlockElement $pageBlockElement  */
+            $this->renameSlugKey($pageBlockElement->getBlockElement()->getHtmlCode(), $renamedSlugKey);
+            $this->renameSlugKey($pageBlockElement->getBlockElement()->getJsCode(), $renamedSlugKey);
+            $this->renameSlugKey($pageBlockElement->getBlockElement()->getCssCode(), $renamedSlugKey);
+        }
+    }
+
+    private function renameSlugKey(string $content = null, string $searchedSlugKey, string $renamedSlugKey = null)
+    {
+        if ($searchedSlugKey == null || $content == null || strpos($content, $searchedSlugKey) === false) {
+            return $content;
+        }
+        dump($content);
+        preg_match_all('!{\"slug\"\:[\s]?\"(.*)\"[\s]?}!', $content, $translationKeys);
+        $uniqueTranslationKeys = array_unique($translationKeys[1]);
+        foreach ($uniqueTranslationKeys as $translationKey) {
+            if ($translationKey == $searchedSlugKey) {
+                dump($translationKey);
+                $content = preg_replace('!{\"slug\"\:[\s]?"'. $translationKey . '"[\s]?}!',  '{"slug": "' . $renamedSlugKey . '" }', $content);
+            }
+        }
+        dd($content);
         return $content;
     }
 }

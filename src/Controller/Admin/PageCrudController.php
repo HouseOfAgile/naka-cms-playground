@@ -78,7 +78,7 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         $pageConfigurationTab = FormField::addTab('backend.form.page.pageConfigurationTab')
             ->setHelp('backend.form.page.pageConfigurationTab.help');
 
-        $pageTranslationsTab = FormField::addTab('backend.form.page.mainPageTranslationsPanel')
+        $pageTranslationTab = FormField::addTab('backend.form.page.mainPageTranslationsPanel')
             ->setHelp('backend.form.page.mainPageTranslationsPanel.help');
 
         $translations = TranslationField::new('translations', 'Translations', $fieldsConfig)
@@ -88,7 +88,10 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         $name = TextField::new('name')
             ->setLabel('Name')
             ->setHelp('Internal name to be used in Menus and elsewhere');
-        $pageType = ChoiceField::new('pageType')->setChoices(NakaPageType::getGuessOptions());
+        $pageType = ChoiceField::new('pageType')
+        ->setChoices(NakaPageType::getGuessOptions())
+        ->setHelp('backend.form.page.pageType.help')
+        ->setFormTypeOption('required', true);
 
         $enabled = BooleanField::new('enabled')->setLabel('is it Enabled')
             ->hideOnIndex()
@@ -102,26 +105,26 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         $pageBlockElements = AssociationField::new('pageBlockElements', 'backend.form.page.pageBlockElements')
             ->setFormTypeOption('by_reference', false)
             ->setHelp('backend.form.page.pageBlockElements.help');;
-        $category = AssociationField::new('category', 'backend.form.page.category');
+        // $category = AssociationField::new('category', 'backend.form.page.category');
 
 
         if (Crud::PAGE_INDEX === $pageName) {
             return [$id, $name, $slug, $pageType, $enabled, $pageBlockElements];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $slug, $enabled, $category];
+            return [$id, $name, $slug, $enabled];
         } elseif (Crud::PAGE_NEW === $pageName) {
             return [
                 $pageConfigurationTab, $pageDetailsPanel, $name, $pageType, $pageGallery,  $pageBlockElements, $enabled,
-                $pageConfigurationPanel, $category,
-                $pageTranslationsTab, $translations,
+                // $pageConfigurationPanel, $category,
+                $pageTranslationTab, $translations,
 
             ];
         } elseif (Crud::PAGE_EDIT === $pageName) {
             return [
 
-                $pageConfigurationTab, $pageDetailsPanel, $name, $pageType, $pageGallery,  $pageBlockElements, $enabled,
-                $pageConfigurationPanel, $category,
-                $pageTranslationsTab, $translations,
+                $pageConfigurationTab, $pageDetailsPanel, $name, $slug, $pageType, $pageGallery,  $pageBlockElements, $enabled,
+                // $pageConfigurationPanel, $category,
+                $pageTranslationTab, $translations,
 
             ];
         }

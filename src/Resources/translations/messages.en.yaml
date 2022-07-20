@@ -31,7 +31,7 @@ backend.websiteAsset.generalHelpForAdmin: "Here you can add assets that will be 
 backend.websiteAsset.generalHelpForManager: "Here you can find a list of assets that gives you information on the website."
 
 backend.form.page.pageDetailsPanel: "Page Details"
-backend.form.page.pageDetailsPanel.help: "Details for page"
+backend.form.page.pageDetailsPanel.help: "Those are the main settings of the page"
 backend.form.page.pageConfigurationTab: 'Page configuration'
 backend.form.page.pageConfigurationTab.help: 'General configuration for the page'
 
@@ -43,6 +43,9 @@ backend.form.page.category: "Category of the page"
 backend.form.page.pageBlockElements: "All related PageBlock Elements"
 backend.form.page.pageBlockElements.help: "Here you can select the pageblock you want to have on that page, you can later change and order them through the config layout Page."
 backend.form.page.pageGallery: "Related Gallery"
+backend.form.page.pageGallery.help: 'This is the gallery holding the images that will be used in the <strong>content</strong> part of the page'
+
+backend.form.page.pageType.help: 'The type of the page, can be of three main types'
 
 backend.form.page.pageConfigurationPanel: "Page Configuration"
 backend.form.page.pageConfigurationPanel.help: "Here you can select the blocks on that page, connect a gallery, set the category"
@@ -92,6 +95,13 @@ backend.crud.menu.generalHelp: |
         <li>footerMenu: the menu that is usually in the footer</li>
     <ul>
 backend.formPage.editBlockElement.title: Edition of a block element
+
+
+websiteInfo.globalSettings: 'Global Settings'
+websiteInfo.generalExplanation: 'You can have a look here tot he global settings of the website, as well as customizing the main translation'
+websiteInfo.globalTranslations: 'Global Translations'
+websiteInfo.globalParameter: 'Global Parameters'
+websiteInfo.value: 'Value'
 thumbnail.viewLarger: "View Larger"
 
 contact.contactTitle: Contact Us
