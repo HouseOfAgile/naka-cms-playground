@@ -98,7 +98,7 @@ backend.formPage.editBlockElement.title: Edition of a block element
 
 
 websiteInfo.globalSettings: 'Global Settings'
-websiteInfo.generalExplanation: 'You can have a look here tot he global settings of the website, as well as customizing the main translation'
+websiteInfo.generalExplanation: 'You can have a look here to the global settings of the website, as well as customizing the main translation'
 websiteInfo.globalTranslations: 'Global Translations'
 websiteInfo.globalParameter: 'Global Parameters'
 websiteInfo.value: 'Value'

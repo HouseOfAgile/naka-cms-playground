@@ -7,7 +7,7 @@
 
 		{% if websiteInfo %}
 			<div class="col-6 my-5">
-				<p>{{ 'websiteInfo.generalExplanation'|trans }}</p>
+				<p class="my-5 p-5 bg-info">{{ 'websiteInfo.generalExplanation'|trans }}</p>
 			</div>
 			<div class="col-6 my-5">
 				<h3>{{ 'websiteInfo.globalSettings'|trans }}</h3>
@@ -54,7 +54,7 @@
 			</div>
 			<div class="col-6 offset-3 ">
 				<a href="{{ ea_url().setController('HouseOfAgile\\NakaCMSBundle\\Controller\\Admin\\WebsiteInfoCrudController').setAction('edit').setEntityId(websiteInfo.id) }}" class="btn btn-success d-flex justify-content-center p-4" role="button">
-					<i class="fa fa-info"></i>
+					<i class="fa fa-info"></i>&nbsp;
 					<span>{{ 'backend.websiteInfo.configureWebsiteInfo' | trans }}</span>
 				</a>
 			</div>
@@ -67,12 +67,10 @@
 							{{ is_granted('ROLE_ADMIN') ? ('<p>'~('backend.websiteInfo.youNeedAWebsiteInfo' | trans)~'</p>') | raw : '' }}</div>
 					</div>
 				</div>
-				<div class="col-6 offset-3 ">
+				<div class="col-6 offset-3">
 					<a href="{{ ea_url().setController('HouseOfAgile\\NakaCMSBundle\\Controller\\Admin\\WebsiteInfoCrudController').setAction('new') }}" class="btn btn-success d-flex justify-content-center p-4" role="button">
-
-						<span>
-							<i class="fa fa-info"></i>
-							{{ 'backend.websiteInfo.configureWebsiteInfo' | trans }}</span>
+						<i class="fa fa-info"></i>&nbsp;
+						<span>{{ 'backend.websiteInfo.configureWebsiteInfo' | trans }}</span>
 					</a>
 				</div>
 			</div>
