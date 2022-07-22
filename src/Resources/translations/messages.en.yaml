@@ -96,6 +96,21 @@ backend.crud.menu.generalHelp: |
     <ul>
 backend.formPage.editBlockElement.title: Edition of a block element
 
+backend.form.menuItem.configurationPanel: 'MenuItem Configuration'
+backend.form.menuItem.typePanel: 'MenuItem type'
+backend.form.menuItem.typePanel.help: 'The type of the menuItem determines how the link will be rendered, as well as its translations '
+backend.form.menuItem.type.help: |
+    Each menuitem can have a type among:
+        <ul>
+        <li><strong>page</strong>: link to a NakaCMS page, in that case the translation of the menuitem will be the one form the page</li>
+        <li><strong>route</strong>: In this case the menuItem link to a NakaCMS route with some route parameters, translations have to be provided.</li>
+        <li><strong>uri</strong>: This is to link to an external url, translations have to be provided</li>
+        </ul>
+    Depending on the type, you have to set the correct fields (for route, you have to set the route and the routeParameters)
+
+backend.form.menuItem.translations.help: 'Translations for the menuItem are used when the type of the menuItem is route or uri'
+admin.form.menuItem.page: 'Related Page'
+
 
 websiteInfo.globalSettings: 'Global Settings'
 websiteInfo.generalExplanation: 'You can have a look here to the global settings of the website, as well as customizing the main translation'
