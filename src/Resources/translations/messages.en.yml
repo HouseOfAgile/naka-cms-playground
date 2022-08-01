@@ -2,15 +2,13 @@
 frontend.goToAdmin: "Go to Admin"
 main.returnToAdmin: "Return to Admin"
 
-
 form.contact.name: Name
 form.contact.email: Email
 form.contact.subject: Subject
 form.contact.message: Message
 form.contact.submit: "Send your message"
 
-
-common.readMore: 'Read More'
+common.readMore: "Read More"
 backend.dashboard.title: "Welcome in the %applicationName% backend"
 backend.dashboardAdmin.generalHelp: "This is the general backend for administration of the system.<br/>You can manage pages, menus and the various blocks they contains."
 backend.dashboardManager.generalHelp: "This backend give you the ability to manage the specifics of this NakaCMS instance."
@@ -32,20 +30,20 @@ backend.websiteAsset.generalHelpForManager: "Here you can find a list of assets 
 
 backend.form.page.pageDetailsPanel: "Page Details"
 backend.form.page.pageDetailsPanel.help: "Those are the main settings of the page"
-backend.form.page.pageConfigurationTab: 'Page configuration'
-backend.form.page.pageConfigurationTab.help: 'General configuration for the page'
+backend.form.page.pageConfigurationTab: "Page configuration"
+backend.form.page.pageConfigurationTab.help: "General configuration for the page"
 
-backend.form.page.mainPageTranslationsPanel: "Main page translations"
+page.mainPageTranslationsPanel: "Main page translations"
 backend.form.page.mainPageTranslationsPanel.help: |
-    <p>Translations for the page profived internationalized translation for the page details in the various supported languages.</p>
+    <p>Those are the internationalized translation for the page details in the various supported languages.</p>
     <p>The content will give an insight on the page, and will be used for SEO.</p>
 backend.form.page.category: "Category of the page"
 backend.form.page.pageBlockElements: "All related PageBlock Elements"
 backend.form.page.pageBlockElements.help: "Here you can select the pageblock you want to have on that page, you can later change and order them through the config layout Page."
 backend.form.page.pageGallery: "Related Gallery"
-backend.form.page.pageGallery.help: 'This is the gallery holding the images that will be used in the <strong>content</strong> part of the page'
+backend.form.page.pageGallery.help: "This is the gallery holding the images that will be used in the <strong>content</strong> part of the page"
 
-backend.form.page.pageType.help: 'The type of the page, can be of three main types'
+backend.form.page.pageType.help: "The type of the page, can be of three main types"
 
 backend.form.page.pageConfigurationPanel: "Page Configuration"
 backend.form.page.pageConfigurationPanel.help: "Here you can select the blocks on that page, connect a gallery, set the category"
@@ -73,13 +71,13 @@ backend.form.blockElementType.jsCode: "The javascript code for that block elemen
 
 backend.form.menu.menuItems: "List of items in that menu"
 
-backend.form.staff.staffSettingsPanel: 'General settings for staff'
-backend.form.staff.staffDetailsPanel: 'Staff details'
-backend.form.staff.staffTranslationsPanel: 'Staff content'
-backend.form.staff.staffTranslationsPanel.help: 'This will control the content associated with the staff, more specifically the one used in the team page'
+backend.form.staff.staffSettingsPanel: "General settings for staff"
+backend.form.staff.staffDetailsPanel: "Staff details"
+backend.form.staff.staffTranslationsPanel: "Staff content"
+backend.form.staff.staffTranslationsPanel.help: "This will control the content associated with the staff, more specifically the one used in the team page"
 
-backend.form.user.firstName.help: 'Set the first name of that user, it should be unique'
-backend.form.user.roles.help: ''
+backend.form.user.firstName.help: "Set the first name of that user, it should be unique"
+backend.form.user.roles.help: ""
 
 backend.crud.pageBlockElement.relatedToPage: "Related to page"
 backend.crud.pageBlockElement.notLinkedToAnyPage: "Not linked to any page"
@@ -95,10 +93,9 @@ backend.crud.menu.generalHelp: |
         <li>footerMenu: the menu that is usually in the footer</li>
     <ul>
 backend.formPage.editBlockElement.title: Edition of a block element
-
-backend.form.menuItem.configurationPanel: 'MenuItem Configuration'
-backend.form.menuItem.typePanel: 'MenuItem type'
-backend.form.menuItem.typePanel.help: 'The type of the menuItem determines how the link will be rendered, as well as its translations '
+backend.form.menuItem.configurationPanel: "MenuItem Configuration"
+backend.form.menuItem.typePanel: "MenuItem type"
+backend.form.menuItem.typePanel.help: "The type of the menuItem determines how the link will be rendered, as well as its translations "
 backend.form.menuItem.type.help: |
     Each menuitem can have a type among:
         <ul>
@@ -107,16 +104,25 @@ backend.form.menuItem.type.help: |
         <li><strong>uri</strong>: This is to link to an external url, translations have to be provided</li>
         </ul>
     Depending on the type, you have to set the correct fields (for route, you have to set the route and the routeParameters)
+backend.form.menuItem.translations.help: "Translations for the menuItem are used when the type of the menuItem is route or uri"
 
-backend.form.menuItem.translations.help: 'Translations for the menuItem are used when the type of the menuItem is route or uri'
-admin.form.menuItem.page: 'Related Page'
+backend.form.configureMenu.menuItem: MenuItem
+backend.form.configureMenu.title: Configure  menu
+backend.form.configureMenu.detailedHelp: |
+    <p>You can rearrange the menuItems from a menu by drag''n dropping them. You can move the menuItems to rearrange them.</p>
+    <p>The position is shown in the black bubble, menu Items order is based on that number, from the smallest to the biggest.</p>
+    <p>If there is a question mark, it just means the position has not been set for that element, and thus this element will be shown on top.</p>
+backend.form.configureMenu.position: Position
+backend.form.configureMenu.submit: Reorganize Menu
 
 
-websiteInfo.globalSettings: 'Global Settings'
-websiteInfo.generalExplanation: 'You can have a look here to the global settings of the website, as well as customizing the main translation'
-websiteInfo.globalTranslations: 'Global Translations'
-websiteInfo.globalParameter: 'Global Parameters'
-websiteInfo.value: 'Value'
+admin.form.menuItem.page: "Related Page"
+
+websiteInfo.globalSettings: "Global Settings"
+websiteInfo.generalExplanation: "You can have a look here to the global settings of the website, as well as customizing the main translation"
+websiteInfo.globalTranslations: "Global Translations"
+websiteInfo.globalParameter: "Global Parameters"
+websiteInfo.value: "Value"
 thumbnail.viewLarger: "View Larger"
 
 contact.contactTitle: Contact Us
@@ -131,7 +137,6 @@ form.editOpeningHours.detailedHelp: |
     <div class="py-1"><strong>"exceptions":{"2024-11-11":["09:00-12:00"],"2024-12-25":[]}</strong> means the office will be close on 2024-11-11 between 9:00 and 12:00 and will be close al day on 2024-12-25.</div>
     <div class="py-1"><strong>"exceptions":{"01-01":[],"12-25":['09:00-12:00']}</strong> means the office will be close on each 1st of January and each 25th of December between 9:00 and 12:00.</div>
 form.openingHours.updateOpeningHours: "Update Opening Hours"
-
 flash.openingHours.openingHoursUpdated: "Opening hours have been updated !"
 
 openingHours.title: "Opening Hours"
@@ -141,6 +146,6 @@ openingHours.closed: "Closed"
 openingHours.weAreOpen: "We are open"
 openingHours.weAreClosed: "We are closed"
 
-team.title: 'Our team looks forward to seeing you.'
+team.title: "Our team looks forward to seeing you."
 
 footer.mainText: "Business in Berlin"
