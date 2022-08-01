@@ -18,23 +18,23 @@ class Menu
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $isFixed;
+    protected $isFixed;
     
     /**
      * @ORM\ManyToMany(targetEntity=MenuItem::class, inversedBy="menus")
      * @ORM\OrderBy({"position": "ASC"})
      */
-    private $menuItems;
+    protected $menuItems;
 
 
     

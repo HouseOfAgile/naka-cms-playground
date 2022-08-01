@@ -18,23 +18,23 @@ class PageBlockElement
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Page::class, inversedBy="pageBlockElements")
      */
-    private $page;
+    protected $page;
 
     /**
      * @ORM\ManyToOne(targetEntity=BlockElement::class, inversedBy="pageBlockElements")
      */
-    private $blockElement;
+    protected $blockElement;
 
     /**
      * @Gedmo\SortablePosition
      * @ORM\Column(type="integer")
      */
-    private $position;
+    protected $position;
 
     public function getId(): ?int
     {

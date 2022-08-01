@@ -18,15 +18,15 @@ class PageGallery
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $name;
+    protected $name;
 
     /**
-     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="pageGallery",cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="pageGallery",cascade={"remove","persist"})
      */
     protected $images;
 

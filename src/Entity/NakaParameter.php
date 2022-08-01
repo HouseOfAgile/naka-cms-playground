@@ -14,22 +14,22 @@ class NakaParameter
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $path;
+    protected $path;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $value;
+    protected $value;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $help;
+    protected $help;
 
 
     /**

@@ -22,27 +22,27 @@ class BlockElementType implements TimestampableInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=40)
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $htmlCode;
+    protected $htmlCode;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $jsCode;
+    protected $jsCode;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $cssCode;
+    protected $cssCode;
 
     /**
      * @ORM\OneToMany(targetEntity=BlockElement::class, mappedBy="blockElementType")

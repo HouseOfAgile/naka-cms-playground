@@ -31,32 +31,32 @@ class Page implements TranslatableInterface, SluggableInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="NakaPageType", nullable=true)
      */
-    private $pageType;
+    protected $pageType;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $enabled;
+    protected $enabled;
 
     /**
      * @ORM\OneToOne(targetEntity=PageGallery::class, cascade={"persist", "remove"})
      */
-    private $pageGallery;
+    protected $pageGallery;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="pages")
      */
-    private $category;
+    protected $category;
 
     /**
      * @ORM\OneToMany(targetEntity=MenuItem::class, mappedBy="page")
@@ -64,7 +64,7 @@ class Page implements TranslatableInterface, SluggableInterface
     protected $menuItems;
 
     /**
-     * @ORM\OneToMany(targetEntity=PageBlockElement::class, mappedBy="page")
+     * @ORM\OneToMany(targetEntity=PageBlockElement::class, mappedBy="page", cascade={"remove"})
      * @ORM\OrderBy({"position": "ASC"})
      */
     protected $pageBlockElements;
@@ -116,7 +116,7 @@ class Page implements TranslatableInterface, SluggableInterface
         }
     }
 
-    private function shouldRegenerateSlugOnUpdate(): bool
+    protected function shouldRegenerateSlugOnUpdate(): bool
     {
         return false;
     }

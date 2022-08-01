@@ -5,6 +5,7 @@ namespace HouseOfAgile\NakaCMSBundle\Entity;
 use App\Entity\BlockElement;
 use App\Entity\Gallery;
 use App\Entity\PageGallery;
+use App\Entity\Staff;
 use App\Entity\PictureGallery;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -30,7 +31,7 @@ class Picture implements TimestampableInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -39,24 +40,24 @@ class Picture implements TimestampableInterface
      * 
      * @var File|null
      */
-    private $imageFile;
+    protected $imageFile;
 
     /**
      * @ORM\Embedded(class="Vich\UploaderBundle\Entity\File")
      *
      * @var EmbeddedFile
      */
-    private $image;
+    protected $image;
 
     /**
      * @ORM\ManyToOne(targetEntity=PageGallery::class, inversedBy="images",cascade={"persist"})
      */
-    private $pageGallery;
+    protected $pageGallery;
 
     /**
      * @ORM\ManyToOne(targetEntity=PictureGallery::class, inversedBy="images")
      */
-    private $pictureGallery;
+    protected $pictureGallery;
 
     /**
      * @ORM\ManyToMany(targetEntity=BlockElement::class, mappedBy="pictures")

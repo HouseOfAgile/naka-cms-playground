@@ -18,7 +18,7 @@ class PictureGallery
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="pictureGallery")

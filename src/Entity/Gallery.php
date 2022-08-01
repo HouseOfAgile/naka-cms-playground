@@ -19,17 +19,17 @@ class Gallery
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\ManyToMany(targetEntity=Picture::class, inversedBy="galleries",cascade={"persist"})
      */
-    private $pictures;
+    protected $pictures;
 
     /**
      * @ORM\OneToMany(targetEntity=BlockElement::class, mappedBy="gallery")

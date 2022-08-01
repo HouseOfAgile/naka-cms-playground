@@ -18,17 +18,17 @@ class WebsiteInfoTranslation implements TranslationInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
      */
-    private $title;
+    protected $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $catchPhrase;
+    protected $catchPhrase;
 
     public function getId(): ?int
     {

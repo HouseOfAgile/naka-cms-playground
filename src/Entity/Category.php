@@ -10,10 +10,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use HouseOfAgile\NakaCMSBundle\Entity\AppTrait\DefaultTranslatableTrait;
 use HouseOfAgile\NakaCMSBundle\Repository\CategoryRepository;
-use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TreeNodeInterface;
-use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 use Knp\DoctrineBehaviors\Model\Tree\TreeNodeTrait;
 
@@ -32,7 +30,7 @@ class Category implements TranslatableInterface, TreeNodeInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToMany(targetEntity=Page::class, mappedBy="category")

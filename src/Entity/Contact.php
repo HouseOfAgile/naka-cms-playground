@@ -16,12 +16,12 @@ class Contact
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=60)
      */
-    private $name;
+    protected $name;
 
     /**
      * @Assert\Email()
@@ -29,17 +29,17 @@ class Contact
      * @Assert\NotNull()
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
+    protected $email;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $subject;
+    protected $subject;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $message;
+    protected $message;
 
 
 

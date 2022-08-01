@@ -24,7 +24,7 @@ class WebsiteAsset implements TimestampableInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -33,14 +33,14 @@ class WebsiteAsset implements TimestampableInterface
      * 
      * @var File|null
      */
-    private $assetFile;
+    protected $assetFile;
 
     /**
      * @ORM\Embedded(class="Vich\UploaderBundle\Entity\File")
      *
      * @var EmbeddedFile
      */
-    private $asset;
+    protected $asset;
 
     public function __construct()
     {

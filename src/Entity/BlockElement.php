@@ -26,39 +26,39 @@ class BlockElement implements TimestampableInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=BlockElementType::class, inversedBy="blockElements")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $blockElementType;
+    protected $blockElementType;
 
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $htmlCode;
+    protected $htmlCode;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $jsCode;
+    protected $jsCode;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $cssCode;
+    protected $cssCode;
 
     /**
      * @ORM\ManyToMany(targetEntity=Picture::class, inversedBy="blockElements")
      */
-    private $pictures;
+    protected $pictures;
 
     /**
      * @ORM\OneToMany(targetEntity=PageBlockElement::class, mappedBy="blockElement")
@@ -68,17 +68,17 @@ class BlockElement implements TimestampableInterface
     /**
      * @ORM\Column(type="json", nullable=true)
      */
-    private $blockConfig = [];
+    protected $blockConfig = [];
 
     /**
      * @ORM\ManyToOne(targetEntity=Gallery::class, inversedBy="blockElements")
      */
-    private $gallery;
+    protected $gallery;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $isFluid;
+    protected $isFluid;
 
     public function __construct()
     {

@@ -26,32 +26,32 @@ class MenuItem implements TranslatableInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=40)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="string", length=120, nullable=true)
      */
-    private $route;
+    protected $route;
 
     /**
      * @ORM\Column(type="array", nullable=true)
      */
-    private $routeParameters = [];
+    protected $routeParameters = [];
 
     /**
      * @ORM\ManyToOne(targetEntity=Page::class, inversedBy="menuItems")
      */
-    private $page;
+    protected $page;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
      */
-    private $orderId;
+    protected $orderId;
 
     /**
      * @ORM\ManyToMany(targetEntity=Menu::class, mappedBy="menuItems")
@@ -61,18 +61,18 @@ class MenuItem implements TranslatableInterface
     /**
      * @ORM\Column(type="NakaMenuItemType", nullable=true)
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $uri;
+    protected $uri;
 
     /**
      * @Gedmo\SortablePosition
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $position;
+    protected $position;
 
     public function __construct()
     {

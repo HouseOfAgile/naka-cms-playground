@@ -18,12 +18,12 @@ class WebsiteInfo implements TranslatableInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="json", nullable=true)
      */
-    private $openingHours = [];
+    protected $openingHours = [];
     
     public function __toString()
     {

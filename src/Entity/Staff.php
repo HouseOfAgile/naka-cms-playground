@@ -5,16 +5,15 @@ namespace HouseOfAgile\NakaCMSBundle\Entity;
 use App\Entity\Picture;
 use Doctrine\ORM\Mapping as ORM;
 use HouseOfAgile\NakaCMSBundle\Entity\AppTrait\DefaultTranslatableTrait;
-use HouseOfAgile\NakaCMSBundle\Repository\StaffRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 
 /**
- * @ORM\MappedSuperclass(repositoryClass=StaffRepository::class)
+ * @ORM\MappedSuperclass
  */
-class Staff implements TranslatableInterface, SluggableInterface
+abstract class Staff implements TranslatableInterface, SluggableInterface
 {
     use TranslatableTrait;
     use SluggableTrait;
@@ -25,27 +24,27 @@ class Staff implements TranslatableInterface, SluggableInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $firstName;
+    protected $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $lastName;
+    protected $lastName;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $businessRole;
+    protected $businessRole;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $isActive;
+    protected $isActive;
 
     /**
      * @ORM\ManyToOne(targetEntity=Picture::class, inversedBy="staff", fetch="EAGER")
@@ -55,7 +54,7 @@ class Staff implements TranslatableInterface, SluggableInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $doctolibUrl;
+    protected $doctolibUrl;
 
     public function getId(): ?int
     {
