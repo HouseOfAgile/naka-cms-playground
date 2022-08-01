@@ -5,7 +5,7 @@ namespace HouseOfAgile\NakaCMSBundle\Controller;
 use Exception;
 use HouseOfAgile\NakaCMSBundle\Component\PageDecorator\PageDecorator;
 use HouseOfAgile\NakaCMSBundle\DBAL\Types\NakaPageType;
-use HouseOfAgile\NakaCMSBundle\Entity\Page;
+use App\Entity\Page;
 use HouseOfAgile\NakaCMSBundle\Repository\PageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

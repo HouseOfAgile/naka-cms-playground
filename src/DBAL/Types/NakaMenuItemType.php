@@ -9,7 +9,7 @@ final class NakaMenuItemType extends AbstractEnumType
     public const TYPE_URL = 'url';
     public const TYPE_PAGE = 'page';
 
-    protected static $choices = [
+    protected static array $choices = [
         self::TYPE_ROUTE => 'Menu Item of type route',
         self::TYPE_URL => 'Menu Item of type url',
         self::TYPE_PAGE => 'Menu Item of type page',

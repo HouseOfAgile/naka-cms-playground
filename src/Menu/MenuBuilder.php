@@ -2,8 +2,9 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Menu;
 
-use HouseOfAgile\NakaCMSBundle\DBAL\Types\NakaMenuItemType;
 use App\Entity\MenuItem;
+use Doctrine\ORM\EntityRepository;
+use HouseOfAgile\NakaCMSBundle\DBAL\Types\NakaMenuItemType;
 use HouseOfAgile\NakaCMSBundle\Repository\MenuRepository;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
@@ -12,25 +13,25 @@ class MenuBuilder
 {
     private $factory;
 
-    /** @var MenuRepository */
-    protected $menuRepository;
+    /** @var EntityRepository */
+    protected $entityRepository;
 
     /**
      * Add any other dependency you need...
      */
     public function __construct(
         FactoryInterface $factory,
-        MenuRepository $menuRepository
+        EntityRepository $entityRepository
     ) {
         $this->factory = $factory;
-        $this->menuRepository = $menuRepository;
+        $this->entityRepository = $entityRepository;
     }
 
     public function createMainMenu(array $options): ItemInterface
     {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'navbar-nav mb-2 mb-lg-0');
-        $mainMenu = $this->menuRepository->findOneBy(['name' => 'mainMenu']);
+        $mainMenu = $this->entityRepository->findOneBy(['name' => 'mainMenu']);
         if ($mainMenu) {
             foreach ($mainMenu->getMenuItems() as $key => $menuItem) {
                 $thisMenuItem = $this->addMenuItem($menuItem, $menu, true);
@@ -46,7 +47,7 @@ class MenuBuilder
     {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'list-unstyled text-muted');
-        $footerMenu = $this->menuRepository->findOneBy(['name' => 'footerMenu']);
+        $footerMenu = $this->entityRepository->findOneBy(['name' => 'footerMenu']);
         if ($footerMenu) {
             foreach ($footerMenu->getMenuItems() as $key => $menuItem) {
                 $thisMenuItem = $this->addMenuItem($menuItem, $menu)

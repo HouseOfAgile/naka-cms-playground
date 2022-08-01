@@ -2,18 +2,22 @@
 
 namespace HouseOfAgile\NakaCMSBundle\DataFixtures;
 
+use Doctrine\Persistence\ObjectManager;
 use HouseOfAgile\NakaCMSBundle\Entity\AdminUser;
 use HouseOfAgile\NakaCMSBundle\Entity\User;
-use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends BaseFixture
 {
-    private $passwordEncoder;
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
-    {
-        $this->passwordEncoder = $passwordEncoder;
+    
+    private UserPasswordHasherInterface $passwordHasher;
+
+    public function __construct(
+        UserPasswordHasherInterface $passwordHasher
+    ) {
+        $this->passwordHasher = $passwordHasher;
     }
+    
     
     protected function loadData(ObjectManager $manager)
     {
@@ -21,10 +25,11 @@ class UserFixtures extends BaseFixture
             $user = new User();
             $user->setEmail(sprintf('spacebar%d@example.com', $i));
             $user->setFirstName($this->faker->firstName);
-            $user->setPassword($this->passwordEncoder->encodePassword(
+            $hashedPassword = $this->passwordHasher->hashPassword(
                 $user,
                 'engage'
-            ));
+            );
+            $user->setPassword($hashedPassword);
             return $user;
         });
         $this->createMany(3, 'admin_users', function($i) {
@@ -32,10 +37,11 @@ class UserFixtures extends BaseFixture
             $user->setEmail(sprintf('admin%d@thespacebar.com', $i));
             $user->setFirstName($this->faker->firstName);
             $user->setRoles(['ROLE_ADMIN']);
-            $user->setPassword($this->passwordEncoder->encodePassword(
+            $hashedPassword = $this->passwordHasher->hashPassword(
                 $user,
                 'engage'
-            ));
+            );
+            $user->setPassword($hashedPassword);
             return $user;
         });
         $manager->flush();

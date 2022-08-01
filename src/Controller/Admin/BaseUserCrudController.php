@@ -18,24 +18,24 @@ use HouseOfAgile\NakaCMSBundle\Service\Mailer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class BaseUserCrudController extends AbstractCrudController implements EventSubscriberInterface
 {
 
-    /** @var UserPasswordEncoderInterface */
-    private $passwordEncoder;
+    /** @var UserPasswordHasherInterface */
+    private UserPasswordHasherInterface $passwordHasher;
 
     /** @var Mailer */
     private $mailer;
     protected $applicationName;
 
     public function __construct(
-        UserPasswordEncoderInterface $passwordEncoder,
+        UserPasswordHasherInterface $passwordHasher,
         Mailer $mailer,
         $applicationName
     ) {
-        $this->passwordEncoder = $passwordEncoder;
+        $this->passwordHasher = $passwordHasher;
         $this->mailer = $mailer;
         $this->applicationName = $applicationName;
     }
@@ -131,7 +131,11 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
     {
         $user = $event->getEntityInstance();
         if ($user instanceof BaseUser && $user->getPlainPassword()) {
-            $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPlainPassword()));
+            $hashedPassword = $this->passwordHasher->hashPassword(
+                $user,
+                $user->getPlainPassword()
+            );
+            $user->setPassword($hashedPassword);
             $user->setPlainPassword(null);
         }
     }

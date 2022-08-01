@@ -34,7 +34,8 @@ class NakaCMSExtension extends Extension implements PrependExtensionInterface
             ],
         ]);
     }
-    public function getAlias()
+    
+    public function getAlias(): string
     {
         return 'hoa_naka_cms';
     }
