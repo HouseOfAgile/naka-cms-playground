@@ -14,7 +14,7 @@ class NakaPositionItemType extends AbstractType
         foreach ($options['items'] as $item) {
             # code...
             $builder->add('item_' . $item->getId(), TextType::class, [
-                'attr' => ['class' => 'sortable-item'],
+                'attr' => ['class' => 'bg-info p-3 text-light rounded'],
                 'block_prefix' => 'sortable_block',
                 'label' => $item->getName(),
                 'data' => $item->getPosition(),
