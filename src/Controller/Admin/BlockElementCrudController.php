@@ -28,7 +28,7 @@ class BlockElementCrudController extends AbstractCrudController
         // $crud = parent::configureCrud($crud);
 
         return $crud
-            ->showEntityActionsAsDropdown(false)
+            ->showEntityActionsInlined(true)
             ->overrideTemplate('crud/index', '@NakaCMS/backend/block-element/list.html.twig')
             ;
     }

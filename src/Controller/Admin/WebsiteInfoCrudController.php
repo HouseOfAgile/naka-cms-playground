@@ -36,7 +36,7 @@ class WebsiteInfoCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->showEntityActionsAsDropdown(false)
+            ->showEntityActionsInlined(true)
             ->overrideTemplate('crud/detail', '@NakaCMS/backend/website-info/show-website-info.html.twig');
     }
 
@@ -46,8 +46,7 @@ class WebsiteInfoCrudController extends AbstractCrudController
         return $actions
             ->remove(Crud::PAGE_INDEX, Action::NEW)
             ->remove(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER)
-            ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE)
-            ;
+            ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE);
     }
 
     public function configureFields(string $pageName): iterable
