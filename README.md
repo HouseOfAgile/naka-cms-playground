@@ -8,6 +8,7 @@ This bundle has some requirements:
     composer require vich/uploader-bundle
     composer req fresh/doctrine-enum-bundle='~7.1'
 
+View docs `doc/index.md`
 
 Next step:
 * Add fixtures and factories
