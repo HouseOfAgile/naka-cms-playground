@@ -32,4 +32,14 @@
         $projectDir: "%kernel.project_dir%"
         $devMode: "%env(bool:DEV_MODE)%"
 ```
+
+* Add naka services definition files
+
+In your `config/services.yml` file
+
+```
+imports:
+    - { resource: "@NakaCMSBundle/Resources/config/naka_services_menu.yaml" }
+    - { resource: "@NakaCMSBundle/Resources/config/naka_services.yaml" }
+```
 ## Configure Security

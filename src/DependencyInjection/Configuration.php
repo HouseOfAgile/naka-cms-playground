@@ -17,9 +17,13 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('internationalization')
             ->children()
             ->arrayNode('all_locales')
+                ->defaultValue(['en','de','fr'])
                 ->scalarPrototype()->end()
             ->end()
-            ->scalarNode('supported_locales')->end()
+            ->scalarNode('supported_locales')
+            ->info('String representing the supported locales seprated by \'|\'')
+                ->defaultValue('en|de')
+            ->end()
             ->end()
             ->end() // twitter
         ;
