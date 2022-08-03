@@ -2,8 +2,8 @@
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services
         http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="hoa_naka_cms.knpu_ipsum" class="HouseOfAgile\NakaCMSBundle\KnpUIpsum" public="true" />
-        <service id="HouseOfAgile\NakaCMSBundle\KnpUIpsum" alias="hoa_naka_cms.knpu_ipsum" public="false" />
+        <service id="hoa_naka_cms.hoa_ipsum" class="HouseOfAgile\NakaCMSBundle\HoaIpsum" public="true" />
+        <service id="HouseOfAgile\NakaCMSBundle\HoaIpsum" alias="hoa_naka_cms.hoa_ipsum" public="false" />
 
         <!-- <service id="hoa_naka_cms.dashboard_controller" autowire="true" class="HouseOfAgile\NakaCMSBundle\Controller\Admin\DashboardController" public="true"> -->
             <!-- <service id="HouseOfAgile\NakaCMSBundle\Controller\Admin\DashboardController" autowire="true"  public="true"> -->
