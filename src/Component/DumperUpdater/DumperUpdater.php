@@ -63,8 +63,8 @@ class DumperUpdater
     ) {
         $this->logger = $scrappingLogger;
         $this->entityManager = $entityManager;
-        $this->dataDumpDir = $projectDir . '/config/datadump';
-        $this->assetDir = $projectDir . '/data/assets';
+        $this->dataDumpDir = $projectDir . '/naka-cms/active/data/content';
+        $this->assetDir = $projectDir . '/naka-cms/active/data/resources';
         $this->projectDir = $projectDir;
         $this->filesystem = $assetPicturesFsFilesystem;
         $this->uploadHandler = $uploadHandler;
