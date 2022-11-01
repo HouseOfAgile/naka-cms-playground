@@ -101,10 +101,10 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
             ->setHelp('backend.form.page.pageConfigurationPanel.help');
         // no pageGallery for now on page level
         $pageGallery = AssociationField::new('pageGallery', 'backend.form.page.pageGallery')
-            ->setHelp('backend.form.page.pageGallery.help');;
+            ->setHelp('backend.form.page.pageGallery.help');
         $pageBlockElements = AssociationField::new('pageBlockElements', 'backend.form.page.pageBlockElements')
             ->setFormTypeOption('by_reference', false)
-            ->setHelp('backend.form.page.pageBlockElements.help');;
+            ->setHelp('backend.form.page.pageBlockElements.help');
         // $category = AssociationField::new('category', 'backend.form.page.category');
 
 

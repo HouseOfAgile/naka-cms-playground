@@ -67,6 +67,9 @@ class BlockElementCrudController extends AbstractCrudController
             'form.blockElement.type'
         );
 
+        $pageBlockElements = AssociationField::new('pageBlockElements', 'backend.form.page.pageBlockElements')
+            ->setFormTypeOption('by_reference', false)
+            ->setHelp('backend.form.page.pageBlockElements.help');
         // $createdAt = DateTimeField::new('createdAt')->setTemplatePath('@NakaCMS/naka/backend/fields/common/field_human_date.html.twig');
         // $updatedAt = DateTimeField::new('updatedAt')->setTemplatePath('@NakaCMS/naka/backend/fields/common/field_human_date.html.twig');
 
@@ -93,7 +96,7 @@ class BlockElementCrudController extends AbstractCrudController
         $isFluid = BooleanField::new('isFluid');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $name, $blockElementType];
+            return [$id, $name, $pageBlockElements, $blockElementType];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $name, $blockElementType, $htmlCode, $cssCode, $jsCode, $gallery, $isFluid];
         } elseif (Crud::PAGE_NEW === $pageName) {
