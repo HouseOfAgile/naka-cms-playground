@@ -3,22 +3,37 @@
 {% endblock %}
 asd
 {% block sortable_block_widget %}
-	{# {{dump()}} #}
 	<div class="d-flex justify-content-evenly m-2 p-2">
-		<div class="align-end">
+		<div class="col-4">
 			<span class="p-2">
 				{{ 'backend.form.configureMenu.position'|trans }}
 			</span>
-			<span class="fa-stack fa-2x"  data-bs-toggle="tooltip" data-bs-placement="top" title="{{ name }}">
+			<span class="fa-stack fa-2x" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ name }}">
 				<i class="fa fa-circle fa-stack-2x"></i>
 				<strong class="fa-stack-1x text-light">{{ data|default('?') }}</strong>
 			</span>
 		</div>
-		<div {{ block('widget_attributes') }} {% if value is not empty %} value="{{ value }}" {% endif %}>
-			{{ 'backend.form.configureMenu.menuItem'|trans }}
-			{{label}}
+		<div class="col-8">
 
+			<div {{ block('widget_attributes') }} {% if value is not empty %} value="{{ value }}" {% endif %}>
+				<div class="d-flex justify-content-between">
+					{{ 'backend.form.configureMenu.menuItem'|trans }}
+					{{label}}
+					<div class="btn-group" role="group" aria-label="Basic example">
 
+						<a href="{{ ea_url().unsetAll().setEntityId(data).setController('App\\Controller\\Admin\\MenuItemCrudController').setAction('detail') }}" class=" btn btn-primary">
+							<i class="fa fa-eye"></i>
+						</a>
+						<a href="{{ ea_url().unsetAll().setEntityId(data).setController('App\\Controller\\Admin\\MenuItemCrudController').setAction('edit') }}" class=" btn btn-warning">
+							<i class="fa fa-pencil"></i>
+						</a>
+						{# Add delete button maybe #}
+						{# <a href="{{ ea_url().unsetAll().setEntityId(data).setController('App\\Controller\\Admin\\MenuItemCrudController').setAction('delete') }}" class="btn btn-danger">
+													<i class="fa fa-trash"></i>
+												</a> #}
+					</div>
+				</div>
+			</div>
 		</div>
 		{# no chevron for now #}
 		{# <div class="align-end">
