@@ -17,6 +17,7 @@ class RestCURLService
     protected $accessToken;
     protected $endPoint;
     protected $devMode;
+    protected $getParameters;
 
     protected $response;
     protected $rateTotalCpuTime = 0;
@@ -29,6 +30,8 @@ class RestCURLService
         $this->logger = $logger;
         $this->devMode = $devMode;
         $this->endPoint = "http://api.plos.org/search";
+        $this->getParameters = [];
+        $this->setGetParameters();
     }
 
     public function getLatestResponse($asJson = true)
@@ -41,14 +44,23 @@ class RestCURLService
         return sprintf('[total_time: %s, total_cpu_time: %s]', $this->rateTotalTime, $this->rateTotalCpuTime);
     }
 
-    public function addGetAccessToken()
+    public function setGetParameters()
     {
-        return 'access_token=' . $this->accessToken;
+        $this->getParameters['access_token'] = $this->accessToken;
     }
 
-    public function addGetParameters()
+    public function addGetParameters(array $extraGetParameters)
     {
-        return '?' . $this->addGetAccessToken();
+        $this->getParameters = array_merge($this->getParameters, $extraGetParameters);
+    }
+
+    public function getUrlEncodedParameters(){
+        return http_build_query($this->getParameters);
+    }
+
+    public function addGetEncodedParameters()
+    {
+        return '?' . $this->getUrlEncodedParameters();
     }
 
     public function updateDataAndHeaders($data, $headers)
@@ -107,7 +119,8 @@ class RestCURLService
     protected function getJsonCurl($url, $data = NULL, $headers = NULL)
     {
         list($data, $headers) = $this->updateDataAndHeaders($data, $headers);
-        return $this->executeCurl($url . $this->addGetParameters(), 'GET', $data, $headers);
+        // dd($this->addGetEncodedParameters());
+        return $this->executeCurl($url . $this->addGetEncodedParameters(), 'GET', $data, $headers);
     }
 
     protected function deleteCurl($url, $headers = NULL)

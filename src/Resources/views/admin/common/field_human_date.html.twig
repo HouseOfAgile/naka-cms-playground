@@ -1,0 +1,6 @@
+{% if value is defined %}
+	<span data-toggle="tooltip" data-placement="top" title="{{ value|carbon('normal') }}">{{ value ? value|carbon : '-' }}</span>
+{% else %}
+	-
+{% endif %}
+
