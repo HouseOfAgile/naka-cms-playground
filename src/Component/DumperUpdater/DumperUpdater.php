@@ -110,7 +110,7 @@ class DumperUpdater
 
     /**
      * SynchronizeData: execute a dump of entities defined in AppEntities into yaml files 
-     * or update existing yml file into the current database
+     * or update existing yaml file into the current database
      *
      * @param array $appEntities
      * @param array $appEntitiesAliases
