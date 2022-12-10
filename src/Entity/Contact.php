@@ -6,39 +6,27 @@ use HouseOfAgile\NakaCMSBundle\Repository\ContactRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\MappedSuperclass(repositoryClass=ContactRepository::class)
- */
+#[ORM\MappedSuperclass(repositoryClass: ContactRepository::class)]
 class Contact
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
-    /**
-     * @ORM\Column(type="string", length=60)
-     */
+    #[ORM\Column(type: 'string', length: 60)]
     protected $name;
 
-    /**
-     * @Assert\Email()
-     * @Assert\Length(max=255)
-     * @Assert\NotNull()
-     * @ORM\Column(type="string", length=255)
-     */
+    #[Assert\Email]
+    #[Assert\Length(max: 255)]
+    #[Assert\NotNull]
+    #[ORM\Column(type: 'string', length: 255)]
     protected $email;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     protected $subject;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     protected $message;
 
 

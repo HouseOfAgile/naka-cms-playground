@@ -11,9 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/page", requirements={"_locale": "en|de|fr"}, name="page_")
- */
+#[Route(path: '/page', requirements: ['_locale' => 'en|de|fr'], name: 'page_')]
 class PageController extends AbstractController
 {
     /** @var PageDecorator */
@@ -23,9 +21,7 @@ class PageController extends AbstractController
     {
         $this->pageDecorator = $pageDecorator;
     }
-    /**
-     * @Route("/{_locale<%app.supported_locales%>}/pages", name="list")
-     */
+    #[Route(path: '/{_locale<%app.supported_locales%>}/pages', name: 'list')]
     public function showList(PageRepository $pageRepository): Response
     {
         $pages = $pageRepository->findAll();
@@ -37,9 +33,7 @@ class PageController extends AbstractController
         return $this->render('@NakaCMS/naka/page/show-list.html.twig', $viewParams);
     }
 
-    /**
-     * @Route("/{_locale<%app.supported_locales%>}/{slug}", name="view")
-     */
+    #[Route(path: '/{_locale<%app.supported_locales%>}/{slug}', name: 'view')]
     public function showPage(
         Page $page
     ): \Symfony\Component\HttpFoundation\Response {

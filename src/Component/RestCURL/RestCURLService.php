@@ -15,9 +15,9 @@ class RestCURLService
     use LoggerCommandTrait;
 
     protected $accessToken;
-    protected $endPoint;
+    protected $endPoint = "http://api.plos.org/search";
     protected $devMode;
-    protected $getParameters;
+    protected $getParameters = [];
 
     protected $response;
     protected $rateTotalCpuTime = 0;
@@ -29,8 +29,6 @@ class RestCURLService
     ) {
         $this->logger = $logger;
         $this->devMode = $devMode;
-        $this->endPoint = "http://api.plos.org/search";
-        $this->getParameters = [];
         $this->setGetParameters();
     }
 

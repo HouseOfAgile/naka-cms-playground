@@ -8,32 +8,22 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use HouseOfAgile\NakaCMSBundle\Repository\MenuRepository;
 
-/**
- * @ORM\MappedSuperclass(repositoryClass=MenuRepository::class)
- */
+#[ORM\MappedSuperclass(repositoryClass: MenuRepository::class)]
 class Menu
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     protected $name;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     protected $isFixed;
     
-    /**
-     * @ORM\ManyToMany(targetEntity=MenuItem::class, inversedBy="menus")
-     * @ORM\OrderBy({"position": "ASC"})
-     */
+    #[ORM\ManyToMany(targetEntity: MenuItem::class, inversedBy: 'menus')]
+    #[ORM\OrderBy(['position' => 'ASC'])]
     protected $menuItems;
 
 

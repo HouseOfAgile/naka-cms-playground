@@ -14,9 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/test", requirements={"_locale": "en|de|fr"}, name="naka_test_")
- */
+#[Route(path: '/test', requirements: ['_locale' => 'en|de|fr'], name: 'naka_test_')]
 class TestController extends AbstractController
 {
     /** @var ContentDumper */
@@ -27,9 +25,7 @@ class TestController extends AbstractController
         $this->contentDumper = $contentDumper;
     }
 
-    /**
-     * @Route("/{_locale<%app.supported_locales%>}/simple", name="simple")
-     */
+    #[Route(path: '/{_locale<%app.supported_locales%>}/simple', name: 'simple')]
     public function simpleTest(PageRepository $pageRepository): Response
     {
         $testBlockElement = new BlockElement();
@@ -64,9 +60,7 @@ class TestController extends AbstractController
         return $this->render('@NakaCMS/naka/test/show.html.twig', $viewParams);
     }
 
-    /**
-     * @Route("/{_locale<%app.supported_locales%>}/one-time", name="one_time")
-     */
+    #[Route(path: '/{_locale<%app.supported_locales%>}/one-time', name: 'one_time')]
     public function oneTimeTest(PageBlockManager $pageBlockManager): Response
     {
         $pageBlockManager->renameSlugForAllBlocks('oral-hygiene-and-professional-teeth-cleaning','oral-hygiene-and-professional-teeth-cleaning2');

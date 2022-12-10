@@ -12,9 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ContactController extends AbstractController
 {
-    /**
-     * @Route("/{_locale<%app.supported_locales%>}/contact", name="app_contact")
-     */
+    #[Route(path: '/{_locale<%app.supported_locales%>}/contact', name: 'app_contact')]
     public function contact(
         Request $request,
         OpeningHoursManager $openingHoursManager,

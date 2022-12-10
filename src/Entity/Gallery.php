@@ -9,31 +9,21 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use HouseOfAgile\NakaCMSBundle\Repository\GalleryRepository;
 
-/**
- * @ORM\MappedSuperclass(repositoryClass=GalleryRepository::class)
- */
+#[ORM\MappedSuperclass(repositoryClass: GalleryRepository::class)]
 class Gallery
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
-    /**
-     * @ORM\Column(type="string", length=64, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 64, nullable: true)]
     protected $name;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Picture::class, inversedBy="galleries",cascade={"persist"})
-     */
+    #[ORM\ManyToMany(targetEntity: Picture::class, inversedBy: 'galleries', cascade: ['persist'])]
     protected $pictures;
 
-    /**
-     * @ORM\OneToMany(targetEntity=BlockElement::class, mappedBy="gallery")
-     */
+    #[ORM\OneToMany(targetEntity: BlockElement::class, mappedBy: 'gallery')]
     protected $blockElements;
 
     public function __construct()

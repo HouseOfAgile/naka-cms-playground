@@ -19,18 +19,16 @@ use Vich\UploaderBundle\Entity\File as EmbeddedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\MappedSuperclass(repositoryClass=PictureRepository::class)
  * @Vich\Uploadable
  */
+#[ORM\MappedSuperclass(repositoryClass: PictureRepository::class)]
 class Picture implements TimestampableInterface
 {
     use TimestampableTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
     /**
@@ -43,35 +41,24 @@ class Picture implements TimestampableInterface
     protected $imageFile;
 
     /**
-     * @ORM\Embedded(class="Vich\UploaderBundle\Entity\File")
-     *
      * @var EmbeddedFile
      */
+    #[ORM\Embedded(class: 'Vich\UploaderBundle\Entity\File')]
     protected $image;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=PageGallery::class, inversedBy="images",cascade={"persist"})
-     */
+    #[ORM\ManyToOne(targetEntity: PageGallery::class, inversedBy: 'images', cascade: ['persist'])]
     protected $pageGallery;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=PictureGallery::class, inversedBy="images")
-     */
+    #[ORM\ManyToOne(targetEntity: PictureGallery::class, inversedBy: 'images')]
     protected $pictureGallery;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=BlockElement::class, mappedBy="pictures")
-     */
+    #[ORM\ManyToMany(targetEntity: BlockElement::class, mappedBy: 'pictures')]
     protected $blockElements;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Gallery::class, mappedBy="pictures")
-     */
+    #[ORM\ManyToMany(targetEntity: Gallery::class, mappedBy: 'pictures')]
     protected $galleries;
     
-    /**
-     * @ORM\OneToMany(targetEntity=Staff::class, mappedBy="staffPicture")
-     */
+    #[ORM\OneToMany(targetEntity: Staff::class, mappedBy: 'staffPicture')]
     protected $staff;
 
     public function __construct()

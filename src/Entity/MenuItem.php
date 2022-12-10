@@ -13,65 +13,45 @@ use HouseOfAgile\NakaCMSBundle\Repository\MenuItemRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 
-/**
- * @ORM\MappedSuperclass(repositoryClass=MenuItemRepository::class)
- */
+#[ORM\MappedSuperclass(repositoryClass: MenuItemRepository::class)]
 class MenuItem implements TranslatableInterface
 {
     use TranslatableTrait;
     use DefaultTranslatableTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
-    /**
-     * @ORM\Column(type="string", length=40)
-     */
+    #[ORM\Column(type: 'string', length: 40)]
     protected $name;
 
-    /**
-     * @ORM\Column(type="string", length=120, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 120, nullable: true)]
     protected $route;
 
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     */
+    #[ORM\Column(type: 'array', nullable: true)]
     protected $routeParameters = [];
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Page::class, inversedBy="menuItems")
-     */
+    #[ORM\ManyToOne(targetEntity: Page::class, inversedBy: 'menuItems')]
     protected $page;
 
-    /**
-     * @ORM\Column(type="smallint", nullable=true)
-     */
+    #[ORM\Column(type: 'smallint', nullable: true)]
     protected $orderId;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Menu::class, mappedBy="menuItems")
-     */
+    #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'menuItems')]
     protected $menus;
 
-    /**
-     * @ORM\Column(type="NakaMenuItemType", nullable=true)
-     */
+    #[ORM\Column(type: 'NakaMenuItemType', nullable: true)]
     protected $type;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $uri;
 
     /**
      * @Gedmo\SortablePosition
-     * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected $position;
 
     public function __construct()

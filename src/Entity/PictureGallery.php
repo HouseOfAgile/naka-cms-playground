@@ -8,21 +8,15 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use HouseOfAgile\NakaCMSBundle\Repository\PictureGalleryRepository;
 
-/**
- * @ORM\MappedSuperclass(repositoryClass=PictureGalleryRepository::class)
- */
+#[ORM\MappedSuperclass(repositoryClass: PictureGalleryRepository::class)]
 class PictureGallery
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="pictureGallery")
-     */
+    #[ORM\OneToMany(targetEntity: Picture::class, mappedBy: 'pictureGallery')]
     protected $images;
 
     public function __construct()

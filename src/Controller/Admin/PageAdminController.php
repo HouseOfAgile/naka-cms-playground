@@ -15,14 +15,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/page")
- */
+#[Route(path: '/page')]
 class PageAdminController extends AdminDashboardController
 {
-    /**
-     * @Route("/{page}/add-page-to-menu", name="add_page_to_menu")
-     */
+    #[Route(path: '/{page}/add-page-to-menu', name: 'add_page_to_menu')]
     public function addPageToMenuAction(
         Request $request,
         Page $page,
@@ -60,9 +56,7 @@ class PageAdminController extends AdminDashboardController
 
         return $this->render('@NakaCMS/backend/page/add_page_to_menu.html.twig', $viewParams);
     }
-    /**
-     * @Route("/{page}/add-block-to-page", name="add_block_to_page")
-     */
+    #[Route(path: '/{page}/add-block-to-page', name: 'add_block_to_page')]
     public function addBlockToPageAction(
         Request $request,
         Page $page,

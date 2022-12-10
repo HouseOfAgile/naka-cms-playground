@@ -13,71 +13,47 @@ use HouseOfAgile\NakaCMSBundle\Repository\BlockElementRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
-/**
- * @ORM\MappedSuperclass
- */
+#[ORM\MappedSuperclass]
 class BlockElement implements TimestampableInterface
 {
 
     use TimestampableTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=BlockElementType::class, inversedBy="blockElements")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: BlockElementType::class, inversedBy: 'blockElements')]
+    #[ORM\JoinColumn(nullable: false)]
     protected $blockElementType;
 
 
-    /**
-     * @ORM\Column(type="string", length=64, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 64, nullable: true)]
     protected $name;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $htmlCode;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $jsCode;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $cssCode;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Picture::class, inversedBy="blockElements")
-     */
+    #[ORM\ManyToMany(targetEntity: Picture::class, inversedBy: 'blockElements')]
     protected $pictures;
 
-    /**
-     * @ORM\OneToMany(targetEntity=PageBlockElement::class, mappedBy="blockElement")
-     */
+    #[ORM\OneToMany(targetEntity: PageBlockElement::class, mappedBy: 'blockElement')]
     protected $pageBlockElements;
 
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     */
+    #[ORM\Column(type: 'json', nullable: true)]
     protected $blockConfig = [];
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Gallery::class, inversedBy="blockElements")
-     */
+    #[ORM\ManyToOne(targetEntity: Gallery::class, inversedBy: 'blockElements')]
     protected $gallery;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     protected $isFluid;
 
     public function __construct()

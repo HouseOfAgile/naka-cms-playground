@@ -13,9 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TeamController extends AbstractController
 {
-    /**
-     * @Route("/{_locale<%app.supported_locales%>}/team", name="app_team")
-     */
+    #[Route(path: '/{_locale<%app.supported_locales%>}/team', name: 'app_team')]
     public function showTeam(
         Request $request,
         StaffManager $staffManager

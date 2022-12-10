@@ -16,9 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/block-element")
- */
+#[Route(path: '/block-element')]
 class BlockElementAdminController extends SuperAdminDashboardController
 {
 
@@ -32,9 +30,7 @@ class BlockElementAdminController extends SuperAdminDashboardController
         $this->adminUrlGenerator = $adminUrlGenerator;
     }
 
-    /**
-     * @Route("/choose-block-element-type", name="choose_page_element_type")
-     */
+    #[Route(path: '/choose-block-element-type', name: 'choose_page_element_type')]
     public function chooseBlockElementType(
         Request $request,
         PageBlockManager $pageBlockManager
@@ -71,10 +67,7 @@ class BlockElementAdminController extends SuperAdminDashboardController
         return $this->render('@NakaCMS/backend/block-element/choose-block-element-type.html.twig', $viewParams);
     }
 
-    /**
-     * @Route("/block-element/{blockElement}/edit", name="edit_page_element")
-     *
-     */
+    #[Route(path: '/block-element/{blockElement}/edit', name: 'edit_page_element')]
     public function editBlockElement(
         BlockElement $blockElement,
         ContentDumper $contentDumper,
@@ -115,10 +108,7 @@ class BlockElementAdminController extends SuperAdminDashboardController
     }
 
 
-    /**
-     * @Route("/block-element/{blockElement}/decorated", name="get_decorated_page_element")
-     *
-     */
+    #[Route(path: '/block-element/{blockElement}/decorated', name: 'get_decorated_page_element')]
     public function getDecoratedBlockElementJson(
         BlockElement $blockElement,
         ContentDumper $contentDumper,
@@ -128,10 +118,7 @@ class BlockElementAdminController extends SuperAdminDashboardController
         return $this->json($decoratedBlockElement);
     }
 
-    /**
-     * @Route("/decorate", name="decorate_string", methods="POST")
-     *
-     */
+    #[Route(path: '/decorate', name: 'decorate_string', methods: 'POST')]
     public function decorateStringJson(
         ContentDumper $contentDumper,
         Request $request

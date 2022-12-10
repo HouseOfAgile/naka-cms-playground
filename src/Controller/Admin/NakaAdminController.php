@@ -7,14 +7,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/admin")
- */
+#[Route(path: '/admin')]
 class NakaAdminController extends AdminDashboardController
 {
-    /**
-     * @Route("/dashboard", name="admin_dashboard")
-     */
+    #[Route(path: '/dashboard', name: 'admin_dashboard')]
     public function adminDashboard(Request $request): Response
     {
 

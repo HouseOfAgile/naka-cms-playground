@@ -8,32 +8,24 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use HouseOfAgile\NakaCMSBundle\Repository\PageBlockElementRepository;
 
-/**
- * @ORM\MappedSuperclass
- */
+#[ORM\MappedSuperclass]
 class PageBlockElement
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Page::class, inversedBy="pageBlockElements")
-     */
+    #[ORM\ManyToOne(targetEntity: Page::class, inversedBy: 'pageBlockElements')]
     protected $page;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=BlockElement::class, inversedBy="pageBlockElements")
-     */
+    #[ORM\ManyToOne(targetEntity: BlockElement::class, inversedBy: 'pageBlockElements')]
     protected $blockElement;
 
     /**
      * @Gedmo\SortablePosition
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $position;
 
     public function getId(): ?int

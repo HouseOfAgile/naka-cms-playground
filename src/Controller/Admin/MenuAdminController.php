@@ -13,14 +13,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/menu")
- */
+#[Route(path: '/menu')]
 class MenuAdminController extends AdminDashboardController
 {
-    /**
-     * @Route("/{menu}/configure", name="configure_menu")
-     */
+    #[Route(path: '/{menu}/configure', name: 'configure_menu')]
     public function configureMenu(
         Request $request,
         Menu $menu,

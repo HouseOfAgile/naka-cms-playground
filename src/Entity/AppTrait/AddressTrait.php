@@ -10,26 +10,23 @@ trait AddressTrait
 {
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotBlank(groups={"Address"})
      */
+    #[ORM\Column(type: 'string', nullable: true)]
+    #[Assert\NotBlank(groups: ['Address'])]
     private $street;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotBlank(groups={"Address"})
      */
+    #[ORM\Column(type: 'string', nullable: true)]
+    #[Assert\NotBlank(groups: ['Address'])]
     private $postcode;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotBlank(groups={"Address"})
      */
+    #[ORM\Column(type: 'string', nullable: true)]
+    #[Assert\NotBlank(groups: ['Address'])]
     private $city;
 
     /**
@@ -37,10 +34,10 @@ trait AddressTrait
      *
      * @var string
      *
-     * @ORM\Column(type="string", nullable=true, length=3)
      *
-     * @Assert\NotBlank(groups={"Address"})
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 3)]
+    #[Assert\NotBlank(groups: ['Address'])]
     private $country;
 
     /**

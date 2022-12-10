@@ -27,9 +27,7 @@ class NakaDashboardController extends AbstractDashboardController
         $this->applicationName = $applicationName;
     }
 
-    /**
-     * @Route("/admin")
-     */
+    #[Route(path: '/admin')]
     public function index(): Response
     {
         return $this->redirectToRoute('admin_dashboard');

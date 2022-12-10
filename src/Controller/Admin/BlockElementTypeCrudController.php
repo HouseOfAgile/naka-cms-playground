@@ -78,9 +78,7 @@ class BlockElementTypeCrudController extends AbstractCrudController
         }
     }
 
-    /**
-     * @Route("/preview/{blockElementType}", name="preview_page_element")
-     */
+    #[Route(path: '/preview/{blockElementType}', name: 'preview_page_element')]
     public function previewBlockElementType(
         BlockElementType $blockElementType
     ): \Symfony\Component\HttpFoundation\Response {

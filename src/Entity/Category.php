@@ -15,9 +15,7 @@ use Knp\DoctrineBehaviors\Contract\Entity\TreeNodeInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 use Knp\DoctrineBehaviors\Model\Tree\TreeNodeTrait;
 
-/**
- * @ORM\MappedSuperclass(repositoryClass=CategoryRepository::class)
- */
+#[ORM\MappedSuperclass(repositoryClass: CategoryRepository::class)]
 class Category implements TranslatableInterface, TreeNodeInterface
 {
     use TreeNodeTrait;
@@ -25,16 +23,12 @@ class Category implements TranslatableInterface, TreeNodeInterface
     // use SluggableTrait;
     use DefaultTranslatableTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Page::class, mappedBy="category")
-     */
+    #[ORM\ManyToMany(targetEntity: Page::class, mappedBy: 'category')]
     protected $pages;
 
     public function __construct()

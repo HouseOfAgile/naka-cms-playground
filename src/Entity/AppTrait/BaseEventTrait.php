@@ -6,26 +6,18 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait BaseEventTrait
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private $eventId;
 
-    /**
-     * @ORM\Column(type="datetimetz")
-     */
+    #[ORM\Column(type: 'datetimetz')]
     private $startDate;
 
-    /**
-     * @ORM\Column(type="datetimetz")
-     */
+    #[ORM\Column(type: 'datetimetz')]
     private $endDate;
 
     public function __construct()

@@ -17,56 +17,38 @@ use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 
-/**
- * @ORM\MappedSuperclass(repositoryClass=PageRepository::class)
- */
+#[ORM\MappedSuperclass(repositoryClass: PageRepository::class)]
 class Page implements TranslatableInterface, SluggableInterface
 {
     use TranslatableTrait;
     use SluggableTrait;
     use DefaultTranslatableTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
-    /**
-     * @ORM\Column(type="string", length=64, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 64, nullable: true)]
     protected $name;
 
-    /**
-     * @ORM\Column(type="NakaPageType", nullable=true)
-     */
+    #[ORM\Column(type: 'NakaPageType', nullable: true)]
     protected $pageType;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     protected $enabled;
 
-    /**
-     * @ORM\OneToOne(targetEntity=PageGallery::class, cascade={"persist", "remove"})
-     */
+    #[ORM\OneToOne(targetEntity: PageGallery::class, cascade: ['persist', 'remove'])]
     protected $pageGallery;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="pages")
-     */
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'pages')]
     protected $category;
 
-    /**
-     * @ORM\OneToMany(targetEntity=MenuItem::class, mappedBy="page")
-     */
+    #[ORM\OneToMany(targetEntity: MenuItem::class, mappedBy: 'page')]
     protected $menuItems;
 
-    /**
-     * @ORM\OneToMany(targetEntity=PageBlockElement::class, mappedBy="page", cascade={"remove"})
-     * @ORM\OrderBy({"position": "ASC"})
-     */
+    #[ORM\OneToMany(targetEntity: PageBlockElement::class, mappedBy: 'page', cascade: ['remove'])]
+    #[ORM\OrderBy(['position' => 'ASC'])]
     protected $pageBlockElements;
 
 

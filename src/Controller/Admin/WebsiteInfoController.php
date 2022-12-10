@@ -10,14 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/website-info")
- */
+#[Route(path: '/website-info')]
 class WebsiteInfoController extends AdminDashboardController
 {
-    /**
-     * @Route("/view", name="website_info_dashboard")
-     */
+    #[Route(path: '/view', name: 'website_info_dashboard')]
     public function viewWebsiteInfo(Request $request, WebsiteInfoRepository $websiteInfoRepository): Response
     {
         $viewParams = [
@@ -27,9 +23,7 @@ class WebsiteInfoController extends AdminDashboardController
         return $this->render('@NakaCMS/backend/website-info/show-website-info.html.twig', $viewParams);
     }
 
-    /**
-     * @Route("/opening-hours", name="website_info_view_opening_hours")
-     */
+    #[Route(path: '/opening-hours', name: 'website_info_view_opening_hours')]
     public function viewOpeningHours(
         Request $request,
         OpeningHoursManager $openingHoursManager
@@ -41,9 +35,7 @@ class WebsiteInfoController extends AdminDashboardController
         return $this->render('@NakaCMS/backend/website-info/show-opening-hours.html.twig', $viewParams);
     }
 
-    /**
-     * @Route("/opening-hours/edit", name="website_info_edit_opening_hours")
-     */
+    #[Route(path: '/opening-hours/edit', name: 'website_info_edit_opening_hours')]
     public function editOpeningHours(
         Request $request,
         OpeningHoursManager $openingHoursManager

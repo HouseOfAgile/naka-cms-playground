@@ -12,18 +12,16 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * @ORM\MappedSuperclass
  * @Vich\Uploadable
  */
+#[ORM\MappedSuperclass]
 class WebsiteAsset implements TimestampableInterface
 {
     use TimestampableTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
     /**
@@ -36,10 +34,9 @@ class WebsiteAsset implements TimestampableInterface
     protected $assetFile;
 
     /**
-     * @ORM\Embedded(class="Vich\UploaderBundle\Entity\File")
-     *
      * @var EmbeddedFile
      */
+    #[ORM\Embedded(class: 'Vich\UploaderBundle\Entity\File')]
     protected $asset;
 
     public function __construct()

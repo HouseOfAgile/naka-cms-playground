@@ -10,43 +10,29 @@ use HouseOfAgile\NakaCMSBundle\Repository\BlockElementTypeRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
-/**
- * @ORM\MappedSuperclass(repositoryClass=BlockElementTypeRepository::class)
- */
+#[ORM\MappedSuperclass(repositoryClass: BlockElementTypeRepository::class)]
 class BlockElementType implements TimestampableInterface
 {
     use TimestampableTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
-    /**
-     * @ORM\Column(type="string", length=40)
-     */
+    #[ORM\Column(type: 'string', length: 40)]
     protected $type;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $htmlCode;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $jsCode;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected $cssCode;
 
-    /**
-     * @ORM\OneToMany(targetEntity=BlockElement::class, mappedBy="blockElementType")
-     */
+    #[ORM\OneToMany(targetEntity: BlockElement::class, mappedBy: 'blockElementType')]
     protected $blockElements;
 
     public function __construct()

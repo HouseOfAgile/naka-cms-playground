@@ -108,9 +108,8 @@ class BlockElementCrudController extends AbstractCrudController
 
     /**
      * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @Route("/{blockElement}/edit", name="edit_page_element_redir")
      */
+    #[Route(path: '/{blockElement}/edit', name: 'edit_page_element_redir')]
     public function editBlockElementRedirection(BlockElement $blockElement): \Symfony\Component\HttpFoundation\Response
     {
         return $this->redirectToRoute('edit_page_element', [

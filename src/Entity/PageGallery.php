@@ -8,26 +8,18 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use HouseOfAgile\NakaCMSBundle\Repository\PageGalleryRepository;
 
-/**
- * @ORM\MappedSuperclass(repositoryClass=PageGalleryRepository::class)
- */
+#[ORM\MappedSuperclass(repositoryClass: PageGalleryRepository::class)]
 class PageGallery
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $name;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="pageGallery",cascade={"remove","persist"})
-     */
+    #[ORM\OneToMany(targetEntity: Picture::class, mappedBy: 'pageGallery', cascade: ['remove', 'persist'])]
     protected $images;
 
     public function __construct()
