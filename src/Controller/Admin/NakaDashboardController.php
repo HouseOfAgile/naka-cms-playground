@@ -80,7 +80,6 @@ class NakaDashboardController extends AbstractDashboardController
             // ->addJsFile('https://code.jquery.com/ui/1.12.1/jquery-ui.min.js')
             // ->addJsFile('js/somejs.js')
             // ->addCssFile('https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.3.0/font-awesome-animation.min.css')
-            // ->addCssFile('https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css')
             ->addCssFile('css/admin.css');
     }
 }

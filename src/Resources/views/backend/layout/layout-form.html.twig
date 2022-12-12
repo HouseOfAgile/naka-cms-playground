@@ -1,5 +1,5 @@
 {% extends '@!EasyAdmin/page/content.html.twig' %}
-{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
 
 {% block content_title %}{% endblock %}
 {% block global_actions %}{% endblock %}
@@ -7,7 +7,7 @@
 
 {% block main %}
 	<div class="row">
-		<div class="{{ form_size is defined ? 'col-10 offset-1' :'col-8 offset-2' }}">
+		<div class="{{ form_size is defined ? form_size :'col-8 offset-2' }}">
 			<div class="jumbotron">
 				<h2 class="text-center my-4">
 					{% block form_title %}
