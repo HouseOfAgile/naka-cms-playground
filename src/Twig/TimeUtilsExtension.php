@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
-class CarbonExtension extends AbstractExtension
+class TimeUtilsExtension extends AbstractExtension
 {
     /** @var RequestStack */
     private $requestStack;
@@ -22,6 +22,7 @@ class CarbonExtension extends AbstractExtension
         return [
             new TwigFilter('carbon', [$this, 'carbonDate']),
             new TwigFilter('carbonWeekDay', [$this, 'carbonWeekDay']),
+            new TwigFilter('durationFromSeconds', [$this, 'durationFromSeconds']),
         ];
     }
 
@@ -54,5 +55,10 @@ class CarbonExtension extends AbstractExtension
     {
         $locale = $this->requestStack->getCurrentRequest()->getLocale();
         return Carbon::create($weekday)->locale($locale)->dayName;
+    }
+
+    public function durationFromSeconds($durationInSeconds)
+    {
+        return $durationInSeconds > 3600 ? gmdate("g \h\o\u\\r\s i \m\i\\n s", $durationInSeconds) : gmdate("g \h\o\u\\r\s i \m\i\\n s", $durationInSeconds);
     }
 }
