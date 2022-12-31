@@ -94,6 +94,14 @@ class MenuItem implements TranslatableInterface
         );
     }
 
+    /**
+     * @return void
+     */
+    public function __clone()
+    {
+        $this->name = '[Copy] ' . $this->getName();
+    }
+
     public function getTitle()
     {
         return $this->getDefaultEnglishTranslation($this, 'title');

@@ -4,9 +4,12 @@ namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
 use App\Controller\Admin\AdminDashboardController;
 use App\Entity\Menu;
+use App\Entity\MenuItem;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use HouseOfAgile\NakaCMSBundle\Component\ContentManagement\NakaMenuManager;
 use HouseOfAgile\NakaCMSBundle\Controller\Admin\MenuCrudController;
+use HouseOfAgile\NakaCMSBundle\Controller\Admin\MenuItemCrudController;
 use HouseOfAgile\NakaCMSBundle\Form\NakaPositionType;
 use HouseOfAgile\NakaCMSBundle\Repository\MenuRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,5 +54,26 @@ class MenuAdminController extends AdminDashboardController
         ];
 
         return $this->render('@NakaCMS/backend/menu/configure_menu.html.twig', $viewParams);
+    }
+
+    #[Route(path: '/menu-item/{menuItem}/duplicate', name: 'duplicate_menu_item')]
+    public function duplicateMenuItem(
+        Request $request,
+        MenuItem $menuItem,
+        EntityManagerInterface $entityManager
+    ): \Symfony\Component\HttpFoundation\Response {
+        if ($menuItem instanceof MenuItem) {
+            $newMenuItem = clone $menuItem;
+            $entityManager->persist($newMenuItem);
+            $entityManager->flush();
+
+            $this->addFlash('success', sprintf('MenuItem \'%s\' has been duplicated into \'%s\'', $menuItem, $newMenuItem));
+        } else {
+            $this->addFlash('danger', sprintf('Cannot duplicate MenuItem \'%s\', check logs', $menuItem));
+        }
+        return $this->redirect($this->adminUrlGenerator
+            ->setController(MenuItemCrudController::class)
+            ->setAction(Action::INDEX)
+            ->generateUrl());
     }
 }

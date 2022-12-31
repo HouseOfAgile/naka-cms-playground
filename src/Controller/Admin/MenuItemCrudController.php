@@ -3,6 +3,8 @@
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
 use App\Entity\MenuItem;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -23,6 +25,23 @@ class MenuItemCrudController extends AbstractCrudController
     {
         return MenuItem::class;
     }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        $menuItemId = fn (MenuItem $menuItem): array => [
+            'menuItem' => $menuItem->getId(),
+        ];
+        $duplicateMenuItem = Action::new('duplicateMenuItem', 'Duplicate Generator', 'fa fa-clone')
+            ->linkToRoute('duplicate_menu_item', $menuItemId)
+            ->addCssClass('btn btn-warning');
+
+        return $actions
+            ->add(Crud::PAGE_INDEX, $duplicateMenuItem)
+            ->add(Crud::PAGE_DETAIL, $duplicateMenuItem)
+            ;
+    }
+
+
 
     public function configureFields(string $pageName): iterable
     {
