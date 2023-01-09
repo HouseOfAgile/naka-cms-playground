@@ -9,12 +9,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ContactController extends AbstractController
 {
     #[Route(path: '/{_locale<%app.supported_locales%>}/contact', name: 'app_contact')]
     public function contact(
         Request $request,
+        EntityManagerInterface $em,
         OpeningHoursManager $openingHoursManager,
         Mailer $mailer
     ): Response {
@@ -27,7 +29,6 @@ class ContactController extends AbstractController
             if ($form->isValid()) {
                 // $data = $form->getData();
                 $contact = $form->getData();
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($contact);
                 $em->flush();
                 $this->addFlash(

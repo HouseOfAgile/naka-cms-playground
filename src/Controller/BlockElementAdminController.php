@@ -4,6 +4,7 @@ namespace HouseOfAgile\NakaCMSBundle\Controller;
 
 use App\Controller\Admin\SuperAdminDashboardController;
 use App\Entity\BlockElement;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use HouseOfAgile\NakaCMSBundle\Component\ContentDumper\ContentDumper;
@@ -71,6 +72,7 @@ class BlockElementAdminController extends SuperAdminDashboardController
     public function editBlockElement(
         BlockElement $blockElement,
         ContentDumper $contentDumper,
+        EntityManagerInterface $em,
         Request $request
     ): Response {
         $form = $this->createForm(BlockElementType::class, $blockElement, [
@@ -87,7 +89,6 @@ class BlockElementAdminController extends SuperAdminDashboardController
                     // dd($blockElement);
 
                 } else {
-                    $em = $this->getDoctrine()->getManager();
                     $em->persist($blockElement);
                     $em->flush();
                     $this->addFlash('success', sprintf('Block Element %s has been updated!', $blockElement->getId()));
