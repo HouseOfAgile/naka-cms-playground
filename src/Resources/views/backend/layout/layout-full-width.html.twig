@@ -19,20 +19,20 @@
 		{% block navbar %}
 			<div class="container-fluid g-0">
 				<nav class="navbar navbar-dark bg-dark  text-right p-2">
-						<div class="navbar-brand  justify-content-start">
-							<span class="faa-parent animated-hover">
-								<i class="fas fa-feather-alt faa-flash faa-slow fa-lg"></i>
-								{{ app.request.server.get('APPLICATION_NAME') }}
-							</span>
-						</div>
+					<div class="navbar-brand justify-content-start">
+						<span class="faa-parent animated-hover">
+							<i class="fas fa-feather-alt faa-flash faa-slow fa-lg"></i>
+							{{ app.request.server.get('APPLICATION_NAME') }}
+						</span>
+					</div>
 
-						<div
-							class="navbar-nav mb-0 justify-content-end ">
-							{# Redirect to proper admin with twig helper #}
-							<a href="{{ path('admin_dashboard') }}" role="button" class="nav-item nav-link btn btn-success text-white p-2">
-								<span class="fa fa-fast-backward"></span>
-								{{ 'main.returnToAdmin'|trans }}
-							</a>
+					<div
+						class="navbar-nav mb-0 justify-content-end ">
+						{# Redirect to proper admin with twig helper #}
+						<a href="{{ path('admin_dashboard') }}" role="button" class="nav-item nav-link btn btn-success text-white p-2">
+							<span class="fa fa-fast-backward"></span>
+							{{ 'main.returnToAdmin'|trans }}
+						</a>
 					</div>
 				</nav>
 			</div>
@@ -55,9 +55,12 @@
 			</div>
 		{% endblock flash_message %}
 		<div class="container-fluid">
-			<h3 class="text-center my-4">
-				{{ block('content_title') }}
-			</h3>
+			{% block show_title %}
+				<h3 class="text-center my-4">
+					{{ block('content_title') }}
+				</h3>
+			{% endblock show_title %}
+
 			{% block main %}
 				<div class="row">
 					<div class="{{ form_size is defined ? form_size : 'col-10 offset-1' }}">

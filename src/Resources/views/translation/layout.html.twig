@@ -2,8 +2,8 @@
 
 {% set form_size = 'col-12' %}
 
-{% block content_title %}
-	{% block lexik_title %}{% endblock %}
+{% block title %}
+	{% block lexik_title %}{% endblock %} - {{ app.request.server.get('APPLICATION_NAME') }} Translation
 {% endblock %}
 {% block stylesheets %}
 	{{ parent() }}
@@ -16,7 +16,6 @@
 {% endblock stylesheets %}
 
 {% block flash_message %}
-
 	{% block lexik_flash_message %}
 		<div class="container-fluid">
 			<div class="row">
@@ -35,6 +34,8 @@
 	{% endblock lexik_flash_message %}
 {% endblock flash_message %}
 
+{% block show_title %}
+{% endblock show_title %}
 
 {% block content %}
 	{% block lexik_content '' %}
