@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path: '/admin')]
+#[Route(path: '/admin/{_locale}')]
 class NakaAdminController extends AdminDashboardController
 {
     #[Route(path: '/dashboard', name: 'admin_dashboard')]

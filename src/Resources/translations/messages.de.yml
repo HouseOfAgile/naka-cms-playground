@@ -1,3 +1,4 @@
+backend.dashboard.title: "Willkommen in der %applicationName% backend"
 
 form.contact.name: Name
 form.contact.email: Email

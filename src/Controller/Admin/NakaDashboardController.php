@@ -13,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route(path: '/admin/{_locale}')]
 class NakaDashboardController extends AbstractDashboardController
 {
     /** @var AdminUrlGenerator */
@@ -28,15 +29,17 @@ class NakaDashboardController extends AbstractDashboardController
     }
 
     #[Route(path: '/admin')]
-    public function index(): Response
+    public function indexNonLocalized(): Response
     {
+        // return $this->redirectToRoute('naka_localized_admin');
         return $this->redirectToRoute('admin_dashboard');
     }
 
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle(sprintf('%s Admin', $this->applicationName));
+            ->setTitle(sprintf('%s Admin', $this->applicationName))
+            ->setLocales(['en', 'de']);
     }
 
     public function configureCrud(): Crud
@@ -69,7 +72,7 @@ class NakaDashboardController extends AbstractDashboardController
             // ->update(Crud::PAGE_INDEX, Action::BATCH_DELETE, fn (Action $action) => $action->addCssClass('text-white'))
             // We remove new by default and add it when needed on CRUD level
             // ->remove(Crud::PAGE_INDEX, Action::NEW)
-            ;
+        ;
     }
 
     public function configureAssets(): Assets
