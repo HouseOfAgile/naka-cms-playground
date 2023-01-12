@@ -37,8 +37,7 @@ class MenuItemCrudController extends AbstractCrudController
 
         return $actions
             ->add(Crud::PAGE_INDEX, $duplicateMenuItem)
-            ->add(Crud::PAGE_DETAIL, $duplicateMenuItem)
-            ;
+            ->add(Crud::PAGE_DETAIL, $duplicateMenuItem);
     }
 
 
@@ -69,7 +68,9 @@ class MenuItemCrudController extends AbstractCrudController
         $type = ChoiceField::new('type')->setChoices(NakaMenuItemType::getGuessOptions())
             ->setHelp('backend.form.menuItem.type.help');
 
-        $page = AssociationField::new('page', 'admin.form.menuItem.page')->setColumns('col-4');
+        $page = AssociationField::new('page', 'admin.form.menuItem.page')
+            ->setRequired(false)
+            ->setColumns('col-4');
         $uri = TextField::new('uri')->setColumns('col-4');
         $route = TextField::new('route')
             ->setColumns('col-4');

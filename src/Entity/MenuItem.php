@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use HouseOfAgile\NakaCMSBundle\DBAL\Types\NakaMenuItemType;
 use HouseOfAgile\NakaCMSBundle\Entity\AppTrait\DefaultTranslatableTrait;
 use HouseOfAgile\NakaCMSBundle\Repository\MenuItemRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
@@ -34,6 +35,7 @@ class MenuItem implements TranslatableInterface
     protected $routeParameters = [];
 
     #[ORM\ManyToOne(targetEntity: Page::class, inversedBy: 'menuItems')]
+    // #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     protected $page;
 
     #[ORM\Column(type: 'smallint', nullable: true)]
@@ -104,12 +106,12 @@ class MenuItem implements TranslatableInterface
 
     public function getTitle()
     {
-        return $this->getDefaultEnglishTranslation($this, 'title');
+        return $this->getDefaultEnglishTranslation($this, 'title') ?? $this->getName();
     }
 
     public function getTranslatedName(): ?string
     {
-        if ($this->page) {
+        if ($this->getType() == NakaMenuItemType::TYPE_PAGE && $this->page) {
             return $this->getPage()->getTitle();
         } else {
             return $this->getTitle();
@@ -162,7 +164,7 @@ class MenuItem implements TranslatableInterface
         return $this->page;
     }
 
-    public function setPage(?Page $page): self
+    public function setPage(?Page $page = null): self
     {
         $this->page = $page;
 
