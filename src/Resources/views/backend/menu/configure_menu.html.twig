@@ -5,6 +5,10 @@
 
 {% extends '@!EasyAdmin/page/content.html.twig' %}
 
+{% block head_stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('dragndrop') }}
+{% endblock %}
 
 {% block page_title %}
 	{{ 'backend.form.configureMenu.title'|trans }}
@@ -15,9 +19,9 @@
 	<div class="row my-4">
 		<div class="col-4 offset-1 p-4 bg-light">{{ 'backend.form.configureMenu.detailedHelp'|trans|raw }}</div>
 		<div class="col-6 offset-1">
-			<div class="sortable">
-				{% for menuItem in form.items %}
-					<div class="row m-4 sortable-item rounded">
+			<div id="sortable">
+				{% for menuItem in form.menuItems %}
+					<div class="row m-4 sortable-item rounded" data-id="{{ menuItem.vars.value.id }}">
 						<div class="col-12">{{ form_widget(menuItem) }}</div>
 					</div>
 				{% endfor %}
@@ -30,9 +34,10 @@
 			</div>
 		</div>
 		{{ form_end(form) }}
+	</div>
 
-	{% endblock main %}
+{% endblock main %}
 
-	{% block body_javascript %}
-		{{ encore_entry_script_tags('dragndrop') }}
-	{% endblock body_javascript %}
+{% block body_javascript %}
+	{{ encore_entry_script_tags('dragndrop') }}
+{% endblock body_javascript %}

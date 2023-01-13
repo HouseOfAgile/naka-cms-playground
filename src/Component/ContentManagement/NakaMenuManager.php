@@ -73,4 +73,17 @@ class NakaMenuManager
         }
         return $menuItem;
     }
+
+    public function updateMenuItemPosition(Menu $menu, $newOrder)
+    {
+        $position = 1;
+        foreach ($newOrder as $menuItemId) {
+            $menuItem = $this->menuItemRepository->findOneBy(['id' => $menuItemId]);
+            $menuItem->setPosition($position);
+            $position++;
+            $this->entityManager->persist($menuItem);
+        }
+        $this->entityManager->flush();
+        return true;
+    }
 }

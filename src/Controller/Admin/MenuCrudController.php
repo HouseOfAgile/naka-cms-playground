@@ -24,7 +24,7 @@ class MenuCrudController extends AbstractCrudController
         $menuId = fn (Menu $menu): array => [
             'menu' => $menu->getId(),
         ];
-        $configureMenu = Action::new('configureMenu', 'Configure Menu', 'fa fa-wheel')
+        $configureMenu = Action::new('configureMenu', 'backend.crud.menu.action.reorganizeMenu', 'fa fa-wheel')
             ->linkToRoute('configure_menu', $menuId)
             ->addCssClass('btn btn-success');
 

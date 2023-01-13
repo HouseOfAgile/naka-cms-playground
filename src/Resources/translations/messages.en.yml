@@ -15,7 +15,7 @@ backend.dashboardManager.generalHelp: "This backend give you the ability to mana
 
 backend.menu.websiteInfo: Website Info
 backend.menu.openingHours: Opening Hours
-backend.menu.websiteAsset: Website Asset
+backend.menu.websiteAsset: 'Website Documents'
 backend.menu.translations: "Translations"
 backend.menu.staff: "Staff"
 
@@ -27,6 +27,8 @@ backend.websiteInfo.editOpeningHours: "Edit Opening Hours"
 
 backend.websiteAsset.generalHelpForAdmin: "Here you can add assets that will be available for all people granted access to the admin. This could be pdf, word documents or images."
 backend.websiteAsset.generalHelpForManager: "Here you can find a list of assets that gives you information on the website."
+
+backend.crud.menu.action.reorganizeMenu: 'Reorganize Menu'
 
 backend.form.page.pageDetailsPanel: "Page Details"
 backend.form.page.pageDetailsPanel.help: "Those are the main settings of the page"
