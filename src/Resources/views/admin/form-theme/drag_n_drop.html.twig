@@ -1,6 +1,7 @@
 {% block sortable_block_widget %}
-	<div class="d-flex justify-content-evenly m-2 p-2">
-		<div class="col-4">
+	{# <div class="d-flex justify-content-evenly m-2 p-2"> #}
+	<div class="row p-3">
+		<div class="col-3  my-auto">
 			<span class="p-2">
 				{{ 'backend.form.configureMenu.position'|trans }}
 			</span>
@@ -9,24 +10,44 @@
 				<strong class="fa-stack-1x text-light">{{ data.position|default('?') }}</strong>
 			</span>
 		</div>
+
 		<div class="col-8">
 			<div {{ block('widget_attributes') }} {% if value is not empty %} value="{{ value }}" {% endif %}>
-				<div class="d-flex justify-content-between">
-					{{ 'backend.form.configureMenu.menuItem'|trans }}
-					{{ data.translatedName }}
-					<div class="btn-group" role="group" aria-label="Basic example">
-
-						<a href="{{ ea_url().unsetAll().setEntityId(data.id).setController('HouseOfAgile\\NakaCMSBundle\\Controller\\Admin\\MenuItemCrudController').setAction('detail') }}" class=" btn btn-primary">
-							<i class="fa fa-eye"></i>
-						</a>
-						<a href="{{ ea_url().unsetAll().setEntityId(data.id).setController('HouseOfAgile\\NakaCMSBundle\\Controller\\Admin\\MenuItemCrudController').setAction('edit') }}" class=" btn btn-warning">
-							<i class="fa fa-pencil"></i>
-						</a>
-						{# Add delete button maybe #}
-						{# <a href="{{ ea_url().unsetAll().setEntityId(data).setController('App\\Controller\\Admin\\MenuItemCrudController').setAction('delete') }}" class="btn btn-danger">
-													<i class="fa fa-trash"></i>
-												</a> #}
+				<div class="lead">
+					<div class="d-flex p-2">
+						<div class="text-start">
+							<small>
+								{{ 'backend.form.configureMenu.menuItem'|trans }}
+								<span class="badge bg-secondary p-2">{{ data.id }}</span>
+								:
+							</small>
+						</div>
 					</div>
+					<div class="d-flex p-2">
+
+						<div class="text-center  mx-auto">
+							{{ data.translatedName }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-1 mx-auto my-auto">
+			<div class="d-flex justify-content-between">
+
+				<div class="btn-group-vertical" role="group" aria-label="actions">
+
+					<a href="{{ ea_url().unsetAll().setEntityId(data.id).setController('HouseOfAgile\\NakaCMSBundle\\Controller\\Admin\\MenuItemCrudController').setAction('detail') }}" class=" btn btn-primary">
+						<i class="fa fa-eye"></i>
+					</a>
+					<a href="{{ ea_url().unsetAll().setEntityId(data.id).setController('HouseOfAgile\\NakaCMSBundle\\Controller\\Admin\\MenuItemCrudController').setAction('edit') }}" class=" btn btn-warning">
+						<i class="fa fa-pencil"></i>
+					</a>
+					{# Add delete button maybe #}
+					{# <a href="{{ ea_url().unsetAll().setEntityId(data).setController('App\\Controller\\Admin\\MenuItemCrudController').setAction('delete') }}" class="btn btn-danger">
+																																																								<i class="fa fa-trash"></i>
+																																																							</a> #}
 				</div>
 			</div>
 		</div>

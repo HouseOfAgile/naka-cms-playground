@@ -21,13 +21,13 @@ class Menu
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     protected $isFixed;
-    
+
     #[ORM\ManyToMany(targetEntity: MenuItem::class, inversedBy: 'menus')]
     #[ORM\OrderBy(['position' => 'ASC'])]
     protected $menuItems;
 
 
-    
+
     public function __construct()
     {
         $this->menuItems = new ArrayCollection();
@@ -59,7 +59,17 @@ class Menu
 
         return $config;
     }
-    
+
+    public function getOrderedMenuItemsArray(): array
+    {
+        return  array_map(
+            function ($o) {
+                return $o->getId();
+            },
+            $this->getMenuItems()->toArray()
+        );
+    }
+
     public function getId(): ?int
     {
         return $this->id;

@@ -11,14 +11,14 @@
 {% endblock %}
 
 {% block page_title %}
-	{{ 'backend.form.configureMenu.title'|trans }}
+	{{ 'backend.form.configureMenu.title'|trans }} <span class="bg-secondary p-2 rounded fw-lighter">{{ menu.name }}</span>
 {% endblock page_title %}
 
 {% block main %}
 	{{ form_start(form) }}
 	<div class="row my-4">
 		<div class="col-4 offset-1 p-4 bg-light">{{ 'backend.form.configureMenu.detailedHelp'|trans|raw }}</div>
-		<div class="col-6 offset-1">
+		<div class="col-7">
 			<div id="sortable">
 				{% for menuItem in form.menuItems %}
 					<div class="row m-4 sortable-item rounded" data-id="{{ menuItem.vars.value.id }}">
@@ -28,10 +28,8 @@
 			</div>
 		</div>
 
-		<div class="row m-4">
-			<div class="col-4 offset-4">
-				{{ form_row(form.submit, { 'attr' : { 'class': 'btn  btn-success btn-block px-4 py-2' } }) }}
-			</div>
+		<div class="d-grid gap-2 col-4 mx-auto my-4">
+			{{ form_widget(form.submit, { 'attr' : { 'class': 'btn btn-success p-4' } }) }}
 		</div>
 		{{ form_end(form) }}
 	</div>

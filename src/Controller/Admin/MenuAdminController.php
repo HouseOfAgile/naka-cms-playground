@@ -28,6 +28,7 @@ class MenuAdminController extends AdminDashboardController
 
         $form = $this->createForm(NakaMenuType::class, $menu, [
             // 'items' => ,
+            'orderedMenuItemsArray' => $menu->getOrderedMenuItemsArray()
         ]);
         $form->handleRequest($request);
 

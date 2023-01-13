@@ -23,6 +23,6 @@ class NakaMenuItemType extends AbstractType
             'data_class' => MenuItem::class,
         ]);
         $resolver->setDefault('block_prefix', 'sortable_block');
-        $resolver->setDefault('attr',  ['class' => 'bg-info p-3 text-light rounded']);
+        $resolver->setDefault('attr',  ['class' => 'bg-info text-light rounded']);
     }
 }

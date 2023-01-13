@@ -25,6 +25,7 @@ class NakaMenuType extends AbstractType
         ]);
         $builder->add('newOrder', HiddenType::class, [
             'mapped' => false,
+            'data' => implode(',',$options['orderedMenuItemsArray']),
             'attr' => ['class' => 'new-order']
         ]);
         $builder
@@ -36,7 +37,7 @@ class NakaMenuType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Menu::class,
-            // 'items' => [],
+            'orderedMenuItemsArray' => [],
         ]);
     }
 }

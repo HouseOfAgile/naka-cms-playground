@@ -111,7 +111,7 @@ backend.form.menuItem.translations.help: "Translations for the menuItem are used
 backend.form.configureMenu.menuItem: MenuItem
 backend.form.configureMenu.title: Configure  menu
 backend.form.configureMenu.detailedHelp: |
-    <p>You can rearrange the menuItems from a menu by drag''n dropping them. You can move the menuItems to rearrange them.</p>
+    <p>You can rearrange the menuItems from a menu by drag'n dropping them. You can move the menuItems to rearrange them.</p>
     <p>The position is shown in the black bubble, menu Items order is based on that number, from the smallest to the biggest.</p>
     <p>If there is a question mark, it just means the position has not been set for that element, and thus this element will be shown on top.</p>
 backend.form.configureMenu.position: Position
