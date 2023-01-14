@@ -12,6 +12,8 @@ common.readMore: "Read More"
 
 
 backend.common.position: Position
+backend.common.menuItem: 'MenuItem'
+backend.common.pageBlockElement: 'Page block element'
 
 
 backend.dashboard.title: "Welcome in the %applicationName% backend"
