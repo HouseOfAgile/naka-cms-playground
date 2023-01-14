@@ -135,6 +135,15 @@ class Page implements TranslatableInterface, SluggableInterface
         return $this->getDefaultEnglishTranslation($this, 'content');
     }
 
+    public function getOrderedPageBlockElementsArray(): array
+    {
+        return  array_map(
+            function ($o) {
+                return $o->getId();
+            },
+            $this->getPageBlockElements()->toArray()
+        );
+    }
     public function getPageType()
     {
         return $this->pageType;

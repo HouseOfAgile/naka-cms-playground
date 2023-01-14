@@ -25,7 +25,7 @@ class PageBlockElement
     /**
      * @Gedmo\SortablePosition
      */
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected $position;
 
     public function getId(): ?int
@@ -60,6 +60,11 @@ class PageBlockElement
         return $config;
     }
 
+    public function getTitle(): ?string
+    {
+        return  $this->getBlockElement() ? $this->getBlockElement() : $this->__toString();
+    }
+
     public function getPage(): ?Page
     {
         return $this->page;
@@ -89,7 +94,7 @@ class PageBlockElement
         return $this->position;
     }
 
-    public function setPosition(int $position): self
+    public function setPosition(?int $position): self
     {
         $this->position = $position;
 

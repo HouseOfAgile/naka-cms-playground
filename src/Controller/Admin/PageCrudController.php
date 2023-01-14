@@ -42,9 +42,14 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
             ->linkToRoute('add_page_to_menu', $pageId)
             ->addCssClass('btn btn-info text-white');
 
+        $reorganizeBlocksInPage = Action::new('configureMenu', 'backend.crud.page.action.reorganizeBlocksInPage', 'fa fa-wheel')
+            ->linkToRoute('reorganize_blocks_in_page', $pageId)
+            ->addCssClass('btn btn-success');
+
         return $actions
             ->add(Crud::PAGE_INDEX, $addBlockToPage)
             ->add(Crud::PAGE_INDEX, $addPageToMenu)
+            ->add(Crud::PAGE_INDEX, $reorganizeBlocksInPage)
             // ->add(Crud::PAGE_INDEX, $viewPerformanceStrategy)
         ;
     }
@@ -89,9 +94,9 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
             ->setLabel('Name')
             ->setHelp('Internal name to be used in Menus and elsewhere');
         $pageType = ChoiceField::new('pageType')
-        ->setChoices(NakaPageType::getGuessOptions())
-        ->setHelp('backend.form.page.pageType.help')
-        ->setFormTypeOption('required', true);
+            ->setChoices(NakaPageType::getGuessOptions())
+            ->setHelp('backend.form.page.pageType.help')
+            ->setFormTypeOption('required', true);
 
         $enabled = BooleanField::new('enabled')->setLabel('is it Enabled')
             ->hideOnIndex()

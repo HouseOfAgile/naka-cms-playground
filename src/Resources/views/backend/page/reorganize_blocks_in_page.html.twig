@@ -1,7 +1,6 @@
 {% form_theme form with [
-    '@NakaCMS/admin/form-theme/drag_n_drop_menu.html.twig'
+    '@NakaCMS/admin/form-theme/drag_n_drop_page.html.twig'
 ] %}
-
 
 {% extends '@!EasyAdmin/page/content.html.twig' %}
 
@@ -11,18 +10,18 @@
 {% endblock %}
 
 {% block page_title %}
-	{{ 'backend.form.configureMenu.title'|trans }} <span class="bg-secondary p-2 rounded fw-lighter">{{ menu.name }}</span>
+	{{ 'backend.form.reorganizeBlocksInPage.title'|trans }} <span class="bg-secondary p-2 rounded fw-lighter">{{ page.name }}</span>
 {% endblock page_title %}
 
 {% block main %}
 	{{ form_start(form) }}
 	<div class="row my-4">
-		<div class="col-4 offset-1 p-4 bg-light">{{ 'backend.form.configureMenu.detailedHelp'|trans|raw }}</div>
+		<div class="col-4 offset-1 p-4 bg-light">{{ 'backend.form.reorganizeBlocksInPage.detailedHelp'|trans|raw }}</div>
 		<div class="col-7">
-			<div id="sortable" data-new-order-key="naka_menu_newOrder">
-				{% for menuItem in form.menuItems %}
-					<div class="row m-4 sortable-item rounded" data-id="{{ menuItem.vars.value.id }}">
-						<div class="col-12">{{ form_widget(menuItem) }}</div>
+			<div id="sortable" data-new-order-key="blocks_in_page_position_newOrder">
+				{% for pageBlockElement in form.pageBlockElements %}
+					<div class="row m-4 sortable-item rounded" data-id="{{ pageBlockElement.vars.value.id }}">
+						<div class="col-12">{{ form_widget(pageBlockElement) }}</div>
 					</div>
 				{% endfor %}
 			</div>

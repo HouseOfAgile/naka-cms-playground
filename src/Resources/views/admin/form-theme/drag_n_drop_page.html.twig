@@ -1,0 +1,33 @@
+{% extends '@NakaCMS/admin/form-theme/drag_n_drop_common.html.twig' %}
+
+{% block drag_n_drop_item %}
+	<div class="lead">
+		<div class="d-flex p-2">
+			<div class="text-start">
+				<small>
+					{{ 'backend.form.configureMenu.menuItem'|trans }}
+					<span class="badge bg-secondary p-2">{{ data.id }}</span>
+					:
+				</small>
+			</div>
+		</div>
+		<div class="d-flex p-2">
+			<div class="text-center  mx-auto">
+				{{ data.title }}
+			</div>
+		</div>
+	</div>
+{% endblock drag_n_drop_item %}
+
+{% block drag_n_drop_actions %}
+	<div class="btn-group-vertical" role="group" aria-label="actions">
+		<a href="{{ ea_url().unsetAll().setEntityId(data.id).setController('HouseOfAgile\\NakaCMSBundle\\Controller\\Admin\\PageBlockElementCrudController').setAction('detail') }}" class=" btn btn-primary">
+			<i class="fa fa-eye"></i>
+		</a>
+		<a href="{{ ea_url().unsetAll().setEntityId(data.id).setController('HouseOfAgile\\NakaCMSBundle\\Controller\\Admin\\PageBlockElementCrudController').setAction('edit') }}" class=" btn btn-warning">
+			<i class="fa fa-pencil"></i>
+		</a>
+		{# Add delete button maybe #}
+		{# <a href="{{ ea_url().unsetAll().setEntityId(data).setController('App\\Controller\\Admin\\MenuItemCrudController').setAction('delete') }}" class="btn btn-danger"></a> #}
+	</div>
+{% endblock drag_n_drop_actions %}

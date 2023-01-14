@@ -7,7 +7,9 @@ use App\Entity\Page;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use HouseOfAgile\NakaCMSBundle\Component\ContentManagement\NakaMenuManager;
+use HouseOfAgile\NakaCMSBundle\Component\ContentManagement\NakaPageManager;
 use HouseOfAgile\NakaCMSBundle\Component\ContentManagement\PageBlockManager;
+use HouseOfAgile\NakaCMSBundle\Form\BlocksInPagePositionType;
 use HouseOfAgile\NakaCMSBundle\Form\ChooseBlockElementTypeType;
 use HouseOfAgile\NakaCMSBundle\Form\ChooseMenuForPageType;
 use HouseOfAgile\NakaCMSBundle\Repository\MenuRepository;
@@ -97,5 +99,42 @@ class PageAdminController extends AdminDashboardController
         ];
 
         return $this->render('@NakaCMS/backend/page/choose_block_to_add.html.twig', $viewParams);
+    }
+
+    #[Route(path: '/{page}/reorganize', name: 'reorganize_blocks_in_page')]
+    public function reorganizePageMenu(
+        Request $request,
+        Page $page,
+        NakaPageManager $nakaPageManager
+    ): \Symfony\Component\HttpFoundation\Response {
+
+        $form = $this->createForm(BlocksInPagePositionType::class, $page, [
+            'orderedPageBlockElementsArray' => $page->getOrderedPageBlockElementsArray()
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $newOrderString = $form->get("newOrder")->getData();
+                $newOrder = explode(',', $newOrderString);
+                $result =$nakaPageManager->updatePageBlockElementsPosition($page, $newOrder);
+                if ($result) {
+                    $this->addFlash('success', sprintf('Page \'%s\' has been reorganized', $page));
+                } else {
+                    $this->addFlash('warning', sprintf('Page \'%s\' cannot be reorganized', $page));
+                }
+
+                return $this->redirect($this->adminUrlGenerator
+                    ->setController(PageCrudController::class)
+                    ->setAction(Action::INDEX)
+                    ->generateUrl());
+            }
+        }
+        $viewParams = [
+            'form' => $form->createView(),
+            'page' => $page,
+        ];
+
+        return $this->render('@NakaCMS/backend/page/reorganize_blocks_in_page.html.twig', $viewParams);
     }
 }

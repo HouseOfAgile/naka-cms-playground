@@ -1,0 +1,25 @@
+{% block sortable_block_widget %}
+	<div class="row p-3">
+		<div class="col-3  my-auto">
+			<span class="p-2">
+				{{ 'backend.common.position'|trans }}
+			</span>
+			<span class="fa-stack fa-2x" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ data }}">
+				<i class="fa fa-circle fa-stack-2x"></i>
+				<strong class="fa-stack-1x text-light">{{ data.position|default('?') }}</strong>
+			</span>
+		</div>
+		<div class="col-8">
+			<div {{ block('widget_attributes') }} {% if value is not empty %} value="{{ value }}" {% endif %}>
+				{% block drag_n_drop_item %}
+				{% endblock drag_n_drop_item %}
+			</div>
+		</div>
+		<div class="col-1 mx-auto my-auto">
+			<div class="d-flex justify-content-between">
+				{% block drag_n_drop_actions %}
+				{% endblock drag_n_drop_actions %}
+			</div>
+		</div>
+	</div>
+{% endblock %}
