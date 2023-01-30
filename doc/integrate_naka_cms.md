@@ -43,3 +43,18 @@ imports:
     - { resource: "@NakaCMSBundle/Resources/config/naka_services.yaml" }
 ```
 ## Configure Security
+## Configure Specifc feature
+### dynamic reconfigure
+Need to add the link to dragndrop js
+```
+in webpack.config.js
+    .addEntry('dragndrop', './lib/NakaCMSBundle/assets/js/components/dragndrop.js')
+
+```
+
+### i18n websiteinfo metas
+
+We need a new twxig service in twig.yml
+```
+        websiteInfo: '@HouseOfAgile\NakaCMSBundle\Component\WebsiteInfo\WebsiteInfoService'
+```

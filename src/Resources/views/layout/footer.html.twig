@@ -3,11 +3,18 @@
 	<div class="container py-4">
 		<div class="row gy-4 gx-5">
 			<div class="col-lg-6 col-md-6">
-				<h5 class="display-6 text-white">{{ 'footer.title' | trans }}</h5>
-				<p class="small text-muted"><i class="fas fa-map-marker-alt zsh-text-color"></i> {{ 'footer.address' | trans }}</p>
-				<p class="small text-muted"><i class="fas fa-phone zsh-text-color"></i> {{ 'footer.contactData' | trans }}</p>
+				<div class="display-6 text-white">{{ websiteInfo.translatedTitle |default(application_name) }}</div>
+				{% if websiteInfo.translatedCatchPhrase is defined %}
+					<h2 class="lead text-white mx-4 mb-3">{{ websiteInfo.translatedCatchPhrase }}</h2>
+				{% endif %}
+				<p class="small text-muted">
+					<i class="fas fa-map-marker-alt zsh-text-color"></i>
+					{{ 'footer.address' | trans }}</p>
+				<p class="small text-muted">
+					<i class="fas fa-phone zsh-text-color"></i>
+					{{ 'footer.contactData' | trans }}</p>
 				<div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-					<strong>{{ application_name }}</strong>, 2021 -
+					<strong>{{ websiteInfo.websiteInfo.translate.title |default(application_name) }}</strong>, 2021 -
 					{{ 'now'|date('Y') }}, v.{{ application_version }}{{ app.environment == 'dev' ? (' - [' ~ app.environment ~ ']') :'' }}<br/>
 					{% if trademarkOn is defined and trademarkOn %}
 						<small class="text-muted">Made with
