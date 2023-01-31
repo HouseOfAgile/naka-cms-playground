@@ -31,7 +31,7 @@ class MenuItemCrudController extends AbstractCrudController
         $menuItemId = fn (MenuItem $menuItem): array => [
             'menuItem' => $menuItem->getId(),
         ];
-        $duplicateMenuItem = Action::new('duplicateMenuItem', 'Duplicate Generator', 'fa fa-clone')
+        $duplicateMenuItem = Action::new('duplicateMenuItem', 'Duplicate Menu Item', 'fa fa-clone')
             ->linkToRoute('duplicate_menu_item', $menuItemId)
             ->addCssClass('btn btn-warning');
 
