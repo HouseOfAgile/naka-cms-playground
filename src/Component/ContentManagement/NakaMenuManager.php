@@ -5,13 +5,10 @@ namespace HouseOfAgile\NakaCMSBundle\Component\ContentManagement;
 use App\Entity\Menu;
 use App\Entity\MenuItem;
 use App\Entity\Page;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use HouseOfAgile\NakaCMSBundle\Component\WebsiteInfo\WebsiteInfoService;
 use HouseOfAgile\NakaCMSBundle\DBAL\Types\NakaMenuItemType;
 use HouseOfAgile\NakaCMSBundle\Repository\MenuItemRepository;
 use HouseOfAgile\NakaCMSBundle\Repository\MenuRepository;
-use Spatie\OpeningHours\OpeningHours;
 
 class NakaMenuManager
 {

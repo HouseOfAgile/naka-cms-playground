@@ -5,13 +5,12 @@ namespace HouseOfAgile\NakaCMSBundle\Menu;
 use App\Entity\MenuItem;
 use Doctrine\ORM\EntityRepository;
 use HouseOfAgile\NakaCMSBundle\DBAL\Types\NakaMenuItemType;
-use HouseOfAgile\NakaCMSBundle\Repository\MenuRepository;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 
 class MenuBuilder
 {
-    private $factory;
+    protected $factory;
 
     /** @var EntityRepository */
     protected $entityRepository;

@@ -6,7 +6,7 @@ services:
       - App\Entity\Menu
 
   app.menu_builder:
-    class: HouseOfAgile\NakaCMSBundle\Menu\MenuBuilder
+    class: App\Menu\MenuBuilder
     arguments: 
       - "@knp_menu.factory"
       - "@menu_repository"
