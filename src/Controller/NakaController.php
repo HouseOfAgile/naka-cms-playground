@@ -30,7 +30,7 @@ class NakaController extends BaseController
         $homePage = $pageRepository->findOneBy(['name' => 'homepage']);
         $viewParams = [
             'homePage' => $homePage,
-            'blockElements' => $this->pageDecorator->decorateBlockElementsForPage($homePage),
+            'blockElements' => ($homePage) ? $this->pageDecorator->decorateBlockElementsForPage($homePage):[],
         ];
         return $this->render('@NakaCMS/naka/homepage.html.twig', $viewParams);
     }
