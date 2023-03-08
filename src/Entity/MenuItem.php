@@ -123,6 +123,15 @@ class MenuItem implements TranslatableInterface
         return $this->id;
     }
 
+    public function getRouteParametersAsArray(): ?array
+    {
+        $arr =[];
+        foreach ($this->routeParameters as $key => $value) {
+            $arr[$value['name']] = $value['val'];
+        }
+        return $arr;
+    }
+
     public function getName(): ?string
     {
         return $this->name;

@@ -29,6 +29,11 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         return Page::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setDefaultSort(['updatedAt' => 'DESC']);
+    }
 
     public function configureActions(Actions $actions): Actions
     {
@@ -106,7 +111,9 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
             ->setHelp('backend.form.page.pageConfigurationPanel.help');
         // no pageGallery for now on page level
         $pageGallery = AssociationField::new('pageGallery', 'backend.form.page.pageGallery')
-            ->setHelp('backend.form.page.pageGallery.help');
+            ->setHelp('backend.form.page.pageGallery.help')
+            ->setFormTypeOption('required', false);
+
         $pageBlockElements = AssociationField::new('pageBlockElements', 'backend.form.page.pageBlockElements')
             ->setFormTypeOption('by_reference', false)
             ->setHelp('backend.form.page.pageBlockElements.help');
@@ -115,7 +122,9 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         if (Crud::PAGE_INDEX === $pageName) {
             return [$id, $name, $slug, $pageType, $enabled, $pageBlockElements];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $slug, $enabled];
+            return [
+                $pageConfigurationTab, $pageDetailsPanel, $name, $pageType, $pageGallery, $enabled,
+            ];
         } elseif (Crud::PAGE_NEW === $pageName) {
             return [
                 $pageConfigurationTab, $pageDetailsPanel, $name, $pageType, $pageGallery,  $pageBlockElements, $enabled,

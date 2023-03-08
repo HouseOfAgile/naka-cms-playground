@@ -13,16 +13,19 @@ use HouseOfAgile\NakaCMSBundle\DBAL\Types\NakaPageType;
 use HouseOfAgile\NakaCMSBundle\Entity\AppTrait\DefaultTranslatableTrait;
 use HouseOfAgile\NakaCMSBundle\Repository\PageRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 
 #[ORM\MappedSuperclass(repositoryClass: PageRepository::class)]
-class Page implements TranslatableInterface, SluggableInterface
+class Page implements TranslatableInterface, SluggableInterface, TimestampableInterface
 {
     use TranslatableTrait;
     use SluggableTrait;
     use DefaultTranslatableTrait;
+    use TimestampableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
