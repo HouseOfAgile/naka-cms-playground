@@ -112,7 +112,6 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
             ->setHelp('backend.form.page.pageBlockElements.help');
         // $category = AssociationField::new('category', 'backend.form.page.category');
 
-
         if (Crud::PAGE_INDEX === $pageName) {
             return [$id, $name, $slug, $pageType, $enabled, $pageBlockElements];
         } elseif (Crud::PAGE_DETAIL === $pageName) {

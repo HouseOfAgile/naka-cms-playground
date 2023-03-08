@@ -27,12 +27,12 @@
 
 	</div>
 	{% if is_granted('ROLE_ADMIN') %}
-		<div class="btn-group mx-2" role="group" aria-label="Basic example">
-			<a href="{{ path('admin_dashboard') }}" role="button" class="admin-link nav-item nav-link btn btn-success text-white">
+		<div class="btn-group m-2" role="group" aria-label="Basic example">
+			<a href="{{ path('admin_dashboard') }}" role="button" class="admin-link nav-item nav-link btn btn-success text-white p-2">
 				<i class="fa-solid fa-screwdriver-wrench"></i>
 				{{ 'frontend.goToAdmin'|trans }}
 			</a>
-			<a href="{{ path('logout') }}" role="button" class="nav-item nav-link btn btn-danger text-white">
+			<a href="{{ path('logout') }}" role="button" class="nav-item nav-link btn btn-danger text-white p-2">
 				<i class="fa fa-sign-out-alt"></i>
 			</a>
 		</div>
