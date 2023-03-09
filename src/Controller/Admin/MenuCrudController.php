@@ -18,7 +18,7 @@ class MenuCrudController extends AbstractCrudController
     {
         return Menu::class;
     }
-    
+
     public function configureActions(Actions $actions): Actions
     {
         $menuId = fn (Menu $menu): array => [
@@ -37,7 +37,9 @@ class MenuCrudController extends AbstractCrudController
     {
         $id = IdField::new('id');
         $name = TextField::new('name');
-        $isFixed = BooleanField::new('isFixed');
+        $isFixed = BooleanField::new('isFixed')
+            ->setHelp('backend.form.menu.isFixed.help');
+
         $menuItems = AssociationField::new('menuItems', 'backend.form.menu.menuItems');
         /** @var Menu $thisEntity */
         $thisEntity = $this->getContext()->getEntity()->getInstance();
@@ -59,20 +61,11 @@ class MenuCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-        $crud = parent::configureCrud($crud);
-        $crud
-            // ->setFormThemes(
-            //     [
-            //         '@A2lixTranslationForm/bootstrap_4_layout.html.twig',
-            //         '@EasyAdmin/crud/form_theme.html.twig',
-            //         // '@FOSCKEditor/Form/ckeditor_widget.html.twig',
-            //     ]
-            // )
+        return parent::configureCrud($crud)
             ->overrideTemplates([
-                'crud/edit' => '@NakaCMS/admin/crud/menu/form_menu.html.twig',
-                'crud/new' => '@NakaCMS/admin/crud/menu/form_menu.html.twig',
+                'crud/index' => '@NakaCMS/admin/crud/menu/index.html.twig',
+                'crud/edit' => '@NakaCMS/admin/crud/menu/edit.html.twig',
+                'crud/new' => '@NakaCMS/admin/crud/menu/new.html.twig',
             ]);
-
-        return $crud;
     }
 }

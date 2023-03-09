@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PageController extends AbstractController
 {
     /** @var PageDecorator */
-    private $pageDecorator;
+    protected $pageDecorator;
 
     public function __construct(PageDecorator $pageDecorator)
     {

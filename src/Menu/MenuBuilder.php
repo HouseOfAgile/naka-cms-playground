@@ -68,7 +68,7 @@ class MenuBuilder
                 }
                 break;
             case NakaMenuItemType::TYPE_ROUTE:
-                $childParameters = ['route' => $menuItem->getRoute(), 'routeParameters' => $menuItem->getRouteParameters()];
+                $childParameters = ['route' => $menuItem->getRoute(), 'routeParameters' => $menuItem->getRouteParametersAsArray()];
 
                 break;
             case NakaMenuItemType::TYPE_URL:

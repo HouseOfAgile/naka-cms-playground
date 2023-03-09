@@ -36,6 +36,8 @@ backend.websiteAsset.generalHelpForAdmin: "Here you can add assets that will be 
 backend.websiteAsset.generalHelpForManager: "Here you can find a list of assets that gives you information on the website."
 
 backend.crud.menu.action.reorganizeMenu: 'Reorganize Menu'
+backend.form.menu.isFixed.help: 'this parameter control if the menu is fixed or not, i.e., this menu cannot be deleted, usually useful for the main menus'
+
 backend.crud.page.action.reorganizeBlocksInPage: 'Reorganize blocks'
 
 backend.form.page.pageDetailsPanel: "Page Details"
