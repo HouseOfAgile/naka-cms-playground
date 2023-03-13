@@ -79,7 +79,7 @@ class MenuItemCrudController extends AbstractCrudController
             ->allowDelete()
             ->setEntryType(DictItemType::class)
             ->showEntryLabel(false)
-            ->setColumns('col-4 offset-8');
+            ->setColumns('col-4');
 
 
 

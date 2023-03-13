@@ -15,6 +15,7 @@ use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Uid\Ulid;
 use Symfony\Component\Yaml\Yaml;
 use Vich\UploaderBundle\Handler\UploadHandler;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper as VichUploaderHelper;
@@ -168,7 +169,7 @@ class DumperUpdater
                             $this->logCommand(sprintf('working on %s', $keyAttr));
 
                             // this is a onetomany relation
-                            if (is_array($valAttr)) {
+                            if (is_array($valAttr) && !in_array($keyAttr, array_keys($appEntities[$type]))) {
                                 foreach ($valAttr as $refId) {
                                     if (in_array($keyAttr, array_keys($appEntitiesAliases))) {
                                         // We get the alias here if it is an alias
@@ -233,6 +234,12 @@ class DumperUpdater
                                                             'none',
                                                         $valAttr->format('Y-m-d H:i:s')
                                                     ));
+                                                    break;
+                                                case 'array':
+                                                    $valAttr=$valAttr;
+                                                    break;
+                                                case 'Ulid':
+                                                    $valAttr = Ulid::fromString($valAttr);
                                                     break;
                                                 case 'Json':
                                                     $valAttr = json_decode($valAttr, true);
