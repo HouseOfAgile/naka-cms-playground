@@ -315,17 +315,16 @@ class DumperUpdater
                         $pathAsset = $this->projectDir . '/public' . $this->vichUploaderHelper->asset($entityItem, $fileAttributeName);
                         // copy asset and get path
                         $newPathAsset = $this->assetDir . '/' . basename($pathAsset);
-                        $filesystem->copy(
-                            $pathAsset,
-                            $newPathAsset,
-                            true
-                        );
                         $this->logInfo(sprintf(
                             'moving asset from %s to %s',
                             $pathAsset,
                             $newPathAsset
                         ));
-
+                        $filesystem->copy(
+                            $pathAsset,
+                            $newPathAsset,
+                            true
+                        );
 
                         $dataArray[$entityItem->getId()] = $entityItem->dumpConfig();
                         $dataArray[$entityItem->getId()]['imagePath'] = $newPathAsset;
