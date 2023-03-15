@@ -5,10 +5,8 @@ namespace HouseOfAgile\NakaCMSBundle\Entity;
 use App\Entity\BlockElement;
 use App\Entity\Gallery;
 use App\Entity\PageGallery;
-use App\Entity\Staff;
 use App\Entity\PictureGallery;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use HouseOfAgile\NakaCMSBundle\Repository\PictureRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
@@ -57,16 +55,12 @@ class Picture implements TimestampableInterface
 
     #[ORM\ManyToMany(targetEntity: Gallery::class, mappedBy: 'pictures')]
     protected $galleries;
-    
-    #[ORM\OneToMany(targetEntity: Staff::class, mappedBy: 'staffPicture')]
-    protected $staff;
 
     public function __construct()
     {
         $this->image = new EmbeddedFile();
         $this->blockElements = new ArrayCollection();
         $this->galleries = new ArrayCollection();
-        $this->staff = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -215,33 +209,4 @@ class Picture implements TimestampableInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Staff>
-     */
-    public function getStaff(): Collection
-    {
-        return $this->staff;
-    }
-
-    public function addStaff(Staff $staff): self
-    {
-        if (!$this->staff->contains($staff)) {
-            $this->staff[] = $staff;
-            $staff->setStaffPicture($this);
-        }
-
-        return $this;
-    }
-
-    public function removeStaff(Staff $staff): self
-    {
-        if ($this->staff->removeElement($staff)) {
-            // set the owning side to null (unless already changed)
-            if ($staff->getStaffPicture() === $this) {
-                $staff->setStaffPicture(null);
-            }
-        }
-
-        return $this;
-    }
 }

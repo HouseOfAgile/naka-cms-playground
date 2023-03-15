@@ -24,7 +24,6 @@ backend.menu.websiteInfo: Website Info
 backend.menu.openingHours: Opening Hours
 backend.menu.websiteAsset: 'Website Documents'
 backend.menu.translations: "Translations"
-backend.menu.staff: "Staff"
 
 backend.websiteInfo.title: "Website info for %applicationName%"
 backend.websiteInfo.thereIsNoWebsiteInfo: "There is no website info yet"
@@ -83,11 +82,6 @@ backend.form.blockElementType.cssCode: "The css code of that block element"
 backend.form.blockElementType.jsCode: "The javascript code for that block element"
 
 backend.form.menu.menuItems: "List of items in that menu"
-
-backend.form.staff.staffSettingsPanel: "General settings for staff"
-backend.form.staff.staffDetailsPanel: "Staff details"
-backend.form.staff.staffTranslationsPanel: "Staff content"
-backend.form.staff.staffTranslationsPanel.help: "This will control the content associated with the staff, more specifically the one used in the team page"
 
 backend.form.user.firstName.help: "Set the first name of that user, it should be unique"
 backend.form.user.roles.help: ""
