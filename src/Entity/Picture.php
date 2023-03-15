@@ -7,6 +7,7 @@ use App\Entity\Gallery;
 use App\Entity\PageGallery;
 use App\Entity\PictureGallery;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use HouseOfAgile\NakaCMSBundle\Repository\PictureRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
