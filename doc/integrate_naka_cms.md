@@ -43,7 +43,12 @@ imports:
     - { resource: "@NakaCMSBundle/Resources/config/naka_services.yaml" }
 ```
 ## Configure Security
-## Configure Specifc feature
+
+Add binging for the form_login Service
+    $formLoginAuthenticator: '@security.authenticator.form_login.main'
+
+
+## Configure Specific feature
 ### dynamic reconfigure
 Need to add the link to dragndrop js
 ```
