@@ -16,7 +16,7 @@ class DateUtilsExtension extends AbstractExtension
 
     public function __construct(RequestStack $requestStack)
     {
-        $this->locale = $requestStack->getCurrentRequest()->getLocale();
+        $this->requestStack = $requestStack;
     }
 
     public function getFunctions()
@@ -37,8 +37,9 @@ class DateUtilsExtension extends AbstractExtension
      */
     public function rangeAggregateMonth(DateTime $beginDate, DateTime $endDate)
     {
-        $carbonBeginDate = Carbon::parse($beginDate)->locale($this->locale);
-        $carbonEndDate = Carbon::parse($endDate)->locale($this->locale);
+        $locale = $this->requestStack->getCurrentRequest()->getLocale();
+        $carbonBeginDate = Carbon::parse($beginDate)->locale($locale);
+        $carbonEndDate = Carbon::parse($endDate)->locale($locale);
         // $differentMonth =  $carbonBeginDate->month !=$carbonEndDate->month;
         $differentYear =  $carbonBeginDate->year != $carbonEndDate->year;
         return $differentYear ?
