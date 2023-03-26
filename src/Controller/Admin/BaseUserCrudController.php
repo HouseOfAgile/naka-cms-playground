@@ -65,9 +65,9 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
 
     public function configureFields(string $pageName): iterable
     {
-        $panel = FormField::addTab('User Details');
+        $tabUserDetails = FormField::addTab('User Details');
         $panel3 = FormField::addTab('User Detailss');
-        
+
         $firstName = TextField::new('firstName')
             ->setHelp('backend.form.user.firstName.help');
 
@@ -87,6 +87,7 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
             'Content Editor' => 'ROLE_EDITOR',
             'Administrator' => 'ROLE_ADMIN',
         ])->allowMultipleChoices()
+            // ->renderAsBadges()
             ->setHelp('backend.form.user.roles.help');
 
 
@@ -109,11 +110,11 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
                 return [$firstName, $email, $roles];
             }
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$firstName, $email, $salt, $password, $roles, $id];
+            return [$tabUserDetails, $firstName, $email, $salt, $password, $roles, $id];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$firstName, $password, $email, $roles];
+            return [$tabUserDetails, $firstName, $password, $email, $roles];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$panel, $firstName, $password,$panel3,  $email, $roles, $rolesSuperAdmin];
+            return [$tabUserDetails, $firstName, $password,  $email, $roles, $rolesSuperAdmin];
         }
     }
 

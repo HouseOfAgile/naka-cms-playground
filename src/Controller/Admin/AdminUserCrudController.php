@@ -24,4 +24,6 @@ class AdminUserCrudController extends BaseUserCrudController
             ->setPaginatorPageSize(30);
     }
 
+    // speciality
+
 }
