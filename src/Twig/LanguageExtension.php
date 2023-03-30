@@ -13,6 +13,7 @@ class LanguageExtension extends AbstractExtension
     {
         return [
             new TwigFilter('englishClean', [$this, 'englishClean']),
+            new TwigFilter('getLanguage', [$this, 'getLanguage']),
             new TwigFilter('getAlpha2', [$this, 'getAlpha2']),
             new TwigFilter('getAlpha3', [$this, 'getAlpha3']),
         ];
@@ -21,6 +22,11 @@ class LanguageExtension extends AbstractExtension
     public function englishClean($code)
     {
         return str_replace('en', 'gb', $code);
+    }
+
+    public function getLanguage($code)
+    {
+        return Languages::getName($code);
     }
 
     public function getAlpha2($alpha3Code)

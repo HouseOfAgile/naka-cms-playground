@@ -13,7 +13,7 @@
 	{% if blockElements|length >0 %}
 		{% for blockElement in blockElements %}
 			<div class="{{ blockElement.blockElement.isFluid == true ? 'container-fluid p-0' : 'container g-0' }}">
-			{% include '@NakaCMS/admin/component/design_helper.html.twig' with { blockElement: blockElement} %}
+				{% include '@NakaCMS/admin/component/design_helper.html.twig' with { blockElement: blockElement} %}
 				{% if blockElement.blockElement.type == 'carousel' %}
 					{% include '@NakaCMS/naka/block-element/render-block-carousel.html.twig' with { blockElement: blockElement} %}
 				{% elseif blockElement.blockElement.type == 'gallery' %}
@@ -33,16 +33,6 @@
 		{{ blockElement.jsCode|raw }}
 	{% endfor %}
 	<script>
-		$('.gallery-container').magnificPopup({
-delegate: 'a', // child items selector, by clicking on it popup will open
-type: 'image'
-// other options
-});
-
-$('.thumbnail').hover(function () {
-$(this).find('.caption').slideDown(250); // .fadeIn(250)
-}, function () {
-$(this).find('.caption').slideUp(250); // .fadeOut(205)
-});
+		
 	</script>
 {% endblock %}

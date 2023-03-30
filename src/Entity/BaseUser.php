@@ -75,6 +75,7 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
             'roles' => $this->getRoles(),
         ];
 
+        
         return $config;
     }
 

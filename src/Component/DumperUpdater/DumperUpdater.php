@@ -236,7 +236,7 @@ class DumperUpdater
                                                     ));
                                                     break;
                                                 case 'array':
-                                                    $valAttr=$valAttr;
+                                                    $valAttr = $valAttr;
                                                     break;
                                                 case 'Ulid':
                                                     $valAttr = Ulid::fromString($valAttr);
