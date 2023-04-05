@@ -2,16 +2,19 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use HouseOfAgile\NakaCMSBundle\Entity\AppTrait\AddressTrait;
 use HouseOfAgile\NakaCMSBundle\Repository\UserRepository;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\MappedSuperclass(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use AddressTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -32,8 +35,14 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     protected $firstName;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    protected $lastName;
+
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $plainPassword;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $birthDate = null;
 
     public function getId(): ?int
     {
@@ -75,7 +84,7 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
             'roles' => $this->getRoles(),
         ];
 
-        
+
         return $config;
     }
 
@@ -174,6 +183,18 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
     public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
@@ -182,6 +203,18 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPlainPassword(?string $plainPassword): self
     {
         $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    public function getBirthDate(): ?\DateTimeInterface
+    {
+        return $this->birthDate;
+    }
+
+    public function setBirthDate(?\DateTimeInterface $birthDate): self
+    {
+        $this->birthDate = $birthDate;
 
         return $this;
     }

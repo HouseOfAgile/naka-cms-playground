@@ -30,21 +30,23 @@ class DateUtilsExtension extends AbstractExtension
      * rangeAggregateMonth function: from two datetime, return a string in the form:
      * * DEC 15 - DEC 20 2023 // same year
      * * DEC 15 2022 - JAN 23 2023 // different year
-     *
      * @param DateTime $beginDate
      * @param DateTime $endDate
+     * @param boolean $doNotShowYear : set to true to not show year
+     * @param string $separator
      * @return void
      */
-    public function rangeAggregateMonth(DateTime $beginDate, DateTime $endDate)
+    public function rangeAggregateMonth(DateTime $beginDate, DateTime $endDate, bool $doNotShowYear = false, $separator = ' / ')
     {
         $locale = $this->requestStack->getCurrentRequest()->getLocale();
         $carbonBeginDate = Carbon::parse($beginDate)->locale($locale);
         $carbonEndDate = Carbon::parse($endDate)->locale($locale);
         // $differentMonth =  $carbonBeginDate->month !=$carbonEndDate->month;
+        $yearFormat = $doNotShowYear ? '' : ' Y';
         $differentYear =  $carbonBeginDate->year != $carbonEndDate->year;
         return $differentYear ?
-            $carbonBeginDate->format('M j Y') . ' / ' . $carbonEndDate->format('M j Y') :
-            $carbonBeginDate->format('M j') . ' / ' . $carbonEndDate->format('M j Y');
+            $carbonBeginDate->format('M j'.$yearFormat) . $separator . $carbonEndDate->format('M j' . $yearFormat) :
+            $carbonBeginDate->format('M j') . $separator . $carbonEndDate->format('M j'.$yearFormat);
     }
 
     public function openingStatusBool()

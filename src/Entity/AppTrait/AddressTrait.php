@@ -20,7 +20,7 @@ trait AddressTrait
      */
     #[ORM\Column(type: 'string', nullable: true)]
     #[Assert\NotBlank(groups: ['Address'])]
-    private $postcode;
+    private $zipCode;
 
     /**
      * @var string
@@ -34,7 +34,6 @@ trait AddressTrait
      *
      * @var string
      *
-     *
      */
     #[ORM\Column(type: 'string', nullable: true, length: 3)]
     #[Assert\NotBlank(groups: ['Address'])]
@@ -45,7 +44,7 @@ trait AddressTrait
      */
     public function getFullAddress()
     {
-        $address = array_filter([$this->getCity(), $this->getPostcode(), $this->getStreet(), $this->getCountryName()]);
+        $address = array_filter([$this->getCity(), $this->getZipCode(), $this->getStreet(), $this->getCountryName()]);
 
         return $address ? implode(', ', $address) : '';
     }
@@ -75,27 +74,27 @@ trait AddressTrait
     }
 
     /**
-     * Set the value of Postcode.
+     * Set the value of PostcZipCodeode.
      *
-     * @param string $postcode
+     * @param string $zipCode
      *
      * @return self
      */
-    public function setPostcode($postcode)
+    public function setZipCode($zipCode)
     {
-        $this->postcode = $postcode;
+        $this->zipCode = $zipCode;
 
         return $this;
     }
 
     /**
-     * Get the value of Postcode.
+     * Get the value of ZipCode.
      *
      * @return string
      */
-    public function getPostcode()
+    public function getZipCode()
     {
-        return $this->postcode;
+        return $this->zipCode;
     }
 
     /**

@@ -91,6 +91,6 @@ class RegistrationController extends AbstractController
 
     public function resendVerifyEmail()
     {
-        return $this->render('registration/resend_verify_email.html.twig');
+        return $this->render('@NakaCMS/registration/resend_verify_email.html.twig');
     }
 }
