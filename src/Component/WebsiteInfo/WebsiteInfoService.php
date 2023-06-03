@@ -33,6 +33,11 @@ class WebsiteInfoService
         $this->requestStack = $requestStack;
     }
 
+    public function isMainWebsiteInfoSet()
+    {
+        return $this->websiteInfo != null;
+    }
+
     public function getWebsiteInfo()
     {
         return $this->websiteInfo;
@@ -40,12 +45,12 @@ class WebsiteInfoService
 
     public function getTranslatedTitle()
     {
-        return $this->websiteInfo->translate($this->requestStack->getSession()->get('_locale'))->getTitle();
+        return $this->isMainWebsiteInfoSet() ? $this->websiteInfo->translate($this->requestStack->getSession()->get('_locale'))->getTitle():'';
     }
 
     public function getTranslatedCatchPhrase()
     {
-        return $this->websiteInfo->translate($this->requestStack->getSession()->get('_locale'))->getCatchPhrase();
+        return $this->isMainWebsiteInfoSet() ? $this->websiteInfo->translate($this->requestStack->getSession()->get('_locale'))->getCatchPhrase():'';
     }
 
     public function setOpeningHours($openingHours)
