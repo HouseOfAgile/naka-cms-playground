@@ -42,51 +42,9 @@
 
 		</div>
 	</div>
-	<div class="container my-4">
-		<div class="row g-0">
-			<div class="col-md-12">
-				<h2 class="display-4 my-3 text-center">{{'contact.contactTitle'|trans|raw }}</h2>
-			</div>
 
-			<div class="col-md-4">
-				<img class="img-fluid" src="{{ '/images/logo/logo_transparent.png'| imagine_filter('logo_resize') }}"/>
-			</div>
-			<div class="col-md-8">
-				<div class="jumbotron">
-					<div class="lead my-3">{{'contact.contactDetails'|trans|raw }}</div>
-				</div>
-				<hr/>
-				{{ form_start(form) }}
-				<div class="row m-4">
-					<div class="col-3">{{ form_label(form.name) }}</div>
-					<div class="col-9">{{ form_widget(form.name,{ 'attr': {'class': 'form-control' }}) }}</div>
-					<div class="col-9 offset-3">{{ form_help(form.name) }}</div>
-				</div>
-				<div class="row m-4">
-					<div class="col-3">{{ form_label(form.email) }}</div>
-					<div class="col-9">{{ form_widget(form.email,{ 'attr': {'class': 'form-control' }}) }}</div>
-					<div class="col-9 offset-3">{{ form_help(form.email) }}</div>
-				</div>
-				<div class="row m-4">
-					<div class="col-3">{{ form_label(form.subject) }}</div>
-					<div class="col-9">{{ form_widget(form.subject,{ 'attr': {'class': 'form-control' }}) }}</div>
-					<div class="col-9 offset-3">{{ form_help(form.subject) }}</div>
-				</div>
-				<div class="row m-4">
-					<div class="col-3">{{ form_label(form.message) }}</div>
-					<div class="col-9">{{ form_widget(form.message,{ 'attr': {'class': 'form-control' }}) }}</div>
-					<div class="col-9 offset-3">{{ form_help(form.message) }}</div>
-				</div>
-				<div class="row m-4">
-					<div class="col-4 offset-4">
-						{{ form_row(form.submit, { 'attr' : { 'class': 'btn btn-block btn-success p-2' } }) }}
-					</div>
-				</div>
-				{{ form_rest(form) }}
 
-			</div>
-		</div>
-	</div>
+	{% include '@NakaCMS/fragment/_show_contact_form.html.twig' with {'form': contactForm } %}
 {% endblock %}
 
 

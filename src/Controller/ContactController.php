@@ -46,7 +46,7 @@ class ContactController extends AbstractController
         }
         // get content from contact page if it exist
         $viewParams = [
-            'form' => $form->createView(),
+            'contactForm' => $form->createView(),
             'contactBlockElements' => [],
             'openingHours' => $openingHoursManager->getOpeningHoursData(),
         ];
