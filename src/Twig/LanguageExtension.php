@@ -2,7 +2,6 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Twig;
 
-use HouseOfAgile\NakaCMSBundle\Component\NakaParameter\NakaParameterManager;
 use Symfony\Component\Intl\Languages;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;

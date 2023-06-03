@@ -1,0 +1,23 @@
+footer {
+  /* Set the fixed height of the footer here */
+  // background-color: #f5f5f5;
+  background         : #212529;
+}
+
+a.footer-link{
+  color: #dbd9d9;
+  text-decoration: none;
+  font-size: 20px;
+}
+a.footer-link:hover{
+  color: white;
+}
+
+a.social-link {
+  text-decoration: none;
+  color: white;
+}
+
+a.social-link:hover {
+  color: darken(white,20%);
+}

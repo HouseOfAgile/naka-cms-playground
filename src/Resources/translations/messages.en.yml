@@ -160,6 +160,7 @@ openingHours.weAreClosed: "We are closed"
 team.title: "Our team looks forward to seeing you."
 
 footer.mainText: "Business in Berlin"
+footer.followUsOnSocialMedia: 'Follow us on Social Media !'
 
 register.signUpToPlatform.title: 'Signup to the platform'
 register.signUpToPlatform.detail: 'Signup to the platform in order to book an appointment'

@@ -1,14 +1,9 @@
-<nav id="main-navbar" class="navbar fixed-top navbar-expand-md navbar-light bg-light">
-	<div class="container-xxl">
-		<a class="navbar-brand" href="{{ path('app_homepage') }}">{{ application_name }}</a>
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse flex-grow-1" id="navbarSupportedContent">
+<nav id="main-navbar" class="navbar fixed-top navbar-expand-md navbar-light bg-white shadow-lg">
+	<div class="container py-2">
+		<div
+			class="collapse navbar-collapse flex-grow-1" id="navbarSupportedContent">
 			{# align menu in the middle #}
-			<div style="margin-left: 200px;">{{ knp_menu_render('main') }}</div>
-
-
+			<div class="main-menu">{{ knp_menu_render('main') }}</div>
 			<ul class="navbar-nav ms-auto">
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="dropdown-language" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -24,18 +19,30 @@
 				</li>
 			</ul>
 		</div>
+		{% if is_granted('ROLE_ADMIN') %}
+			<div class="btn-group m-2" role="group" aria-label="Basic example">
+				<a href="{{ path('admin_dashboard') }}" role="button" class="admin-link nav-item nav-link btn btn-success text-white p-2">
+					<i class="fa-solid fa-screwdriver-wrench"></i>
+					{{ 'frontend.goToAdmin'|trans }}
+				</a>
+				<a href="{{ path('logout') }}" role="button" class="nav-item nav-link btn btn-danger text-white p-2">
+					<i class="fa fa-sign-out-alt"></i>
+				</a>
+			</div>
 
+		{% endif %}
 	</div>
-	{% if is_granted('ROLE_ADMIN') %}
-		<div class="btn-group m-2" role="group" aria-label="Basic example">
-			<a href="{{ path('admin_dashboard') }}" role="button" class="admin-link nav-item nav-link btn btn-success text-white p-2">
-				<i class="fa-solid fa-screwdriver-wrench"></i>
-				{{ 'frontend.goToAdmin'|trans }}
-			</a>
-			<a href="{{ path('logout') }}" role="button" class="nav-item nav-link btn btn-danger text-white p-2">
-				<i class="fa fa-sign-out-alt"></i>
-			</a>
-		</div>
 
-	{% endif %}
 </nav>
+<div class="container">
+	<div class="row">
+		<div class="col-12 py-3">
+			<a class="navbar-brand" href="{{ path('app_homepage') }}">
+				<img class="img-fluid p-4" src="{{ '/asset/logo_spitzmuehle_transparent.png'| imagine_filter('logo_resize') }}"/>
+			</a>
+			{# <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+										<span class="navbar-toggler-icon"></span>
+									</button> #}
+		</div>
+	</div>
+</div>
