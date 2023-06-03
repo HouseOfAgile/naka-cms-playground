@@ -13,17 +13,41 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContactType extends AbstractType
 {
+    const FORM_CONTROL = 'form-control form-control-lg';
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, ['label' => 'form.contact.name'])
-            ->add('email', EmailType::class, ['label' => 'form.contact.email'])
-            ->add('subject', TextType::class, ['label' => 'form.contact.subject'])
+            ->add('name', TextType::class, [
+                'label' => 'form.contact.name',
+                'attr' => [
+                    'class' => $this::FORM_CONTROL,
+                ]
+            ])
+            ->add('email', EmailType::class, [
+                'label' => 'form.contact.email',
+                'attr' => [
+                    'class' => $this::FORM_CONTROL,
+                ]
+            ])
+            ->add('subject', TextType::class, [
+                'label' => 'form.contact.subject',
+                'attr' => [
+                    'class' => $this::FORM_CONTROL,
+                ]
+            ])
             ->add('message', TextareaType::class, [
                 'label' => 'form.contact.message',
-                'attr' => array('rows' => '6')
+                'attr' => [
+                    'rows' => '6',
+                    'class' => $this::FORM_CONTROL,
+                ]
             ])
-            ->add('submit', SubmitType::class, ['label' => 'form.contact.submit']);
+            ->add('submit', SubmitType::class, [
+                'label' => 'form.contact.submit',
+                'attr' => [
+                    'class' => $this::FORM_CONTROL,
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
