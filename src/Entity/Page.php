@@ -128,6 +128,14 @@ class Page implements TranslatableInterface, SluggableInterface, TimestampableIn
         return $config;
     }
 
+    /**
+     * @return string[]
+     */
+    public function getSluggableFields(): array
+    {
+        return ['name', 'title'];
+    }
+    
     public function getTitle()
     {
         return $this->getDefaultEnglishTranslation($this, 'title');
@@ -169,14 +177,6 @@ class Page implements TranslatableInterface, SluggableInterface, TimestampableIn
         $this->enabled = $enabled;
 
         return $this;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getSluggableFields(): array
-    {
-        return ['name', 'title'];
     }
 
     public function getPageGallery(): ?PageGallery

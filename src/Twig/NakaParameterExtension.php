@@ -32,6 +32,7 @@ class NakaParameterExtension extends AbstractExtension
         if ($nakaParameter) {
             return $nakaParameter->getValue();
         } else {
+            return null;
             // dd($this->allNakaParameter);
         }
     }
