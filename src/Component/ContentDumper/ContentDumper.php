@@ -165,6 +165,7 @@ class ContentDumper
     public function replacePicture($stringToReplace): string
     {
         preg_match('!\'?picture-([^\'|\||%]*)\|?([^\'|%]*)\'?!', $stringToReplace, $pictureMatch);
+
         if (is_array($pictureMatch) && array_key_exists(1, $pictureMatch) && is_int((int)$pictureMatch[1])) {
             $picture = $this->pictureRepository->find($pictureMatch[1]);
 
@@ -174,7 +175,7 @@ class ContentDumper
 
             if ($picture) {
                 $realAssetPath = $this->vichUploaderHelper->asset($picture, 'imageFile');
-                $filter = $pictureMatches[2] ?? null;
+                $filter = $pictureMatch[2] ?? null;
                 $assetPath = $this->getFilteredImage($realAssetPath, $filter);
             } else {
                 $assetPath = '/asset/broken-image.png';
@@ -196,6 +197,13 @@ class ContentDumper
         }
     }
 
+    /**
+     * 
+     * replace %% link("page_view", {"slug": "sub-seminar-house"}) %% with a route from the project
+     *
+     * @param [type] $stringToReplace
+     * @return string
+     */
     public function replaceLink($stringToReplace): string
     {
         preg_match_all(
@@ -277,6 +285,7 @@ class ContentDumper
                 $this->cacheManager->store($filteredBinary, $path, $filter);
             }
         } catch (\Throwable $th) {
+            dd($th);
             dd($filter);
         }
 

@@ -5,7 +5,7 @@
 		<div class="d-flex p-2">
 			<div class="text-start">
 				<small>
-					{{ 'backend.common.menuItem'|trans }}
+					{{ 'backend.common.menuItem'|trans }} {{ data.name is not empty ? '(' ~ data.name ~ ')': ''}}
 					<span class="badge bg-secondary p-2">{{ data.id }}</span>
 					:
 				</small>

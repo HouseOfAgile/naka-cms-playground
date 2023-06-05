@@ -29,13 +29,12 @@ class BlockElementCrudController extends AbstractCrudController
 
         return $crud
             ->showEntityActionsInlined(true)
-            ->overrideTemplate('crud/index', '@NakaCMS/backend/block-element/list.html.twig')
-            ;
+            ->overrideTemplate('crud/index', '@NakaCMS/backend/block-element/list.html.twig');
     }
 
     public function configureActions(Actions $actions): Actions
     {
-        
+
         $blockElementId = function (BlockElement $blockElement): array {
             return [
                 'blockElement' => $blockElement->getId(),
@@ -59,7 +58,7 @@ class BlockElementCrudController extends AbstractCrudController
         )
             ->setHelp('form.panelSetting.codeElement.help')
             ->addCssClass('col-12');
-            
+
         $name = TextField::new('name');
 
         $blockElementType = AssociationField::new(
@@ -92,7 +91,8 @@ class BlockElementCrudController extends AbstractCrudController
             'form.blockElement.jsCode'
         )->setColumns(6);
 
-        $gallery = AssociationField::new('gallery');
+        $gallery = AssociationField::new('gallery')
+            ->setFormTypeOption('required', false);
         $isFluid = BooleanField::new('isFluid');
 
         if (Crud::PAGE_INDEX === $pageName) {
