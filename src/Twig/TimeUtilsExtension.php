@@ -40,6 +40,10 @@ class TimeUtilsExtension extends AbstractExtension
                 return $dt->dayName;
                 break;
                 // get month name and year if not in the current year
+            case 'getMonthPlusYear':
+                return $dt->monthName . ' ' . $dt->year;
+                break;
+
             case 'getMonthYear':
                 $current = Carbon::now();
                 return $dt->year != $current->year ? $dt->monthName . ' ' . $dt->year : $dt->monthName;
