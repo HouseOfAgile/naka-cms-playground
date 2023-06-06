@@ -32,9 +32,10 @@ class DateUtilsExtension extends AbstractExtension
      * * DEC 15 2022 - JAN 23 2023 // different year
      * @param DateTime $beginDate
      * @param DateTime $endDate
-     * @param boolean $doNotShowYear : set to true to not show year
+     * @param boolean $doNotShowYear : set to true to not show year if not different from current year
      * @param string $separator
      * @return void
+     * @todo improve the donotshowyear feature
      */
     public function rangeAggregateMonth(DateTime $beginDate, DateTime $endDate, bool $doNotShowYear = false, $separator = ' / ')
     {
@@ -42,8 +43,9 @@ class DateUtilsExtension extends AbstractExtension
         $carbonBeginDate = Carbon::parse($beginDate)->locale($locale);
         $carbonEndDate = Carbon::parse($endDate)->locale($locale);
         // $differentMonth =  $carbonBeginDate->month !=$carbonEndDate->month;
-        $yearFormat = $doNotShowYear ? '' : ' Y';
         $differentYear =  $carbonBeginDate->year != $carbonEndDate->year;
+        $yearFormat = ($doNotShowYear && $differentYear) ? '' : ' Y';
+
         return $differentYear ?
             $carbonBeginDate->format('M j'.$yearFormat) . $separator . $carbonEndDate->format('M j' . $yearFormat) :
             $carbonBeginDate->format('M j') . $separator . $carbonEndDate->format('M j'.$yearFormat);

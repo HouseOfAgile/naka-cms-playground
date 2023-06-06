@@ -17,7 +17,10 @@ backend.common.pageBlockElement: 'Page block element'
 
 
 backend.dashboard.title: "Welcome in the %applicationName% backend"
-backend.dashboardAdmin.generalHelp: "This is the general backend for administration of the system.<br/>You can manage pages, menus and the various blocks they contains."
+backend.dashboardAdmin.generalHelp: |
+    <p>This is the general backend for administration of the NakaCMS Instance.</p>
+    <p>Depending on your role access, you can work on the content or the general configuration of the platform.</p>
+
 backend.dashboardManager.generalHelp: "This backend give you the ability to manage the specifics of this NakaCMS instance."
 
 backend.menu.websiteInfo: Website Info

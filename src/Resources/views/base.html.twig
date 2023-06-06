@@ -3,15 +3,17 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Welcome!
-			{% endblock %}
+			{% block master_title %}
+				{% block title %}Welcome!
+				{% endblock %}
+			{% endblock master_title %}
 		</title>
 		<link
 		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
-			<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+			<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css"/>
 		{% endblock %}
 
 		{% block javascripts %}
@@ -25,26 +27,25 @@
 		{% endblock %}
 		{% block stylesheets_extra %}{% endblock %}
 	</head>
-	<body data-aos-easing="ease-out-back" data-aos-duration="1000" data-aos-delay="0">
-		{% block body %}{% endblock %}
+	<body data-aos-easing="ease-out-back" data-aos-duration="1000" data-aos-delay="0"> {% block body %}{% endblock %}
 		{% block javascripts_extra %}
-		<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+			<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
 
 			<script>
 
-window.cookieconsent.initialise({
-  "palette": {
-    "popup": {
-      "background": "#000"
-    },
-    "button": {
-      "background": "#f1d600"
-    }
-  },
-  "theme": "classic"
+				window.cookieconsent.initialise({
+"palette": {
+"popup": {
+"background": "#000"
+},
+"button": {
+"background": "#f1d600"
+}
+},
+"theme": "classic"
 });
-</script>
+			</script>
 			{{ encore_entry_script_tags('appBottom') }}
-{% endblock %}
+		{% endblock %}
 	</body>
 </html>

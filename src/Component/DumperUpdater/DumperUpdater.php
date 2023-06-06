@@ -273,7 +273,9 @@ class DumperUpdater
                     $this->entitiesIdMapping[$type][$dataEntity['id']] = $entity->getId();
                 }
                 $this->logSuccess(sprintf('We updated all data for entities %s', $type));
-                dump($this->entitiesIdMapping);
+                
+                // dump all entities for debug
+                // dump($this->entitiesIdMapping);
             }
         }
         return true;
