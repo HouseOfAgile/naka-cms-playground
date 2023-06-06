@@ -273,7 +273,7 @@ class DumperUpdater
                     $this->entitiesIdMapping[$type][$dataEntity['id']] = $entity->getId();
                 }
                 $this->logSuccess(sprintf('We updated all data for entities %s', $type));
-                
+
                 // dump all entities for debug
                 // dump($this->entitiesIdMapping);
             }
@@ -373,6 +373,9 @@ class DumperUpdater
                         $entity->setImageFile($uploadedFile);
                     } elseif (method_exists($entity, 'setAssetFile')) {
                         $entity->setAssetFile($uploadedFile);
+                    }
+                    if ($dataEntity['name'] != null) {
+                        $entity->setName($dataEntity['name']);
                     }
 
                     // foreach ($dataEntity as $keyAttr => $valAttr) {

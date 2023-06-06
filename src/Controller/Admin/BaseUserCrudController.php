@@ -71,6 +71,9 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
         $firstName = TextField::new('firstName')
             ->setHelp('backend.form.user.firstName.help');
 
+        $lastName = TextField::new('lastName')
+            ->setHelp('backend.form.user.lastName.help');
+
         $email = TextField::new('email')->setHelp('backend.form.user.email.help');
 
         // @todo Move roles definitions to some configuration file
@@ -105,16 +108,16 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
 
         if (Crud::PAGE_INDEX === $pageName) {
             if ($this->isGranted('ROLE_SUPER_ADMIN')) {
-                return [$firstName, $email, $rolesSuperAdmin];
+                return [$firstName, $lastName, $email, $rolesSuperAdmin];
             } else {
-                return [$firstName, $email, $roles];
+                return [$firstName, $lastName, $email, $roles];
             }
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$tabUserDetails, $firstName, $email, $salt, $password, $roles, $id];
+            return [$tabUserDetails, $firstName, $lastName, $email, $salt, $password, $roles, $id];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$tabUserDetails, $firstName, $password, $email, $roles];
+            return [$tabUserDetails, $firstName, $lastName, $password, $email, $roles];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$tabUserDetails, $firstName, $password,  $email, $roles, $rolesSuperAdmin];
+            return [$tabUserDetails, $firstName, $lastName, $password,  $email, $roles, $rolesSuperAdmin];
         }
     }
 

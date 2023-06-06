@@ -41,8 +41,8 @@ class Page implements TranslatableInterface, SluggableInterface, TimestampableIn
     #[ORM\Column(type: 'boolean', nullable: true)]
     protected $enabled;
 
-    #[ORM\OneToOne(targetEntity: PageGallery::class, cascade: ['persist', 'remove'])]
-    protected $pageGallery;
+    #[ORM\ManyToOne(inversedBy: 'pages')]
+    private ?PageGallery $pageGallery = null;
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'pages')]
     protected $category;

@@ -27,16 +27,18 @@ class PictureCrudController extends AbstractCrudController
         $image = ImageField::new('image.name')
             ->setTemplatePath('@NakaCMS/admin/fields/vich_image.html.twig');
         $imageFile = Field::new('imageFile')->setFormType(VichImageType::class);
-        $name = TextField::new('image.name');
-
+        $imageName = TextField::new('image.name');
+        $name = TextField::new('name')
+            ->setLabel('Name')
+            ->setHelp('Internal name to be used in Menus and elsewhere');
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $name, $image];
+            return [$id, $name, $imageName, $image];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $image];
+            return [$id, $name, $image];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$imageFile];
+            return [$name, $imageFile];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$imageFile];
+            return [$name, $imageFile];
         }
     }
 }

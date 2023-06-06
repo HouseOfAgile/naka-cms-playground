@@ -22,9 +22,13 @@ class PageGallery
     #[ORM\OneToMany(targetEntity: Picture::class, mappedBy: 'pageGallery', cascade: ['remove', 'persist'])]
     protected $images;
 
+    #[ORM\OneToMany(mappedBy: 'pageGallery', targetEntity: Page::class)]
+    protected Collection $pages;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->pages = new ArrayCollection();
     }
 
     /**
@@ -97,6 +101,36 @@ class PageGallery
             // set the owning side to null (unless already changed)
             if ($image->getPageGallery() === $this) {
                 $image->setPageGallery(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Page>
+     */
+    public function getPages(): Collection
+    {
+        return $this->pages;
+    }
+
+    public function addPage(Page $page): self
+    {
+        if (!$this->pages->contains($page)) {
+            $this->pages->add($page);
+            $page->setPageGallery($this);
+        }
+
+        return $this;
+    }
+
+    public function removePage(Page $page): self
+    {
+        if ($this->pages->removeElement($page)) {
+            // set the owning side to null (unless already changed)
+            if ($page->getPageGallery() === $this) {
+                $page->setPageGallery(null);
             }
         }
 

@@ -30,6 +30,9 @@ class Picture implements TimestampableInterface
     #[ORM\Column(type: 'integer')]
     protected $id;
 
+
+    #[ORM\Column(type: 'string', length: 64, nullable: true)]
+    protected $name;
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      * 
@@ -79,7 +82,7 @@ class Picture implements TimestampableInterface
         $config =  [
             'id' => $this->getId(),
             // 'originalName' => $this->image->getOriginalName(),
-            // 'name' => $this->image->getName(),
+            'name' => $this->getName(),
             // 'mimeType' => $this->image->getMimeType(),
             // 'dimensions' => $this->image->getDimensions(),
             // 'size' => $this->image->getSize(),
@@ -97,6 +100,19 @@ class Picture implements TimestampableInterface
         );
     }
 
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+    
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this

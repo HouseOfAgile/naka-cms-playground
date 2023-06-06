@@ -86,7 +86,8 @@ backend.form.blockElementType.jsCode: "The javascript code for that block elemen
 
 backend.form.menu.menuItems: "List of items in that menu"
 
-backend.form.user.firstName.help: "Set the first name of that user, it should be unique"
+backend.form.user.firstName.help: "Set the first name of that user"
+backend.form.user.lastName.help: "Set the last name of that user"
 backend.form.user.roles.help: ""
 
 backend.crud.pageBlockElement.relatedToPage: "Related to page"
