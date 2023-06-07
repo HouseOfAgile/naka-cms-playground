@@ -1,94 +1,22 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<meta name="viewport" content="width=device-width">
-		<title>Welcome to the Space Bar!</title>
-		<style>
-			@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700 &display=swap');
-			body {
-				margin: 0;
-				padding: 0;
-				background-color: #f3f3f3;
-				font-family: Helvetica, Arial, sans-serif;
-			}
-			h1 {
-				background-color: #264459;
-				color: #ffffff;
-				padding: 30px 0 50px;
-				font-weight: normal;
-			}
-			hr {
-				border: none;
-				border-top: 3px solid #264459;
-				margin: 20px;
-			}
-			.container {
-				background-color: #fefefe;
-				width: 580px;
-				margin: 0 auto;
-			}
-			.bottom {
-				background-color: #efefee;
-			}
-			.block {
-				margin: 0;
-				padding: 10px 20px 20px;
-			}
-			.logo {
-				width: 100%;
-				font-family: 'Caveat', cursive;
-				font-size: 40px;
-				text-decoration: none;
-			}
-			.text-center {
-				text-align: center;
-			}
-			.btn {
-				display: inline-block;
-				padding: 10px 20px;
-				background-color: #264459;
-				color: #fefefe;
-				border: 1px solid #fff;
-				border-radius: 3px;
-				font-size: 20px;
-				font-weight: bold;
-				text-decoration: none;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="body">
-			<div class="container">
-				<div class="header text-center">
-					<a href="{{ url('app_homepage') }}" class="logo">
-						{{ application_name }}
-					</a>
-				</div>
-				<div class="content">
-					<h1 class="text-center">{{ 'email.new-contact.title' | trans }}</h1>
-					<p class="block">
-						{{ 'email.new-contact.you-have-a-new-message' | trans }}
-					</p>
-					<div class="block">
-						<h2>From: {{ contact.name }}</h2>
-						<h2>Email: {{ contact.email }}</h2>
-						<hr/>
-						<p>Subject: {{ contact.subject }}</p>
-						<p>Message: {{ contact.message }}</p>
-					</div>
-				</div>
-				<div class="footer">
-					<p class="block">
-						Cheers,<br><br>
-						Your friendly
-						<em>The {{ application_name }} Team</em>
-					</p>
-					<p class="block bottom text-center">
-						Sent with ❤️ from the friendly folks at The {{ application_name }}
-					</p>
-				</div>
-			</div>
-		</div>
-	</body>
-</html>
+{% extends '@NakaCMS/email/base-email-layout.html.twig' %}
+
+{% block impact_message %}
+	<h1 class="text-center">{{ 'email.new-contact.title' | trans }}</h1>
+{% endblock impact_message %}
+
+{% block email_content %}
+	<p class="block">
+		{{ 'email.new-contact.you-have-a-new-message' | trans }}
+	</p>
+	<div class="block">
+		<h2>From:
+			{{ contact.name }}</h2>
+		<h2>Email:
+			{{ contact.email }}</h2>
+		<hr/>
+		<p>Subject:
+			{{ contact.subject }}</p>
+		<p>Message:
+			{{ contact.message }}</p>
+	</div>
+{% endblock email_content %}

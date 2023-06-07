@@ -12,8 +12,8 @@ use Twig\Environment;
 
 class Mailer
 {
-    private $mailer;
-    private $twig;
+    protected $mailer;
+    protected $twig;
 
     /** @var LoggerInterface */
     protected $logger;

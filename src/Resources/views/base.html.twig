@@ -5,7 +5,7 @@
 		<title>
 			{% block master_title %}
 				{% block title %}Welcome!
-				{% endblock %}
+				{% endblock %} - {{ websiteInfo.translatedTitle |default(application_name) }}
 			{% endblock master_title %}
 		</title>
 		<link

@@ -3,6 +3,7 @@
 namespace HouseOfAgile\NakaCMSBundle\Controller;
 
 use App\Entity\User;
+use App\Service\Mailer;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use HouseOfAgile\NakaCMSBundle\Form\RegistrationFormType;
@@ -24,6 +25,7 @@ class RegistrationController extends AbstractController
     public function register(
         Request $request,
         ManagerRegistry $doctrine,
+        Mailer $mailer,
         UserPasswordHasherInterface $userPasswordHasher,
         VerifyEmailHelperInterface $verifyEmailHelper
     ): Response {
@@ -49,8 +51,11 @@ class RegistrationController extends AbstractController
                     $user->getEmail(),
                     ['id' => $user->getId()]
                 );
-                // TODO: in a real app, send this as an email!
-                $this->addFlash('success', 'Confirm your email at: ' . $signatureComponents->getSignedUrl());
+
+                $mailer->sendVerifyMessageToNewMember($user, $signatureComponents->getSignedUrl());
+
+                $this->addFlash('success', 'flash.register.checkYourEmailAndVerifyYourEmail');
+                
                 return $this->redirectToRoute('app_homepage');
             }
         }
