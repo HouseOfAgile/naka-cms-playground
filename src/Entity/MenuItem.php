@@ -76,6 +76,7 @@ class MenuItem implements TranslatableInterface
             'orderId' => $this->getOrderId(),
             'position' => $this->getPosition(),
             'routeParameters' => $this->getRouteParameters(),
+            'uri' => $this->getUri(),
             'menuItemTranslations' => array_map(function ($mi) {
                 return $mi->getId();
             }, $this->getTranslations()->toArray()),

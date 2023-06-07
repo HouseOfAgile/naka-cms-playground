@@ -81,8 +81,13 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
             'email' => $this->getEmail(),
             'password' => $this->getPassword(),
             'firstName' => $this->getFirstName(),
+            'birthDate' => $this->getBirthDate(),
             'lastName' => $this->getLastName(),
             'roles' => $this->getRoles(),
+            'street' => $this->getStreet(),
+            'zipCode' => $this->getZipCode(),
+            'city' => $this->getCity(),
+            'country' => $this->getCountry(),
         ];
 
 
