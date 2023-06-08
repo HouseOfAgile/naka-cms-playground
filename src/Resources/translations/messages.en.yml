@@ -168,3 +168,11 @@ footer.followUsOnSocialMedia: 'Follow us on Social Media !'
 
 register.signUpToPlatform.title: 'Signup to the platform'
 register.signUpToPlatform.detail: 'Signup to the platform in order to book an appointment'
+
+
+# loginForm
+loginForm.title: 'Sign in to your Dentist Fixer Account'
+loginForm.header: 'Sign in to your Dentist Fixer Account'
+loginForm.email: 'Email'
+loginForm.password: 'Password'
+loginForm.signIn: 'Sign In'
