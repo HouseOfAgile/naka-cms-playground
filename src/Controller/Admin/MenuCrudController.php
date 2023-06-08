@@ -33,6 +33,7 @@ class MenuCrudController extends AbstractCrudController
             // ->add(Crud::PAGE_INDEX, $viewPerformanceStrategy)
         ;
     }
+    
     public function configureFields(string $pageName): iterable
     {
         $id = IdField::new('id');
