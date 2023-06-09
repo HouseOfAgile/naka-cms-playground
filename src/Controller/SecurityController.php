@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
 {
@@ -17,12 +18,13 @@ class SecurityController extends AbstractController
             'error' => $authenticationUtils->getLastAuthenticationError(),
             'last_username' => $authenticationUtils->getLastUsername(),
         ]);
-
     }
 
     #[Route(path: '/admin-login', name: 'app_admin_login')]
-    public function adminLogin(AuthenticationUtils $authenticationUtils): Response
-    {
+    public function adminLogin(
+        AuthenticationUtils $authenticationUtils,
+        TranslatorInterface $translator
+    ): Response {
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
@@ -42,7 +44,7 @@ class SecurityController extends AbstractController
             // the title visible above the login form (define this option only if you are
             // rendering the login template in a regular Symfony controller; when rendering
             // it from an EasyAdmin Dashboard this is automatically set as the Dashboard title)
-            'page_title' => 'NakaCMS login',
+            'page_title' => $translator->trans('backend.loginForm.title'),
 
             // the string used to generate the CSRF token. If you don't define
             // this parameter, the login form won't include a CSRF token

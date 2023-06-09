@@ -44,7 +44,7 @@ trait AddressTrait
      */
     public function getFullAddress()
     {
-        $address = array_filter([$this->getCity(), $this->getZipCode(), $this->getStreet(), $this->getCountryName()]);
+        $address = array_filter([$this->getStreet(), $this->getZipcode(), $this->getCity(), $this->getCountryName()]);
 
         return $address ? implode(', ', $address) : '';
     }

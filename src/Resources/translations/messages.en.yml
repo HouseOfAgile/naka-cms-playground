@@ -15,6 +15,7 @@ backend.common.position: Position
 backend.common.menuItem: 'MenuItem'
 backend.common.pageBlockElement: 'Page block element'
 
+backend.loginForm.title: 'NakaCMS login'
 
 backend.dashboard.title: "Welcome in the %applicationName% backend"
 backend.dashboardAdmin.generalHelp: |
@@ -169,6 +170,16 @@ footer.followUsOnSocialMedia: 'Follow us on Social Media !'
 register.signUpToPlatform.title: 'Signup to the platform'
 register.signUpToPlatform.detail: 'Signup to the platform in order to book an appointment'
 
+
+# registerForm
+form.registerForm.firstName: 'First Name'
+form.registerForm.lastName: 'Last Name'
+form.registerForm.birthDate: 'Birth Date'
+form.registerForm.address: 'Address'
+form.registerForm.email: 'Email'
+form.registerForm.agreeTerms: 'Agree to the terms'
+form.registerForm.password: 'Password'
+form.registerForm.register: 'Register'
 
 # loginForm
 loginForm.title: 'Sign in to your Dentist Fixer Account'

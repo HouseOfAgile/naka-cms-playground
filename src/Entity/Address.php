@@ -68,7 +68,7 @@ class Address
     public function getFullAddress()
     {
         // @todo add city
-        $address = array_filter([$this->getPostcode(), $this->getStreet(), $this->getCountryName()]);
+        $address = array_filter([$this->getStreet(), $this->getPostcode(), $this->getCity(), $this->getCountryName()]);
 
         return $address ? implode(', ', $address) : '';
     }

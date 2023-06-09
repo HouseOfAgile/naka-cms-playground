@@ -8,6 +8,8 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\NamedAddress;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 class Mailer
@@ -21,13 +23,22 @@ class Mailer
     protected $applicationSenderEmail;
     protected $applicationContactEmail;
 
+    /** @var TranslatorInterface */
+    protected $translator;
+
+    /** @var UrlGeneratorInterface */
+    protected $router;
+
     public function __construct(
         MailerInterface $mailer,
         Environment $twig,
         LoggerInterface $generalLogger,
         $applicationName,
         $applicationSenderEmail,
-        $applicationContactEmail
+        $applicationContactEmail,
+        TranslatorInterface $translator,
+        UrlGeneratorInterface $router,
+
     ) {
         $this->mailer = $mailer;
         $this->twig = $twig;
@@ -35,6 +46,8 @@ class Mailer
         $this->applicationName = $applicationName;
         $this->applicationSenderEmail = $applicationSenderEmail;
         $this->applicationContactEmail = $applicationContactEmail;
+        $this->translator = $translator;
+        $this->router = $router;
     }
 
     public function sendWelcomeMessageToEditor(BaseUser $user)
