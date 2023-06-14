@@ -60,8 +60,28 @@ class Address
             $this->id,
             $this->getFullAddress(),
         );
-        
     }
+    
+    /**
+     * dumpConfig: return array with main config
+     *
+     * @return array
+     */
+    public function dumpConfig(): array
+    {
+        $config =  [
+            'id' => $this->id,
+            'street' => $this->getStreet(),
+            'postcode' => $this->getPostcode(),
+            'country' => $this->getCountry(),
+        ];
+
+        if ($this->getCity() != null) {
+            $config['city'] = $this->getCity()->getId();
+        }
+        return $config;
+    }
+
     /**
      * @return string
      */

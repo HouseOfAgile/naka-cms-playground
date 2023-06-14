@@ -134,7 +134,9 @@ class RestCURLService
             dump($url, $method, $headers);
             dd($data);
         }
+        $agent = 'Sequasa/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)';
         $ch = curl_init();
+        curl_setopt($ch, CURLOPT_USERAGENT, $agent);
 
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -199,6 +201,8 @@ class RestCURLService
         }
         $this->logger->info(sprintf('Curl Request response: %s', $response));
         $this->updateRateLimit($headers);
+        // if ($response == null) {return null;}
+
         return json_decode($response, true, 512, JSON_THROW_ON_ERROR);
     }
 }
