@@ -308,6 +308,7 @@ class DumperUpdater
         // if action is dump we dump, otherwise we udpate
 
         foreach ($assetEntities as $type => $attr) {
+            $this->logSuccess(sprintf('Dumping assets for %s', $type));
             $entityClass = 'App\\Entity\\' . ucfirst($type);
             $repository = $this->appEntitiesDict[$type];
             $dataArray = [];
@@ -374,7 +375,7 @@ class DumperUpdater
                     } elseif (method_exists($entity, 'setAssetFile')) {
                         $entity->setAssetFile($uploadedFile);
                     }
-                    if ($dataEntity['name'] != null) {
+                    if (array_key_exists('name', $dataEntity) && $dataEntity['name'] != null) {
                         $entity->setName($dataEntity['name']);
                     }
 
