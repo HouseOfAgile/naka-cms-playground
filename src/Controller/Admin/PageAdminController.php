@@ -109,7 +109,8 @@ class PageAdminController extends AdminDashboardController
     ): \Symfony\Component\HttpFoundation\Response {
 
         $form = $this->createForm(BlocksInPagePositionType::class, $page, [
-            'orderedPageBlockElementsArray' => $page->getOrderedPageBlockElementsArray()
+            'orderedPageBlockElementsArray' => $page->getOrderedPageBlockElementsArray(),
+            'data_class' => Page::class
         ]);
         $form->handleRequest($request);
 
@@ -117,7 +118,7 @@ class PageAdminController extends AdminDashboardController
             if ($form->isValid()) {
                 $newOrderString = $form->get("newOrder")->getData();
                 $newOrder = explode(',', $newOrderString);
-                $result =$nakaPageManager->updatePageBlockElementsPosition($page, $newOrder);
+                $result =$nakaPageManager->updatePageBlockElementsPosition($newOrder);
                 if ($result) {
                     $this->addFlash('success', sprintf('Page \'%s\' has been reorganized', $page));
                 } else {

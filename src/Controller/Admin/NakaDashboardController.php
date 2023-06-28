@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -29,7 +30,7 @@ class NakaDashboardController extends AbstractDashboardController
     }
 
     #[Route(path: '/admin')]
-    public function indexNonLocalized(): Response
+    public function indexNonLocalized(): RedirectResponse
     {
         // return $this->redirectToRoute('naka_localized_admin');
         return $this->redirectToRoute('admin_dashboard');

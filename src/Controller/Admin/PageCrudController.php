@@ -49,6 +49,9 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
 
         $reorganizeBlocksInPage = Action::new('configureMenu', 'backend.crud.page.action.reorganizeBlocksInPage', 'fa fa-wheel')
             ->linkToRoute('reorganize_blocks_in_page', $pageId)
+            ->displayIf(static function ($entity) {
+                return count($entity->getPageBlockElements()) > 1;
+            })
             ->addCssClass('btn btn-success');
 
         return $actions

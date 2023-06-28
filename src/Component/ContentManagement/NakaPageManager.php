@@ -23,7 +23,7 @@ class NakaPageManager
         $this->pageBlockElementRepository = $pageBlockElementRepository;
     }
 
-    public function updatePageBlockElementsPosition(Page $page, $newOrder)
+    public function updatePageBlockElementsPosition($newOrder)
     {
         $position = 1;
         foreach ($newOrder as $pageBlockElementId) {
