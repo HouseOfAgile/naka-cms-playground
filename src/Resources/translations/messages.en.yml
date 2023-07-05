@@ -90,9 +90,12 @@ backend.form.blockElementType.jsCode: "The javascript code for that block elemen
 
 backend.form.menu.menuItems: "List of items in that menu"
 
-backend.form.user.firstName.help: "Set the first name of that user"
-backend.form.user.lastName.help: "Set the last name of that user"
-backend.form.user.roles.help: ""
+backend.form.user.firstName.help: "Set the first name of this user"
+backend.form.user.email.help: "Set the email for this user"
+backend.form.user.lastName.help: "Set the last name of this user"
+backend.form.user.roles.help: "Set the roles of this user. They are several roles available, refer to the documentation for the details."
+
+backend.form.adminUser.roles.help: "Set the roles of this user. They are several roles available, refer to the documentation for the details."
 
 backend.crud.pageBlockElement.relatedToPage: "Related to page"
 backend.crud.pageBlockElement.notLinkedToAnyPage: "Not linked to any page"

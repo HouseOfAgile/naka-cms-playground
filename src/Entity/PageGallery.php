@@ -2,6 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
+use App\Entity\Page;
 use App\Entity\Picture;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

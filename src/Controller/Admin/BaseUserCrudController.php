@@ -65,6 +65,8 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
 
     public function configureFields(string $pageName): iterable
     {
+        $id = IntegerField::new('id', 'ID');
+
         $tabUserDetails = FormField::addTab('User Details');
         $panel3 = FormField::addTab('User Detailss');
 
@@ -76,26 +78,13 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
 
         $email = TextField::new('email')->setHelp('backend.form.user.email.help');
 
-        // @todo Move roles definitions to some configuration file
-        $rolesSuperAdmin = ChoiceField::new('roles')
-            ->setChoices([
-                'Content Editor' => 'ROLE_EDITOR',
-                'Administrator' => 'ROLE_ADMIN',
-                'Super Administrator' => 'ROLE_SUPER_ADMIN',
-            ])
-            ->allowMultipleChoices()
-            ->setPermission('ROLE_SUPER_ADMIN');
-
         $roles = ChoiceField::new('roles')->setChoices([
-            'Content Editor' => 'ROLE_EDITOR',
+            'User' => 'ROLE_USER',
             'Administrator' => 'ROLE_ADMIN',
         ])->allowMultipleChoices()
             // ->renderAsBadges()
             ->setHelp('backend.form.user.roles.help');
 
-
-
-        $salt = TextField::new('salt');
         $password = Field::new('plainPassword', 'New password')->onlyOnForms()
             ->setFormType(RepeatedType::class)
             ->setFormTypeOptions([
@@ -104,20 +93,15 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
                 'second_options' => ['label' => 'Repeat password'],
             ])
             ->setFormTypeOption('required', false);
-        $id = IntegerField::new('id', 'ID');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            if ($this->isGranted('ROLE_SUPER_ADMIN')) {
-                return [$firstName, $lastName, $email, $rolesSuperAdmin];
-            } else {
-                return [$firstName, $lastName, $email, $roles];
-            }
+            return [$firstName, $lastName, $email, $roles];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$tabUserDetails, $firstName, $lastName, $email, $salt, $password, $roles, $id];
+            return [$tabUserDetails, $firstName, $lastName, $email, $password, $roles, $id];
         } elseif (Crud::PAGE_NEW === $pageName) {
             return [$tabUserDetails, $firstName, $lastName, $password, $email, $roles];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$tabUserDetails, $firstName, $lastName, $password,  $email, $roles, $rolesSuperAdmin];
+            return [$tabUserDetails, $firstName, $lastName, $password,  $email, $roles];
         }
     }
 
