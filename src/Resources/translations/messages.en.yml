@@ -184,8 +184,18 @@ form.registerForm.birthDate: 'Birth Date'
 form.registerForm.address: 'Address'
 form.registerForm.email: 'Email'
 form.registerForm.agreeTerms: 'Agree to the terms'
+form.registerForm.agreeTerms.constraint.isTrue: 'You should agree to our terms.'
 form.registerForm.password: 'Password'
+form.registerForm.repeatPassword: 'Repeat Password'
+form.registerForm.password.constraint.pleaseEnterAPassword: 'Please enter a password'
+form.registerForm.password.invalidMessage: 'The password fields must match.'
 form.registerForm.register: 'Register'
+
+# addressForm
+form.addressForm.street: 'Street'
+form.addressForm.zipcode: 'Zip Code'
+form.addressForm.city: 'City'
+form.addressForm.country: 'Country'
 
 # loginForm
 loginForm.title: 'Sign in to your Dentist Fixer Account'

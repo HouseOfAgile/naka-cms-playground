@@ -1,0 +1,35 @@
+{% extends '@NakaCMS/layout/base-layout.html.twig' %}
+
+{% block title %}
+	{{ 'form.resetPassword.request.title' | trans }}
+{% endblock %}
+
+{% block content %}
+	{% for flash_error in app.flashes('reset_password_error') %}
+		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+	{% endfor %}
+	<div class="container my-5">
+		<div class="row">
+			<div class="col-10 offset-1 global-main-form-style p-5">
+				<h1 class="text-center py-3">{{ 'form.resetPassword.request.header' | trans }}</h1>
+
+				{{ form_start(requestForm) }}
+				<div class="row m-4">
+					<div class="col-6 offset-3">{{ form_row(requestForm.email) }}
+						{# <div class="col-4">{{ form_widget(requestForm.email) }}</div> #}
+						<div>
+							<small>
+								{{ 'form.resetPassword.request.submitText' | trans }}
+							</small>
+						</div>
+					</div>
+				</div>
+
+				<div class="text-center py-3">
+					<button class="btn btn-primary">{{ 'form.resetPassword.request.submitText' | trans }}</button>
+				</div>
+				{{ form_end(requestForm) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

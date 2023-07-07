@@ -11,6 +11,7 @@ use Symfony\Component\Mime\NamedAddress;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
+use Symfony\Component\Mime\Address;
 
 class Mailer
 {
@@ -21,6 +22,7 @@ class Mailer
     protected $logger;
     protected $applicationName;
     protected $applicationSenderEmail;
+    protected $applicationSenderName;
     protected $applicationContactEmail;
 
     /** @var TranslatorInterface */
@@ -35,6 +37,7 @@ class Mailer
         LoggerInterface $generalLogger,
         $applicationName,
         $applicationSenderEmail,
+        $applicationSenderName,
         $applicationContactEmail,
         TranslatorInterface $translator,
         UrlGeneratorInterface $router,
@@ -45,6 +48,7 @@ class Mailer
         $this->logger = $generalLogger;
         $this->applicationName = $applicationName;
         $this->applicationSenderEmail = $applicationSenderEmail;
+        $this->applicationSenderName = $applicationSenderName;
         $this->applicationContactEmail = $applicationContactEmail;
         $this->translator = $translator;
         $this->router = $router;
@@ -91,6 +95,23 @@ class Mailer
         $this->logger->info(sprintf(
             'New contact Message from email %s',
             $contact->getEmail()
+        ));
+    }
+
+    public function sendResetPasswordEmail($email, $resetToken)
+    {
+        $templatedEmail = (new TemplatedEmail())
+            ->from(new Address($this->applicationSenderEmail, $this->applicationSenderName))
+            ->to($email)
+            ->subject('Your password reset request')
+            ->htmlTemplate('@NakaCMS/email/reset_password_email.html.twig')
+            ->context([
+                'resetToken' => $resetToken,
+            ]);
+        $this->mailer->send($templatedEmail);
+        $this->logger->info(sprintf(
+            'New Reset email mail sent to email %s',
+            $email
         ));
     }
 }

@@ -25,47 +25,84 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('firstName', TextType::class, [
                 'label' => 'form.registerForm.firstName',
+                'attr' => [
+                    'placeholder' => 'form.registerForm.firstName',
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
             ])
             ->add('lastName', TextType::class, [
                 'label' => 'form.registerForm.lastName',
+                'attr' => [
+                    'placeholder' => 'form.registerForm.lastName',
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
             ])
             ->add('birthDate', BirthdayType::class, [
                 'label' => 'form.registerForm.birthDate',
-                'placeholder' => [
-                    'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
-                ],
+                'help' => 'form.registerForm.birthDate.help',
+                'widget' => 'single_text',
+                'html5' => false,
+                'attr' => ['class' => 'p-3 js-datepicker text-white'],
             ])
             ->add('address', AddressType::class, [
                 'label' => 'form.registerForm.address',
+                'help' => 'form.registerForm.address.help',
                 'data_class' => User::class,
                 'required' => false,
             ])
             ->add('email', EmailType::class, [
-                'label' => 'form.registerForm.email'
+                'label' => 'form.registerForm.email',
+                'attr' => [
+                    'placeholder' => 'form.registerForm.email',
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'label' => 'form.registerForm.agreeTerms',
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'form.registerForm.agreeTerms.constraint.isTrue',
                     ]),
                 ],
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'label' => 'form.registerForm.password',
+                'help' => 'form.registerForm.password.help',
                 'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
+                'invalid_message' => 'form.registerForm.password.invalidMessage',
                 'attr' => ['autocomplete' => 'new-password'],
                 'mapped' => false,
 
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
-                'first_options'  => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
+                'first_options'  => [
+                    'label' => 'form.registerForm.password',
+                    'attr' => [
+                        'placeholder' => 'form.registerForm.password',
+                    ],
+                    'row_attr' => [
+                        'class' => 'form-floating m-4',
+                    ]
+                ],
+                'second_options' => [
+                    'label' => 'form.registerForm.repeatPassword',
+                    'attr' => [
+                        'placeholder' => 'form.registerForm.repeatPassword',
+                    ],
+                    'row_attr' => [
+                        'class' => 'form-floating m-4',
+                    ]
+                ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'form.registerForm.password.constraint.pleaseEnterAPassword',
                     ]),
                     new Length([
                         'min' => 6,

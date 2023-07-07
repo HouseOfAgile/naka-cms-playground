@@ -28,6 +28,7 @@
         $allLocales: "%all_locales%"
         $applicationName: "%env(APPLICATION_NAME)%"
         $applicationSenderEmail: "%env(APPLICATION_SENDER_EMAIL)%"
+        $applicationSenderName: "%env(APPLICATION_SENDER_NAME)%"
         $applicationContactEmail: "%env(APPLICATION_CONTACT_EMAIL)%"
         $projectDir: "%kernel.project_dir%"
         $devMode: "%env(bool:DEV_MODE)%"

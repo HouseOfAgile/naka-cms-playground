@@ -1,0 +1,12 @@
+{% extends '@NakaCMS/layout/layout_notification.html.twig' %}
+
+{% block title %}
+	{{ 'form.resetPassword.checkEmail.title' | trans }}
+{% endblock %}
+
+{% block content %}
+	<h1 class="fs-5 text-center py-3">
+		{{ 'form.resetPassword.checkEmail.title' | trans }}
+	</h1>
+	{{ 'form.resetPassword.checkEmail.content' | trans({'%expirationMessageKey%': resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle'), '%forgotPasswordRequestLink%':  path('app_forgot_password_request') }) | raw }}
+{% endblock %}

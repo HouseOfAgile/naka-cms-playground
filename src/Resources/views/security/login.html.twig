@@ -1,36 +1,54 @@
 {% extends '@NakaCMS/layout/base-layout.html.twig' %}
 
-{% block title %}{{ 'loginForm.title' | trans }}
+{% block title %}
+	{{ 'loginForm.title' | trans }}
 {% endblock %}
 
 {% block content %}
 	<div class="container">
 		<div class="row">
-			<div class="col-6 offset-3">
-				<div class="login-form bg-light mt-4 p-5">
+			<div class="col-8 offset-2 p-5">
+				<div class="login-form global-main-form-style mt-4 p-5">
 					<div class="row">
 						<form method="post" action="{{ path('app_login') }}" class="row g-3">
-							<h1 class="h3 mb-3 font-weight-normal">{{ 'loginForm.header' | trans }}</h1>
+							<h1 class="text-center fs-3 mb-3">{{ 'loginForm.header' | trans }}</h1>
 
 							{% if error %}
 								<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 							{% endif %}
 
-							<div class="col-8 offset-2">
-								<label for="inputEmail">{{ 'loginForm.email' | trans }}</label>
-								<input type="text" name="email" id="inputEmail" class="form-control" value="{{ last_username }}" required autofocus>
+							<div class="col-6 offset-3">
+								<div class="form-floating mb-3">
+									<input type="text" name="email" id="inputEmail" class="form-control" value="{{ last_username }}" placeholder="{{ 'loginForm.email' | trans }}" required autofocus>
+									<label for="inputEmail">{{ 'loginForm.email' | trans }}</label>
+								</div>
 							</div>
-							<div class="col-8 offset-2">
-								<label for="inputPassword">{{ 'loginForm.password' | trans }}</label>
-								<input type="password" name="password" id="inputPassword" class="form-control" required>
+							<div class="col-6 offset-3">
+								<div class="form-floating mb-3">
+									<input type="password" name="password" id="inputPassword" class="form-control" placeholder="{{ 'loginForm.password' | trans }}" required>
+									<label for="inputPassword">{{ 'loginForm.password' | trans }}</label>
+								</div>
 							</div>
 
 							<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-							<div class="col-10 offset-1 text-center py-4">
+							<div class="col-10 offset-1 text-center">
+								<div class="lead">
+									{{ 'loginForm.forgotPasswordText' | trans({'%forgotPasswordRequestLink%':  path('app_forgot_password_request') }) | raw }}
+								</div>
+							</div>
+							<div class="col-10 offset-1 text-center pb-4 pt-1">
 								<button class="btn btn-lg btn-gls-impact" type="submit">
 									{{ 'loginForm.signIn' | trans }}
 								</button>
+							</div>
+
+							<div class="col-10 offset-1 text-center py-4">
+								<div class="lead pb-3">
+									{{ 'register.inviteToSignUpOnLogin' | trans | raw }}
+								</div>
+								<a href="{{ path('app_register') }}" class="btn btn-lg btn-gls-impact" role="button">
+									{{ 'authenticate.signUp' | trans }}
+								</a>
 							</div>
 						</form>
 					</div>

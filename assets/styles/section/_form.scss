@@ -1,0 +1,9 @@
+
+.global-main-form-style {
+  @extend .rounded;
+  @extend .rounded-5;
+  @extend .shadow-lg;
+  @extend .text-bg-secondary;
+  @extend .bg-gradient;
+  @extend .bg-opacity-75;
+}
