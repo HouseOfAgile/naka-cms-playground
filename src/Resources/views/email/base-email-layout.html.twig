@@ -17,7 +17,7 @@
 			h1 {
 				background-color: #264459;
 				color: #ffffff;
-				padding: 30px 0 50px;
+				padding: 30px 10px 50px;
 				font-weight: normal;
 			}
 			hr {
@@ -42,6 +42,9 @@
 				font-family: 'Caveat', cursive;
 				font-size: 40px;
 				text-decoration: none;
+			}
+			.email-content {
+				padding: 10px 30px 20px;
 			}
 			.text-center {
 				text-align: center;
@@ -68,26 +71,18 @@
 					</a>
 				</div>
 				<div class="content">
-					<div class="email-impact-message"> {% block impact_message %}{% endblock %}
+					<div class="email-impact-message">{% block impact_message %}{% endblock impact_message %}</div>
+					<div class="email-content"> {% block email_content %}{% endblock email_content %}</div>
+					<div class="footer">
+						<div class="block">
+							{{ 'email.signature' | trans({'%applicationName%': application_name }) | raw }}
 						</div>
-						<div class="email-content"> {% block email_content %}{% endblock %}
-
-							</div>
-						</div>
-						<div class="footer">
-							<p class="block">
-								Cheers,<br><br>
-								Your friendly
-								<em>The
-									{{ application_name }}
-									Team</em>
-							</p>
-							<p class="block bottom text-center">
-								Sent with ❤️ from the friendly folks at The
-								{{ application_name }}
-							</p>
-						</div>
+						<p class="block bottom text-center">
+							{{ 'email.bottomFooterText' | trans({'%applicationName%': application_name }) }}
+						</p>
 					</div>
 				</div>
-			</body>
-		</html>
+			</div>
+		</div>
+	</body>
+</html>
