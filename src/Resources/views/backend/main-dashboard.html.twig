@@ -8,8 +8,8 @@
 {% block main %}
 	<div class="row">
 		<div class="col-8 offset-2">
-			<div class="p-2 mb-4 bg-light rounded-3">
-				<div class="container-fluid py-2">
+			<div class="p-2 mb-4 text-bg-light rounded-3">
+				<div class="row py-4">
 					<div class="col-md-10 offset-1">
 						{{ is_granted('ROLE_ADMIN') ? 'backend.dashboardAdmin.generalHelp' | trans | raw :'backend.dashboardManager.generalHelp' | trans | raw }}</div>
 				</div>

@@ -24,77 +24,77 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('firstName', TextType::class, [
-                'label' => 'form.registerForm.firstName',
+                'label' => 'form.member.firstName',
                 'attr' => [
-                    'placeholder' => 'form.registerForm.firstName',
+                    'placeholder' => 'form.member.firstName',
                 ],
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],
             ])
             ->add('lastName', TextType::class, [
-                'label' => 'form.registerForm.lastName',
+                'label' => 'form.member.lastName',
                 'attr' => [
-                    'placeholder' => 'form.registerForm.lastName',
+                    'placeholder' => 'form.member.lastName',
                 ],
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],
             ])
             ->add('birthDate', BirthdayType::class, [
-                'label' => 'form.registerForm.birthDate',
-                'help' => 'form.registerForm.birthDate.help',
+                'label' => 'form.member.birthDate',
+                'help' => 'form.member.birthDate.help',
                 'widget' => 'single_text',
                 'html5' => false,
                 'attr' => ['class' => 'p-3 js-datepicker text-white'],
             ])
             ->add('address', AddressType::class, [
-                'label' => 'form.registerForm.address',
-                'help' => 'form.registerForm.address.help',
+                'label' => 'form.member.address',
+                'help' => 'form.member.address.help',
                 'data_class' => User::class,
                 'required' => false,
             ])
             ->add('email', EmailType::class, [
-                'label' => 'form.registerForm.email',
+                'label' => 'form.member.email',
                 'attr' => [
-                    'placeholder' => 'form.registerForm.email',
+                    'placeholder' => 'form.member.email',
                 ],
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],
             ])
             ->add('agreeTerms', CheckboxType::class, [
-                'label' => 'form.registerForm.agreeTerms',
+                'label' => 'form.member.agreeTerms',
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'form.registerForm.agreeTerms.constraint.isTrue',
+                        'message' => 'form.member.agreeTerms.constraint.isTrue',
                     ]),
                 ],
             ])
             ->add('plainPassword', RepeatedType::class, [
-                'label' => 'form.registerForm.password',
-                'help' => 'form.registerForm.password.help',
+                'label' => 'form.member.password',
+                'help' => 'form.member.password.help',
                 'type' => PasswordType::class,
-                'invalid_message' => 'form.registerForm.password.invalidMessage',
+                'invalid_message' => 'form.member.password.invalidMessage',
                 'attr' => ['autocomplete' => 'new-password'],
                 'mapped' => false,
 
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
                 'first_options'  => [
-                    'label' => 'form.registerForm.password',
+                    'label' => 'form.member.password',
                     'attr' => [
-                        'placeholder' => 'form.registerForm.password',
+                        'placeholder' => 'form.member.password',
                     ],
                     'row_attr' => [
                         'class' => 'form-floating m-4',
                     ]
                 ],
                 'second_options' => [
-                    'label' => 'form.registerForm.repeatPassword',
+                    'label' => 'form.member.repeatPassword',
                     'attr' => [
-                        'placeholder' => 'form.registerForm.repeatPassword',
+                        'placeholder' => 'form.member.repeatPassword',
                     ],
                     'row_attr' => [
                         'class' => 'form-floating m-4',
@@ -102,7 +102,7 @@ class RegistrationFormType extends AbstractType
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'form.registerForm.password.constraint.pleaseEnterAPassword',
+                        'message' => 'form.member.password.constraint.pleaseEnterAPassword',
                     ]),
                     new Length([
                         'min' => 6,
@@ -113,7 +113,7 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('register', SubmitType::class, [
-                'label' => 'form.registerForm.register',
+                'label' => 'form.member.register',
             ]);
     }
 

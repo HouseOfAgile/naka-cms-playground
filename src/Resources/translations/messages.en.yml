@@ -10,6 +10,11 @@ form.contact.submit: "Send your message"
 
 common.readMore: "Read More"
 
+# common address
+common.address.street: 'Street'
+common.address.zipCode: 'Zip Code'
+common.address.city: 'City'
+common.address.country: 'Country'
 
 backend.common.position: Position
 backend.common.menuItem: 'MenuItem'
@@ -178,18 +183,18 @@ register.signUpToPlatform.detail: 'Signup to the platform in order to book an ap
 
 
 # registerForm
-form.registerForm.firstName: 'First Name'
-form.registerForm.lastName: 'Last Name'
-form.registerForm.birthDate: 'Birth Date'
-form.registerForm.address: 'Address'
-form.registerForm.email: 'Email'
-form.registerForm.agreeTerms: 'Agree to the terms'
-form.registerForm.agreeTerms.constraint.isTrue: 'You should agree to our terms.'
-form.registerForm.password: 'Password'
-form.registerForm.repeatPassword: 'Repeat Password'
-form.registerForm.password.constraint.pleaseEnterAPassword: 'Please enter a password'
-form.registerForm.password.invalidMessage: 'The password fields must match.'
-form.registerForm.register: 'Register'
+form.member.firstName: 'First Name'
+form.member.lastName: 'Last Name'
+form.member.birthDate: 'Birth Date'
+form.member.address: 'Address'
+form.member.email: 'Email'
+form.member.agreeTerms: 'Agree to the terms'
+form.member.agreeTerms.constraint.isTrue: 'You should agree to our terms.'
+form.member.password: 'Password'
+form.member.repeatPassword: 'Repeat Password'
+form.member.password.constraint.pleaseEnterAPassword: 'Please enter a password'
+form.member.password.invalidMessage: 'The password fields must match.'
+form.member.register: 'Register'
 
 # addressForm
 form.addressForm.street: 'Street'
