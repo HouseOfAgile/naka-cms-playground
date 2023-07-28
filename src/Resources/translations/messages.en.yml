@@ -149,6 +149,8 @@ websiteInfo.globalSettings: "Global Settings"
 websiteInfo.generalExplanation: "You can have a look here to the global settings of the website, as well as customizing the main translation"
 websiteInfo.globalTranslations: "Global Translations"
 websiteInfo.globalParameter: "Global Parameters"
+websiteInfo.globalParameter.help: "Those parameters are global and have to be changed manually"
+websiteInfo.globalTranslations.help: "Those translations are used mainly in the footer"
 websiteInfo.value: "Value"
 thumbnail.viewLarger: "View Larger"
 
