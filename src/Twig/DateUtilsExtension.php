@@ -4,7 +4,6 @@ namespace HouseOfAgile\NakaCMSBundle\Twig;
 
 use Carbon\Carbon;
 use DateTime;
-use HouseOfAgile\NakaCMSBundle\Component\OpeningHours\OpeningHoursManager;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -51,8 +50,4 @@ class DateUtilsExtension extends AbstractExtension
             $carbonBeginDate->format('M j') . $separator . $carbonEndDate->format('M j'.$yearFormat);
     }
 
-    public function openingStatusBool()
-    {
-        return $this->openingHoursManager->getOpeningStatusBool();
-    }
 }
