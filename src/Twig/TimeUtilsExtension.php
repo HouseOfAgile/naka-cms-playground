@@ -49,8 +49,13 @@ class TimeUtilsExtension extends AbstractExtension
                 break;
             case 'getMonthDayYear':
                 $current = Carbon::now();
-                $monthDay = substr($dt->monthName,0,3). ' ' . $dt->day;
-                return $dt->year != $current->year ? $monthDay  . ' ' . $dt->year : $monthDay ;
+                $monthDay = substr($dt->monthName, 0, 3) . ' ' . $dt->day;
+                return $dt->year != $current->year ? $monthDay  . ' ' . $dt->year : $monthDay;
+                break;
+            case 'getMonthDay':
+                $current = Carbon::now();
+                $monthDay = substr($dt->monthName, 0, 3) . ' ' . $dt->day;
+                return $monthDay;
                 break;
             case 'normal':
             default:
