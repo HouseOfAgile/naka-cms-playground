@@ -43,7 +43,7 @@ class DateUtilsExtension extends AbstractExtension
         $carbonEndDate = Carbon::parse($endDate)->locale($locale);
         // $differentMonth =  $carbonBeginDate->month !=$carbonEndDate->month;
         $differentYear =  $carbonBeginDate->year != $carbonEndDate->year;
-        $yearFormat = ($doNotShowYear && $differentYear) ? '' : ' Y';
+        $yearFormat = ($doNotShowYear && !$differentYear) ? '' : ' Y';
 
         return $differentYear ?
             $carbonBeginDate->format('M j'.$yearFormat) . $separator . $carbonEndDate->format('M j' . $yearFormat) :
