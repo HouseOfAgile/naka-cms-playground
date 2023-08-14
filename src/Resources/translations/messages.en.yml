@@ -1,14 +1,14 @@
 # Some translations that are common
-frontend.goToAdmin: "Go to Admin"
-main.returnToAdmin: "Return to Admin"
+frontend.goToAdmin: 'Go to Admin'
+main.returnToAdmin: 'Return to Admin'
 
 form.contact.name: Name
 form.contact.email: Email
 form.contact.subject: Subject
 form.contact.message: Message
-form.contact.submit: "Send your message"
+form.contact.submit: 'Send your message'
 
-common.readMore: "Read More"
+common.readMore: 'Read More'
 
 # common address
 common.address.street: 'Street'
@@ -22,91 +22,91 @@ backend.common.pageBlockElement: 'Page block element'
 
 backend.loginForm.title: 'NakaCMS login'
 
-backend.dashboard.title: "Welcome in the %applicationName% backend"
+backend.dashboard.title: 'Welcome in the %applicationName% backend'
 backend.dashboardAdmin.generalHelp: |
     <p>This is the general backend for administration of the NakaCMS Instance.</p>
     <p>Depending on your role access, you can work on the content or the general configuration of the platform.</p>
 
-backend.dashboardManager.generalHelp: "This backend give you the ability to manage the specifics of this NakaCMS instance."
+backend.dashboardManager.generalHelp: 'This backend give you the ability to manage the specifics of this NakaCMS instance.'
 
 backend.menu.websiteInfo: Website Info
 backend.menu.openingHours: Opening Hours
 backend.menu.websiteAsset: 'Website Documents'
-backend.menu.translations: "Translations"
+backend.menu.translations: 'Translations'
 
-backend.websiteInfo.title: "Website info for %applicationName%"
-backend.websiteInfo.thereIsNoWebsiteInfo: "There is no website info yet"
-backend.websiteInfo.youNeedAWebsiteInfo: "You should create and configure one"
-backend.websiteInfo.configureWebsiteInfo: "Configure Website Info now"
-backend.websiteInfo.editOpeningHours: "Edit Opening Hours"
+backend.websiteInfo.title: 'Website info for %applicationName%'
+backend.websiteInfo.thereIsNoWebsiteInfo: 'There is no website info yet'
+backend.websiteInfo.youNeedAWebsiteInfo: 'You should create and configure one'
+backend.websiteInfo.configureWebsiteInfo: 'Configure Website Info now'
+backend.websiteInfo.editOpeningHours: 'Edit Opening Hours'
 
-backend.websiteAsset.generalHelpForAdmin: "Here you can add assets that will be available for all people granted access to the admin. This could be pdf, word documents or images."
-backend.websiteAsset.generalHelpForManager: "Here you can find a list of assets that gives you information on the website."
+backend.websiteAsset.generalHelpForAdmin: 'Here you can add assets that will be available for all people granted access to the admin. This could be pdf, word documents or images.'
+backend.websiteAsset.generalHelpForManager: 'Here you can find a list of assets that gives you information on the website.'
 
 backend.crud.menu.action.reorganizeMenu: 'Reorganize Menu'
 backend.form.menu.isFixed.help: 'this parameter control if the menu is fixed or not, i.e., this menu cannot be deleted, usually useful for the main menus'
 
 backend.crud.page.action.reorganizeBlocksInPage: 'Reorganize blocks'
 
-backend.form.page.pageDetailsPanel: "Page Details"
-backend.form.page.pageDetailsPanel.help: "Those are the main settings of the page"
-backend.form.page.pageConfigurationTab: "Page configuration"
-backend.form.page.pageConfigurationTab.help: "General configuration for the page"
+backend.form.page.pageDetailsPanel: 'Page Details'
+backend.form.page.pageDetailsPanel.help: 'Those are the main settings of the page'
+backend.form.page.pageConfigurationTab: 'Page configuration'
+backend.form.page.pageConfigurationTab.help: 'General configuration for the page'
 
-page.mainPageTranslationsPanel: "Main page translations"
+page.mainPageTranslationsPanel: 'Main page translations'
 backend.form.page.mainPageTranslationsPanel: 'Page Translation'
 backend.form.page.mainPageTranslationsPanel.help: |
     <p>Those are the internationalized translation for the page details in the various supported languages.</p>
     <p>The content will give an insight on the page, and will be used for SEO.</p>
-backend.form.page.category: "Category of the page"
-backend.form.page.pageBlockElements: "All related PageBlock Elements"
-backend.form.page.pageBlockElements.help: "Here you can select the pageblock you want to have on that page, you can later change and order them through the config layout Page."
-backend.form.page.pageGallery: "Related Gallery"
-backend.form.page.pageGallery.help: "This is the gallery holding the images that will be used in the <strong>content</strong> part of the page"
+backend.form.page.category: 'Category of the page'
+backend.form.page.pageBlockElements: 'All related PageBlock Elements'
+backend.form.page.pageBlockElements.help: 'Here you can select the pageblock you want to have on that page, you can later change and order them through the config layout Page.'
+backend.form.page.pageGallery: 'Related Gallery'
+backend.form.page.pageGallery.help: 'This is the gallery holding the images that will be used in the <strong>content</strong> part of the page'
 
-backend.form.page.pageType.help: "The type of the page, can be of three main types"
+backend.form.page.pageType.help: 'The type of the page, can be of three main types'
 
-backend.form.page.pageConfigurationPanel: "Page Configuration"
-backend.form.page.pageConfigurationPanel.help: "Here you can select the blocks on that page, connect a gallery, set the category"
+backend.form.page.pageConfigurationPanel: 'Page Configuration'
+backend.form.page.pageConfigurationPanel.help: 'Here you can select the blocks on that page, connect a gallery, set the category'
 
 backend.form.page.bannerPicture.help: 'Banner picture should have a ration of 1200px * 300px'
 backend.form.page.slidePicture.help: 'Slide picture should have a ration of 600px * 400px'
 
-backend.form.addPageToMenu.title: "Add a page to a menu"
+backend.form.addPageToMenu.title: 'Add a page to a menu'
 backend.form.addPageToMenu.detailedHelp: |
     <p>There are various menu available in Naka. You can add a page to a menu by selecting the menu you want your page to be in.</p>
 
-backend.form.chooseMenuForPage.menu: "Select the menu you want to add this page to"
-backend.form.chooseBlockToAdd.title: "Choose the type of block to add to the page %page%"
+backend.form.chooseMenuForPage.menu: 'Select the menu you want to add this page to'
+backend.form.chooseBlockToAdd.title: 'Choose the type of block to add to the page %page%'
 backend.form.chooseBlockToAdd.detailedHelp: |
     <p>You need to choose the type of the block you want to add to the page.</p>
     <p>Each blocks have various type and presets that you can later on change.</p>
 
-backend.form.chooseBlockToAdd.name: "Name of that block"
-backend.form.chooseBlockElementType.blockElementType: "The type of the block"
+backend.form.chooseBlockToAdd.name: 'Name of that block'
+backend.form.chooseBlockElementType.blockElementType: 'The type of the block'
 backend.form.chooseBlockElementType.blockElementType.help: |
     there are various existing standard block that you can choose from, you will then have a standard block content that you can adapt to your need.
 
-backend.form.position.help: "Set the position of this element, the lower will be in front, the higher will be in the end."
-backend.form.blockElementType.type: "The type of this block element"
-backend.form.blockElementType.htmlCode: "The html code of that block element"
-backend.form.blockElementType.cssCode: "The css code of that block element"
-backend.form.blockElementType.jsCode: "The javascript code for that block element"
+backend.form.position.help: 'Set the position of this element, the lower will be in front, the higher will be in the end.'
+backend.form.blockElementType.type: 'The type of this block element'
+backend.form.blockElementType.htmlCode: 'The html code of that block element'
+backend.form.blockElementType.cssCode: 'The css code of that block element'
+backend.form.blockElementType.jsCode: 'The javascript code for that block element'
 
-backend.form.menu.menuItems: "List of items in that menu"
+backend.form.menu.menuItems: 'List of items in that menu'
 
-backend.form.user.firstName.help: "Set the first name of this user"
-backend.form.user.email.help: "Set the email for this user"
-backend.form.user.lastName.help: "Set the last name of this user"
-backend.form.user.roles.help: "Set the roles of this user. They are several roles available, refer to the documentation for the details."
+backend.form.user.firstName.help: 'Set the first name of this user'
+backend.form.user.email.help: 'Set the email for this user'
+backend.form.user.lastName.help: 'Set the last name of this user'
+backend.form.user.roles.help: 'Set the roles of this user. They are several roles available, refer to the documentation for the details.'
 
-backend.form.adminUser.roles.help: "Set the roles of this user. They are several roles available, refer to the documentation for the details."
+backend.form.adminUser.roles.help: 'Set the roles of this user. They are several roles available, refer to the documentation for the details.'
 
-backend.crud.pageBlockElement.relatedToPage: "Related to page"
-backend.crud.pageBlockElement.notLinkedToAnyPage: "Not linked to any page"
-backend.crud.pageBlockElement.page: "Linked Page"
-backend.crud.pageBlockElement.relatedPage: "Related Page"
-backend.crud.pageBlockElement.blockElement: "From BlockElement"
+backend.crud.pageBlockElement.relatedToPage: 'Related to page'
+backend.crud.pageBlockElement.notLinkedToAnyPage: 'Not linked to any page'
+backend.crud.pageBlockElement.page: 'Linked Page'
+backend.crud.pageBlockElement.relatedPage: 'Related Page'
+backend.crud.pageBlockElement.blockElement: 'From BlockElement'
 
 backend.crud.menu.generalHelp: |
     <p>A menu can have many menu items, which could be of any type among page, route, uri.</p>
@@ -116,9 +116,9 @@ backend.crud.menu.generalHelp: |
         <li>footerMenu: the menu that is usually in the footer</li>
     <ul>
 backend.formPage.editBlockElement.title: Edition of a block element
-backend.form.menuItem.configurationPanel: "MenuItem Configuration"
-backend.form.menuItem.typePanel: "MenuItem type"
-backend.form.menuItem.typePanel.help: "The type of the menuItem determines how the link will be rendered, as well as its translations "
+backend.form.menuItem.configurationPanel: 'MenuItem Configuration'
+backend.form.menuItem.typePanel: 'MenuItem type'
+backend.form.menuItem.typePanel.help: 'The type of the menuItem determines how the link will be rendered, as well as its translations '
 backend.form.menuItem.type.help: |
     Each menuitem can have a type among:
         <ul>
@@ -127,8 +127,7 @@ backend.form.menuItem.type.help: |
         <li><strong>uri</strong>: This is to link to an external url, translations have to be provided</li>
         </ul>
     Depending on the type, you have to set the correct fields (for route, you have to set the route and the routeParameters)
-backend.form.menuItem.translations.help: "Translations for the menuItem are used when the type of the menuItem is route or uri"
-
+backend.form.menuItem.translations.help: 'Translations for the menuItem are used when the type of the menuItem is route or uri'
 backend.form.configureMenu.menuItem: MenuItem
 backend.form.configureMenu.title: Configure  menu
 backend.form.configureMenu.detailedHelp: |
@@ -142,17 +141,16 @@ backend.form.reorganizeBlocksInPage.detailedHelp: |
     <p>The position is shown in the black bubble, block elements in the page are ordered based on that number, from the smallest to the biggest.</p>
     <p>If there is a question mark, it just means the position has not been set for that element, and thus this element will be shown on top.</p>
 backend.form.reorganizeBlocksInPage.submit: 'Reorganize blocks in page'
+admin.form.menuItem.page: 'Related Page'
 
-admin.form.menuItem.page: "Related Page"
-
-websiteInfo.globalSettings: "Global Settings"
-websiteInfo.generalExplanation: "You can have a look here to the global settings of the website, as well as customizing the main translation"
-websiteInfo.globalTranslations: "Global Translations"
-websiteInfo.globalParameter: "Global Parameters"
-websiteInfo.globalParameter.help: "Those parameters are global and have to be changed manually"
-websiteInfo.globalTranslations.help: "Those translations are used mainly in the footer"
-websiteInfo.value: "Value"
-thumbnail.viewLarger: "View Larger"
+websiteInfo.globalSettings: 'Global Settings'
+websiteInfo.generalExplanation: 'You can have a look here to the global settings of the website, as well as customizing the main translation'
+websiteInfo.globalTranslations: 'Global Translations'
+websiteInfo.globalParameter: 'Global Parameters'
+websiteInfo.globalParameter.help: 'Those parameters are global and have to be changed manually'
+websiteInfo.globalTranslations.help: 'Those translations are used mainly in the footer'
+websiteInfo.value: 'Value'
+thumbnail.viewLarger: 'View Larger'
 
 contact.contactTitle: Contact Us
 contact.contactDetails: |
@@ -165,24 +163,27 @@ form.editOpeningHours.detailedHelp: |
     <div class="py-1"><strong>"monday":["09:00-12:00","13:00-18:00"]</strong> means the office will be open between 9:00 and 12:00 and then open again at 13:00 and then close at 18:00.</div>
     <div class="py-1"><strong>"exceptions":{"2024-11-11":["09:00-12:00"],"2024-12-25":[]}</strong> means the office will be close on 2024-11-11 between 9:00 and 12:00 and will be close al day on 2024-12-25.</div>
     <div class="py-1"><strong>"exceptions":{"01-01":[],"12-25":['09:00-12:00']}</strong> means the office will be close on each 1st of January and each 25th of December between 9:00 and 12:00.</div>
-form.openingHours.updateOpeningHours: "Update Opening Hours"
-flash.openingHours.openingHoursUpdated: "Opening hours have been updated !"
+form.openingHours.updateOpeningHours: 'Update Opening Hours'
 
-openingHours.title: "Opening Hours"
-openingHours.day: "Day"
-openingHours.hours: "Hours"
-openingHours.closed: "Closed"
-openingHours.weAreOpen: "We are open"
-openingHours.weAreClosed: "We are closed"
+# flash
+flash.openingHours.openingHoursUpdated: 'Opening hours have been updated !'
+flash.contact.messageSent: 'Your contact message has been sent, we will answer you as quick as we can'
+flash.contact.messageCannotBeSent: 'Your contact message cannot be sent, contact us by phone or with your email application.'
 
-team.title: "Our team looks forward to seeing you."
+openingHours.title: 'Opening Hours'
+openingHours.day: 'Day'
+openingHours.hours: 'Hours'
+openingHours.closed: 'Closed'
+openingHours.weAreOpen: 'We are open'
+openingHours.weAreClosed: 'We are closed'
 
-footer.mainText: "Business in Berlin"
+team.title: 'Our team looks forward to seeing you.'
+
+footer.mainText: 'Business in Berlin'
 footer.followUsOnSocialMedia: 'Follow us on Social Media !'
 
 register.signUpToPlatform.title: 'Signup to the platform'
 register.signUpToPlatform.detail: 'Signup to the platform in order to book an appointment'
-
 
 # registerForm
 form.member.firstName: 'First Name'
@@ -210,3 +211,32 @@ loginForm.header: 'Sign in to your Dentist Fixer Account'
 loginForm.email: 'Email'
 loginForm.password: 'Password'
 loginForm.signIn: 'Sign In'
+
+# email
+
+email.resetPassword.subject: 'Reset password for %applicationName%!'
+email.resetPassword.title: 'Reset password for %applicationName%!'
+email.resetPassword.impactMessage: 'You have requested to reset your password on the %applicationName% website'
+email.resetPassword.content: |
+    <p>Hi!</p>
+    <p>To reset your password, please visit the following link</p>
+    <p>This link will expire in %expireLimit%.</p>
+    <p>Cheers!</p>
+
+email.welcomeMessageToEditor.subject: 'Welcome to %applicationName%!'
+email.welcomeMessageToEditor.title: 'Welcome %name%, you are now an editor on %applicationName%'
+email.welcomeMessageToEditor.impactMessage: 'You are now an editor on %applicationName%'
+email.welcomeMessageToEditor.content: |
+    <p class="block">
+    Welcome to <strong>the %applicationName%</strong>,
+    </p>
+    <p class="block">
+    You can now access the %applicationName% platform and manage the content as an editor. 
+    </p>
+    <p class="block">
+    Connect to admin with the following link
+    </p>
+
+email.newContactMessage.subject: 'New contact message on %applicationName%!'
+email.newContactMessage.title: 'New contact message on %applicationName%!'
+email.newContactMessage.youHaveANewMessage: 'You  have received a new contact message.'

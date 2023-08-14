@@ -1,25 +1,16 @@
 {% extends '@NakaCMS/email/base-email-layout.html.twig' %}
 
-{% block impact_message %}
-	<h1 class="text-center">Nice to meet you
-		{{ user.firstName }}!</h1>
+{% block title %}
+	{{ 'email.resetPassword.title' | trans({'%name%': user.firstName, '%applicationName%': application_name }) }}
+{% endblock title %}
 
+{% block impact_message %}
+	{{ 'email.resetPassword.impactMessage' | trans({'%applicationName%': application_name }) }}
 {% endblock impact_message %}
 
 {% block email_content %}
-
+	{{ 'email.resetPassword.content' | trans({'%applicationName%': application_name }) | raw }}
 	<p class="block">
-		Welcome to
-		<strong>the
-			{{ application_name }}</strong>,
-	</p>
-	<p class="block">
-		You can now access the
-		{{ application_name }}
-		platform and manage the content as an editor. Connect to
-		<a href="{{ url('admin_dashboard') }}">the
-			{{ application_name }}
-			Editor Admin</a>
-		and update or create your event.
+		<a href="{{ url('admin_dashboard') }}">{{ url('admin_dashboard') }}</a>
 	</p>
 {% endblock email_content %}

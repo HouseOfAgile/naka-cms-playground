@@ -33,14 +33,14 @@ class ContactController extends AbstractController
                 $em->flush();
                 $this->addFlash(
                     'success',
-                    'app.flash.contact.message-sent'
+                    'flash.contact.messageSent'
                 );
                 $mailer->sendContactNotificationEmail($contact);
 
                 return $this->redirectToRoute('app_homepage');
             } else {
                 $this->addFlash('error', sprintf(
-                    'app.flash.contact.message-cannot-be-sent'
+                    'flash.contact.messageCannotBeSent'
                 ));
             }
         }

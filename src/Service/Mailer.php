@@ -24,6 +24,9 @@ class Mailer
     protected $applicationSenderEmail;
     protected $applicationSenderName;
     protected $applicationContactEmail;
+    protected $applicationContactName;
+    protected $senderAddress;
+    protected $contactAddress;
 
     /** @var TranslatorInterface */
     protected $translator;
@@ -39,6 +42,7 @@ class Mailer
         $applicationSenderEmail,
         $applicationSenderName,
         $applicationContactEmail,
+        $applicationContactName,
         TranslatorInterface $translator,
         UrlGeneratorInterface $router,
 
@@ -50,6 +54,9 @@ class Mailer
         $this->applicationSenderEmail = $applicationSenderEmail;
         $this->applicationSenderName = $applicationSenderName;
         $this->applicationContactEmail = $applicationContactEmail;
+        $this->applicationContactName = $applicationContactName;
+        $this->senderAddress = new Address($applicationSenderEmail, $applicationSenderName);
+        $this->contactAddress = new Address($applicationContactEmail, $applicationContactName);
         $this->translator = $translator;
         $this->router = $router;
     }
@@ -58,10 +65,10 @@ class Mailer
     {
         $email = (new TemplatedEmail())
             // ->from(new NamedAddress('alienmailcarrier@example.com', 'The Space Bar'))
-            ->from($this->applicationSenderEmail)
+            ->from($this->senderAddress)
             ->to($user->getEmail())
             // ->to(new NamedAddress($user->getEmail(), $user->getFirstName()))
-            ->subject(sprintf('Welcome to %s!', $this->applicationName))
+            ->subject($this->translator->trans('email.welcomeMessageToEditor.subject', ['%applicationName%' => $this->applicationName]))
             ->htmlTemplate('@NakaCMS/email/welcome-editor.html.twig')
             ->context([
                 // You can pass whatever data you want
@@ -81,10 +88,10 @@ class Mailer
     {
         $email = (new TemplatedEmail())
             // ->from(new NamedAddress('alienmailcarrier@example.com', 'The Space Bar'))
-            ->from($this->applicationSenderEmail)
-            ->to($this->applicationContactEmail)
+            ->from($this->senderAddress)
+            ->to($this->contactAddress)
             // ->to(new NamedAddress($user->getEmail(), $user->getFirstName()))
-            ->subject('New contact Message!')
+            ->subject($this->translator->trans('email.newContactMessage.subject', ['%applicationName%' => $this->applicationName]))
             ->htmlTemplate('@NakaCMS/email/new-contact-message.html.twig')
             ->context([
                 // You can pass whatever data you want
@@ -101,9 +108,9 @@ class Mailer
     public function sendResetPasswordEmail($email, $resetToken)
     {
         $templatedEmail = (new TemplatedEmail())
-            ->from(new Address($this->applicationSenderEmail, $this->applicationSenderName))
+            ->from($this->senderAddress)
             ->to($email)
-            ->subject('Your password reset request')
+            ->subject($this->translator->trans('email.resetPassword.subject', ['%applicationName%' => $this->applicationName]))
             ->htmlTemplate('@NakaCMS/email/reset_password_email.html.twig')
             ->context([
                 'resetToken' => $resetToken,

@@ -43,6 +43,7 @@ class AddressType extends AbstractType
             ])
             ->add('country', CountryType::class, [
                 'label' => 'form.addressForm.country',
+                'required' => false,
                 'attr' => [
                     'placeholder' => 'form.addressForm.country',
                 ],

@@ -30,9 +30,12 @@
         $applicationSenderEmail: "%env(APPLICATION_SENDER_EMAIL)%"
         $applicationSenderName: "%env(APPLICATION_SENDER_NAME)%"
         $applicationContactEmail: "%env(APPLICATION_CONTACT_EMAIL)%"
+        $applicationContactName: "%env(APPLICATION_CONTACT_NAME)%"
         $projectDir: "%kernel.project_dir%"
         $devMode: "%env(bool:DEV_MODE)%"
 ```
+
+Also add the related tiwg parameters
 
 * Add naka services definition files
 

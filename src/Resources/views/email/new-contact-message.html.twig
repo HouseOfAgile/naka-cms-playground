@@ -1,12 +1,12 @@
 {% extends '@NakaCMS/email/base-email-layout.html.twig' %}
 
 {% block impact_message %}
-	<h1 class="text-center">{{ 'email.new-contact.title' | trans }}</h1>
+	<h1 class="text-center">{{ 'email.newContactMessage.title' | trans({'%applicationName%': application_name }) }}</h1>
 {% endblock impact_message %}
 
 {% block email_content %}
 	<p class="block">
-		{{ 'email.new-contact.you-have-a-new-message' | trans }}
+		{{ 'email.newContactMessage.youHaveANewMessage' | trans }}
 	</p>
 	<div class="block">
 		<h2>From:
