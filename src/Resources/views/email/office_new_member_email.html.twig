@@ -1,0 +1,25 @@
+{% extends '@NakaCMS/email/base_email_layout.html.twig' %}
+
+{% block title %}
+	{{ 'email.office.newMember.title' | trans({'%applicationName%': application_name }) }}
+{% endblock title %}
+
+{% block impact_message %}
+	<h1 class="text-center">
+		{{ 'email.office.newMember.impactMessage' | trans({'%applicationName%': application_name }) }}
+	</h1>
+{% endblock impact_message %}
+
+{% block email_content %}
+	{{ 'email.office.newMember.content' | trans({'%applicationName%': application_name }) }}
+	<br/>
+	<div class="block">
+		<h2>Full Name:
+			{{ user.fullName }}</h2>
+		<h2>Email:
+			{{ user.email }}</h2>
+		<hr/>
+		<p>Address:
+			{{ user.fullAddress }}</p>
+	</div>
+{% endblock email_content %}

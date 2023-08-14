@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Service\Mailer;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use HouseOfAgile\NakaCMSBundle\Component\Communication\NotificationManager;
 use HouseOfAgile\NakaCMSBundle\Form\RegistrationFormType;
 use HouseOfAgile\NakaCMSBundle\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -69,6 +70,7 @@ class RegistrationController extends AbstractController
     public function verifyUserEmail(
         Request $request,
         VerifyEmailHelperInterface $verifyEmailHelper,
+        NotificationManager $notificationManager,
         UserRepository $userRepository,
         EntityManagerInterface $entityManager
     ): Response {
@@ -89,6 +91,8 @@ class RegistrationController extends AbstractController
         $user->setIsVerified(true);
         $entityManager->flush();
         $this->addFlash('success', 'Account Verified! You can now log in.');
+        $notificationManager->notificationNewMemberVerified($user);
+
         return $this->redirectToRoute('app_login');
     }
 

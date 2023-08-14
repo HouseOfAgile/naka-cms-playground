@@ -91,7 +91,7 @@ class Mailer
             ->from($this->senderAddress)
             ->to($this->contactAddress)
             // ->to(new NamedAddress($user->getEmail(), $user->getFirstName()))
-            ->subject($this->translator->trans('email.newContactMessage.subject', ['%applicationName%' => $this->applicationName]))
+            ->subject($this->translator->trans('email.office.newContactMessage.subject', ['%applicationName%' => $this->applicationName]))
             ->htmlTemplate('@NakaCMS/email/new_contact_message.html.twig')
             ->context([
                 // You can pass whatever data you want
@@ -119,6 +119,22 @@ class Mailer
         $this->logger->info(sprintf(
             'New Reset email mail sent to email %s',
             $email
+        ));
+    }
+    
+    public function sendNewMemberNotificationToOffice(BaseUser $user)
+    {
+        $templatedEmail = (new TemplatedEmail())
+            ->from($this->senderAddress)
+            ->to($this->contactAddress)
+            ->subject($this->translator->trans('email.office.newMember.subject', ['%applicationName%' => $this->applicationName]))
+            ->htmlTemplate('@NakaCMS/email/office_new_member_email.html.twig')
+            ->context([
+                'user' => $user,
+            ]);
+        $this->mailer->send($templatedEmail);
+        $this->logger->info(sprintf(
+            'New member email mail sent to office',
         ));
     }
 }

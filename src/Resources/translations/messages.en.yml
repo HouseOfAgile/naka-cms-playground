@@ -237,6 +237,12 @@ email.welcomeMessageToEditor.content: |
     Connect to admin with the following link
     </p>
 
-email.newContactMessage.subject: 'New contact message on %applicationName%!'
-email.newContactMessage.title: 'New contact message on %applicationName%!'
-email.newContactMessage.youHaveANewMessage: 'You  have received a new contact message.'
+email.office.newContactMessage.subject: 'New contact message on %applicationName%!'
+email.office.newContactMessage.title: 'New contact message on %applicationName%!'
+email.office.newContactMessage.youHaveANewMessage: 'You  have received a new contact message.'
+
+email.office.newMember.subject: 'A new %applicationName% member just completed the email verification.'
+email.office.newMember.title: 'New member on %applicationName% platform'
+email.office.newMember.youHaveANewMessage: |
+    <p>A user just finished the verification of his email. He is now able to book.</p>
+    <p>Here are the details:</p>
