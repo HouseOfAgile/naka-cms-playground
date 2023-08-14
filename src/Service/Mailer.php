@@ -69,7 +69,7 @@ class Mailer
             ->to($user->getEmail())
             // ->to(new NamedAddress($user->getEmail(), $user->getFirstName()))
             ->subject($this->translator->trans('email.welcomeMessageToEditor.subject', ['%applicationName%' => $this->applicationName]))
-            ->htmlTemplate('@NakaCMS/email/welcome-editor.html.twig')
+            ->htmlTemplate('@NakaCMS/email/welcome_editor.html.twig')
             ->context([
                 // You can pass whatever data you want
                 'user' => $user,
@@ -92,7 +92,7 @@ class Mailer
             ->to($this->contactAddress)
             // ->to(new NamedAddress($user->getEmail(), $user->getFirstName()))
             ->subject($this->translator->trans('email.newContactMessage.subject', ['%applicationName%' => $this->applicationName]))
-            ->htmlTemplate('@NakaCMS/email/new-contact-message.html.twig')
+            ->htmlTemplate('@NakaCMS/email/new_contact_message.html.twig')
             ->context([
                 // You can pass whatever data you want
                 'contact' => $contact,
