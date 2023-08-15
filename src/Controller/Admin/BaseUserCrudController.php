@@ -2,6 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
+use App\Component\Communication\NotificationManager;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -14,7 +15,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use HouseOfAgile\NakaCMSBundle\Entity\BaseUser;
-use HouseOfAgile\NakaCMSBundle\Service\Mailer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -26,17 +26,18 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
     /** @var UserPasswordHasherInterface */
     private UserPasswordHasherInterface $passwordHasher;
 
-    /** @var Mailer */
-    private $mailer;
+    /** @var NotificationManager */
+    private $notificationManager;
+
     protected $applicationName;
 
     public function __construct(
         UserPasswordHasherInterface $passwordHasher,
-        Mailer $mailer,
+        NotificationManager $notificationManager,
         $applicationName
     ) {
         $this->passwordHasher = $passwordHasher;
-        $this->mailer = $mailer;
+        $this->notificationManager = $notificationManager;
         $this->applicationName = $applicationName;
     }
 
@@ -134,7 +135,7 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
         $user = $event->getEntityInstance();
         if ($user instanceof BaseUser) {
             if (in_array('ROLE_EDITOR', $user->getRoles(), true)) {
-                $this->mailer->sendWelcomeMessageToEditor($user);
+                $this->notificationManager->notificationWelcomeMessageToNewEditor($user);
             }
         }
     }
