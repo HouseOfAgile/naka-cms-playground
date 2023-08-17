@@ -33,43 +33,31 @@ class AdminUserCrudController extends BaseUserCrudController
 
         $uuid = TextField::new('uuid');
 
-        // @todo Move roles definitions to some configuration file
-        $rolesSuperAdmin = ChoiceField::new('roles')
-            ->setChoices([
-                'Content Editor' => 'ROLE_EDITOR',
-                'Administrator' => 'ROLE_ADMIN',
-                'Super Administrator' => 'ROLE_SUPER_ADMIN',
-            ])
-            ->allowMultipleChoices()
-            ->setPermission('ROLE_SUPER_ADMIN');
 
         $roles = ChoiceField::new('roles')->setChoices([
-            'Content Edditor' => 'ROLE_EDITOR',
+            'Content Editor' => 'ROLE_EDITOR',
             'Administrator' => 'ROLE_ADMIN',
+            'Super Administrator' => 'ROLE_SUPER_ADMIN',
         ])->allowMultipleChoices()
             // ->renderAsBadges()
-            ->setHelp('backend.form.adminUser.roles.help');
+            ->setHelp('backend.form.adminUser.roles.help')
+            ->setPermission('ROLE_SUPER_ADMIN');;
 
         // $fieldsFromBaseUser = array_merge($fieldsFromBaseUser,[$roles]);
-        $newFields = [];
+        if ($this->isGranted('ROLE_SUPER_ADMIN')) {
+            $fieldsFromBaseUser = array_merge($fieldsFromBaseUser, [$roles]);
+        }
+
 
 
         if (Crud::PAGE_INDEX === $pageName) {
             return array_merge($fieldsFromBaseUser, [$uuid]);
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return array_merge($fieldsFromBaseUser, $newFields);
+            return array_merge($fieldsFromBaseUser);
         } elseif (Crud::PAGE_NEW === $pageName) {
-            if ($this->isGranted('ROLE_SUPER_ADMIN')) {
-                return array_merge($fieldsFromBaseUser, [$rolesSuperAdmin]);
-            } else {
-                return array_merge($fieldsFromBaseUser, [$roles]);
-            }
+            return array_merge($fieldsFromBaseUser);
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            if ($this->isGranted('ROLE_SUPER_ADMIN')) {
-                return array_merge($fieldsFromBaseUser, [$rolesSuperAdmin]);
-            } else {
-                return array_merge($fieldsFromBaseUser, [$roles]);
-            }
+            return array_merge($fieldsFromBaseUser);
         }
     }
 }

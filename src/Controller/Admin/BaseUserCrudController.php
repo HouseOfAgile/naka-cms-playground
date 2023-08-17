@@ -95,14 +95,19 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
             ])
             ->setFormTypeOption('required', false);
 
+        $mainUserfields = [$firstName, $lastName, $email];
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $mainUserfields = array_merge($mainUserfields, [$roles]);
+        } else {
+        }
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$firstName, $lastName, $email, $roles];
+            return $mainUserfields;
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$tabUserDetails, $firstName, $lastName, $email, $password, $roles, $id];
+            return array_merge([$tabUserDetails, $id], $mainUserfields, [$password]);
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$tabUserDetails, $firstName, $lastName, $password, $email, $roles];
+            return array_merge([$tabUserDetails], $mainUserfields, [$password]);
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$tabUserDetails, $firstName, $lastName, $password,  $email, $roles];
+            return array_merge([$tabUserDetails], $mainUserfields, [$password]);
         }
     }
 
