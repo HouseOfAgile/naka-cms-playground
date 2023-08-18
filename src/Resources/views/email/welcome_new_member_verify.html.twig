@@ -1,0 +1,18 @@
+{% extends '@NakaCMS/email/base_email_layout.html.twig' %}
+{% block title %}
+	{{ 'email.welcomeUserVerifyEmail.title' | trans({'%applicationName%': application_name }) }}
+{% endblock title %}
+
+{% block impact_message %}
+	<h1 class="text-center">
+		{{ 'email.welcomeUserVerifyEmail.impactMessage' | trans({'%firstName%': user.firstName }) | raw }}
+	</h1>
+{% endblock impact_message %}
+
+{% block email_content %}
+	{{ 'email.welcomeUserVerifyEmail.content' | trans(({'%applicationName%': application_name , '%verifyLink%': verifyLink })|raw }}
+	<br/>
+	<div class="text-center">
+		<a href="{{ verifyLink }}" target="_new" class="btn">{{ 'email.welcomeUserVerifyEmail.clickHereToVerifyYourEmail'|trans }}</a>
+	</div>
+{% endblock email_content %}

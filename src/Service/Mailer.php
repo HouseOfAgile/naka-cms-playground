@@ -61,21 +61,33 @@ class Mailer
         $this->router = $router;
     }
 
+
+    public function sendMessageToAddress($fromAddress, $toAddress, $subject, $templateName, $context)
+    {
+        $templatedEmail = (new TemplatedEmail())
+            ->from($fromAddress)
+            ->to($toAddress)
+            ->subject($subject)
+            ->htmlTemplate($templateName)
+            ->context($context);
+        $this->mailer->send($templatedEmail);
+        $this->logger->info(sprintf(
+            'New member email mail sent to office',
+        ));
+    }
+
     public function sendWelcomeMessageToEditor(BaseUser $user)
     {
-        $email = (new TemplatedEmail())
-            // ->from(new NamedAddress('alienmailcarrier@example.com', 'The Space Bar'))
-            ->from($this->senderAddress)
-            ->to($user->getEmail())
-            // ->to(new NamedAddress($user->getEmail(), $user->getFirstName()))
-            ->subject($this->translator->trans('email.welcomeMessageToEditor.subject', ['%applicationName%' => $this->applicationName]))
-            ->htmlTemplate('@NakaCMS/email/welcome_editor.html.twig')
-            ->context([
+        $this->sendMessageToAddress(
+            $this->senderAddress,
+            $user->getEmail(),
+            $this->translator->trans('email.welcomeMessageToEditor.subject', ['%applicationName%' => $this->applicationName]),
+            '@NakaCMS/email/welcome_editor.html.twig',
+            [
                 // You can pass whatever data you want
                 'user' => $user,
-            ]);
-
-        $this->mailer->send($email);
+            ]
+        );
         $this->logger->info(sprintf(
             'Welcome email has been send to editor %s with email %s',
             $user,
@@ -83,22 +95,36 @@ class Mailer
         ));
     }
 
+    public function sendVerifyMessageToNewMember(BaseUser $user, $verifyLink = 'tbd')
+    {
+        $this->sendMessageToAddress(
+            $this->senderAddress,
+            $user->getEmail(),
+            $this->translator->trans('email.welcomeUserVerifyEmail.title', ['%applicationName%' => $this->applicationName]),
+            '@NakaCMS/email/welcome_new_member_verify.html.twig',
+            [
+                'user' => $user,
+                'verifyLink' => $verifyLink,
+            ]
+        );
+        $this->logger->info(sprintf(
+            'Welcome email has been send to new member %s with email %s',
+            $user,
+            $user->getEmail()
+        ));
+    }
 
     public function sendContactNotificationEmail(Contact $contact)
     {
-        $email = (new TemplatedEmail())
-            // ->from(new NamedAddress('alienmailcarrier@example.com', 'The Space Bar'))
-            ->from($this->senderAddress)
-            ->to($this->contactAddress)
-            // ->to(new NamedAddress($user->getEmail(), $user->getFirstName()))
-            ->subject($this->translator->trans('email.office.newContactMessage.subject', ['%applicationName%' => $this->applicationName]))
-            ->htmlTemplate('@NakaCMS/email/new_contact_message.html.twig')
-            ->context([
-                // You can pass whatever data you want
+        $this->sendMessageToAddress(
+            $this->senderAddress,
+            $this->contactAddress,
+            $this->translator->trans('email.office.newContactMessage.subject', ['%applicationName%' => $this->applicationName]),
+            '@NakaCMS/email/new_contact_message.html.twig',
+            [
                 'contact' => $contact,
-            ]);
-
-        $this->mailer->send($email);
+            ]
+        );
         $this->logger->info(sprintf(
             'New contact Message from email %s',
             $contact->getEmail()
@@ -107,32 +133,32 @@ class Mailer
 
     public function sendResetPasswordEmail($email, $resetToken)
     {
-        $templatedEmail = (new TemplatedEmail())
-            ->from($this->senderAddress)
-            ->to($email)
-            ->subject($this->translator->trans('email.resetPassword.subject', ['%applicationName%' => $this->applicationName]))
-            ->htmlTemplate('@NakaCMS/email/reset_password_email.html.twig')
-            ->context([
+        $this->sendMessageToAddress(
+            $this->senderAddress,
+            $email,
+            $this->translator->trans('email.resetPassword.subject', ['%applicationName%' => $this->applicationName]),
+            '@NakaCMS/email/reset_password_email.html.twig',
+            [
                 'resetToken' => $resetToken,
-            ]);
-        $this->mailer->send($templatedEmail);
+            ]
+        );
         $this->logger->info(sprintf(
             'New Reset email mail sent to email %s',
             $email
         ));
     }
-    
+
     public function sendNewMemberNotificationToOffice(BaseUser $user)
     {
-        $templatedEmail = (new TemplatedEmail())
-            ->from($this->senderAddress)
-            ->to($this->contactAddress)
-            ->subject($this->translator->trans('email.office.newMember.subject', ['%applicationName%' => $this->applicationName]))
-            ->htmlTemplate('@NakaCMS/email/office_new_member_email.html.twig')
-            ->context([
+        $this->sendMessageToAddress(
+            $this->senderAddress,
+            $this->contactAddress,
+            $this->translator->trans('email.office.newMember.subject', ['%applicationName%' => $this->applicationName]),
+            '@NakaCMS/email/office_new_member_email.html.twig',
+            [
                 'user' => $user,
-            ]);
-        $this->mailer->send($templatedEmail);
+            ]
+        );
         $this->logger->info(sprintf(
             'New member email mail sent to office',
         ));
