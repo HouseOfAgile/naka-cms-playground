@@ -229,18 +229,15 @@ email.resetPassword.content: |
     <p>This link will expire in %expireLimit%.</p>
     <p>Cheers!</p>
 
-email.welcomeMessageToEditor.subject: 'Welcome to %applicationName%!'
-email.welcomeMessageToEditor.title: 'Welcome %name%, you are now an editor on %applicationName%'
-email.welcomeMessageToEditor.impactMessage: 'You are now an editor on %applicationName%'
-email.welcomeMessageToEditor.content: |
+email.welcomeMessageToNewVerifiedMember.subject: 'Welcome to %applicationName%!'
+email.welcomeMessageToNewVerifiedMember.title: 'Welcome %name%, you are now a member on %applicationName%'
+email.welcomeMessageToNewVerifiedMember.impactMessage: 'You are now a member on %applicationName%'
+email.welcomeMessageToNewVerifiedMember.content: |
     <p class="block">
     Welcome to <strong>the %applicationName%</strong>,
     </p>
     <p class="block">
-    You can now access the %applicationName% platform and manage the content as an editor. 
-    </p>
-    <p class="block">
-    Connect to admin with the following link
+    You can now access the %applicationName% platform, browse and book our events``. 
     </p>
 
 email.office.newContactMessage.subject: 'New contact message on %applicationName%!'

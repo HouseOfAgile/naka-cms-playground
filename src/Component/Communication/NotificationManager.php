@@ -4,14 +4,9 @@ declare(strict_types=1);
 
 namespace HouseOfAgile\NakaCMSBundle\Component\Communication;
 
-use App\Entity\Newsletter;
-use App\Entity\User;
-use App\Repository\NewsletterRepository;
 use App\Service\Mailer;
 use Doctrine\ORM\EntityManagerInterface;
-use HouseOfAgile\NakaCMSBundle\Repository\UserRepository;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Uid\Ulid;
 
 class NotificationManager
 {
@@ -36,6 +31,7 @@ class NotificationManager
 
     public function notificationNewMemberVerified($user)
     {
+        $this->mailer->sendWelcomeMessageToNewVerifiedMember($user);
         $this->mailer->sendNewMemberNotificationToOffice($user);
 
     }

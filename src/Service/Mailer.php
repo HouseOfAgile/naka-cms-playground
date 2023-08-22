@@ -76,13 +76,13 @@ class Mailer
         ));
     }
 
-    public function sendWelcomeMessageToEditor(BaseUser $user)
+    public function sendWelcomeMessageToNewVerifiedMember(BaseUser $user)
     {
         $this->sendMessageToAddress(
             $this->senderAddress,
             $user->getEmail(),
-            $this->translator->trans('email.welcomeMessageToEditor.subject', ['%applicationName%' => $this->applicationName]),
-            '@NakaCMS/email/welcome_editor.html.twig',
+            $this->translator->trans('email.welcomeMessageToNewVerifiedMember.subject', ['%applicationName%' => $this->applicationName]),
+            '@NakaCMS/email/welcome_new_verified_member.html.twig',
             [
                 // You can pass whatever data you want
                 'user' => $user,

@@ -1,0 +1,16 @@
+{% extends '@NakaCMS/email/base_email_layout.html.twig' %}
+
+{% block title %}
+	{{ 'email.welcomeMessageToNewVerifiedMember.title' | trans({'%name%': user.firstName, '%applicationName%': application_name }) }}
+{% endblock title %}
+
+{% block impact_message %}
+	{{ 'email.welcomeMessageToNewVerifiedMember.impactMessage' | trans({'%applicationName%': application_name }) }}
+{% endblock impact_message %}
+
+{% block email_content %}
+	{{ 'email.welcomeMessageToNewVerifiedMember.content' | trans({'%applicationName%': application_name }) | raw }}
+	<p class="block">
+		<a href="{{ url('app_homepaghe') }}">{{ url('admin_dashboard') }}</a>
+	</p>
+{% endblock email_content %}

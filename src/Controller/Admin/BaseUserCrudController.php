@@ -115,7 +115,7 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
     {
         return [
             BeforeEntityPersistedEvent::class => 'encodePassword',
-            // AfterEntityPersistedEvent::class => 'welcomeNewEditor',
+            AfterEntityPersistedEvent::class => 'welcomeNewUser',
             BeforeEntityUpdatedEvent::class => 'encodePassword',
         ];
     }
@@ -131,6 +131,18 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
             );
             $user->setPassword($hashedPassword);
             $user->setPlainPassword(null);
+        }
+    }
+
+
+    public function welcomeNewUser($event)
+    {
+        $user = $event->getEntityInstance();
+        if ($user instanceof BaseUser) {
+            if (!in_array('ROLE_ADMIN', $user->getRoles(), true)) {
+                // we shoudld send specific mails to new users based on their role
+                $this->notificationManager->notificationNewMemberVerified($user);
+            }
         }
     }
 
