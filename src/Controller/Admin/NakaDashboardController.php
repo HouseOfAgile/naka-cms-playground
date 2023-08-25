@@ -74,7 +74,8 @@ class NakaDashboardController extends AbstractDashboardController
             // ->update(Crud::PAGE_INDEX, Action::BATCH_DELETE, fn (Action $action) => $action->addCssClass('text-white'))
             // We remove new by default and add it when needed on CRUD level
             // ->remove(Crud::PAGE_INDEX, Action::NEW)
-        ;
+            ->setPermission(Action::NEW, 'ROLE_SUPER_ADMIN')
+            ->setPermission(Action::DELETE, 'ROLE_SUPER_ADMIN');
     }
 
     public function configureAssets(): Assets

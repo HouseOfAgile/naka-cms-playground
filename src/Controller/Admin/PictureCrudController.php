@@ -4,6 +4,7 @@ namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
 use App\Entity\Picture;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -19,6 +20,12 @@ class PictureCrudController extends AbstractCrudController
         return Picture::class;
     }
 
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add('name')
+            ->add('createdAt');
+    }
 
     public function configureFields(string $pageName): iterable
     {

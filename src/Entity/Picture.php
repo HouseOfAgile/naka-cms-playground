@@ -17,9 +17,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Entity\File as EmbeddedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @Vich\Uploadable
- */
+#[Vich\Uploadable]
 #[ORM\MappedSuperclass(repositoryClass: PictureRepository::class)]
 class Picture implements TimestampableInterface
 {
@@ -30,9 +28,9 @@ class Picture implements TimestampableInterface
     #[ORM\Column(type: 'integer')]
     protected $id;
 
-
     #[ORM\Column(type: 'string', length: 64, nullable: true)]
     protected $name;
+
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      * 
@@ -40,6 +38,7 @@ class Picture implements TimestampableInterface
      * 
      * @var File|null
      */
+    #[Vich\UploadableField(mapping: 'asset_pictures', fileNameProperty: 'image.name', size: 'image.size', mimeType: 'image.mimeType', originalName: 'image.originalName', dimensions: 'image.dimensions')]
     protected $imageFile;
 
     /**
