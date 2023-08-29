@@ -54,46 +54,49 @@ class BlockElementCrudController extends AbstractCrudController
     {
         $id = IdField::new('id');
         $panelSetting = FormField::addPanel(
-            'form.panelSetting.codeElement'
+            'backend.form.blockElement.panelSetting'
         )
-            ->setHelp('form.panelSetting.codeElement.help')
             ->addCssClass('col-12');
 
         $name = TextField::new('name');
 
         $blockElementType = AssociationField::new(
             'blockElementType',
-            'form.blockElement.type'
-        );
+            'backend.form.blockElement.type'
+        )
+            ->setHelp('backend.form.blockElement.type.help')
+            ->setDisabled(true);
 
         $pageBlockElements = AssociationField::new('pageBlockElements', 'backend.form.page.pageBlockElements')
             ->setFormTypeOption('by_reference', false)
-            ->setHelp('backend.form.page.pageBlockElements.help');
+            ->setHelp('backend.form.blockElement.pageBlockElements.help');
         // $createdAt = DateTimeField::new('createdAt')->setTemplatePath('@NakaCMS/naka/backend/fields/common/field_human_date.html.twig');
         // $updatedAt = DateTimeField::new('updatedAt')->setTemplatePath('@NakaCMS/naka/backend/fields/common/field_human_date.html.twig');
 
         $panelCodeElement = FormField::addPanel(
-            'form.blockElement.codeElement'
+            'backend.form.blockElement.panelCodeElement'
         )
-            ->setHelp('form.blockElement.codeElement.help')
+            ->setHelp('backend.form.blockElement.panelCodeElement.help')
             ->addCssClass('col-12');
 
         $htmlCode = CodeEditorField::new(
             'htmlCode',
-            'form.blockElement.htmlCode'
+            'backend.form.blockElement.htmlCode'
         );
         $cssCode = CodeEditorField::new(
             'cssCode',
-            'form.blockElement.cssCode'
+            'backend.form.blockElement.cssCode'
         )->setColumns(6);
         $jsCode = CodeEditorField::new(
             'jsCode',
-            'form.blockElement.jsCode'
+            'backend.form.blockElement.jsCode'
         )->setColumns(6);
 
         $gallery = AssociationField::new('gallery')
+            ->setHelp('backend.form.blockElement.gallery.help')
             ->setFormTypeOption('required', false);
-        $isFluid = BooleanField::new('isFluid');
+        $isFluid = BooleanField::new('isFluid')
+            ->setHelp('backend.form.blockElement.isFluid.help');
 
         if (Crud::PAGE_INDEX === $pageName) {
             return [$id, $name, $pageBlockElements, $blockElementType];

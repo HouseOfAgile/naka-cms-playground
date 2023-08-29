@@ -88,10 +88,22 @@ backend.form.chooseBlockElementType.blockElementType.help: |
     there are various existing standard block that you can choose from, you will then have a standard block content that you can adapt to your need.
 
 backend.form.position.help: 'Set the position of this element, the lower will be in front, the higher will be in the end.'
+
 backend.form.blockElementType.type: 'The type of this block element'
 backend.form.blockElementType.htmlCode: 'The html code of that block element'
 backend.form.blockElementType.cssCode: 'The css code of that block element'
 backend.form.blockElementType.jsCode: 'The javascript code for that block element'
+
+backend.form.blockElement.panelSetting: 'Block Element Settings'
+backend.form.blockElement.type: 'Block Element Type'
+backend.form.blockElement.type.help: 'The type of this block, which will then be used when creating or adding a block to a page, and will provide a basis for the newly created Block Element. You cannot change it once it has been set.'
+backend.form.blockElement.panelCodeElement: 'Code elements of this Block Element'
+backend.form.blockElement.panelCodeElement.help: 'Fill up the code composing this BlockElement'
+backend.form.blockElement.htmlCode: 'The HTML code of this Block Element'
+backend.form.blockElement.cssCode: 'The CSS extra code needed for this Block Element'
+backend.form.blockElement.jsCode: 'The javascript extra code needed for this Block Element'
+backend.form.blockElement.gallery.help: 'Set a gallery to be used in the block Element'
+backend.form.blockElement.isFluid.help: 'Set isFluid to true if you want the block to be using the full width of the screen (fluid container)'
 
 backend.form.menu.menuItems: 'List of items in that menu'
 
@@ -141,6 +153,9 @@ backend.form.reorganizeBlocksInPage.detailedHelp: |
     <p>The position is shown in the black bubble, block elements in the page are ordered based on that number, from the smallest to the biggest.</p>
     <p>If there is a question mark, it just means the position has not been set for that element, and thus this element will be shown on top.</p>
 backend.form.reorganizeBlocksInPage.submit: 'Reorganize blocks in page'
+
+backend.form.codeElement.codeElement: 'Day'
+
 admin.form.menuItem.page: 'Related Page'
 
 websiteInfo.globalSettings: 'Global Settings'
