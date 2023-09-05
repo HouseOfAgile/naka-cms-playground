@@ -10,7 +10,7 @@
 {% endblock impact_message %}
 
 {% block email_content %}
-	{{ 'email.welcomeUserVerifyEmail.content' | trans(({'%applicationName%': application_name , '%verifyLink%': verifyLink })|raw }}
+	{{ 'email.welcomeUserVerifyEmail.content' | trans({'%applicationName%': application_name , '%verifyLink%': verifyLink })|raw }}
 	<br/>
 	<div class="text-center">
 		<a href="{{ verifyLink }}" target="_new" class="btn">{{ 'email.welcomeUserVerifyEmail.clickHereToVerifyYourEmail'|trans }}</a>

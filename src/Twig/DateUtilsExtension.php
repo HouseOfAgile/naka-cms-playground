@@ -21,12 +21,12 @@ class DateUtilsExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('rangeAggregateMonth', [$this, 'rangeAggregateMonth'], ['beginDate', 'endDate']),
+            new TwigFunction('rangeAggregateDay', [$this, 'rangeAggregateDay'], ['beginDate', 'endDate']),
         ];
     }
 
     /**
-     * rangeAggregateMonth function: from two datetime, return a string in the form:
+     * rangeAggregateDay function: from two datetime, return a string in the form:
      * * DEC 15 - DEC 20 2023 // same year
      * * DEC 15 2022 - JAN 23 2023 // different year
      * @param DateTime $beginDate
@@ -36,7 +36,7 @@ class DateUtilsExtension extends AbstractExtension
      * @return void
      * @todo improve the donotshowyear feature
      */
-    public function rangeAggregateMonth(DateTime $beginDate, DateTime $endDate, bool $doNotShowYear = false, $separator = ' / ')
+    public function rangeAggregateDay(DateTime $beginDate, DateTime $endDate, bool $doNotShowYear = false, $separator = ' / ')
     {
         $locale = $this->requestStack->getCurrentRequest()->getLocale();
         $carbonBeginDate = Carbon::parse($beginDate)->locale($locale);
@@ -44,10 +44,12 @@ class DateUtilsExtension extends AbstractExtension
         // $differentMonth =  $carbonBeginDate->month !=$carbonEndDate->month;
         $differentYear =  $carbonBeginDate->year != $carbonEndDate->year;
         $yearFormat = ($doNotShowYear && !$differentYear) ? '' : ' Y';
-
-        return $differentYear ?
-            $carbonBeginDate->format('M j'.$yearFormat) . $separator . $carbonEndDate->format('M j' . $yearFormat) :
-            $carbonBeginDate->format('M j') . $separator . $carbonEndDate->format('M j'.$yearFormat);
+        if ($carbonBeginDate->isSameDay($carbonEndDate)) {
+            return $carbonEndDate->format('M j' . $yearFormat);
+        } else {
+            return $differentYear ?
+                $carbonBeginDate->format('M j' . $yearFormat) . $separator . $carbonEndDate->format('M j' . $yearFormat) :
+                $carbonBeginDate->format('M j') . $separator . $carbonEndDate->format('M j' . $yearFormat);
+        }
     }
-
 }
