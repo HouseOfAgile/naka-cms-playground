@@ -22,7 +22,7 @@ backend.common.pageBlockElement: 'Page block element'
 
 backend.loginForm.title: 'NakaCMS login'
 
-backend.dashboard.title: 'Welcome in the %applicationName% backend'
+backend.dashboard.title: 'Welcome to the %applicationName% backend'
 backend.dashboardAdmin.generalHelp: |
     <p>This is the general backend for administration of the NakaCMS Instance.</p>
     <p>Depending on your role access, you can work on the content or the general configuration of the platform.</p>
@@ -141,7 +141,7 @@ backend.form.menuItem.type.help: |
     Depending on the type, you have to set the correct fields (for route, you have to set the route and the routeParameters)
 backend.form.menuItem.translations.help: 'Translations for the menuItem are used when the type of the menuItem is route or uri'
 backend.form.configureMenu.menuItem: MenuItem
-backend.form.configureMenu.title: Configure  menu
+backend.form.configureMenu.title: 'Configure  menu'
 backend.form.configureMenu.detailedHelp: |
     <p>You can rearrange the menuItems from a menu by drag'n dropping them. You can move the menuItems to rearrange them.</p>
     <p>The position is shown in the black bubble, menu Items order is based on that number, from the smallest to the biggest.</p>
@@ -154,7 +154,15 @@ backend.form.reorganizeBlocksInPage.detailedHelp: |
     <p>If there is a question mark, it just means the position has not been set for that element, and thus this element will be shown on top.</p>
 backend.form.reorganizeBlocksInPage.submit: 'Reorganize blocks in page'
 
-backend.form.codeElement.codeElement: 'Day'
+backend.form.codeElement.codeElement: 'Code Element'
+
+
+backend.controlPanel.exportTranslation: 'Export Translation'
+backend.controlPanel.title: 'Export Translation'
+backend.controlPanel.exportTranslationDone: 'Export Translation done'
+backend.controlPanel.exportTranslationOutput: 'Export Translation output'
+
+
 
 admin.form.menuItem.page: 'Related Page'
 

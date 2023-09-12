@@ -1,0 +1,34 @@
+{% extends '@!EasyAdmin/page/content.html.twig' %}
+
+{% block head_stylesheets %}
+	{{ parent() }}
+{% endblock %}
+
+
+{% block page_title %}
+	{{ 'backend.controlPanel.title'|trans }}
+{% endblock page_title %}
+
+{% block main %}
+	{% for label, messages in app.flashes %}
+		<div class="container my-4">
+			{% for message in messages %}
+				<div class="flash-{{ label }} alert alert-{{ label }}">
+					{{ message|trans }}
+				</div>
+			{% endfor %}
+		</div>
+	{% endfor %}
+	<div class="container">
+		<div class="row">
+			<div class="col-10 offset-1 text-center">
+				<h1>{{ 'backend.controlPanel.title'|trans }}</h1>
+			</div>
+			<div class="col-3">
+			<a class="btn btn-primary p-4" href="{{ path('admin_control_panel_export_translation') }}">{{ 'backend.controlPanel.exportTranslations' | trans }}</a>
+			</div>
+		</div>
+	</div>
+{% endblock main %}
+
+{% block body_javascript %}{% endblock body_javascript %}
