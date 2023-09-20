@@ -64,9 +64,9 @@ class MenuCrudController extends AbstractCrudController
     {
         return parent::configureCrud($crud)
             ->overrideTemplates([
-                'crud/index' => '@NakaCMS/admin/crud/menu/index.html.twig',
-                'crud/edit' => '@NakaCMS/admin/crud/menu/edit.html.twig',
-                'crud/new' => '@NakaCMS/admin/crud/menu/new.html.twig',
+                'crud/index' => '@NakaCMS/backend/crud/menu/index.html.twig',
+                'crud/edit' => '@NakaCMS/backend/crud/menu/edit.html.twig',
+                'crud/new' => '@NakaCMS/backend/crud/menu/new.html.twig',
             ]);
     }
 }

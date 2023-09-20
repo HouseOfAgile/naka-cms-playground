@@ -54,7 +54,7 @@ class MenuAdminController extends AdminDashboardController
             'menu' => $menu,
         ];
 
-        return $this->render('@NakaCMS/backend/menu/configure_menu.html.twig', $viewParams);
+        return $this->render('@NakaCMS/backend/topic/menu/configure_menu.html.twig', $viewParams);
     }
 
     #[Route(path: '/menu-item/{menuItem}/duplicate', name: 'duplicate_menu_item')]

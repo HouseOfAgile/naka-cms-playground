@@ -20,7 +20,7 @@ class WebsiteInfoController extends AdminDashboardController
             'websiteInfo' => $websiteInfoRepository->find(1),
         ];
 
-        return $this->render('@NakaCMS/backend/website-info/show-website-info.html.twig', $viewParams);
+        return $this->render('@NakaCMS/backend/topic/website-info/show_website_info.html.twig', $viewParams);
     }
 
     #[Route(path: '/opening-hours', name: 'website_info_view_opening_hours')]
@@ -32,7 +32,7 @@ class WebsiteInfoController extends AdminDashboardController
             'openingHours' => $openingHoursManager->getOpeningHoursData(),
         ];
 
-        return $this->render('@NakaCMS/backend/website-info/show-opening-hours.html.twig', $viewParams);
+        return $this->render('@NakaCMS/backend/topic/website-info/show_opening_hours.html.twig', $viewParams);
     }
 
     #[Route(path: '/opening-hours/edit', name: 'website_info_edit_opening_hours')]
@@ -65,6 +65,6 @@ class WebsiteInfoController extends AdminDashboardController
         $viewParams = [
             'form' => $form->createView(),
         ];
-        return $this->render('@NakaCMS/backend/website-info/edit-opening-hours.html.twig', $viewParams);
+        return $this->render('@NakaCMS/backend/topic/website-info/edit_opening_hours.html.twig', $viewParams);
     }
 }

@@ -19,7 +19,7 @@ class UserCrudController extends BaseUserCrudController
         $crud
             ->setEntityLabelInSingular(sprintf('%s User', $this->applicationName))
             ->setEntityLabelInPlural(sprintf('%s Users', $this->applicationName))
-            ->overrideTemplate('crud/index', '@NakaCMS/backend/user/list.html.twig');
+            ->overrideTemplate('crud/index', '@NakaCMS/backend/crud/user/list.html.twig');
 
         return $crud;
     }

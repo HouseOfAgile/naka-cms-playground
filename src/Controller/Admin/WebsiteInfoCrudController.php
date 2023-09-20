@@ -37,7 +37,7 @@ class WebsiteInfoCrudController extends AbstractCrudController
     {
         return $crud
             ->showEntityActionsInlined(true)
-            ->overrideTemplate('crud/detail', '@NakaCMS/backend/website-info/show-website-info.html.twig');
+            ->overrideTemplate('crud/detail', '@NakaCMS/backend/topic/website-info/show_website_info.html.twig');
     }
 
     public function configureActions(Actions $actions): Actions

@@ -65,7 +65,7 @@ class BlockElementAdminController extends SuperAdminDashboardController
         ];
         // return $this->render('naka/pages/show-block-element-type.html.twig', $viewParams);
 
-        return $this->render('@NakaCMS/backend/block-element/choose-block-element-type.html.twig', $viewParams);
+        return $this->render('@NakaCMS/backend/topic/block-element/choose_block_element_type.html.twig', $viewParams);
     }
 
     #[Route(path: '/block-element/{blockElement}/edit', name: 'edit_page_element')]
@@ -105,7 +105,7 @@ class BlockElementAdminController extends SuperAdminDashboardController
         ];
         // dd( $viewParams);
 
-        return $this->render('@NakaCMS/backend/block-element/edit-block-element.html.twig', $viewParams);
+        return $this->render('@NakaCMS/backend/topic/block-element/edit_block_element.html.twig', $viewParams);
     }
 
 

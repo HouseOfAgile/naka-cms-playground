@@ -26,7 +26,7 @@ class WebsiteAssetCrudController extends AbstractCrudController
     {
         return $crud
             ->showEntityActionsInlined(true)
-            ->overrideTemplate('crud/index', '@NakaCMS/backend/website-asset/list.html.twig');
+            ->overrideTemplate('crud/index', '@NakaCMS/backend/crud/website-asset/list.html.twig');
     }
 
     public function configureActions(Actions $actions): Actions

@@ -56,7 +56,7 @@ class PageAdminController extends AdminDashboardController
             'page' => $page,
         ];
 
-        return $this->render('@NakaCMS/backend/page/add_page_to_menu.html.twig', $viewParams);
+        return $this->render('@NakaCMS/backend/topic/page/add_page_to_menu.html.twig', $viewParams);
     }
     #[Route(path: '/{page}/add-block-to-page', name: 'add_block_to_page')]
     public function addBlockToPageAction(
@@ -98,7 +98,7 @@ class PageAdminController extends AdminDashboardController
             'page' => $page,
         ];
 
-        return $this->render('@NakaCMS/backend/page/choose_block_to_add.html.twig', $viewParams);
+        return $this->render('@NakaCMS/backend/topic/page/choose_block_to_add.html.twig', $viewParams);
     }
 
     #[Route(path: '/{page}/reorganize', name: 'reorganize_blocks_in_page')]

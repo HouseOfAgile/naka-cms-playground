@@ -29,7 +29,7 @@ class BlockElementCrudController extends AbstractCrudController
 
         return $crud
             ->showEntityActionsInlined(true)
-            ->overrideTemplate('crud/index', '@NakaCMS/backend/block-element/list.html.twig');
+            ->overrideTemplate('crud/index', '@NakaCMS/backend/crud/block-element/list.html.twig');
     }
 
     public function configureActions(Actions $actions): Actions
