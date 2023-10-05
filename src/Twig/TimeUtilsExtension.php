@@ -3,6 +3,7 @@
 namespace HouseOfAgile\NakaCMSBundle\Twig;
 
 use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -23,6 +24,7 @@ class TimeUtilsExtension extends AbstractExtension
             new TwigFilter('carbon', [$this, 'carbonDate']),
             new TwigFilter('carbonWeekDay', [$this, 'carbonWeekDay']),
             new TwigFilter('durationFromSeconds', [$this, 'durationFromSeconds']),
+            new TwigFilter('durationIntoHuman', [$this, 'durationIntoHuman']),
         ];
     }
 
@@ -70,8 +72,27 @@ class TimeUtilsExtension extends AbstractExtension
         return Carbon::create($weekday)->locale($locale)->dayName;
     }
 
+    public function durationIntoHuman($duration, $timeType = 'seconds', $short = true)
+    {
+        switch ($timeType) {
+            case 'seconds':
+                return CarbonInterval::seconds($duration)->cascade()->forHumans(null, $short);
+                break;
+            case 'milliseconds ' || 'ms':
+                return CarbonInterval::milliseconds($duration)->cascade()->forHumans(null, $short);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * @deprecated since NakaCMS 0.8, use durationIntoHuman instead.
+     */
     public function durationFromSeconds($durationInSeconds)
     {
+        //CarbonInterval::seconds(90060)->cascade()->forHumans();
+
         return $durationInSeconds > 3600 ? gmdate("g \h\o\u\\r\s i \m\i\\n s", $durationInSeconds) : gmdate("g \h\o\u\\r\s i \m\i\\n s", $durationInSeconds);
     }
 }
