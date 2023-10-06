@@ -5,6 +5,7 @@ namespace HouseOfAgile\NakaCMSBundle\Twig;
 use HouseOfAgile\NakaCMSBundle\Component\NakaParameter\NakaParameterManager;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 class NakaParameterExtension extends AbstractExtension
 {
@@ -26,6 +27,13 @@ class NakaParameterExtension extends AbstractExtension
         ];
     }
 
+    public function getFunctions()
+    {
+        return [
+            new TwigFunction('existingNakaSocialParameters', [$this, 'existingNakaSocialParameters']),
+        ];
+    }
+
     public function nakaParameter($parameterKey)
     {
         $nakaParameter = $this->nakaParameterManager->getNakaParameter($parameterKey);
@@ -35,5 +43,9 @@ class NakaParameterExtension extends AbstractExtension
             return null;
             // dd($this->allNakaParameter);
         }
+    }
+    public function existingNakaSocialParameters()
+    {
+        return $this->nakaParameterManager->getAllNakaSocialParameters();
     }
 }

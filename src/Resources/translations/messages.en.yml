@@ -127,6 +127,27 @@ backend.crud.menu.generalHelp: |
         <li>mainMenu: the menu on top in the navbar</li>
         <li>footerMenu: the menu that is usually in the footer</li>
     <ul>
+
+
+backend.crud.user.generalHelp: "<p>Users have access to the administration of the GLS platform</p>\n<p>Depending on their roles, they have access to the design and content or the global configuration.<p>\n"
+backend.crud.nakaParameter.generalHelp: |
+  <p>You can define here some general parameters for the platform, you can also change/define some specifics ones</p>
+  <ul>
+  <li>Social Naka parameters: link to social platforms: starting with <strong>social-page-link.</strong> followed by the name of the platform ('instagram', 'twitter', 'youtube', 'linkedin')</li>
+  <li>Contact parameters: used on the contact page
+  <ul>
+  <li>business.address</li>
+  <li>business.phone-number</li>
+  <li>business.email</li>
+  </ul>
+  </li>
+  <li>General Naka parameters
+  <ul>
+  <li>global.google-analytics: the id of the google analytics account</li>
+  </ul>
+  </li>
+  </ul>
+
 backend.formPage.editBlockElement.title: Edition of a block element
 backend.form.menuItem.configurationPanel: 'MenuItem Configuration'
 backend.form.menuItem.typePanel: 'MenuItem type'
@@ -155,6 +176,10 @@ backend.form.reorganizeBlocksInPage.detailedHelp: |
 backend.form.reorganizeBlocksInPage.submit: 'Reorganize blocks in page'
 
 backend.form.codeElement.codeElement: 'Code Element'
+
+backend.form.nakaParameter.path.help: ''
+backend.form.nakaParameter.value.help: ''
+backend.form.nakaParameter.extraInfo.help: ''
 
 
 backend.controlPanel.exportTranslation: 'Export Translation'

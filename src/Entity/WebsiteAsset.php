@@ -11,9 +11,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- * @Vich\Uploadable
- */
+#[Vich\Uploadable]
 #[ORM\MappedSuperclass]
 class WebsiteAsset implements TimestampableInterface
 {
@@ -31,6 +29,7 @@ class WebsiteAsset implements TimestampableInterface
      * 
      * @var File|null
      */
+    #[Vich\UploadableField(mapping: 'asset_website_resources', fileNameProperty: 'asset.name', size: 'asset.size', mimeType: 'asset.mimeType', originalName: 'asset.originalName', dimensions: 'image.dimensions')]
     protected $assetFile;
 
     /**

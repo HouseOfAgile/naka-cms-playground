@@ -7,6 +7,11 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class NakaParameterManager
 {
+    const NAKA_SOCIAL_PAGE_LINK = '-social-page-link';
+    const NAKA_PARAMETER_SOCIAL_PLATFORM = [
+        'instagram', 'twitter', 'youtube', 'linkedin'
+    ];
+
     /** @var EntityManagerInterface */
     protected $entityManager;
 
@@ -25,6 +30,17 @@ class NakaParameterManager
     public function getAllParameter()
     {
         return $this->nakaParameterRepository->findAll();
+    }
+
+    public function getAllNakaSocialParameters()
+    {
+        $existingNakaSocialParamters = [];
+        foreach (self::NAKA_PARAMETER_SOCIAL_PLATFORM as $socialPlatform) {
+            if ($nakaParameter = $this->getNakaParameter($socialPlatform . self::NAKA_SOCIAL_PAGE_LINK)){
+                $existingNakaSocialParamters[$socialPlatform] = $nakaParameter->getValue();
+            }
+        }
+        return $existingNakaSocialParamters;
     }
 
     public function getNakaParameter($path)

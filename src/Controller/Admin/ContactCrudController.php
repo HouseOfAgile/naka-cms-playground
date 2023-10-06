@@ -12,6 +12,8 @@ class ContactCrudController extends AbstractCrudController
         return Contact::class;
     }
 
+
+    
     /*
     public function configureFields(string $pageName): iterable
     {

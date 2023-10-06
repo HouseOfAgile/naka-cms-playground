@@ -19,7 +19,7 @@
 		{% block javascripts %}
 			{{ encore_entry_script_tags('app') }}
 
-			{% set ga_id = 'google-analytics'| nakaParameter %}
+			{% set ga_id = 'global.google-analytics'| nakaParameter %}
 			{% if ga_id %}
 				{% include '@NakaCMS/fragment/_google_analytics.html.twig' %}
 			{% endif %}

@@ -19,8 +19,7 @@ class NakaParameter
     protected $value;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    protected $help;
-
+    protected $extraInfo;
 
     /**
      * dumpConfig: return array with main config
@@ -33,7 +32,7 @@ class NakaParameter
             'id' => $this->id,
             'path' => $this->getPath(),
             'value' => $this->getValue(),
-            'help' => $this->getHelp(),
+            'extraInfo' => $this->getExtraInfo(),
         ];
 
         return $config;
@@ -77,14 +76,14 @@ class NakaParameter
         return $this;
     }
 
-    public function getHelp(): ?string
+    public function getExtraInfo(): ?string
     {
-        return $this->help;
+        return $this->extraInfo;
     }
 
-    public function setHelp(?string $help): self
+    public function setExtraInfo(?string $extraInfo): self
     {
-        $this->help = $help;
+        $this->extraInfo = $extraInfo;
 
         return $this;
     }
