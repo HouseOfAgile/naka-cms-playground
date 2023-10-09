@@ -134,16 +134,16 @@ backend.crud.nakaParameter.generalHelp: |
   <p>You can define here some general parameters for the platform, you can also change/define some specifics ones</p>
   <ul>
   <li>Social Naka parameters: link to social platforms: starting with <strong>social-page-link.</strong> followed by the name of the platform ('instagram', 'twitter', 'youtube', 'linkedin')</li>
-  <li>Contact parameters: used on the contact page
+  <li>Business parameters: used on the contact page
   <ul>
-  <li>business.address</li>
-  <li>business.phone-number</li>
-  <li>business.email</li>
+  <li><strong>business.address</strong></li>
+  <li><strong>business.phone-number</strong></li>
+  <li><strong>business.email</strong></li>
   </ul>
   </li>
   <li>General Naka parameters
   <ul>
-  <li>global.google-analytics: the id of the google analytics account</li>
+  <li><strong>global.google-analytics</strong>: the id of the google analytics account</li>
   </ul>
   </li>
   </ul>
