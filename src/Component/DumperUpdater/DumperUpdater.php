@@ -3,6 +3,7 @@
 namespace HouseOfAgile\NakaCMSBundle\Component\DumperUpdater;
 
 use DateTime;
+use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use HouseOfAgile\NakaCMSBundle\Helper\LoggerCommandTrait;
@@ -226,7 +227,7 @@ class DumperUpdater
                                         if (in_array($keyAttr, array_keys($appEntities[$type]))) {
                                             switch ($appEntities[$type][$keyAttr]) {
                                                 case 'DateTime':
-                                                    $valAttr = new DateTime('@' . $valAttr);
+                                                    $valAttr = new DateTime('@' . $valAttr, new DateTimeZone('Europe/Berlin'));
                                                     $this->logInfo(sprintf(
                                                         'Set %s:: previous: %s => new: %s',
                                                         $keyAttr,
