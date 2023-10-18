@@ -9,7 +9,7 @@ class NakaParameterManager
 {
     const NAKA_SOCIAL_PAGE_LINK = 'social-page-link.';
     const NAKA_PARAMETER_SOCIAL_PLATFORM = [
-        'instagram', 'twitter', 'youtube', 'linkedin'
+        'facebook', 'instagram', 'twitter', 'youtube', 'linkedin'
     ];
 
     /** @var EntityManagerInterface */

@@ -93,9 +93,10 @@ class Picture implements TimestampableInterface
     public function __toString()
     {
         return sprintf(
-            'Image %s [%s]',
+            'Image [%s]: %s (%s) ',
+            $this->getId(),
+            $this->getName() ?? 'No name set',
             $this->getImage()->getName(),
-            $this->getId()
         );
     }
 

@@ -1,0 +1,45 @@
+{% if blockElement.blockElement.gallery and blockElement.blockElement.gallery.pictures|length>0 %}
+	<div class="row gallery-container" id="galley-{{ blockElement.blockElement.id }}">
+	{% for picture in blockElement.blockElement.gallery.pictures %}
+		<div class="col-sm-4 {{ blockElement.blockElement.isFluid == true ? 'p-4' : 'p-1' }}">
+			<div class="thumbnail m-4">
+				<div class="caption">
+					<div class="h-100 d-flex justify-content-center align-items-center">
+						<a href="{{ vich_uploader_asset(picture)|imagine_filter('creative_dim_down') }}" class=" btn btn-dark">{{ 'thumbnail.viewLarger'|trans }}</a>
+					</div>
+				</div>
+				<img data-original="{{ vich_uploader_asset(picture)|imagine_filter('creative_dim_down') }}" src="{{ vich_uploader_asset(picture)|imagine_filter('thumb_medium') }}" alt="{{ picture }}" class="img-fluid pointer-zoom-in"/>
+			</div>
+		</div>
+	{% endfor %}
+	</div>
+
+<script>
+window.addEventListener('DOMContentLoaded', function () {
+	var galley = document.getElementById('galley-{{ blockElement.blockElement.id }}');
+	var viewer = new Viewer(galley, {
+	url: 'data-original',
+	title: function (image) {
+		return image.alt;
+	},
+	toolbar: {
+		zoomIn: 4,
+		zoomOut: 4,
+		oneToOne: 4,
+		reset: 0,
+		prev: 4,
+		play: {
+		show: 4,
+		size: 'large',
+		},
+		next: 4,
+		rotateLeft: 0,
+		rotateRight: 0,
+		flipHorizontal: 0,
+		flipVertical: 0,
+	},
+	});
+});
+</script>
+{% endif %}
+

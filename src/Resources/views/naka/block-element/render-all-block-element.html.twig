@@ -18,7 +18,7 @@
 					{% if blockElement.blockElement.type == 'carousel' %}
 						{% include '@NakaCMS/naka/block-element/render-block-carousel.html.twig' with { blockElement: blockElement} %}
 					{% elseif blockElement.blockElement.type == 'gallery' %}
-						{% include '@NakaCMS/naka/block-element/render-block-gallery.html.twig' with { blockElement: blockElement} %}
+						{% include '@NakaCMS/naka/block-element/render_block_gallery.html.twig' with { blockElement: blockElement} %}
 					{% else %}
 						{% include '@NakaCMS/naka/block-element/render-block-element.html.twig' with { blockElement: blockElement} %}
 					{% endif %}
