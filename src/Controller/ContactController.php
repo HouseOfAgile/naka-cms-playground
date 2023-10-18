@@ -2,6 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use HouseOfAgile\NakaCMSBundle\Component\OpeningHours\OpeningHoursManager;
 use HouseOfAgile\NakaCMSBundle\Form\ContactType;
 use HouseOfAgile\NakaCMSBundle\Service\Mailer;
@@ -9,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;
 
 class ContactController extends AbstractController
 {

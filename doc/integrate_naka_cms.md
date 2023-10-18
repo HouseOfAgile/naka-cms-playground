@@ -67,3 +67,12 @@ We need a new twxig service in twig.yml
 ```
         websiteInfo: '@HouseOfAgile\NakaCMSBundle\Component\WebsiteInfo\WebsiteInfoService'
 ```
+
+## Add Services stub
+For ease of work, we add some general services/component
+
+## Main changes
+
+Update to vich uploader 2: need to use php attributes
+
+

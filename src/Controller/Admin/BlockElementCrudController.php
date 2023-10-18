@@ -59,6 +59,9 @@ class BlockElementCrudController extends AbstractCrudController
             ->addCssClass('col-12');
 
         $name = TextField::new('name');
+        $extraCssClass = TextField::new('extraCssClass')
+        ->setHelp('backend.form.blockElement.extraCssClass.help')
+        ;
 
         $blockElementType = AssociationField::new(
             'blockElementType',
@@ -101,11 +104,11 @@ class BlockElementCrudController extends AbstractCrudController
         if (Crud::PAGE_INDEX === $pageName) {
             return [$id, $name, $pageBlockElements, $blockElementType];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $blockElementType, $htmlCode, $cssCode, $jsCode, $gallery, $isFluid];
+            return [$id, $name, $extraCssClass, $blockElementType, $htmlCode, $cssCode, $jsCode, $gallery, $isFluid];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$panelSetting, $name, $blockElementType,  $panelCodeElement, $htmlCode, $cssCode, $jsCode, $gallery, $isFluid];
+            return [$panelSetting, $name, $extraCssClass, $blockElementType,  $panelCodeElement, $htmlCode, $cssCode, $jsCode, $gallery, $isFluid];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$panelSetting, $name, $blockElementType,  $panelCodeElement, $htmlCode, $cssCode, $jsCode, $gallery, $isFluid];
+            return [$panelSetting, $name, $extraCssClass, $blockElementType,  $panelCodeElement, $htmlCode, $cssCode, $jsCode, $gallery, $isFluid];
         }
     }
 

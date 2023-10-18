@@ -95,6 +95,7 @@ backend.form.blockElementType.cssCode: 'The css code of that block element'
 backend.form.blockElementType.jsCode: 'The javascript code for that block element'
 
 backend.form.blockElement.panelSetting: 'Block Element Settings'
+backend.form.blockElement.extraCssClass.help: 'Add global css classes to this specific block'
 backend.form.blockElement.type: 'Block Element Type'
 backend.form.blockElement.type.help: 'The type of this block, which will then be used when creating or adding a block to a page, and will provide a basis for the newly created Block Element. You cannot change it once it has been set.'
 backend.form.blockElement.panelCodeElement: 'Code elements of this Block Element'

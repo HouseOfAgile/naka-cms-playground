@@ -32,6 +32,9 @@ class BlockElement implements TimestampableInterface
     #[ORM\Column(type: 'string', length: 64, nullable: true)]
     protected $name;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $extraCssClass = null;
+
     #[ORM\Column(type: 'text', nullable: true)]
     protected $htmlCode;
 
@@ -83,6 +86,7 @@ class BlockElement implements TimestampableInterface
         $config =  [
             'id' => $this->id,
             'name' => $this->getName(),
+            'extraCssClass' => $this->getExtraCssClass(),
             'htmlCode' => $this->getHtmlCode(),
             'cssCode' => $this->getCssCode(),
             'jsCode' => $this->getJsCode(),
@@ -125,6 +129,17 @@ class BlockElement implements TimestampableInterface
     public function setName(?string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+    public function getExtraCssClass(): ?string
+    {
+        return $this->extraCssClass;
+    }
+
+    public function setExtraCssClass(?string $extraCssClass): static
+    {
+        $this->extraCssClass = $extraCssClass;
 
         return $this;
     }
