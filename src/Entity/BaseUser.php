@@ -44,6 +44,9 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birthDate = null;
 
+    #[ORM\Column]
+    private ?bool $isVerified = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -95,6 +98,7 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
             'street' => $this->getStreet(),
             'zipCode' => $this->getZipCode(),
             'city' => $this->getCity(),
+            'isVerified' => $this->getIsVerified(),
             'country' => $this->getCountry(),
         ];
 
@@ -229,6 +233,23 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
     public function setBirthDate(?\DateTimeInterface $birthDate): self
     {
         $this->birthDate = $birthDate;
+
+        return $this;
+    }
+
+    public function isIsVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    public function getIsVerified(): ?bool
+    {
+        return $this->isIsVerified();
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }
