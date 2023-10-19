@@ -29,13 +29,19 @@ class WebsiteInfoService
     ) {
         $this->entityManager = $entityManager;
         $this->websiteInfoRepository = $websiteInfoRepository;
-        $this->websiteInfo =  $this->websiteInfoRepository->find(1);
         $this->requestStack = $requestStack;
     }
 
     public function isMainWebsiteInfoSet()
     {
         return $this->websiteInfo != null;
+    }
+
+    public function setMainWebsiteInfo()
+    {
+        if ($this->websiteInfo == null) {
+            $this->websiteInfo =  $this->websiteInfoRepository->find(1);
+        }
     }
 
     public function getWebsiteInfo()
@@ -45,12 +51,12 @@ class WebsiteInfoService
 
     public function getTranslatedTitle()
     {
-        return $this->isMainWebsiteInfoSet() ? $this->websiteInfo->translate($this->requestStack->getSession()->get('_locale'))->getTitle():'';
+        return $this->isMainWebsiteInfoSet() ? $this->websiteInfo->translate($this->requestStack->getSession()->get('_locale'))->getTitle() : '';
     }
 
     public function getTranslatedCatchPhrase()
     {
-        return $this->isMainWebsiteInfoSet() ? $this->websiteInfo->translate($this->requestStack->getSession()->get('_locale'))->getCatchPhrase():'';
+        return $this->isMainWebsiteInfoSet() ? $this->websiteInfo->translate($this->requestStack->getSession()->get('_locale'))->getCatchPhrase() : '';
     }
 
     public function setOpeningHours($openingHours)
