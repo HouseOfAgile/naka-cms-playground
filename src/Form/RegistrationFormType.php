@@ -42,11 +42,13 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('birthDate', BirthdayType::class, [
+                'format' => $options['locale'] == 'de' ? 'd.M.y' : 'd/M/y',
                 'label' => 'form.member.birthDate',
                 'help' => 'form.member.birthDate.help',
+                'required' => false,
                 'widget' => 'single_text',
                 'html5' => false,
-                'attr' => ['class' => 'p-3 js-datepicker text-white'],
+                'attr' => ['class' => 'p-3 js-datepicker text-center'],
             ])
             ->add('address', AddressType::class, [
                 'label' => 'form.member.address',
@@ -65,6 +67,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'label' => 'form.member.agreeTerms',
+                'label_attr' => ['class' => 'py-2'],
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
@@ -121,6 +124,7 @@ class RegistrationFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'locale' => 'en'
         ]);
     }
 }

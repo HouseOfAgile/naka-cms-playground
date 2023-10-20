@@ -31,7 +31,7 @@ class RegistrationController extends AbstractController
         VerifyEmailHelperInterface $verifyEmailHelper
     ): Response {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(RegistrationFormType::class, $user, ['locale' => $request->getLocale()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
@@ -56,7 +56,7 @@ class RegistrationController extends AbstractController
                 $mailer->sendVerifyMessageToNewMember($user, $signatureComponents->getSignedUrl());
 
                 $this->addFlash('success', 'flash.register.checkYourEmailAndVerifyYourEmail');
-                
+
                 return $this->redirectToRoute('app_homepage');
             }
         }

@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
@@ -79,6 +80,13 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
 
         $email = TextField::new('email')->setHelp('backend.form.user.email.help');
 
+        $birthDate = DateField::new(
+            'birthDate',
+            'backend.form.user.birthDate'
+        )
+            ->setHelp('backend.form.user.birthDate.help')
+            ->setDisabled(true);
+
         $roles = ChoiceField::new('roles')->setChoices([
             'User' => 'ROLE_USER',
             'Administrator' => 'ROLE_ADMIN',
@@ -95,7 +103,7 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
             ])
             ->setFormTypeOption('required', false);
 
-        $mainUserfields = [$firstName, $lastName, $email];
+        $mainUserfields = [$firstName, $lastName, $birthDate, $email];
         if ($this->isGranted('ROLE_ADMIN')) {
             $mainUserfields = array_merge($mainUserfields, [$roles]);
         } else {
@@ -145,7 +153,4 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
             }
         }
     }
-
-
-
 }
