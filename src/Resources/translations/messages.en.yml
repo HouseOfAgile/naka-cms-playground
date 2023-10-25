@@ -110,6 +110,8 @@ backend.form.menu.menuItems: 'List of items in that menu'
 
 backend.form.user.firstName.help: 'Set the first name of this user'
 backend.form.user.email.help: 'Set the email for this user'
+backend.form.user.birthDate: 'Birth date'
+backend.form.user.birthDate.help: 'Set birth date for this user'
 backend.form.user.lastName.help: 'Set the last name of this user'
 backend.form.user.roles.help: 'Set the roles of this user. They are several roles available, refer to the documentation for the details.'
 

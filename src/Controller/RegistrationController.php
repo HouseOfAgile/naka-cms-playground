@@ -3,11 +3,11 @@
 namespace HouseOfAgile\NakaCMSBundle\Controller;
 
 use App\Entity\User;
+use App\Form\RegistrationFormType;
 use App\Service\Mailer;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use HouseOfAgile\NakaCMSBundle\Component\Communication\NotificationManager;
-use HouseOfAgile\NakaCMSBundle\Form\RegistrationFormType;
 use HouseOfAgile\NakaCMSBundle\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
