@@ -10,12 +10,20 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserInfoType extends AbstractType
 {
+    public function __construct(
+        protected RequestStack $requestStack,
+    ) {
+    }
+    
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $locale = $this->requestStack->getCurrentRequest()->getLocale() ?: 'de';
+
         $builder
             ->add('firstName', TextType::class, [
                 'label' => 'form.member.firstName',
@@ -39,7 +47,7 @@ class UserInfoType extends AbstractType
                 'label' => 'form.member.birthDate',
                 'help' => 'form.member.birthDate.help',
                 'required' => false,
-                'format' => $options['locale'] == 'de' ? 'd.M.y' : 'd/M/y',
+                'format' => $locale == 'de' ? 'd.M.y' : 'd/M/y',
                 'widget' => 'single_text',
                 'html5' => false,
                 'attr' => ['class' => 'p-3 js-datepicker text-center'],
@@ -65,7 +73,6 @@ class UserInfoType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'locale' => 'en'
         ]);
     }
 }
