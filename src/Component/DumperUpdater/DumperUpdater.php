@@ -129,7 +129,7 @@ class DumperUpdater
             if ($dumpOrUpdate) {
                 if (!in_array($type, array_keys($assetEntities))) {
                     // dump data
-                    foreach ($repository->findAll() as $entityItem) {
+                    foreach ($repository->findBy([], ['id' => 'ASC']) as $entityItem) {
                         $dataArray[$entityItem->getId()] = $entityItem->dumpConfig();
                     }
                     $this->dumpFile($dataArray, $type);
@@ -227,14 +227,16 @@ class DumperUpdater
                                         if (in_array($keyAttr, array_keys($appEntities[$type]))) {
                                             switch ($appEntities[$type][$keyAttr]) {
                                                 case 'DateTime':
-                                                    $valAttr = new DateTime('@' . $valAttr, new DateTimeZone('Europe/Berlin'));
-                                                    $this->logInfo(sprintf(
-                                                        'Set %s:: previous: %s => new: %s',
-                                                        $keyAttr,
-                                                        $entity->{'get' . ucfirst($keyAttr)}() != null  ? $entity->{'get' . ucfirst($keyAttr)}()->format('Y-m-d H:i:s') :
-                                                            'none',
-                                                        $valAttr->format('Y-m-d H:i:s')
-                                                    ));
+                                                    if ($valAttr) {
+                                                        $valAttr = new DateTime('@' . $valAttr, new DateTimeZone('Europe/Berlin'));
+                                                        $this->logInfo(sprintf(
+                                                            'Set %s:: previous: %s => new: %s',
+                                                            $keyAttr,
+                                                            $entity->{'get' . ucfirst($keyAttr)}() != null  ? $entity->{'get' . ucfirst($keyAttr)}()->format('Y-m-d H:i:s') :
+                                                                'none',
+                                                            $valAttr->format('Y-m-d H:i:s')
+                                                        ));
+                                                    }
                                                     break;
                                                 case 'array':
                                                     $valAttr = $valAttr;
