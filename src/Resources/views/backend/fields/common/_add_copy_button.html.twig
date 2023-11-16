@@ -1,0 +1,4 @@
+{% set value = value is defined ? value : field is defined ? field.value : value %}
+<button class="btn btn-info" data-clipboard-text="{{ value }}">
+   <i class="fa fa-copy faa-burst"></i>
+</button>

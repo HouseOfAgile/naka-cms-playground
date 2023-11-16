@@ -1,0 +1,6 @@
+{% if onlyButton is not defined %}
+	<span>{{ field.value }}</span>
+{% endif %}
+<span>
+{% include '@NakaCMS/backend/fields/common/_add_copy_button.html.twig' with {'value': field.value } %}
+</span>
