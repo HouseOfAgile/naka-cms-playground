@@ -67,6 +67,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function getRandomOwner(): ?User
     {
+        dd('we should have a special user for this case');
         $qb = $this->createQueryBuilder('f');
         $qb->orderBy('rand()');
         $randomOwner = $qb->getQuery()
