@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 class RegistrationFormType extends UserInfoType
 {
@@ -65,6 +66,10 @@ class RegistrationFormType extends UserInfoType
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
+                    new PasswordStrength([
+                        'minScore' => PasswordStrength::STRENGTH_WEAK,
+                        'message' => 'Please enter a stronger password (with special characters)'
+                    ])
                 ],
             ])
             ->add('register', SubmitType::class, [

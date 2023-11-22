@@ -9,6 +9,8 @@ use HouseOfAgile\NakaCMSBundle\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints\PasswordStrength;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\MappedSuperclass(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -38,6 +40,9 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     protected $lastName;
 
+    #[Assert\PasswordStrength([
+        'minScore' => PasswordStrength::STRENGTH_VERY_STRONG, // Very strong password required
+    ])]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $plainPassword;
 

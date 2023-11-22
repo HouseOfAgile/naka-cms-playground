@@ -50,6 +50,7 @@ class UserInfoType extends AbstractType
                 'format' => $locale == 'de' ? 'd.M.y' : 'd/M/y',
                 'widget' => 'single_text',
                 'html5' => false,
+                'error_bubbling' => false,
                 'attr' => ['class' => 'p-3 js-datepicker text-center'],
             ])
             ->add('email', EmailType::class, [
