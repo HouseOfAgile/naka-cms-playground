@@ -138,7 +138,7 @@ trait AddressTrait
      */
     public function getCountryName()
     {
-        return  $this->country ? Countries::getName($this->country) : 'not set';
+        return  $this->country ? Countries::getName($this->country) : null;
     }
 
     /**
