@@ -3,6 +3,7 @@
 namespace HouseOfAgile\NakaCMSBundle\Component\DumperUpdater;
 
 use DateTime;
+use DateTimeImmutable;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -229,6 +230,18 @@ class DumperUpdater
                                                 case 'DateTime':
                                                     if ($valAttr) {
                                                         $valAttr = new DateTime('@' . $valAttr, new DateTimeZone('Europe/Berlin'));
+                                                        $this->logInfo(sprintf(
+                                                            'Set %s:: previous: %s => new: %s',
+                                                            $keyAttr,
+                                                            $entity->{'get' . ucfirst($keyAttr)}() != null  ? $entity->{'get' . ucfirst($keyAttr)}()->format('Y-m-d H:i:s') :
+                                                                'none',
+                                                            $valAttr->format('Y-m-d H:i:s')
+                                                        ));
+                                                    }
+                                                    break;
+                                                case 'DateTimeImmutable':
+                                                    if ($valAttr) {
+                                                        $valAttr = new DateTimeImmutable('@' . $valAttr, new DateTimeZone('Europe/Berlin'));
                                                         $this->logInfo(sprintf(
                                                             'Set %s:: previous: %s => new: %s',
                                                             $keyAttr,
