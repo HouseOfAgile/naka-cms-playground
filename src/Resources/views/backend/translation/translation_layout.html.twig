@@ -3,7 +3,10 @@
 {% set form_size = 'col-12' %}
 
 {% block title %}
-	{% block lexik_title %}{% endblock %} - {{ app.request.server.get('APPLICATION_NAME') }} Translation
+	{% block lexik_title %}{% endblock %}
+	-
+	{{ app.request.server.get('APPLICATION_NAME') }}
+	Translation
 {% endblock %}
 {% block stylesheets %}
 	{{ parent() }}
@@ -34,8 +37,17 @@
 	{% endblock lexik_flash_message %}
 {% endblock flash_message %}
 
-{% block show_title %}
-{% endblock show_title %}
+{% block show_title %}{% endblock show_title %}
+
+{% block navbar_extra_nav %}
+	<ul class="navbar-nav">
+		<li class="nav-item">
+			<a class="nav-link btn btn-sm btn-warning" href="{{ path('admin_control_panel_export_translation') }}">
+				<span class="fa fa-data"></span>
+				{{ 'backend.operation.exportTranslation' | trans }}</a>
+		</li>
+	</ul>
+{% endblock navbar_extra_nav %}
 
 {% block content %}
 	{% block lexik_content '' %}

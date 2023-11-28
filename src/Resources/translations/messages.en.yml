@@ -185,10 +185,10 @@ backend.form.nakaParameter.value.help: ''
 backend.form.nakaParameter.extraInfo.help: ''
 
 
-backend.controlPanel.exportTranslation: 'Export Translation'
-backend.controlPanel.title: 'Export Translation'
-backend.controlPanel.exportTranslationDone: 'Export Translation done'
-backend.controlPanel.exportTranslationOutput: 'Export Translation output'
+backend.operation.exportTranslation: 'Export Translation'
+backend.operation.exportTranslation.title: 'Export Translation'
+backend.operation.exportTranslation.exportTranslationDone: 'Export Translation done'
+backend.operation.exportTranslation.exportTranslationOutput: 'Export Translation output'
 
 
 
