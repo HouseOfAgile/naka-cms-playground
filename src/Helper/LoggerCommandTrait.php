@@ -16,11 +16,18 @@ trait LoggerCommandTrait
     protected $io;
     protected $prefix = '';
 
+    protected $showAllLogs;
+
+    public function __construct($devMode)
+    {
+        $this->showAllLogs = $devMode;
+    }
+
     protected function setLoaderCommandIo($io): void
     {
         $this->io = $io;
     }
-    
+
     protected function setInteractive($isInteractive): void
     {
         $this->isInteractive = $isInteractive;
@@ -57,7 +64,7 @@ trait LoggerCommandTrait
             $this->io->write($message);
         }
     }
-    
+
     /**
      * we write in console if io is defined
      */
@@ -75,12 +82,16 @@ trait LoggerCommandTrait
         }
         switch ($type) {
             case 'debug':
-                $this->writeConsole($message);
-                $this->logger->debug($message);
+                if ($this->showAllLogs) {
+                    $this->writeConsole($message);
+                    $this->logger->debug($message);
+                }
                 break;
             case 'info':
-                $this->writeConsole('<info>' . $message . '</info>');
-                $this->logger->info($message);
+                if ($this->showAllLogs) {
+                    $this->writeConsole('<info>' . $message . '</info>');
+                    $this->logger->info($message);
+                }
                 break;
             case 'success':
                 $this->writeConsole($message, 'success');
@@ -96,5 +107,4 @@ trait LoggerCommandTrait
                 break;
         }
     }
-
 }
