@@ -4,6 +4,7 @@ namespace HouseOfAgile\NakaCMSBundle\Twig;
 
 use Carbon\Carbon;
 use DateTime;
+use DateTimeImmutable;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -29,14 +30,14 @@ class DateUtilsExtension extends AbstractExtension
      * rangeAggregateDay function: from two datetime, return a string in the form:
      * * DEC 15 - DEC 20 2023 // same year
      * * DEC 15 2022 - JAN 23 2023 // different year
-     * @param DateTime $beginDate
-     * @param DateTime $endDate
+     * @param DateTime|DateTimeImmutable $beginDate
+     * @param DateTime|DateTimeImmutable $endDate
      * @param boolean $doNotShowYear : set to true to not show year if not different from current year
      * @param string $separator
      * @return void
      * @todo improve the donotshowyear feature
      */
-    public function rangeAggregateDay(DateTime $beginDate, DateTime $endDate, bool $doNotShowYear = false, $separator = ' / ')
+    public function rangeAggregateDay(DateTime|DateTimeImmutable $beginDate, DateTime|DateTimeImmutable $endDate, bool $doNotShowYear = false, $separator = ' / ')
     {
         $locale = $this->requestStack->getCurrentRequest()->getLocale();
         $carbonBeginDate = Carbon::parse($beginDate)->locale($locale);

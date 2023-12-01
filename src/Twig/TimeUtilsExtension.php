@@ -38,6 +38,24 @@ class TimeUtilsExtension extends AbstractExtension
             case 'human':
                 return $dt->diffForHumans();
                 break;
+            case 'onlyHourMinute':
+                // return $dt->hour . ':' . $dt->minute;
+                return $dt->isoFormat('LT');
+                break;
+            case 'dayHourMinute':
+                return $dt->shortLocaleDayOfWeek . ' ' . $dt->isoFormat('LT');
+                break;
+            case 'dayHourSlot':
+                $dtnh = $dt->copy()->addHour();
+                return $dt->shortLocaleDayOfWeek . ' ' . $dt->isoFormat('LT') . ' - ' . $dtnh->isoFormat('LT');
+                break;
+            case 'shortDay':
+                return $dt->shortLocaleDayOfWeek;
+                break;
+            case 'hourSlot':
+                $dtnh = $dt->copy()->addHour();
+                return $dt->isoFormat('LT') . ' - ' . $dtnh->isoFormat('LT');
+                break;
             case 'onlyWeekDay':
                 return $dt->dayName;
                 break;
@@ -55,7 +73,6 @@ class TimeUtilsExtension extends AbstractExtension
                 return $dt->year != $current->year ? $monthDay  . ' ' . $dt->year : $monthDay;
                 break;
             case 'getMonthDay':
-                $current = Carbon::now();
                 $monthDay = substr($dt->monthName, 0, 3) . ' ' . $dt->day;
                 return $monthDay;
                 break;
