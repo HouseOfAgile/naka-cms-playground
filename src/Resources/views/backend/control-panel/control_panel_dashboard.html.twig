@@ -4,12 +4,13 @@
 	{{ parent() }}
 {% endblock %}
 
-
 {% block page_title %}
 	{{ 'backend.controlPanel.title'|trans }}
 {% endblock page_title %}
 
+{% block content_title %}{% endblock content_title %}
 {% block main %}
+
 	{% for label, messages in app.flashes %}
 		<div class="container my-4">
 			{% for message in messages %}
@@ -24,8 +25,11 @@
 			<div class="col-10 offset-1 text-center">
 				<h1>{{ 'backend.controlPanel.title'|trans }}</h1>
 			</div>
-			<div class="col-3">
-			<a class="btn btn-primary p-4" href="{{ path('admin_control_panel_export_translation') }}">{{ 'backend.operation.exportTranslation' | trans }}</a>
+			<div class="col-4 border rounded text-bg-info p-3">
+				<h2>{{ 'backend.operation.exportTranslation' | trans }}</h2>
+				<div class="float-start">{{ 'backend.operation.exportTranslation.explanation' | trans | raw }}
+				</div>
+				<a class="btn btn-primary p-4 float-end my-3" href="{{ path('admin_control_panel_export_translation') }}">{{ 'backend.operation.exportTranslation' | trans }}</a>
 			</div>
 		</div>
 	</div>

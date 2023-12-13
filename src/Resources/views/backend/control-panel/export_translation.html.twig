@@ -7,6 +7,7 @@
 {% block page_title %}
 	{{ 'backend.operation.exportTranslation.title'|trans }}
 {% endblock page_title %}
+{% block content_title %}{% endblock content_title %}
 
 {% block main %}
 	{% for label, messages in app.flashes %}
@@ -20,16 +21,21 @@
 	{% endfor %}
 	<div class="container">
 		<div class="row">
-			<div class="col-10 offset-1 text-center p-4">
-				<h1>{{ 'backend.operation.exportTranslation.exportTranslationDone'|trans }}</h1>
+			<div class="col-4 offset-1 mx-auto rounded-pill text-bg-success text-center p-4 mb-4 ">
+				<h1 class="fs-2 p-2">{{ 'backend.operation.exportTranslation.exportTranslationDone'|trans }}</h1>
 			</div>
-			<div class="col-10 offset-1 text-bg-info p-4">
-				<h1 class="text-center">{{ 'backend.operation.exportTranslation.exportTranslationOutput'|trans }}</h1>
+			<div class="col-10 offset-1 text-bg-info p-4 shadow rounded">
+				<h1 class="text-center py-3">{{ 'backend.operation.exportTranslation.exportTranslationOutput'|trans }}</h1>
 				<div class="row">
-					<div class="col-10 offset-1 p-4">
-						{{ exportTranslationContent| nl2br }}
+					<div class="col-10 offset-1 p-4 bg-light bg-gradient">
+						<pre>{{ exportTranslationContent| nl2br }}</pre>
 					</div>
 				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-6 offset-3 text-center">
+				<a class="btn btn-primary p-4 my-3" href="{{ path('lexik_translation_overview') }}"><i class="fa-solid fa-globe"></i> {{ 'backend.operation.goToStaticTranslation' | trans }}</a>
 			</div>
 		</div>
 	</div>
