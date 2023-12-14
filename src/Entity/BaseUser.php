@@ -46,6 +46,9 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $plainPassword;
 
+    #[ORM\Column(length: 5, nullable: true)]
+    private ?string $preferredLocale = null;
+
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birthDate = null;
 
@@ -105,6 +108,7 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
             'city' => $this->getCity(),
             'isVerified' => $this->getIsVerified(),
             'country' => $this->getCountry(),
+            'preferredLocale' => $this->getPreferredLocale(),
         ];
 
 
@@ -255,6 +259,18 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getPreferredLocale(): ?string
+    {
+        return $this->preferredLocale;
+    }
+
+    public function setPreferredLocale(?string $preferredLocale): static
+    {
+        $this->preferredLocale = $preferredLocale;
 
         return $this;
     }

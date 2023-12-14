@@ -11,7 +11,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class SecurityController extends AbstractController
 {
 
-    #[Route(path: '/login', name: 'app_login')]
+    #[Route(path: '/{_locale<%app.supported_locales%>}/login', requirements: ['_locale' => 'en|de|fr'], name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         return $this->render('@NakaCMS/security/login.html.twig', [
