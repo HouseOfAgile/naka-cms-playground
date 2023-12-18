@@ -2,11 +2,12 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
+use App\Entity\Address;
 use App\Repository\CityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Address;
+use Symfony\Component\Intl\Countries;
 
 #[ORM\MappedSuperclass(repositoryClass: CityRepository::class)]
 class City
@@ -59,7 +60,17 @@ class City
             $this->getName(),
         );
     }
-
+    
+    /**
+     * Get the value of Country.
+     *
+     * @return string
+     */
+    public function getCountryName()
+    {
+        return  $this->country ? Countries::getName($this->country) : 'not set';
+    }
+    
     public function getName(): ?string
     {
         return $this->name;

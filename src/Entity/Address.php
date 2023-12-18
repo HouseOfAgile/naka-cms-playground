@@ -36,17 +36,6 @@ class Address
     #[ORM\ManyToOne(targetEntity: City::class, inversedBy: 'addresses', cascade: ['persist'])]
     protected City $city;
 
-    /**
-     * Country name in ISO format.
-     *
-     * @var string
-     *
-     *
-     */
-    #[ORM\Column(type: 'string', nullable: true, length: 3)]
-    #[Assert\NotBlank(groups: ['Address'])]
-    protected $country;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -61,7 +50,7 @@ class Address
             $this->getFullAddress(),
         );
     }
-    
+
     /**
      * dumpConfig: return array with main config
      *
@@ -73,7 +62,6 @@ class Address
             'id' => $this->id,
             'street' => $this->getStreet(),
             'postcode' => $this->getPostcode(),
-            'country' => $this->getCountry(),
         ];
 
         if ($this->getCity() != null) {
@@ -88,7 +76,8 @@ class Address
     public function getFullAddress()
     {
         // @todo add city
-        $address = array_filter([$this->getStreet(), $this->getPostcode(), $this->getCity(), $this->getCountryName()]);
+        $address = array_filter([$this->getStreet(), $this->getPostcode(), $this->getCity(), $this->getCity() ? $this->getCity()->getCountryName() : 'not set']);
+        // $address = [];
 
         return $address ? implode(', ', $address) : '';
     }
@@ -139,40 +128,6 @@ class Address
     public function getPostcode()
     {
         return $this->postcode;
-    }
-
-    /**
-     * Get the value of Country.
-     *
-     * @return string
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    /**
-     * Get the value of Country.
-     *
-     * @return string
-     */
-    public function getCountryName()
-    {
-        return  $this->country ? Countries::getName($this->country) : 'not set';
-    }
-
-    /**
-     * Set the value of Country.
-     *
-     * @param string $country
-     *
-     * @return self
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
-
-        return $this;
     }
 
     public function getCity(): ?City

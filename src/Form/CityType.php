@@ -4,6 +4,7 @@ namespace HouseOfAgile\NakaCMSBundle\Form;
 
 use App\Entity\City;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,8 +14,11 @@ class CityType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('country')
-        ;
+            ->add('country', CountryType::class, array(
+                'preferred_choices' => array('DE', 'AT'),
+                'required' => false,
+                // 'choice_translation_locale' => null
+            ));;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
