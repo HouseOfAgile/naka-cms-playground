@@ -4,18 +4,28 @@ namespace HouseOfAgile\NakaCMSBundle\Twig;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
+use DateTime;
+use DateTimeImmutable;
+use HouseOfAgile\NakaCMSBundle\Service\DateTimeUtilsService;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 class TimeUtilsExtension extends AbstractExtension
 {
+    /** @var DateTimeUtilsService */
+    private $dateTimeUtilsService;
+
     /** @var RequestStack */
     private $requestStack;
 
-    public function __construct(RequestStack $requestStack)
-    {
+    public function __construct(
+        RequestStack $requestStack,
+        DateTimeUtilsService $dateTimeUtilsService,
+    ) {
         $this->requestStack = $requestStack;
+        $this->dateTimeUtilsService = $dateTimeUtilsService;
     }
 
     public function getFilters()
@@ -25,6 +35,14 @@ class TimeUtilsExtension extends AbstractExtension
             new TwigFilter('carbonWeekDay', [$this, 'carbonWeekDay']),
             new TwigFilter('durationFromSeconds', [$this, 'durationFromSeconds']),
             new TwigFilter('durationIntoHuman', [$this, 'durationIntoHuman']),
+        ];
+    }
+
+
+    public function getFunctions()
+    {
+        return [
+            new TwigFunction('rangeAggregateTime', [$this, 'rangeAggregateTime']),
         ];
     }
 
@@ -111,5 +129,25 @@ class TimeUtilsExtension extends AbstractExtension
         //CarbonInterval::seconds(90060)->cascade()->forHumans();
 
         return $durationInSeconds > 3600 ? gmdate("g \h\o\u\\r\s i \m\i\\n s", $durationInSeconds) : gmdate("g \h\o\u\\r\s i \m\i\\n s", $durationInSeconds);
+    }
+
+    public function rangeAggregateTime(
+        DateTime|DateTimeImmutable $startTime,
+        DateTime|DateTimeImmutable $endTime,
+        ?bool $withDay = false,
+        ?bool $withDate = false,
+        ?string $separator = ' - ',
+    ) {
+        $locale = $this->requestStack->getCurrentRequest()->getLocale();
+
+        $timeString = $this->dateTimeUtilsService->rangeAggregateTime(
+            $startTime,
+            $endTime,
+            $locale,
+            $withDay,
+            $withDate,
+            $separator
+        );
+        return $timeString;
     }
 }
