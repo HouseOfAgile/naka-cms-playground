@@ -20,6 +20,24 @@ class DateTimeUtilsService
     }
 
     /**
+     * rangeOverlap function: check if range starting on FirstDate and ending on EndDate overlap with range
+     * starting on SecondDate and ending on SecondDate
+     *
+     * @param $startFirst
+     * @param $endFirst
+     * @param $startSecond
+     * @param $endSecond
+     * @return void
+     */
+    public function rangeOverlap($startFirst, $endFirst, $startSecond, $endSecond)
+    {
+        if ($startFirst <= $endSecond && $endFirst >= $startSecond) {
+            return min($startFirst, $endSecond)->diff(max($startSecond, $startFirst))->days + 1;
+        }
+        return 0;
+    }
+
+    /**
      * dummy function: from two datetime, return a string in the form:
      * * Fri Dec 15 - 06-08 // same day
      * * Fri Dec 15 - 06-08 // same day

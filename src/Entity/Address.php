@@ -45,9 +45,9 @@ class Address
     public function __toString()
     {
         return sprintf(
-            'Address: #%s %s',
+            'Address: #%s',
             $this->id,
-            $this->getFullAddress(),
+            // $this->getFullAddress(),
         );
     }
 
@@ -76,7 +76,7 @@ class Address
     public function getFullAddress()
     {
         // @todo add city
-        $address = array_filter([$this->getStreet(), $this->getPostcode(), $this->getCity(), $this->getCity() ? $this->getCity()->getCountryName() : 'not set']);
+        $address = array_filter([$this->getStreet(), $this->getPostcode(), $this->getCity() ?: null, $this->getCity() ? $this->getCity()->getCountryName() : 'not set']);
         // $address = [];
 
         return $address ? implode(', ', $address) : '';
