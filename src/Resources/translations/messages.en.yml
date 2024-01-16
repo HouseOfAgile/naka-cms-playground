@@ -33,6 +33,7 @@ backend.menu.websiteInfo: Website Info
 backend.menu.openingHours: Opening Hours
 backend.menu.websiteAsset: 'Website Documents'
 backend.menu.translations: 'Translations'
+backend.menu.controlPanel: 'Control Panel'
 
 backend.websiteInfo.title: 'Website info for %applicationName%'
 backend.websiteInfo.thereIsNoWebsiteInfo: 'There is no website info yet'
@@ -187,10 +188,13 @@ backend.form.nakaParameter.extraInfo.help: ''
 
 backend.operation.exportTranslation: 'Export Translation'
 backend.operation.exportTranslation.title: 'Export Translation'
+backend.operation.exportTranslation.explanation: 'This operation dumps the current values of the translations defined in the Static translation screen.'
 backend.operation.exportTranslation.exportTranslationDone: 'Export Translation done'
 backend.operation.exportTranslation.exportTranslationOutput: 'Export Translation output'
 
-
+backend.controlPanel.sectionSettings: '%section% Settings'
+backend.controlPanel.title: 'Control panel'
+backend.controlPanel.exportTranslations: 'Export Translations'
 
 admin.form.menuItem.page: 'Related Page'
 

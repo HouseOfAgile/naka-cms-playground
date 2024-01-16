@@ -4,7 +4,6 @@ namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
 use App\Controller\Admin\AdminDashboardController;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,10 +13,15 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/control-panel/{_locale<%app.supported_locales%>}', requirements: ['_locale' => 'en|de|fr'], name: 'admin_control_panel_')]
 class AdminControlPanelController extends AdminDashboardController
 {
+    public const CONTROL_PANEL_SECTIONS = [
+        'translation' => '@NakaCMS/backend/control-panel/_panel_translation.html.twig'
+    ];
+
     #[Route(path: '/dashboard', name: 'dashboard')]
     public function controlPanelDashboard(KernelInterface $kernel): Response
     {
         $viewParams = [
+            'controlPanelSections' => self::CONTROL_PANEL_SECTIONS
         ];
         return $this->render('@NakaCMS/backend/control-panel/control_panel_dashboard.html.twig', $viewParams);
     }
@@ -30,6 +34,7 @@ class AdminControlPanelController extends AdminDashboardController
 
         $input = new ArrayInput([
             'command' => 'lexik:translations:export',
+            '--domains' => 'messages',
         ]);
 
         // You can use NullOutput() if you don't need the output

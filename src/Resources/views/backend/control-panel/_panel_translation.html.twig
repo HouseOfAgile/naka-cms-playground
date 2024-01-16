@@ -1,0 +1,15 @@
+<div class="row my-3 p-3 border rounded text-bg-light">
+	<div class="col-10 offset-1 text-center">
+		<h1>{{ 'backend.controlPanel.sectionSettings' | trans({'%section%' : section}) | capitalize }}</h1>
+	</div>
+	<div class="row">
+		<div class="col-6">
+			<div class="border border-info rounded p-3 m-2">
+				<h2>{{ 'backend.operation.exportTranslation' | trans }}</h2>
+				<div class="">{{ 'backend.operation.exportTranslation.explanation' | trans | raw }}
+				</div>
+				<a class="btn btn-primary p-4 my-3" href="{{ path('admin_control_panel_export_translation') }}">{{ 'backend.operation.exportTranslation' | trans }}</a>
+			</div>
+		</div>
+	</div>
+</div>

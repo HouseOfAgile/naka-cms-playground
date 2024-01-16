@@ -1,4 +1,4 @@
 {% set value = value is defined ? value : field is defined ? field.value : value %}
-<button class="btn btn-info" data-clipboard-text="{{ value }}">
+<button class="btn btn-info" data-clipboard-text="{{ value }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Copy {{value}}">
    <i class="fa fa-copy faa-burst"></i>
 </button>
