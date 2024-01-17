@@ -6,13 +6,13 @@ use App\Entity\Page;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -33,6 +33,12 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
     {
         return $crud
             ->setDefaultSort(['updatedAt' => 'DESC']);
+    }
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add('active');
     }
 
     public function configureActions(Actions $actions): Actions
@@ -84,12 +90,12 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
 
         $id = IdField::new('id');
         $slug = TextField::new('slug');
-        // panels can also define their icon, CSS class and help message
-        $pageDetailsPanel = FormField::addPanel('backend.form.page.pageDetailsPanel')
-            ->setHelp('backend.form.page.pageDetailsPanel.help');
 
         $pageConfigurationTab = FormField::addTab('backend.form.page.pageConfigurationTab')
             ->setHelp('backend.form.page.pageConfigurationTab.help');
+
+        $pageDetailsPanel = FormField::addPanel('backend.form.page.pageDetailsPanel')
+            ->setHelp('backend.form.page.pageDetailsPanel.help');
 
         $pageTranslationTab = FormField::addTab('backend.form.page.mainPageTranslationsPanel')
             ->setHelp('backend.form.page.mainPageTranslationsPanel.help');
@@ -100,16 +106,18 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
 
         $name = TextField::new('name')
             ->setLabel('Name')
-            ->setHelp('Internal name to be used in Menus and elsewhere');
+            ->setHelp('backend.form.page.name.help');
+
+        $active = BooleanField::new('active')
+            ->setHelp('backend.form.page.active.help')
+            // ->setColumns(6)
+            ;
+
         $pageType = ChoiceField::new('pageType')
             ->setChoices(NakaPageType::getGuessOptions())
             ->setHelp('backend.form.page.pageType.help')
             ->setFormTypeOption('required', true);
 
-        $enabled = BooleanField::new('enabled')->setLabel('is it Enabled')
-            ->hideOnIndex()
-            ->hideOnDetail()
-            ->hideOnForm();
         $pageConfigurationPanel = FormField::addPanel('backend.form.page.pageConfigurationPanel')
             ->setHelp('backend.form.page.pageConfigurationPanel.help');
         // no pageGallery for now on page level
@@ -123,14 +131,14 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         // $category = AssociationField::new('category', 'backend.form.page.category');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $name, $slug, $pageType, $enabled, $pageBlockElements];
+            return [$id, $active, $name, $slug, $pageType, $pageBlockElements];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [
-                $pageConfigurationTab, $pageDetailsPanel, $name, $pageType, $pageGallery, $enabled,
+                $pageConfigurationTab, $pageDetailsPanel, $name, $pageType, $pageGallery,
             ];
         } elseif (Crud::PAGE_NEW === $pageName) {
             return [
-                $pageConfigurationTab, $pageDetailsPanel, $name, $pageType, $pageGallery,  $pageBlockElements, $enabled,
+                $pageConfigurationTab, $pageDetailsPanel, $name, $pageType, $pageGallery,  $pageBlockElements,
                 // $pageConfigurationPanel, $category,
                 $pageTranslationTab, $translations,
 
@@ -138,7 +146,7 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         } elseif (Crud::PAGE_EDIT === $pageName) {
             return [
 
-                $pageConfigurationTab, $pageDetailsPanel, $name, $slug, $pageType, $pageGallery,  $pageBlockElements, $enabled,
+                $pageConfigurationTab, $pageDetailsPanel, $active, $name, $slug, $pageType, $pageGallery,  $pageBlockElements,
                 // $pageConfigurationPanel, $category,
                 $pageTranslationTab, $translations,
 

@@ -32,14 +32,14 @@ class Page implements TranslatableInterface, SluggableInterface, TimestampableIn
     #[ORM\Column(type: 'integer')]
     protected $id;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $active = null;
+
     #[ORM\Column(type: 'string', length: 64, nullable: true)]
     protected $name;
 
     #[ORM\Column(type: 'NakaPageType', nullable: true)]
     protected $pageType;
-
-    #[ORM\Column(type: 'boolean', nullable: true)]
-    protected $enabled;
 
     #[ORM\ManyToOne(inversedBy: 'pages')]
     private ?PageGallery $pageGallery = null;
@@ -74,6 +74,18 @@ class Page implements TranslatableInterface, SluggableInterface, TimestampableIn
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(?bool $active): static
+    {
+        $this->active = $active;
+
+        return $this;
     }
 
     public function findPosition($operator): ?int
@@ -115,11 +127,11 @@ class Page implements TranslatableInterface, SluggableInterface, TimestampableIn
     {
         $config =  [
             'id' => $this->id,
+            'active' => $this->getActive(),
             'name' => $this->getName(),
             'slug' => $this->getSlug(),
             'pageType' => $this->getPageType(),
             'pageGallery' => $this->getPageGallery() ? $this->getPageGallery()->getId() : null,
-            'enabled' => $this->getEnabled(),
             'pageTranslations' => array_map(function ($pt) {
                 return $pt->getId();
             }, $this->getTranslations()->toArray()),
@@ -167,15 +179,8 @@ class Page implements TranslatableInterface, SluggableInterface, TimestampableIn
         return $this;
     }
 
-    public function getEnabled(): ?bool
-    {
-        return $this->enabled;
-    }
-
     public function setEnabled(?bool $enabled): self
     {
-        $this->enabled = $enabled;
-
         return $this;
     }
 

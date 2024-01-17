@@ -50,6 +50,9 @@ backend.form.menu.isFixed.help: 'this parameter control if the menu is fixed or 
 backend.crud.page.action.reorganizeBlocksInPage: 'Reorganize blocks'
 
 backend.form.page.pageDetailsPanel: 'Page Details'
+backend.form.page.name.help: 'Internal name to be used in Menus and elsewhere'
+backend.form.page.active.help: 'Set active to true if the page is active. If inactive, the page will not be shown'
+
 backend.form.page.pageDetailsPanel.help: 'Those are the main settings of the page'
 backend.form.page.pageConfigurationTab: 'Page configuration'
 backend.form.page.pageConfigurationTab.help: 'General configuration for the page'
