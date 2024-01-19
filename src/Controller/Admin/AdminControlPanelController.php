@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/control-panel/{_locale<%app.supported_locales%>}', requirements: ['_locale' => 'en|de|fr'], name: 'admin_control_panel_')]
 class AdminControlPanelController extends AdminDashboardController
 {
-    public const CONTROL_PANEL_SECTIONS = [
+    public const CONTROL_PANEL_OPERATIONS = [
         'translation' => '@NakaCMS/backend/control-panel/_panel_translation.html.twig'
     ];
 
@@ -21,7 +21,7 @@ class AdminControlPanelController extends AdminDashboardController
     public function controlPanelDashboard(KernelInterface $kernel): Response
     {
         $viewParams = [
-            'controlPanelSections' => self::CONTROL_PANEL_SECTIONS
+            'controlPanelOperations' => self::CONTROL_PANEL_OPERATIONS
         ];
         return $this->render('@NakaCMS/backend/control-panel/control_panel_dashboard.html.twig', $viewParams);
     }

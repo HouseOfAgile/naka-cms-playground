@@ -195,7 +195,7 @@ backend.operation.exportTranslation.explanation: 'This operation dumps the curre
 backend.operation.exportTranslation.exportTranslationDone: 'Export Translation done'
 backend.operation.exportTranslation.exportTranslationOutput: 'Export Translation output'
 
-backend.controlPanel.sectionSettings: '%section% Settings'
+backend.controlPanel.typeOfOperations: '%typeOfOperation% Operation'
 backend.controlPanel.title: 'Control panel'
 backend.controlPanel.exportTranslations: 'Export Translations'
 

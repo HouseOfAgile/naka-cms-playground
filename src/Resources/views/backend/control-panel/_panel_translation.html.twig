@@ -1,14 +1,21 @@
 <div class="row my-3 p-3 border rounded text-bg-light">
 	<div class="col-10 offset-1 text-center">
-		<h1>{{ 'backend.controlPanel.sectionSettings' | trans({'%section%' : section}) | capitalize }}</h1>
+		<h1>{{ 'backend.controlPanel.typeOfOperations' | trans({'%typeOfOperation%' : operation}) | capitalize }}</h1>
 	</div>
-	<div class="row">
-		<div class="col-6">
-			<div class="border border-info rounded p-3 m-2">
-				<h2>{{ 'backend.operation.exportTranslation' | trans }}</h2>
-				<div class="">{{ 'backend.operation.exportTranslation.explanation' | trans | raw }}
+	<div class="col-12">
+		<div class="border border-info rounded p-3 m-2">
+			<div class="row p-3">
+				<div class="col-7">
+					<h2 class="fs-4">{{ 'backend.operation.exportTranslation' | trans }}</h2>
+					<div class="ps-5">{{ 'backend.operation.exportTranslation.explanation' | trans | raw }}</div>
 				</div>
-				<a class="btn btn-primary p-4 my-3" href="{{ path('admin_control_panel_export_translation') }}">{{ 'backend.operation.exportTranslation' | trans }}</a>
+				<div class="col-5">
+					<div class="d-flex align-items-center justify-content-end h-100">
+						<div class="btn-group-vertical" role="group" aria-label="Basic example">
+							<a class="btn btn-primary" href="{{ path('admin_control_panel_export_translation') }}">{{ 'backend.operation.exportTranslation' | trans }}</a>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
