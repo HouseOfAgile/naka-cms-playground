@@ -1,19 +1,21 @@
-<div class="row my-3 p-3 border rounded text-bg-light">
-	<div class="col-10 offset-1 text-center py-4">
-		<h1>{{ 'backend.controlPanel.typeOfOperations' | trans({'%typeOfOperation%' : operation}) | capitalize }}</h1>
-	</div>
-	<div class="row row-cols-1 row-cols-xl-2 my-2">
-		<div class="col">
-			<a class="" href="{{ path('admin_control_panel_export_translation') }}">
-				<div class="cp-item border border-light text-bg-secondary h-100 rounded p-3 mx-2">
-					<div class="row p-3 ">
-						<div class="col-12">
-							<h2 class="fs-4 text-center">{{ 'backend.operation.exportTranslation' | trans }}</h2>
-							<div class="ps-2">{{ 'backend.operation.exportTranslation.explanation' | trans | raw }}</div>
+<div class="py-3">
+	<div class="row p-3 border rounded text-bg-light">
+		<div class="col-10 offset-1 text-center py-4">
+			<h1>{{ 'backend.controlPanel.typeOfOperations' | trans({'%typeOfOperation%' : operation}) | capitalize }}</h1>
+		</div>
+		<div class="row row-cols-1 row-cols-xl-2 my-2">
+			<div class="col">
+				<a class="" href="{{ path('admin_control_panel_export_translation') }}">
+					<div class="cp-item border border-light text-bg-secondary h-100 rounded p-3 mx-2">
+						<div class="row p-3 ">
+							<div class="col-12">
+								<h2 class="fs-4 text-center">{{ 'backend.operation.exportTranslation' | trans }}</h2>
+								<div class="ps-2">{{ 'backend.operation.exportTranslation.explanation' | trans | raw }}</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			</a>
+				</a>
+			</div>
 		</div>
 	</div>
 </div>
