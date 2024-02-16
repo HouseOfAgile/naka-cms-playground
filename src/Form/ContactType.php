@@ -41,12 +41,6 @@ class ContactType extends AbstractType
                     'rows' => '6',
                     'class' => $this::FORM_CONTROL,
                 ]
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'form.contact.submit',
-                'attr' => [
-                    'class' => $this::FORM_CONTROL,
-                ]
             ]);
     }
 
