@@ -63,7 +63,7 @@ in webpack.config.js
 
 ### i18n websiteinfo metas
 
-We need a new twxig service in twig.yml
+We need a new twig service in twig.yml
 ```
         websiteInfo: '@HouseOfAgile\NakaCMSBundle\Component\WebsiteInfo\WebsiteInfoService'
 ```
@@ -72,7 +72,6 @@ We need a new twxig service in twig.yml
 For ease of work, we add some general services/component
 
 ## Main changes
-
 Update to vich uploader 2: need to use php attributes
 
 

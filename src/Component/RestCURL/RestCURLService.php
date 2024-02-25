@@ -52,7 +52,8 @@ class RestCURLService
         $this->getParameters = array_merge($this->getParameters, $extraGetParameters);
     }
 
-    public function getUrlEncodedParameters(){
+    public function getUrlEncodedParameters()
+    {
         return http_build_query($this->getParameters);
     }
 
@@ -130,79 +131,104 @@ class RestCURLService
 
     protected function executeCurl($url, $method, $data = NULL, $headers = NULL)
     {
+        $verboseOutput = fopen('php://temp', 'w+');
+
         if ($this->devMode) {
             dump($url, $method, $headers);
-            dd($data);
+            dump($data);
         }
         $agent = 'Sequasa/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)';
+
         $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_USERAGENT, $agent);
 
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        if ($this->devMode) {
+            curl_setopt($ch, CURLOPT_VERBOSE, true);
+            curl_setopt($ch, CURLOPT_STDERR, $verboseOutput);
+        }
 
+        // Set method-specific options
         switch ($method) {
-            case "GET":
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-                break;
             case "POST":
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+                break;
+            case "GET":
+                // No need to set anything specific for GET
+                // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
                 break;
             case "PUT":
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
                 break;
             case "DELETE":
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
                 break;
         }
 
-        if (!empty($data)) {
-            if (is_array($data)) {
-                // We have a x-www-form-urlencode type of request, header whould be there
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-            } else {
-                // This is most likely a standard json post request
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-            }
-        }
+        // if (!empty($data)) {
+        //     if (is_array($data)) {
+        //         // We have a x-www-form-urlencode type of request, header whould be there
+        //         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        //     } else {
+        //         // This is most likely a standard json post request
+        //         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        //     }
+        // }
 
         if (!empty($headers)) {
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         }
-        $headers = [];
+        // $headers = [];
 
-        // this function is called by curl for each header received
-        curl_setopt(
-            $ch,
-            CURLOPT_HEADERFUNCTION,
-            function ($curl, $header) use (&$headers) {
-                $len = strlen($header);
-                $header = explode(':', $header, 2);
-                if (count($header) < 2) // ignore invalid headers
-                    return $len;
+        // // this function is called by curl for each header received
+        // curl_setopt(
+        //     $ch,
+        //     CURLOPT_HEADERFUNCTION,
+        //     function ($curl, $header) use (&$headers) {
+        //         $len = strlen($header);
+        //         $header = explode(':', $header, 2);
+        //         if (count($header) < 2) // ignore invalid headers
+        //             return $len;
 
-                $headers[strtolower(trim($header[0]))][] = trim($header[1]);
+        //         $headers[strtolower(trim($header[0]))][] = trim($header[1]);
 
-                return $len;
-            }
-        );
+        //         return $len;
+        //     }
+        // );
 
         curl_setopt($ch, CURLOPT_VERBOSE, true);
 
         // Log curl errors here
         $response = curl_exec($ch);
+        $httpStatusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-        if (curl_errno($ch)) {
-            $info = curl_getinfo($ch);
-            dump($info);
-            $this->logger->error(sprintf('Curl Request response [Error]: %s', $response));
+        // Check for cURL errors or non-2xx responses
+        if (curl_errno($ch) || $httpStatusCode < 200 || $httpStatusCode >= 300) {
+            if ($this->devMode) {
+                rewind($verboseOutput);
+                $verboseLog = stream_get_contents($verboseOutput);
+                // Log or process $verboseLog as needed
+                fclose($verboseOutput);
+                $this->logger->debug(sprintf('Curl verboseOutput: %s', $verboseLog));
+            }
+            $error = curl_error($ch) ?: "HTTP status code: $httpStatusCode";
+            $this->logger->error("cURL request failed: $error");
+            curl_close($ch);
             return null;
         }
-        $this->logger->info(sprintf('Curl Request response: %s', $response));
-        $this->updateRateLimit($headers);
-        // if ($response == null) {return null;}
 
-        return json_decode($response, true, 512, JSON_THROW_ON_ERROR);
+        curl_close($ch);
+
+        // Assuming JSON response, decode it
+        $decodedResponse = json_decode($response, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            $this->logger->error("JSON decode error: " . json_last_error_msg());
+            return null;
+        }
+
+        return $decodedResponse;
     }
 }
