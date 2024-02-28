@@ -43,6 +43,7 @@ class TimeUtilsExtension extends AbstractExtension
     {
         return [
             new TwigFunction('rangeAggregateTime', [$this, 'rangeAggregateTime']),
+            new TwigFunction('isOlderThan', [$this, 'isOlderThan']),
         ];
     }
 
@@ -149,5 +150,17 @@ class TimeUtilsExtension extends AbstractExtension
             $separator
         );
         return $timeString;
+    }
+
+    public function isOlderThan($date, $timeRange = '-1 week'): bool
+    {
+        if (!$date instanceof DateTime) {
+            // Optionally handle invalid argument or convert from another format
+            return false;
+        }
+
+        $timeAgo = new DateTime($timeRange);
+
+        return $date < $timeAgo;
     }
 }
