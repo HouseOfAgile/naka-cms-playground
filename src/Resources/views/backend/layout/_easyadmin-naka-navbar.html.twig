@@ -1,0 +1,42 @@
+<div class=" btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+	<div class="m-2 p-1">
+		<a href="{{ path('app_homepage') }}" class="btn btn-success" role="button">
+			<i class="fas fa-home"></i>
+			Main Frontend
+		</a>
+	</div>
+	<div class="m-2 p-1">
+		<a href="{{ naka_doc }}" target="_new" class="btn btn-info" role="button">
+			<i class="fa fa-fw fa-question-circle"></i>
+			DOCS
+		</a>
+	</div>
+	{% if is_granted('ROLE_ADMIN') %}
+		<div class="m-2 p-1">
+			<a href="{{ path('admin_dashboard') }}" class="btn btn-success" role="button">
+				<i class="fas fa-screwdriver"></i>
+				Admin
+			</a>
+		</div>
+	{% endif %}
+	{% if is_granted('ROLE_SUPER_ADMIN') %}
+
+		<div class="m-2 p-1">
+			<a href="{{ path('superadmin_dashboard') }}" class="btn btn-danger" role="button">
+				<i class="fas fa-tools"></i>
+				Superadmin
+			</a>
+		</div>
+	{% endif %}
+	<div class="m-2 p-1">
+		<div class="dropdown user-menu-wrapper {{ is_granted(impersonator_permission) ? 'user-is-impersonated' }}">
+			<a class="user-details" type="button" data-bs-toggle="dropdown" data-bs-offset="0,5" aria-expanded="false">
+				{{ user_menu_avatar }}
+				{% if ea.userMenu.isNameDisplayed %}
+					<span class="user-name">{{ ea.userMenu.name }}</span>
+				{% endif %}
+			</a>
+			{{ user_menu_dropdown }}
+		</div>
+	</div>
+</div>
