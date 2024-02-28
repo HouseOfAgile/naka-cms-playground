@@ -2,8 +2,6 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Twig;
 
-use Carbon\Carbon;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Vich\UploaderBundle\Entity\File as EmbeddedFile;
