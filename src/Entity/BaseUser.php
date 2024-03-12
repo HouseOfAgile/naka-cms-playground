@@ -69,8 +69,8 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return sprintf(
             '%s %s',
-            $lastNameFirst ? $this->getLastName(): $this->getFirstName(),
-            $lastNameFirst ? $this->getFirstName(): $this->getLastName(),
+            $lastNameFirst ? $this->getLastName() : $this->getFirstName(),
+            $lastNameFirst ? $this->getFirstName() : $this->getLastName(),
         );
     }
     public function getHumanName(): string
@@ -191,6 +191,7 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @see UserInterface
+     * @return void
      */
     public function eraseCredentials()
     {

@@ -12,7 +12,7 @@ class CacheKeyGenerator
      * @param bool $includeRandomId Whether to include a random ID component in the cache key.
      * @return string The generated cache key.
      */
-    public function generate(string $baseString, array $identifiers = [], bool $includeRandomId = true): string
+    public function generate(string $baseString, array $identifiers = [], bool $includeRandomId = false): string
     {
         $keyComponents = [$baseString];
         if (!empty($identifiers)) {
