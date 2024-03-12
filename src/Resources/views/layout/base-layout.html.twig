@@ -26,6 +26,11 @@
 			{% endif %}
 			<div class="main-content">
 				{% block main %}
+					{% block breadcrumbs %}
+						{% if breadCrumbs is defined and breadCrumbs is not empty %}
+							{% include '@NakaCMS/component/navigation/breadcrumbs.html.twig' %}
+						{% endif %}
+					{% endblock %}
 					{{ block('content') }}
 				{% endblock %}
 			</div>

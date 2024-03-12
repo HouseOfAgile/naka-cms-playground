@@ -307,3 +307,5 @@ email.office.newMember.title: 'New member on %applicationName% platform'
 email.office.newMember.youHaveANewMessage: |
     <p>A user just finished the verification of his email. He is now able to book.</p>
     <p>Here are the details:</p>
+
+breadCrumb.home: 'Home'

@@ -57,14 +57,15 @@ class MenuBuilder
         return $menu;
     }
 
-
     public function addMenuItem(MenuItem $menuItem, ItemInterface $menu, $toUpper = false)
     {
         switch ($menuItem->getType()) {
             case NakaMenuItemType::TYPE_PAGE:
-                if ($menuItem->getPage() == null) {
-                } else {
+                if ($menuItem->getPage() !== null) {
                     $childParameters = ['route' => 'page_view', 'routeParameters' => ['slug' => $menuItem->getPage()->getSlug()]];
+                } else{
+                    // not a valid menu item, we do not add it
+                    return;
                 }
                 break;
             case NakaMenuItemType::TYPE_ROUTE:
