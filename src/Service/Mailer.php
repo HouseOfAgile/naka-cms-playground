@@ -22,6 +22,7 @@ class Mailer
     protected $logger;
     protected $applicationName;
     protected $applicationSenderEmail;
+    protected $applicationDoNotReplyEmail;
     protected $applicationSenderName;
     protected $applicationContactEmail;
     protected $applicationContactName;
@@ -40,6 +41,7 @@ class Mailer
         LoggerInterface $generalLogger,
         $applicationName,
         $applicationSenderEmail,
+        $applicationDoNotReplyEmail,
         $applicationSenderName,
         $applicationContactEmail,
         $applicationContactName,
@@ -52,6 +54,7 @@ class Mailer
         $this->logger = $generalLogger;
         $this->applicationName = $applicationName;
         $this->applicationSenderEmail = $applicationSenderEmail;
+        $this->applicationDoNotReplyEmail = $applicationDoNotReplyEmail;
         $this->applicationSenderName = $applicationSenderName;
         $this->applicationContactEmail = $applicationContactEmail;
         $this->applicationContactName = $applicationContactName;
@@ -62,7 +65,7 @@ class Mailer
     }
 
 
-    public function sendMessageToAddress($fromAddress, $toAddress, $subject, $templateName, $context)
+    public function sendMessageToAddress($fromAddress, $toAddress, $subject, $templateName, $context, $addDoNotReply = true)
     {
         $templatedEmail = (new TemplatedEmail())
             ->from($fromAddress)
@@ -70,6 +73,9 @@ class Mailer
             ->subject($subject)
             ->htmlTemplate($templateName)
             ->context($context);
+        if ($addDoNotReply) {
+            $templatedEmail->replyTo($this->applicationDoNotReplyEmail);
+        }
         $this->mailer->send($templatedEmail);
         $this->logger->info(sprintf(
             'New member email mail sent to office',

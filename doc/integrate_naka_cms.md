@@ -28,6 +28,7 @@
         $allLocales: "%all_locales%"
         $applicationName: "%env(APPLICATION_NAME)%"
         $applicationSenderEmail: "%env(APPLICATION_SENDER_EMAIL)%"
+        $applicationSenderEmail: '%env(APPLICATION_SENDER_EMAIL)%'
         $applicationSenderName: "%env(APPLICATION_SENDER_NAME)%"
         $applicationContactEmail: "%env(APPLICATION_CONTACT_EMAIL)%"
         $applicationContactName: "%env(APPLICATION_CONTACT_NAME)%"
@@ -35,7 +36,16 @@
         $devMode: "%env(bool:DEV_MODE)%"
 ```
 
-Also add the related tiwg parameters
+You should have some dotenv parameters set:
+
+    APPLICATION_SENDER_EMAIL=office@dentistsoffice.org
+    APPLICATION_DONOTREPLY_EMAIL=do-not-reply@dentistsoffice.org
+    APPLICATION_SENDER_NAME='DEN Office'
+    APPLICATION_CONTACT_EMAIL=office+contact@dentistsoffice.org
+    APPLICATION_CONTACT_NAME='DEN Contact'
+
+
+Also add the related twig parameters
 
 * Add naka services definition files
 
