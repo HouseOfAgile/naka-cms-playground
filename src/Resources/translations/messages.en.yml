@@ -274,7 +274,8 @@ loginForm.signIn: 'Sign In'
 email.welcomeUserVerifyEmail.title: 'Welcome to %applicationName%, please verify your email'
 email.welcomeUserVerifyEmail.impactMessage: 'Nice to meet you %firstName%'
 email.welcomeUserVerifyEmail.content: |
-    <p>Welcome the the %applicationName% platform. Before you can access your account, we need to verify your email, click on the following link or copy and paste the following link:</p>
+    <p>Welcome the the %applicationName% platform.</p>
+    <p>Before you can access your account, we need to verify your email, click on the following link or copy and paste the following link.</p>
     <p>Link to copy and paste: <pre>%verifyLink%</pre></p>
 email.welcomeUserVerifyEmail.clickHereToVerifyYourEmail: 'Click here to verify your email'
 
@@ -295,7 +296,7 @@ email.welcomeMessageToNewVerifiedMember.content: |
     Welcome to <strong>the %applicationName%</strong>,
     </p>
     <p class="block">
-    You can now access the %applicationName% platform, browse and book our events``. 
+    You can now access the %applicationName% platform, browse and book our events. 
     </p>
 
 email.office.newContactMessage.subject: 'New contact message on %applicationName%!'
