@@ -136,7 +136,7 @@ backend.crud.menu.generalHelp: |
     <ul>
 
 
-backend.crud.user.generalHelp: "<p>Users have access to the administration of the GLS platform</p>\n<p>Depending on their roles, they have access to the design and content or the global configuration.<p>\n"
+backend.crud.user.generalHelp: "<p>Users have access to the administration of this Naka platform</p>\n<p>Depending on their roles, they have access to the design and content or the global configuration.<p>\n"
 backend.crud.nakaParameter.generalHelp: |
   <p>You can define here some general parameters for the platform, you can also change/define some specifics ones</p>
   <ul>
