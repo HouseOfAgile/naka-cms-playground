@@ -2,6 +2,8 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity\AppTrait;
 
+use ReflectionClass;
+
 trait DefaultTranslatableTrait
 {
     /**
@@ -16,7 +18,6 @@ trait DefaultTranslatableTrait
         $methodName = 'get' . ucfirst($field);
         if ($entity->translate()->{$methodName}() !== null) {
             return $entity->translate()->{$methodName}();
-
         } else {
             if ($entity->translate('en')->{$methodName}() !== null) {
                 return $entity->translate('en')->{$methodName}();
@@ -26,6 +27,23 @@ trait DefaultTranslatableTrait
                 return ($showDefault) ? substr(md5(rand()), 0, 7) : null;
             }
         }
+    }
 
+    protected function getTranslatableAttributes($translationClass): array
+    {
+        $reflectionClass = new ReflectionClass($translationClass);
+        $properties = $reflectionClass->getProperties();
+        $attributeNames = [];
+
+        foreach ($properties as $property) {
+            if (!$property->isStatic()) {
+                $attributeNames[] = $property->getName();
+            }
+        }
+        $excludeKeys = ["id", "locale", "translatable"];
+
+        $filteredAttributes = array_diff($attributeNames, $excludeKeys);
+
+        return $filteredAttributes;
     }
 }

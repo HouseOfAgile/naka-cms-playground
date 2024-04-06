@@ -15,20 +15,40 @@ class DeepLTranslationService
 
     public function translate(string $text, string $sourceLang, string $targetLang): string
     {
-        $result = $this->translator->translateText($text, $sourceLang, $targetLang);
+        $targetLang = $this->updateLanguageCode($targetLang);
+        if ($this->containsHtml($text)) {
+            $result = $this->translator->translateText($text, $sourceLang, $targetLang, [
+                'tag_handling' => 'xml', // Tells DeepL to preserve HTML/XML tags
+                // Specify 'ignore_tags' to protect parts of the text from translation
+            ]);
+        } else {
+            $result = $this->translator->translateText($text, $sourceLang, $targetLang);
+        }
         return $result->text;
     }
 
     /**
-     * Translates HTML content from the source language to the target language.
-     * This method specifically indicates to the API that the content is HTML.
+     * Checks if a string contains HTML tags.
+     *
+     * @param string $string The string to check.
+     * @return bool True if the string contains HTML tags; otherwise, false.
      */
-    public function translateHtml(string $html, string $sourceLang, string $targetLang): string
+    private function containsHtml(string $string): bool
     {
-        $result = $this->translator->translateText($html, $sourceLang, $targetLang, [
-            'tag_handling' => 'xml', // Tells DeepL to preserve HTML/XML tags
-            // Specify 'ignore_tags' to protect parts of the text from translation
-        ]);
-        return $result->text;
+        return $string !== strip_tags($string);
+    }
+
+    private function updateLanguageCode($langCode) {
+        $defaultRegions = [
+            'en' => 'US',
+        ];
+    
+        if (strlen($langCode) == 2) {
+            if (array_key_exists($langCode, $defaultRegions)) {
+                return $langCode . '_' . $defaultRegions[$langCode];
+            }
+        }
+    
+        return $langCode;
     }
 }
