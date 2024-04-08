@@ -38,17 +38,18 @@ class DeepLTranslationService
         return $string !== strip_tags($string);
     }
 
-    private function updateLanguageCode($langCode) {
+    private function updateLanguageCode($langCode)
+    {
         $defaultRegions = [
             'en' => 'US',
         ];
-    
+
         if (strlen($langCode) == 2) {
             if (array_key_exists($langCode, $defaultRegions)) {
-                return $langCode . '_' . $defaultRegions[$langCode];
+                return $langCode . '-' . $defaultRegions[$langCode];
             }
         }
-    
+
         return $langCode;
     }
 }

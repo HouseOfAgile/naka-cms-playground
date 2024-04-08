@@ -4,13 +4,15 @@ namespace HouseOfAgile\NakaCMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
-use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatableMethodsTrait;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatablePropertiesTrait;
 
 #[ORM\MappedSuperclass]
 class WebsiteInfo implements TranslatableInterface
 {
-    use TranslatableTrait;
-
+    use TranslatablePropertiesTrait;
+    use TranslatableMethodsTrait;
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]

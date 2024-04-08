@@ -12,6 +12,8 @@ use HouseOfAgile\NakaCMSBundle\Entity\AppTrait\DefaultTranslatableTrait;
 use HouseOfAgile\NakaCMSBundle\Repository\CategoryRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TreeNodeInterface;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatableMethodsTrait;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatablePropertiesTrait;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 use Knp\DoctrineBehaviors\Model\Tree\TreeNodeTrait;
 
@@ -19,7 +21,8 @@ use Knp\DoctrineBehaviors\Model\Tree\TreeNodeTrait;
 class Category implements TranslatableInterface, TreeNodeInterface
 {
     use TreeNodeTrait;
-    use TranslatableTrait;
+    use TranslatablePropertiesTrait;
+    use TranslatableMethodsTrait;
     // use SluggableTrait;
     use DefaultTranslatableTrait;
 
