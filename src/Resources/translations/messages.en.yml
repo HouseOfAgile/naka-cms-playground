@@ -136,7 +136,7 @@ backend.crud.menu.generalHelp: |
     <ul>
 
 
-backend.crud.user.generalHelp: "<p>Users have access to the administration of the GLS platform</p>\n<p>Depending on their roles, they have access to the design and content or the global configuration.<p>\n"
+backend.crud.user.generalHelp: "<p>Users have access to the administration of this Naka platform</p>\n<p>Depending on their roles, they have access to the design and content or the global configuration.<p>\n"
 backend.crud.nakaParameter.generalHelp: |
   <p>You can define here some general parameters for the platform, you can also change/define some specifics ones</p>
   <ul>
@@ -274,7 +274,8 @@ loginForm.signIn: 'Sign In'
 email.welcomeUserVerifyEmail.title: 'Welcome to %applicationName%, please verify your email'
 email.welcomeUserVerifyEmail.impactMessage: 'Nice to meet you %firstName%'
 email.welcomeUserVerifyEmail.content: |
-    <p>Welcome the the %applicationName% platform. Before you can access your account, we need to verify your email, click on the following link or copy and paste the following link:</p>
+    <p>Welcome the the %applicationName% platform.</p>
+    <p>Before you can access your account, we need to verify your email, click on the following link or copy and paste the following link.</p>
     <p>Link to copy and paste: <pre>%verifyLink%</pre></p>
 email.welcomeUserVerifyEmail.clickHereToVerifyYourEmail: 'Click here to verify your email'
 
@@ -295,7 +296,7 @@ email.welcomeMessageToNewVerifiedMember.content: |
     Welcome to <strong>the %applicationName%</strong>,
     </p>
     <p class="block">
-    You can now access the %applicationName% platform, browse and book our events``. 
+    You can now access the %applicationName% platform, browse and book our events. 
     </p>
 
 email.office.newContactMessage.subject: 'New contact message on %applicationName%!'
@@ -307,3 +308,5 @@ email.office.newMember.title: 'New member on %applicationName% platform'
 email.office.newMember.youHaveANewMessage: |
     <p>A user just finished the verification of his email. He is now able to book.</p>
     <p>Here are the details:</p>
+
+breadCrumb.home: 'Home'

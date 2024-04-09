@@ -9,7 +9,6 @@ use App\Entity\PageGallery;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use HouseOfAgile\NakaCMSBundle\DBAL\Types\NakaPageType;
 use HouseOfAgile\NakaCMSBundle\Entity\AppTrait\DefaultTranslatableTrait;
 use HouseOfAgile\NakaCMSBundle\Repository\PageRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
@@ -17,13 +16,15 @@ use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
-use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatableMethodsTrait;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatablePropertiesTrait;
 
 #[ORM\MappedSuperclass(repositoryClass: PageRepository::class)]
 class Page implements TranslatableInterface, SluggableInterface, TimestampableInterface
 {
-    use TranslatableTrait;
-    use SluggableTrait;
+    use TranslatablePropertiesTrait;
+    use TranslatableMethodsTrait;
+        use SluggableTrait;
     use DefaultTranslatableTrait;
     use TimestampableTrait;
 

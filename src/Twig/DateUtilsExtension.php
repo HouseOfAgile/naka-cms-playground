@@ -23,6 +23,7 @@ class DateUtilsExtension extends AbstractExtension
     {
         return [
             new TwigFunction('rangeAggregateDay', [$this, 'rangeAggregateDay'], ['beginDate', 'endDate']),
+            new TwigFunction('isDateTime', [$this, 'isDateTime']),
         ];
     }
 
@@ -52,5 +53,10 @@ class DateUtilsExtension extends AbstractExtension
                 $carbonBeginDate->format('M j' . $yearFormat) . $separator . $carbonEndDate->format('M j' . $yearFormat) :
                 $carbonBeginDate->format('M j') . $separator . $carbonEndDate->format('M j' . $yearFormat);
         }
+    }
+
+    public function isDateTime($date)
+    {
+        return ($date instanceof \DateTime);
     }
 }

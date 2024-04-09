@@ -10,67 +10,8 @@
 	</a>
 {% endblock header_logo %}
 
-{# {% block head_javascript %}
-	{{ parent() }}
-	{{ encore_entry_script_tags('app') }}
-
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id={{ ga_id }}"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-function gtag() {
-dataLayer.push(arguments);
-}
-gtag('js', new Date());
-
-gtag('config', '{{ ga_id }}');
-	</script>
-{% endblock head_javascript %} #}
-
 {% block header_custom_menu %}
-	<div class=" btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-		<div class="m-2 p-1">
-			<a href="{{ path('app_homepage') }}" class="btn btn-success" role="button">
-				<i class="fas fa-home"></i>
-				Frontend
-			</a>
-		</div>
-		<div class="m-2 p-1">
-			<a href="{{ naka_doc }}" target="_new" class="btn btn-info" role="button">
-				<i class="fa fa-fw fa-question-circle"></i> DOCS
-			</a>
-		</div>
-		{% if is_granted('ROLE_ADMIN') %}
-			<div class="m-2 p-1">
-				<a href="{{ path('admin_dashboard') }}" class="btn btn-success" role="button">
-					<i class="fas fa-screwdriver"></i>
-					Admin
-				</a>
-			</div>
-		{% endif %}
-		{% if is_granted('ROLE_SUPER_ADMIN') %}
-
-			<div class="m-2 p-1">
-				<a href="{{ path('superadmin_dashboard') }}" class="btn btn-danger" role="button">
-					<i class="fas fa-tools"></i>
-					Superadmin
-				</a>
-			</div>
-		{% endif %}
-		<div class="m-2 p-1">
-			<div class="dropdown user-menu-wrapper {{ is_granted(impersonator_permission) ? 'user-is-impersonated' }}">
-				<a class="user-details" type="button" data-bs-toggle="dropdown" data-bs-offset="0,5" aria-expanded="false">
-					{{ user_menu_avatar }}
-					{% if ea.userMenu.isNameDisplayed %}
-						<span class="user-name">{{ ea.userMenu.name }}</span>
-					{% endif %}
-				</a>
-				{{ user_menu_dropdown }}
-			</div>
-		</div>
-	</div>
-
-
+	{% include '@NakaCMS/backend/layout/_easyadmin-naka-navbar.html.twig' %}
 {% endblock header_custom_menu %}
 
 

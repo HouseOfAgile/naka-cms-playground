@@ -28,6 +28,7 @@
         $allLocales: "%all_locales%"
         $applicationName: "%env(APPLICATION_NAME)%"
         $applicationSenderEmail: "%env(APPLICATION_SENDER_EMAIL)%"
+        $applicationSenderEmail: '%env(APPLICATION_SENDER_EMAIL)%'
         $applicationSenderName: "%env(APPLICATION_SENDER_NAME)%"
         $applicationContactEmail: "%env(APPLICATION_CONTACT_EMAIL)%"
         $applicationContactName: "%env(APPLICATION_CONTACT_NAME)%"
@@ -35,7 +36,16 @@
         $devMode: "%env(bool:DEV_MODE)%"
 ```
 
-Also add the related tiwg parameters
+You should have some dotenv parameters set:
+
+    APPLICATION_SENDER_EMAIL=office@dentistsoffice.org
+    APPLICATION_DONOTREPLY_EMAIL=do-not-reply@dentistsoffice.org
+    APPLICATION_SENDER_NAME='DEN Office'
+    APPLICATION_CONTACT_EMAIL=office+contact@dentistsoffice.org
+    APPLICATION_CONTACT_NAME='DEN Contact'
+
+
+Also add the related twig parameters
 
 * Add naka services definition files
 
@@ -63,7 +73,7 @@ in webpack.config.js
 
 ### i18n websiteinfo metas
 
-We need a new twxig service in twig.yml
+We need a new twig service in twig.yml
 ```
         websiteInfo: '@HouseOfAgile\NakaCMSBundle\Component\WebsiteInfo\WebsiteInfoService'
 ```
@@ -72,7 +82,6 @@ We need a new twxig service in twig.yml
 For ease of work, we add some general services/component
 
 ## Main changes
-
 Update to vich uploader 2: need to use php attributes
 
 

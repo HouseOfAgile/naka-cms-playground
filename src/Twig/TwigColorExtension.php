@@ -2,19 +2,11 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Twig;
 
-use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class TwigColorExtension extends AbstractExtension
 {
-    /** @var RequestStack */
-    private $requestStack;
-
-    public function __construct(RequestStack $requestStack)
-    {
-        $this->requestStack = $requestStack;
-    }
     public function getFunctions()
     {
         return [

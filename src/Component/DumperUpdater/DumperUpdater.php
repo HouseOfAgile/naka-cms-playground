@@ -263,6 +263,10 @@ class DumperUpdater
                                                 case 'DynamicContent':
                                                     $valAttr = $this->updateDynamicContent($valAttr);
                                                     break;
+                                                case 'Enum' || 'enum':
+                                                    // $valAttr = constant(ucfirst($keyAttr).'::tryFrom(\''.$valAttr.'\')');
+                                                    $valAttr = constant($valAttr);
+                                                    break;
                                                 default:
                                                     $this->logInfo(sprintf(
                                                         'Set %s:: previous: %s => new: %s',

@@ -34,12 +34,20 @@
 				<div class="col-9 offset-3">{{ form_help(form.message) }}</div>
 			</div>
 			<div class="row m-4">
-				<div class="col-4 offset-4">
-					{{ form_row(form.submit, { 'attr' : { 'class': 'btn btn-block btn-success p-2' } }) }}
-				</div>
+			<div class="col-12">
+				{{ form_rest(form) }}
 			</div>
-			{{ form_rest(form) }}
+			</div>
+			<div class="row m-4">
+				<div class="col-4 offset-4">
+					<button class="btn btn-lg btn-gls-impact p-2" type="submit">
+						{{ 'form.contact.message' | trans }}
+					</button>
+				</div>
+				{# {{ form_row(form.submit, { 'attr' : { 'class': 'btn btn-block btn-success p-2' } }) }} #}
+			</div>
 
+			{{ form_end(form) }}
 		</div>
 	</div>
 </div>

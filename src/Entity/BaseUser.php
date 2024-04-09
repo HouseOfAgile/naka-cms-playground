@@ -41,7 +41,7 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
     protected $lastName;
 
     #[Assert\PasswordStrength([
-        'minScore' => PasswordStrength::STRENGTH_VERY_STRONG, // Very strong password required
+        'minScore' => PasswordStrength::STRENGTH_MEDIUM,
     ])]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $plainPassword;
@@ -65,12 +65,12 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
         return sprintf('%s [%s]', $this->getFirstName(), $this->getId());
     }
 
-    public function getFullName(): string
+    public function getFullName($lastNameFirst = true): string
     {
         return sprintf(
             '%s %s',
-            $this->getLastName(),
-            $this->getFirstName(),
+            $lastNameFirst ? $this->getLastName() : $this->getFirstName(),
+            $lastNameFirst ? $this->getFirstName() : $this->getLastName(),
         );
     }
     public function getHumanName(): string
@@ -191,6 +191,7 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @see UserInterface
+     * @return void
      */
     public function eraseCredentials()
     {
