@@ -29,21 +29,4 @@ trait DefaultTranslatableTrait
         }
     }
 
-    protected function getTranslatableAttributes($translationClass): array
-    {
-        $reflectionClass = new ReflectionClass($translationClass);
-        $properties = $reflectionClass->getProperties();
-        $attributeNames = [];
-
-        foreach ($properties as $property) {
-            if (!$property->isStatic()) {
-                $attributeNames[] = $property->getName();
-            }
-        }
-        $excludeKeys = ["id", "locale", "translatable"];
-
-        $filteredAttributes = array_diff($attributeNames, $excludeKeys);
-
-        return $filteredAttributes;
-    }
 }

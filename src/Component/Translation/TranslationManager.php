@@ -5,6 +5,7 @@ namespace HouseOfAgile\NakaCMSBundle\Component\Translation;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Psr\Log\LoggerInterface;
+use ReflectionClass;
 
 class TranslationManager
 {
@@ -37,20 +38,19 @@ class TranslationManager
      */
 
     public function updateTranslations($entity, array $translationData): void
-{
-    if (!$entity instanceof TranslatableInterface) {
-        throw new \InvalidArgumentException('The entity must implement TranslatableInterface.');
-    }
+    {
+        if (!$entity instanceof TranslatableInterface) {
+            throw new \InvalidArgumentException('The entity must implement TranslatableInterface.');
+        }
 
-    foreach ($translationData as $attr => $details) {
-        try {
-            $this->updateTranslation($entity, $attr, $details['updated'], $details['targetLang']);
-        } catch (\Exception $e) {
-            $this->logger->error("An error occurred while updating the translation for '{$attr}': {$e->getMessage()}");
+        foreach ($translationData as $attr => $details) {
+            try {
+                $this->updateTranslation($entity, $attr, $details['updated'], $details['targetLang']);
+            } catch (\Exception $e) {
+                $this->logger->error("An error occurred while updating the translation for '{$attr}': {$e->getMessage()}");
+            }
         }
     }
-
-}
 
     /**
      * Updates a single translation for a given entity.
@@ -82,9 +82,49 @@ class TranslationManager
             $this->entityManager->persist($entity);
             $this->entityManager->flush();
 
-            $this->logger->info("Translation for '{$attribute}' in {$targetLang} updated to '{$updatedText}' successfully.");
+            $this->logger->info("TM: Translation for '{$attribute}' in {$targetLang} updated to '{$updatedText}' successfully.");
         } catch (\Exception $e) {
             $this->logger->error("An error occurred while updating the translation for '{$attribute}': {$e->getMessage()}");
         }
+    }
+
+    public function getTranslatableAttributes($translationClass): array
+    {
+        $reflectionClass = new ReflectionClass($translationClass);
+        $properties = $reflectionClass->getProperties();
+        $attributeNames = [];
+
+        foreach ($properties as $property) {
+            if (!$property->isStatic()) {
+                $attributeNames[] = $property->getName();
+            }
+        }
+        $excludeKeys = ["id", "locale", "translatable"];
+
+        $filteredAttributes = array_diff($attributeNames, $excludeKeys);
+
+        return $filteredAttributes;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param object $entity The entity that contains the translations.
+     * @param [type] $translationAttributes
+     * @param [type] $allLocales
+     * @return array
+     */
+    public function calculateMissingTranslations(
+        $entity,
+        $translationAttributes,
+        $allLocales
+    ): array {
+        $existingTranslations = [];
+        foreach ($allLocales as $locale) {
+            foreach ($translationAttributes as $translationAttribute) {
+                $existingTranslations[$locale][$translationAttribute] = $entity->translate($locale)->{'get' . ucfirst($translationAttribute)}();
+            }
+        }
+        return $existingTranslations;
     }
 }
