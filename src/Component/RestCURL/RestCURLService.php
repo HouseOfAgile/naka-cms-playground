@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace HouseOfAgile\NakaCMSBundle\Component\RestCURL;
 
+use Exception;
+use HouseOfAgile\NakaCMSBundle\Exception\RestAPIException;
 use HouseOfAgile\NakaCMSBundle\Helper\LoggerCommandTrait;
 use Psr\Log\LoggerInterface;
 
@@ -52,7 +54,8 @@ class RestCURLService
         $this->getParameters = array_merge($this->getParameters, $extraGetParameters);
     }
 
-    public function getUrlEncodedParameters(){
+    public function getUrlEncodedParameters()
+    {
         return http_build_query($this->getParameters);
     }
 
@@ -130,79 +133,86 @@ class RestCURLService
 
     protected function executeCurl($url, $method, $data = NULL, $headers = NULL)
     {
-        if ($this->devMode) {
-            dump($url, $method, $headers);
-            dd($data);
-        }
-        $agent = 'Sequasa/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)';
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_USERAGENT, $agent);
+        try {
 
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-        switch ($method) {
-            case "GET":
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-                break;
-            case "POST":
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-                break;
-            case "PUT":
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
-                break;
-            case "DELETE":
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-                break;
-        }
-
-        if (!empty($data)) {
-            if (is_array($data)) {
-                // We have a x-www-form-urlencode type of request, header whould be there
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-            } else {
-                // This is most likely a standard json post request
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            if ($this->devMode) {
+                dump($url, $method, $headers);
+                dd($data);
             }
-        }
+            $agent = 'Sequasa/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)';
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_USERAGENT, $agent);
 
-        if (!empty($headers)) {
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        }
-        $headers = [];
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-        // this function is called by curl for each header received
-        curl_setopt(
-            $ch,
-            CURLOPT_HEADERFUNCTION,
-            function ($curl, $header) use (&$headers) {
-                $len = strlen($header);
-                $header = explode(':', $header, 2);
-                if (count($header) < 2) // ignore invalid headers
+            switch ($method) {
+                case "GET":
+                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+                    break;
+                case "POST":
+                    curl_setopt($ch, CURLOPT_POST, 1);
+                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                    break;
+                case "PUT":
+                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+                    break;
+                case "DELETE":
+                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+                    break;
+            }
+
+            if (!empty($data)) {
+                if (is_array($data)) {
+                    // We have a x-www-form-urlencode type of request, header whould be there
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+                } else {
+                    // This is most likely a standard json post request
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+                }
+            }
+
+            if (!empty($headers)) {
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            }
+            $headers = [];
+
+            // this function is called by curl for each header received
+            curl_setopt(
+                $ch,
+                CURLOPT_HEADERFUNCTION,
+                function ($curl, $header) use (&$headers) {
+                    $len = strlen($header);
+                    $header = explode(':', $header, 2);
+                    if (count($header) < 2) // ignore invalid headers
+                        return $len;
+
+                    $headers[strtolower(trim($header[0]))][] = trim($header[1]);
+
                     return $len;
+                }
+            );
 
-                $headers[strtolower(trim($header[0]))][] = trim($header[1]);
+            curl_setopt($ch, CURLOPT_VERBOSE, true);
 
-                return $len;
+            // Log curl errors here
+            $response = curl_exec($ch);
+
+            if (curl_errno($ch)) {
+                $info = curl_getinfo($ch);
+                dump($info);
+                $this->logger->error(sprintf('Curl Request response [Error]: %s', $response));
+                return null;
             }
-        );
+            $this->logger->info(sprintf('Curl Request response: %s', $response));
+            $this->updateRateLimit($headers);
+            if ($response == null) {
+                throw new RestAPIException(sprintf('Response is null'));
+            }
 
-        curl_setopt($ch, CURLOPT_VERBOSE, true);
-
-        // Log curl errors here
-        $response = curl_exec($ch);
-
-        if (curl_errno($ch)) {
-            $info = curl_getinfo($ch);
-            dump($info);
-            $this->logger->error(sprintf('Curl Request response [Error]: %s', $response));
-            return null;
+            return json_decode($response, true, 512, JSON_THROW_ON_ERROR);
+        } catch (Exception $e) {
+            throw new RestAPIException(sprintf('Rest API Exception, because %s', $e->getMessage()), 0, $e);
         }
-        $this->logger->info(sprintf('Curl Request response: %s', $response));
-        $this->updateRateLimit($headers);
-        // if ($response == null) {return null;}
-
-        return json_decode($response, true, 512, JSON_THROW_ON_ERROR);
     }
 }
