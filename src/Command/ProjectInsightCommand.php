@@ -36,7 +36,8 @@ class ProjectInsightCommand extends Command
             ->setHelp('This command allows you to get details about a specific entity and lists the main Composer and Node.js libraries used in the project.')
             ->addArgument('entityName', InputArgument::REQUIRED, 'The full class name of the entity to inspect')
             ->addOption('show-composer', null, InputOption::VALUE_NONE, 'Show main Composer libraries')
-            ->addOption('show-node', null, InputOption::VALUE_NONE, 'Show main Node.js libraries');;
+            ->addOption('show-node', null, InputOption::VALUE_NONE, 'Show main Node.js libraries')
+            ->addOption('all', null, InputOption::VALUE_NONE, 'Show all insights');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -51,13 +52,18 @@ class ProjectInsightCommand extends Command
         $this->displayEntityDetails($io, $metadata);
 
         // Display main Composer libraries
-        if ($input->getOption('show-composer')) {
+        if ($input->getOption('all')) {
             $this->showComposerLibraries($io);
-        }
-
-        // Display main Node.js libraries
-        if ($input->getOption('show-node')) {
             $this->showNodeLibraries($io);
+        } else {
+            if ($input->getOption('show-composer')) {
+                $this->showComposerLibraries($io);
+            }
+
+            // Display main Node.js libraries
+            if ($input->getOption('show-node')) {
+                $this->showNodeLibraries($io);
+            }
         }
 
         return Command::SUCCESS;
