@@ -107,7 +107,7 @@ class TranslationManager
     }
 
     /**
-     * Undocumented function
+     * calculateMissingTranslations function: get the translation properties and check which one are filled up. 
      *
      * @param object $entity The entity that contains the translations.
      * @param [type] $translationAttributes
