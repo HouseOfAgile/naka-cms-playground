@@ -5,10 +5,6 @@ namespace HouseOfAgile\NakaCMSBundle\Controller;
 use App\Entity\BlockElement;
 use Exception;
 use HouseOfAgile\NakaCMSBundle\Component\ContentDumper\ContentDumper;
-use HouseOfAgile\NakaCMSBundle\Component\ContentManagement\PageBlockManager;
-use HouseOfAgile\NakaCMSBundle\Component\PageDecorator\PageDecorator;
-use HouseOfAgile\NakaCMSBundle\DBAL\Types\NakaPageType;
-use HouseOfAgile\NakaCMSBundle\Entity\Page;
 use HouseOfAgile\NakaCMSBundle\Repository\PageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,15 +52,6 @@ class TestController extends AbstractController
         dd($decoratedBlockElements);
         $viewParams = [
             'decoratedBlockElements' => $decoratedBlockElements,
-        ];
-        return $this->render('@NakaCMS/naka/test/show.html.twig', $viewParams);
-    }
-
-    #[Route(path: '/{_locale<%app.supported_locales%>}/one-time', name: 'one_time')]
-    public function oneTimeTest(PageBlockManager $pageBlockManager): Response
-    {
-        $pageBlockManager->renameSlugForAllBlocks('oral-hygiene-and-professional-teeth-cleaning','oral-hygiene-and-professional-teeth-cleaning2');
-        $viewParams = [
         ];
         return $this->render('@NakaCMS/naka/test/show.html.twig', $viewParams);
     }

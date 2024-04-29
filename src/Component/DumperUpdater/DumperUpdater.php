@@ -5,7 +5,9 @@ namespace HouseOfAgile\NakaCMSBundle\Component\DumperUpdater;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeZone;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Exception;
 use HouseOfAgile\NakaCMSBundle\Helper\LoggerCommandTrait;
 use HouseOfAgile\NakaCMSBundle\Service\UploaderHelper;
@@ -416,6 +418,56 @@ class DumperUpdater
         }
 
         return true;
+    }
+
+    /**
+     * Dynamically dumps entity configuration.
+     *
+     * @param object $entity The entity instance to dump.
+     * @return array
+     * @throws \ReflectionException
+     */
+    public function dynamicDump($entity): array
+    {
+        $reflection = new \ReflectionClass($entity);
+        $properties = $reflection->getProperties(\ReflectionProperty::IS_PRIVATE);
+        $data = [];
+        $metadata = $this->entityManager->getClassMetadata(get_class($entity));
+
+        foreach ($properties as $property) {
+            $property->setAccessible(true);
+            $propertyName = $property->getName();
+            $getter = 'get' . ucfirst($propertyName);
+
+            if (method_exists($entity, $getter)) {
+                $value = $entity->$getter();
+            } else {
+                $value = $property->getValue($entity);
+            }
+
+            if ($value instanceof Collection && isset($metadata->associationMappings[$propertyName])) {
+                $mapping = $metadata->associationMappings[$propertyName];
+
+                // Check if the collection is the owning side of a ManyToMany relation
+                if ($mapping['type'] === ClassMetadataInfo::MANY_TO_MANY && !isset($mapping['mappedBy'])) {
+                    $data[$propertyName] = array_map(function ($item) {
+                        return $item->getId();
+                    }, $value->toArray());
+                }
+            } elseif ($value instanceof Collection) {
+                // Handle OneToMany or non-owning ManyToMany by ignoring or handling differently
+            } elseif ($value instanceof \DateTimeInterface) {
+                $data[$propertyName] = $value->format('Y-m-d H:i:s');
+            } elseif (is_object($value) && method_exists($value, 'getId')) {
+                $data[$propertyName] = $value->getId();
+            } else {
+                if ($value != null) {
+                    $data[$propertyName] = $value;
+                }
+            }
+        }
+
+        return $data;
     }
 
     private function updateDynamicContent($dataString)
