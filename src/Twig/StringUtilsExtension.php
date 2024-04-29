@@ -30,6 +30,7 @@ class StringUtilsExtension extends AbstractExtension
             new TwigFilter('toSnakeCase', [$this, 'toSnakeCase']),
             new TwigFilter('toCamelCase', [$this, 'toCamelCase']),
             new TwigFilter('toHumanWords', [$this, 'toHumanWords']),
+            new TwigFilter('replaceCustom', [$this, 'replaceCustom']),
         ];
     }
 
@@ -60,5 +61,11 @@ class StringUtilsExtension extends AbstractExtension
     public function toHumanWords(string $value): string
     {
         return $this->stringUtils->toHumanWords($value);
+    }
+
+    public function replaceCustom(string $text, string $replacement = 'has_been_replaced'): string
+    {
+        $pattern = '/##(.*?)##/';
+        return preg_replace($pattern, $replacement, $text);
     }
 }
