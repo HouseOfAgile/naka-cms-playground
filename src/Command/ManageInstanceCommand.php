@@ -6,7 +6,7 @@ namespace HouseOfAgile\NakaCMSBundle\Command;
 
 use App\NakaData\DataDumperParameter;
 use Exception;
-use HouseOfAgile\NakaCMSBundle\Component\DumperUpdater\DumperUpdater;
+use HouseOfAgile\NakaCMSBundle\Component\DumperUpdater\DataSyncManager;
 use HouseOfAgile\NakaCMSBundle\Helper\LoggerCommandTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -20,14 +20,14 @@ class ManageInstanceCommand extends Command
 
     protected static $defaultName = 'naka:instance:manage';
 
-    /** @var DumperUpdater */
-    protected $dumperUpdater;
+    /** @var DataSyncManager */
+    protected $dataSyncManager;
 
     public function __construct(
-        DumperUpdater $dumperUpdater
+        DataSyncManager $dataSyncManager
     ) {
         parent::__construct();
-        $this->dumperUpdater = $dumperUpdater;
+        $this->dataSyncManager = $dataSyncManager;
     }
 
     protected function configure(): void
@@ -48,7 +48,7 @@ class ManageInstanceCommand extends Command
     {
         $this->io = new SymfonyStyle($input, $output);
 
-        $this->dumperUpdater->setIo(
+        $this->dataSyncManager->setIo(
             $this->io
         );
 
@@ -65,7 +65,7 @@ class ManageInstanceCommand extends Command
 
         $dumpOrUpdate = $input->getArgument('mainAction') == 'dump';
 
-        $synchronizationStatus = $this->dumperUpdater->manageNakaCMS($appEntities, $appEntitiesAliases, $assetEntities, $dumpOrUpdate);
+        $synchronizationStatus = $this->dataSyncManager->manageNakaCMS($appEntities, $appEntitiesAliases, $assetEntities, $dumpOrUpdate);
 
         return $synchronizationStatus ? Command::SUCCESS : Command::FAILURE;
     }

@@ -26,11 +26,10 @@ use Vich\UploaderBundle\Handler\UploadHandler;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper as VichUploaderHelper;
 
 /**
- * @deprecated This class is deprecated and will be removed in a future version. 
- * Use DataSyncManager instead.
+ * Manages data synchronization between the application and external data representations.
+ * Capable of handling various formats, currently supports YAML, with plans to support additional formats in the future.
  */
-
-class DumperUpdater
+class DataSyncManager
 {
     use LoggerCommandTrait;
 
