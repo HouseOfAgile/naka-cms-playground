@@ -36,7 +36,6 @@ class MenuItem implements TranslatableInterface
     protected $routeParameters = [];
 
     #[ORM\ManyToOne(targetEntity: Page::class, inversedBy: 'menuItems')]
-    // #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     protected $page;
 
     #[ORM\Column(type: 'smallint', nullable: true)]

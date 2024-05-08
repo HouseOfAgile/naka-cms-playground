@@ -8,6 +8,7 @@ use DateTimeZone;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Doctrine\Persistence\Proxy;
 use Exception;
 use HouseOfAgile\NakaCMSBundle\Helper\LoggerCommandTrait;
 use HouseOfAgile\NakaCMSBundle\Service\UploaderHelper;
@@ -438,17 +439,18 @@ class DataSyncManager
      */
     public function dynamicDump($entity): array
     {
-        $reflection = new \ReflectionClass($entity);
+        if ($entity instanceof \Doctrine\Persistence\Proxy) {
+            $entity->__load(); // This method initializes the proxy if it's not initialized
+        }
+        $reflection = new \ReflectionClass($entity instanceof Proxy ? get_parent_class($entity) : get_class($entity));
         $properties = $reflection->getProperties();
 
         $data = [];
         $metadata = $this->entityManager->getClassMetadata(get_class($entity));
-
         foreach ($properties as $property) {
             $property->setAccessible(true);
             $propertyName = $property->getName();
             $getter = 'get' . ucfirst($propertyName);
-
 
             if (method_exists($entity, $getter)) {
                 $value = $entity->$getter();
@@ -456,10 +458,6 @@ class DataSyncManager
                 $value = $property->getValue($entity);
             }
 
-            // KNP translatable specifics
-            if ($value instanceof TranslatableInterface) {
-                continue;
-            }
             if ($propertyName == 'translations' && $value instanceof Collection) {
                 // translationkey is specific to the class
                 $data[lcfirst($reflection->getShortName()) . ucfirst($propertyName)] = array_map(function ($item) {
@@ -470,21 +468,28 @@ class DataSyncManager
             }
 
             // Deal with __isInitialized__, remove them for now
-            if ($propertyName === '__isInitialized__') continue;
+            if ($propertyName === '__isInitialized__' || $propertyName === 'translatable') {
+                continue;
+            }
 
-            // $attributes = $property->getAttributes(\Doctrine\ORM\Mapping\Column::class);
-            // $isJson = false;
-            // foreach ($attributes as $attribute) {
-            //     $args = $attribute->getArguments();
-            //     if (array_key_exists('type', $args) && $args['type'] === 'json') {
-            //         $isJson = true;
-            //         break;
-            //     }
-            // }
-            // if ($isJson && false) {
-            //     $data[$propertyName] = json_encode($value);
-            //     continue;
-            // }
+            // Deal with __isInitialized__, remove them for now
+            if (array_key_exists($propertyName, ['__isInitialized__', 'translatable'])) {
+                continue;
+            }
+
+            $attributes = $property->getAttributes(\Doctrine\ORM\Mapping\Column::class);
+            $isJson = false;
+            foreach ($attributes as $attribute) {
+                $args = $attribute->getArguments();
+                if (array_key_exists('type', $args) && $args['type'] === 'json') {
+                    $isJson = true;
+                    break;
+                }
+            }
+            if ($isJson && false) {
+                $data[$propertyName] = json_encode($value);
+                continue;
+            }
 
             if ($value instanceof Collection && isset($metadata->associationMappings[$propertyName])) {
                 $mapping = $metadata->associationMappings[$propertyName];
