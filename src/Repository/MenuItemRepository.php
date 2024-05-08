@@ -14,6 +14,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class MenuItemRepository extends ServiceEntityRepository
 {
+    use RandomEntityTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, MenuItem::class);

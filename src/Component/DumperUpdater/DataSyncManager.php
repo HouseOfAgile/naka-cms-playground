@@ -234,7 +234,9 @@ class DataSyncManager
                                     if ($keyAttr == 'slug') {
                                         $entity->{'set' . ucfirst($keyAttr)}($valAttr);
                                     } elseif ($entity->{'get' . ucfirst($keyAttr)}() !== $valAttr) {
-                                        if (in_array($keyAttr, array_keys($appEntities[$type]))) {
+                                        if ($keyAttr == 'createdAt' || $keyAttr == 'updatedAt') {
+                                            $valAttr = new DateTime('@' . $valAttr, new DateTimeZone('Europe/Berlin'));
+                                        } elseif (in_array($keyAttr, array_keys($appEntities[$type]))) {
                                             switch ($appEntities[$type][$keyAttr]) {
                                                 case 'DateTime':
                                                     if ($valAttr) {
@@ -455,10 +457,34 @@ class DataSyncManager
             }
 
             // KNP translatable specifics
-            if ($value instanceof TranslatableInterface) continue;
+            if ($value instanceof TranslatableInterface) {
+                continue;
+            }
+            if ($propertyName == 'translations' && $value instanceof Collection) {
+                // translationkey is specific to the class
+                $data[lcfirst($reflection->getShortName()) . ucfirst($propertyName)] = array_map(function ($item) {
+                    return $item->getId();
+                }, $value->toArray());
 
-            // Deal with isinitianlized, remove them for now
+                continue;
+            }
+
+            // Deal with __isInitialized__, remove them for now
             if ($propertyName === '__isInitialized__') continue;
+
+            // $attributes = $property->getAttributes(\Doctrine\ORM\Mapping\Column::class);
+            // $isJson = false;
+            // foreach ($attributes as $attribute) {
+            //     $args = $attribute->getArguments();
+            //     if (array_key_exists('type', $args) && $args['type'] === 'json') {
+            //         $isJson = true;
+            //         break;
+            //     }
+            // }
+            // if ($isJson && false) {
+            //     $data[$propertyName] = json_encode($value);
+            //     continue;
+            // }
 
             if ($value instanceof Collection && isset($metadata->associationMappings[$propertyName])) {
                 $mapping = $metadata->associationMappings[$propertyName];
@@ -474,6 +500,8 @@ class DataSyncManager
                 // } elseif ($value instanceof \DateTimeInterface) {
                 // $data[$propertyName] = $value->format('Y-m-d H:i:s');
             } elseif (is_object($value) && method_exists($value, 'getId')) {
+                $mapping = $metadata->associationMappings[$propertyName];
+                if ($mapping['type'] === ClassMetadataInfo::ONE_TO_ONE && !isset($mapping['mappedBy'])) continue;
                 $data[$propertyName] = $value->getId();
             } else {
                 if ($value != null) {

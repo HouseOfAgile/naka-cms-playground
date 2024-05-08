@@ -12,7 +12,7 @@ class WebsiteInfo implements TranslatableInterface
 {
     use TranslatablePropertiesTrait;
     use TranslatableMethodsTrait;
-    
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -20,7 +20,7 @@ class WebsiteInfo implements TranslatableInterface
 
     #[ORM\Column(type: 'json', nullable: true)]
     protected $openingHours = [];
-    
+
     public function __toString()
     {
         return sprintf(
@@ -63,4 +63,12 @@ class WebsiteInfo implements TranslatableInterface
         return $this;
     }
 
+    public function addOpeningHour($openingHour): self
+    {
+        if (!in_array($openingHour, $this->openingHours)) {
+            $this->openingHours[] = $openingHour;
+        }
+
+        return $this;
+    }
 }
