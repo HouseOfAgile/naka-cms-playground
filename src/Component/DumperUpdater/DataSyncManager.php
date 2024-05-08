@@ -131,6 +131,8 @@ class DataSyncManager
     public function synchronizeData(array $appEntities, array $appEntitiesAliases, array $assetEntities, bool $dumpOrUpdate = false): bool
     {
         foreach ($appEntities as $type => $appEntityAttr) {
+            $this->logSuccess(sprintf('We start working on entity %s', $type));
+
             $repository = $this->appEntitiesDict[$type];
 
             $dataArray = [];

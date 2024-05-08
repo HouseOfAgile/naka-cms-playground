@@ -6,6 +6,7 @@ use App\Entity\Page;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use HouseOfAgile\NakaCMSBundle\Repository\RandomEntityTrait;
 
 /**
  * @method Page|null find($id, $lockMode = null, $lockVersion = null)
@@ -15,6 +16,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PageRepository extends ServiceEntityRepository
 {
+    use RandomEntityTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Page::class);
