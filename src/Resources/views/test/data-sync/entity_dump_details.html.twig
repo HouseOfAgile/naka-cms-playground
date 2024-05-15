@@ -1,0 +1,56 @@
+{% extends '@NakaCMS/layout/base-layout.html.twig' %}
+
+{% block title %}Entity Dump Details{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Entity Dump Details</h1>
+
+    <ul class="nav nav-tabs" id="entityTabs" role="tablist">
+        {% for type, entities in dumpOutputs %}
+        <li class="nav-item" role="presentation">
+            <button class="nav-link{{ loop.first ? ' active' : '' }}" id="tab-{{ type }}-tab" data-bs-toggle="tab" data-bs-target="#tab-{{ type }}" type="button" role="tab" aria-controls="tab-{{ type }}" aria-selected="{{ loop.first ? 'true' : 'false' }}">{{ type }}</button>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <div class="tab-content" id="entityTabsContent">
+        {% for type, entities in dumpOutputs %}
+        <div class="tab-pane fade{{ loop.first ? ' show active' : '' }}" id="tab-{{ type }}" role="tabpanel" aria-labelledby="tab-{{ type }}-tab">
+            <h2 class="mt-3">{{ type }}</h2>
+            <div id="accordion{{ type }}">
+                {% for output in entities %}
+                <div class="card">
+                    <div class="card-header" id="heading{{ type }}{{ loop.index }}">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#collapse{{ type }}{{ loop.index }}" aria-expanded="true" aria-controls="collapse{{ type }}{{ loop.index }}">
+                                {{ type }} #{{ loop.index }}
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="collapse{{ type }}{{ loop.index }}" class="collapse{{ loop.first ? ' show' : '' }}" aria-labelledby="heading{{ type }}{{ loop.index }}" data-parent="#accordion{{ type }}">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4>Config Output</h4>
+                                    <pre>{{ output.configOutput|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4>Dynamic Dump Output</h4>
+                                    <pre>{{ output.dynamicDumpOutput|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+                                </div>
+                                <div class="col-md-12">
+								{{ dump(output) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
