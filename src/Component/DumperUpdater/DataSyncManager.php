@@ -447,11 +447,19 @@ class DataSyncManager
 
         $data = [];
         $metadata = $this->entityManager->getClassMetadata(get_class($entity));
+
+        // Determine the Ulid format to use for this entity
+        $ulidFormat = method_exists($entity, 'getUlidFormat') ? $entity->getUlidFormat() : 'toRfc4122';
+
         foreach ($properties as $property) {
             $property->setAccessible(true);
             $propertyName = $property->getName();
             $getter = 'get' . ucfirst($propertyName);
 
+            // Skip proxy-specific and unnecessary properties
+            if (array_key_exists($propertyName, ['__isInitialized__', 'translatable'])) {
+                continue;
+            }
             if (method_exists($entity, $getter)) {
                 $value = $entity->$getter();
             } else {
@@ -467,16 +475,6 @@ class DataSyncManager
                 continue;
             }
 
-            // Deal with __isInitialized__, remove them for now
-            if ($propertyName === '__isInitialized__' || $propertyName === 'translatable') {
-                continue;
-            }
-
-            // Deal with __isInitialized__, remove them for now
-            if (array_key_exists($propertyName, ['__isInitialized__', 'translatable'])) {
-                continue;
-            }
-
             $attributes = $property->getAttributes(\Doctrine\ORM\Mapping\Column::class);
             $isJson = false;
             foreach ($attributes as $attribute) {
@@ -488,6 +486,15 @@ class DataSyncManager
             }
             if ($isJson && false) {
                 $data[$propertyName] = json_encode($value);
+                continue;
+            }
+
+            if ($value instanceof Ulid) {
+                if ($ulidFormat === 'toBase32') {
+                    $data[$propertyName] = $value->toBase32();
+                } else {
+                    $data[$propertyName] = $value->toRfc4122();
+                }
                 continue;
             }
 
