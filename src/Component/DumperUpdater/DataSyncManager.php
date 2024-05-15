@@ -105,11 +105,11 @@ class DataSyncManager
         }
     }
 
-    public function manageNakaCMS(array $appEntities, array $appEntitiesAliases, array $assetEntities, bool $dumpOrUpdate = false): bool
+    public function manageNakaCMS(array $appEntities, array $appEntitiesAliases, array $assetEntities, bool $dumpOrUpdate = false, bool $doNotMoveAsset = false): bool
     {
         $this->updateMappings($assetEntities);
         $this->updateMappings($appEntities);
-        $assetSynchronized = $this->synchronizeAssets($assetEntities, $dumpOrUpdate);
+        $assetSynchronized = $this->synchronizeAssets($assetEntities, $dumpOrUpdate, $doNotMoveAsset);
         if ($assetSynchronized) {
             $contentSynchronized = $this->synchronizeData($appEntities, $appEntitiesAliases, $assetEntities, $dumpOrUpdate);
             return $assetSynchronized && $contentSynchronized;
@@ -325,12 +325,13 @@ class DataSyncManager
      *
      * @param array $assetEntities
      * @param boolean $dumpOrUpdate
+     * @param boolean $doNotMoveAsset
      * @return boolean
      */
-    public function synchronizeAssets($assetEntities, bool $dumpOrUpdate = false): bool
+    public function synchronizeAssets($assetEntities, bool $dumpOrUpdate = false, bool $doNotMoveAsset = false): bool
     {
         // we clean the assets directory in case of dump
-        if ($dumpOrUpdate) {
+        if ($dumpOrUpdate && !$doNotMoveAsset) {
             $filesystem = new Filesystem();
             $filesystem->remove($this->assetDir);
         }
@@ -352,18 +353,23 @@ class DataSyncManager
                         }
 
                         $pathAsset = $this->projectDir . '/public' . $this->vichUploaderHelper->asset($entityItem, $fileAttributeName);
-                        // copy asset and get path
-                        $newPathAsset = $this->assetDir . '/' . basename($pathAsset);
-                        $this->logInfo(sprintf(
-                            'moving asset from %s to %s',
-                            $pathAsset,
-                            $newPathAsset
-                        ));
-                        $filesystem->copy(
-                            $pathAsset,
-                            $newPathAsset,
-                            true
-                        );
+
+                        if (!$doNotMoveAsset) {
+                            // copy asset and get path
+                            $newPathAsset = $this->assetDir . '/' . basename($pathAsset);
+                            $this->logInfo(sprintf(
+                                'moving asset from %s to %s',
+                                $pathAsset,
+                                $newPathAsset
+                            ));
+                            $filesystem->copy(
+                                $pathAsset,
+                                $newPathAsset,
+                                true
+                            );
+                        } else {
+                            $newPathAsset = $pathAsset;
+                        }
 
                         $dataArray[$entityItem->getId()] = $entityItem->dumpConfig();
                         $dataArray[$entityItem->getId()]['imagePath'] = $newPathAsset;
@@ -408,15 +414,9 @@ class DataSyncManager
                         $entity->setName($dataEntity['name']);
                     }
 
-                    // foreach ($dataEntity as $keyAttr => $valAttr) {
-                    // }
                     $this->entityManager->persist($entity);
                     $this->entityManager->flush();
                     $this->logInfo(sprintf('Saving entity %s on id %s', $entity, $entity->getId()));
-                    // if ($entity->getId() != $dataEntity['id']) {
-                    //     die('asdasd');
-                    //     $this->assetIdMapping[$type];
-                    // }
 
                     $this->entitiesIdMapping[$type][$dataEntity['id']] = $entity->getId();
                 }
@@ -447,6 +447,15 @@ class DataSyncManager
             $propertyName = $property->getName();
             $getter = 'get' . ucfirst($propertyName);
 
+            // Skip proxy-specific properties
+            if (in_array($propertyName, ['__isInitialized__', 'lazyObjectState'])) {
+                continue;
+            }
+
+            // Check if the entity is a proxy and is not initialized
+            if ($entity instanceof \Doctrine\Persistence\Proxy && !$entity->__isInitialized()) {
+                $this->entityManager->initializeObject($entity);
+            }
 
             if (method_exists($entity, $getter)) {
                 $value = $entity->$getter();
@@ -456,9 +465,6 @@ class DataSyncManager
 
             // KNP translatable specifics
             if ($value instanceof TranslatableInterface) continue;
-
-            // Deal with isinitianlized, remove them for now
-            if ($propertyName === '__isInitialized__') continue;
 
             if ($value instanceof Collection && isset($metadata->associationMappings[$propertyName])) {
                 $mapping = $metadata->associationMappings[$propertyName];

@@ -1,0 +1,20 @@
+{% extends '@NakaCMS/layout/base-layout.html.twig' %}
+
+{% block title %}Random Entity Dump{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1>Random {{ entityName|capitalize }} Dump</h1>
+    <div class="card">
+        <div class="card-header">
+            Dump Output
+        </div>
+        <div class="card-body">
+            <h4>Config Output</h4>
+            <pre>{{ dumpOutput.configOutput|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+            <h4>Dynamic Dump Output</h4>
+            <pre>{{ dumpOutput.dynamicDumpOutput|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+        </div>
+    </div>
+</div>
+{% endblock %}
