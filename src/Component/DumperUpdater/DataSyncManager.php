@@ -234,6 +234,14 @@ class DataSyncManager
                                         $entity->{'set' . ucfirst($keyAttr)}(null);
                                     }
                                 } elseif ($keyAttr != 'id') {
+                                    // Handle setting enum values
+                                    $reflectionClass = new \ReflectionClass($entity);
+                                    $property = $reflectionClass->getProperty($keyAttr);
+                                    $proptype = $property->getType();
+                                    if ($proptype instanceof \ReflectionNamedType && enum_exists($proptype->getName())) {
+                                        $enumClass = $proptype->getName();
+                                        $valAttr = constant("$enumClass::{$valAttr}");
+                                    }
                                     // if key is slug, we do not try to getSlug form entity as it is not yet generated
                                     if ($keyAttr == 'slug') {
                                         $entity->{'set' . ucfirst($keyAttr)}($valAttr);
@@ -280,7 +288,8 @@ class DataSyncManager
                                                     break;
                                                 case 'Enum' || 'enum':
                                                     // $valAttr = constant(ucfirst($keyAttr).'::tryFrom(\''.$valAttr.'\')');
-                                                    $valAttr = constant($valAttr);
+                                                    // $valAttr = constant($valAttr);
+                                                    $valAttr = $valAttr;
                                                     break;
                                                 default:
                                                     $this->logInfo(sprintf(
@@ -518,6 +527,8 @@ class DataSyncManager
                 $mapping = $metadata->associationMappings[$propertyName];
                 if ($mapping['type'] === ClassMetadataInfo::ONE_TO_ONE && !isset($mapping['mappedBy'])) continue;
                 $data[$propertyName] = $value->getId();
+            } elseif ($value instanceof \BackedEnum) {
+                $data[$propertyName] = $value->value;
             } else {
                 if ($value !== null) {
                     $data[$propertyName] = $value;

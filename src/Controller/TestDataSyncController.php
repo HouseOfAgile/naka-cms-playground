@@ -6,6 +6,8 @@ use App\Entity\WebsiteInfo;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use HouseOfAgile\NakaCMSBundle\Component\DumperUpdater\DataSyncManager;
+use libphonenumber\PhoneNumberFormat;
+use libphonenumber\PhoneNumberUtil;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -98,8 +100,11 @@ class TestDataSyncController extends AbstractController
     protected function prepareDataForDisplay($data)
     {
         foreach ($data as $key => $value) {
-                if ($value instanceof \DateTimeImmutable) {
+            if ($value instanceof \DateTimeImmutable) {
                 $data[$key] = $value->format('Y-m-d H:i:s');
+            } elseif ($value instanceof \libphonenumber\PhoneNumber) {
+                $phoneNumberUtil = PhoneNumberUtil::getInstance();
+                $data[$key] = $phoneNumberUtil->format($value, PhoneNumberFormat::E164);
             } elseif (is_array($value)) {
                 $data[$key] = $this->prepareDataForDisplay($value);
             }
