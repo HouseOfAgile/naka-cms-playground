@@ -24,7 +24,7 @@ class Page implements TranslatableInterface, SluggableInterface, TimestampableIn
 {
     use TranslatablePropertiesTrait;
     use TranslatableMethodsTrait;
-        use SluggableTrait;
+    use SluggableTrait;
     use DefaultTranslatableTrait;
     use TimestampableTrait;
 
@@ -34,7 +34,7 @@ class Page implements TranslatableInterface, SluggableInterface, TimestampableIn
     protected $id;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $active = null;
+    protected ?bool $active = null;
 
     #[ORM\Column(type: 'string', length: 64, nullable: true)]
     protected $name;
@@ -43,7 +43,7 @@ class Page implements TranslatableInterface, SluggableInterface, TimestampableIn
     protected $pageType;
 
     #[ORM\ManyToOne(inversedBy: 'pages')]
-    private ?PageGallery $pageGallery = null;
+    protected ?PageGallery $pageGallery = null;
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'pages')]
     protected $category;
@@ -75,6 +75,11 @@ class Page implements TranslatableInterface, SluggableInterface, TimestampableIn
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
     }
 
     public function getActive(): ?bool
@@ -148,7 +153,7 @@ class Page implements TranslatableInterface, SluggableInterface, TimestampableIn
     {
         return ['name', 'title'];
     }
-    
+
     public function getTitle()
     {
         return $this->getDefaultEnglishTranslation($this, 'title');

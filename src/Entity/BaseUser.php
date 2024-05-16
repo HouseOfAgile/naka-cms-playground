@@ -47,13 +47,13 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
     protected $plainPassword;
 
     #[ORM\Column(length: 5, nullable: true)]
-    private ?string $preferredLocale = null;
+    protected ?string $preferredLocale = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $birthDate = null;
+    protected ?\DateTimeInterface $birthDate = null;
 
     #[ORM\Column]
-    private ?bool $isVerified = false;
+    protected ?bool $isVerified = false;
 
     public function getId(): ?int
     {

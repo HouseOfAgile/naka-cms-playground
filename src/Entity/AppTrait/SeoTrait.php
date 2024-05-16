@@ -7,13 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
 trait SeoTrait
 {
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $metaTitle = null;
+    protected ?string $metaTitle = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    private ?string $metaDescription = null;
+    protected ?string $metaDescription = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    private ?string $metaKeywords = null;
+    protected ?string $metaKeywords = null;
 
     public function getMetaTitle(): ?string
     {
