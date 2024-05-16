@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
@@ -74,55 +75,75 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
     {
         $id = IntegerField::new('id', 'ID');
 
-        $firstName = TextField::new('firstName')
+        $firstName = TextField::new('firstName', 'backend.form.user.firstName')
             ->setHelp('backend.form.user.firstName.help');
 
-        $lastName = TextField::new('lastName')
+        $lastName = TextField::new('lastName', 'backend.form.user.lastName')
             ->setHelp('backend.form.user.lastName.help');
 
-        $email = TextField::new('email')->setHelp('backend.form.user.email.help');
+        $email = TextField::new('email', 'backend.form.user.email')
+            ->setHelp('backend.form.user.email.help');
 
-        $birthDate = DateField::new(
-            'birthDate',
-            'backend.form.user.birthDate'
-        )
+        $birthDate = DateField::new('birthDate', 'backend.form.user.birthDate')
             ->setHelp('backend.form.user.birthDate.help');
-
-        $preferredLocale = LocaleField::new('preferredLocale', 'backend.form.preferredLocale')
+        $preferredLocale = LocaleField::new('preferredLocale', 'backend.form.user.preferredLocale')
             ->includeOnly($this->allLocales)
             ->setHelp('backend.form.user.preferredLocale.help');
 
-        $roles = ChoiceField::new('roles')->setChoices([
-            'User' => 'ROLE_USER',
-            'Administrator' => 'ROLE_ADMIN',
-        ])->allowMultipleChoices()
-            // ->renderAsBadges()
+        $isVerified = BooleanField::new('isVerified')
+            ->setHelp('backend.form.user.isVerified.help')
+            ->setColumns(6);
+        $roles = ChoiceField::new('roles', 'backend.form.user.roles')
+            ->setChoices([
+                'backend.form.user.role.user' => 'ROLE_USER',
+                'backend.form.user.role.admin' => 'ROLE_ADMIN',
+            ])->allowMultipleChoices()
             ->setHelp('backend.form.user.roles.help');
 
-        $password = Field::new('plainPassword', 'New password')->onlyOnForms()
+        $password = Field::new('plainPassword', 'backend.form.user.password')
+            ->onlyOnForms()
             ->setFormType(RepeatedType::class)
             ->setFormTypeOptions([
                 'type' => PasswordType::class,
-                'first_options' => ['label' => 'New password'],
-                'second_options' => ['label' => 'Repeat password'],
+                'first_options' => ['label' => 'backend.form.user.password.new'],
+                'second_options' => ['label' => 'backend.form.user.password.repeat'],
             ])
             ->setFormTypeOption('required', false);
 
         $tabUserfields = [
-            FormField::addTab('User Details'),
-            $firstName, $lastName, $email
+            FormField::addTab('backend.form.user.details'),
+
+            FormField::addColumn(8),
+            FormField::addFieldset('backend.form.user.userDetails'),
+            $firstName, $lastName, $email,
+            $birthDate,
+            FormField::addColumn(4),
+            FormField::addFieldset('backend.form.user.userPreferences'),
+            $preferredLocale,
         ];
 
         $tabUserAdminFields = [
-            FormField::addTab('Member admin Configuration')->setIcon('wheel'),
-            $roles,
-            $preferredLocale,
-            $birthDate,
+            FormField::addTab('backend.form.user.adminConfiguration')->setIcon('wheel'),
+            FormField::addColumn(6),
+            FormField::addFieldset('backend.form.user.userAuthentication'),
             $password,
+            $roles,
+            $isVerified,
         ];
+
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $firstName->setDisabled(true);
+            $lastName->setDisabled(true);
+            $email->setDisabled(true);
+            $birthDate->setDisabled(true);
+            $preferredLocale->setDisabled(true);
+            $roles->setDisabled(true);
+            $password->setDisabled(true);
+            $isVerified->setDisabled(true);
+        }
+
         if (!$this->isGranted('ROLE_SUPER_ADMIN')) {
-            $birthDate
-                ->setDisabled(true);
+            $birthDate->setDisabled(true);
         }
 
         if ($this->isGranted('ROLE_ADMIN')) {
@@ -130,6 +151,7 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
         } else {
             $mainUserfields = array_merge($tabUserfields);
         }
+
 
         if (Crud::PAGE_INDEX === $pageName) {
             return $mainUserfields;
