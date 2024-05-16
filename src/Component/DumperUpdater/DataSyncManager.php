@@ -180,6 +180,10 @@ class DataSyncManager
                         foreach ($dataEntity as $keyAttr => $valAttr) {
                             $this->logCommand(sprintf('working on %s', $keyAttr));
 
+                            if ($valAttr === null) {
+                                $this->logWarning(sprintf('Skipping on %s as value is %s', $keyAttr, $valAttr));
+                                continue;
+                            }
                             // this is a onetomany relation
                             if (is_array($valAttr) && !in_array($keyAttr, array_keys($appEntities[$type]))) {
                                 foreach ($valAttr as $refId) {
@@ -223,7 +227,6 @@ class DataSyncManager
                                         $newRefId = $this->entitiesIdMapping[$relatedEntity][$valAttr];
 
                                         $linkedEntity = $this->appEntitiesDict[$relatedEntity]->findOneBy(['id' => $newRefId]);
-
                                         $this->logInfo(sprintf('<-> Set link from entity %s to entity %s', $entity, $linkedEntity));
                                         $entity->{'set' . ucfirst($keyAttr)}($linkedEntity);
                                     } else {
@@ -457,7 +460,7 @@ class DataSyncManager
             $getter = 'get' . ucfirst($propertyName);
 
             // Skip proxy-specific and unnecessary properties
-            if (array_key_exists($propertyName, ['__isInitialized__', 'translatable'])) {
+            if (in_array($propertyName, ['__isInitialized__', 'translatable'])) {
                 continue;
             }
             if (method_exists($entity, $getter)) {
@@ -516,7 +519,7 @@ class DataSyncManager
                 if ($mapping['type'] === ClassMetadataInfo::ONE_TO_ONE && !isset($mapping['mappedBy'])) continue;
                 $data[$propertyName] = $value->getId();
             } else {
-                if ($value != null) {
+                if ($value !== null) {
                     $data[$propertyName] = $value;
                 }
             }

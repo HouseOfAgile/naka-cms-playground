@@ -7,6 +7,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use HouseOfAgile\NakaCMSBundle\Component\DumperUpdater\DataSyncManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -43,14 +44,14 @@ class TestDataSyncController extends AbstractController
     }
 
     #[Route('/entity-dump', name: 'entity_dump')]
-    public function entityDumpTest(): Response
+    public function entityDumpTest(Request $request): Response
     {
         $dumpOutputs = [];
 
         dump($this->entitiesToTest);
         foreach ($this->entitiesToTest as $entityName) {
             $repository = $this->doctrine->getRepository('App\Entity\\' . $entityName);
-            $entities = $repository->findBy([], null, 5);
+            $entities = $repository->findBy([], null, $request->query->get('qty', 1),);
 
             foreach ($entities as $entity) {
                 $configOutput = $this->prepareDataForDisplay($entity->dumpConfig());
@@ -97,7 +98,7 @@ class TestDataSyncController extends AbstractController
     protected function prepareDataForDisplay($data)
     {
         foreach ($data as $key => $value) {
-            if ($value instanceof \DateTimeImmutable) {
+                if ($value instanceof \DateTimeImmutable) {
                 $data[$key] = $value->format('Y-m-d H:i:s');
             } elseif (is_array($value)) {
                 $data[$key] = $this->prepareDataForDisplay($value);
