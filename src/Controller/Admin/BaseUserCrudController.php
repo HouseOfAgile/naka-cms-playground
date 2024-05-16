@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\LocaleField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use HouseOfAgile\NakaCMSBundle\Entity\BaseUser;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -32,14 +33,18 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
 
     protected $applicationName;
 
+    private array $allLocales;
+
     public function __construct(
         UserPasswordHasherInterface $passwordHasher,
         NotificationManager $notificationManager,
-        $applicationName
+        $applicationName,
+        array $allLocales
     ) {
         $this->passwordHasher = $passwordHasher;
         $this->notificationManager = $notificationManager;
         $this->applicationName = $applicationName;
+        $this->allLocales = $allLocales;
     }
 
     public static function getEntityFqcn(): string
@@ -69,9 +74,6 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
     {
         $id = IntegerField::new('id', 'ID');
 
-        $tabUserDetails = FormField::addTab('User Details');
-        $panel3 = FormField::addTab('User Detailss');
-
         $firstName = TextField::new('firstName')
             ->setHelp('backend.form.user.firstName.help');
 
@@ -84,8 +86,11 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
             'birthDate',
             'backend.form.user.birthDate'
         )
-            ->setHelp('backend.form.user.birthDate.help')
-            ->setDisabled(true);
+            ->setHelp('backend.form.user.birthDate.help');
+
+        $preferredLocale = LocaleField::new('preferredLocale', 'backend.form.preferredLocale')
+            ->includeOnly($this->allLocales)
+            ->setHelp('backend.form.user.preferredLocale.help');
 
         $roles = ChoiceField::new('roles')->setChoices([
             'User' => 'ROLE_USER',
@@ -103,19 +108,37 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
             ])
             ->setFormTypeOption('required', false);
 
-        $mainUserfields = [$firstName, $lastName, $birthDate, $email];
-        if ($this->isGranted('ROLE_ADMIN')) {
-            $mainUserfields = array_merge($mainUserfields, [$roles]);
-        } else {
+        $tabUserfields = [
+            FormField::addTab('User Details'),
+            $firstName, $lastName, $email
+        ];
+
+        $tabUserAdminFields = [
+            FormField::addTab('Member admin Configuration')->setIcon('wheel'),
+            $roles,
+            $preferredLocale,
+            $birthDate,
+            $password,
+        ];
+        if (!$this->isGranted('ROLE_SUPER_ADMIN')) {
+            $birthDate
+                ->setDisabled(true);
         }
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $mainUserfields = array_merge($tabUserfields, $tabUserAdminFields);
+        } else {
+            $mainUserfields = array_merge($tabUserfields);
+        }
+
         if (Crud::PAGE_INDEX === $pageName) {
             return $mainUserfields;
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return array_merge([$tabUserDetails, $id], $mainUserfields, [$password]);
+            return array_merge([$id], $mainUserfields);
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return array_merge([$tabUserDetails], $mainUserfields, [$password]);
+            return array_merge($mainUserfields);
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return array_merge([$tabUserDetails], $mainUserfields, [$password]);
+            return array_merge($mainUserfields);
         }
     }
 
