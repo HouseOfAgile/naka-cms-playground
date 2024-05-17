@@ -144,7 +144,7 @@ class DataSyncManager
                         $dataArray[$entityItem->getId()] = $this->dynamicDump($entityItem);
                     }
                     $this->dumpFile($dataArray, $type);
-                    $this->logSuccess(sprintf('Configuration has been dumped for static instances definition (%s)', $type));
+                    $this->logSuccess(sprintf('Configuration has been dumped for dynamic instances definition (%s)', $type));
                 } else {
 
                     $this->logWarning(sprintf('Not dumping Asset entity: %s', $type));
@@ -179,7 +179,6 @@ class DataSyncManager
 
                         foreach ($dataEntity as $keyAttr => $valAttr) {
                             $this->logCommand(sprintf('working on %s', $keyAttr));
-
                             if ($valAttr === null) {
                                 $this->logWarning(sprintf('Skipping on %s as value is %s', $keyAttr, $valAttr));
                                 continue;
@@ -525,7 +524,7 @@ class DataSyncManager
                 // $data[$propertyName] = $value->format('Y-m-d H:i:s');
             } elseif (is_object($value) && method_exists($value, 'getId')) {
                 $mapping = $metadata->associationMappings[$propertyName];
-                if ($mapping['type'] === ClassMetadataInfo::ONE_TO_ONE && !isset($mapping['mappedBy'])) continue;
+                if ($mapping['type'] === ClassMetadataInfo::ONE_TO_ONE && isset($mapping['mappedBy'])) continue;
                 $data[$propertyName] = $value->getId();
             } elseif ($value instanceof \BackedEnum) {
                 $data[$propertyName] = $value->value;
