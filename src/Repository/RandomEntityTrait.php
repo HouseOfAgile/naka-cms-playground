@@ -5,16 +5,24 @@ namespace HouseOfAgile\NakaCMSBundle\Repository;
 trait RandomEntityTrait
 {
     /**
-     * Fetches a random entity instance. Needs beberlei doctrine extensions
+     * Fetches up to a specified count of random entity instances. Needs beberlei doctrine extensions.
      *
-     * @return object|null Returns one random entity object or null if none found
+     * @param int $count The number of random entities to fetch
+     * @param bool $asArray Whether to force the return value to be an array even if count is 0 or 1
+     * @return array Returns an array of random entity objects, or an empty array if none found
      */
-    public function findRandom()
+    public function findRandom(int $count = 1, bool $asArray = false): array
     {
-        return $this->createQueryBuilder('e')
-                    ->orderBy('RAND()')
-                    ->setMaxResults(1)
-                    ->getQuery()
-                    ->getOneOrNullResult();
+        $queryBuilder = $this->createQueryBuilder('e')
+            ->orderBy('RAND()')
+            ->setMaxResults($count)
+            ->getQuery();
+
+        if ($count <= 1 && !$asArray) {
+            $result = $queryBuilder->getOneOrNullResult();
+            return $result !== null ? [$result] : [];
+        }
+
+        return $queryBuilder->getResult();
     }
 }
