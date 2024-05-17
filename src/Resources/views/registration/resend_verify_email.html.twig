@@ -1,16 +1,28 @@
 {% extends '@NakaCMS/layout/base-layout.html.twig' %}
-{% block title %}Verify Email{% endblock %}
+
+{% block title %}{{ 'authenticate.verifyEmail.title'|trans }}{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="login-form bg-light mt-4 p-4">
-            <h1 class="h3 mb-3 font-weight-normal">Verify your Email</h1>
+            <h1 class="h3 mb-3 font-weight-normal">{{ 'authenticate.verifyEmail.header'|trans }}</h1>
             <p>
-                A verification email was sent - please click it to enable your
-                account before logging in.
+                {{ 'authenticate.verifyEmail.instructions'|trans }}
             </p>
-            <a href="#" class="btn btn-primary">Re-send Email</a>
+            <form method="post" action="{{ path('app_verify_resend_email') }}">
+                {% if not email %}
+                    <div class="form-group">
+                        <label for="email">{{ 'authenticate.verifyEmail.emailLabel'|trans }}</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+                {% else %}
+                    <input type="hidden" name="email" value="{{ email }}">
+                    <p>{{ 'authenticate.verifyEmail.emailToResend'|trans({'%email%': email}) }}</p>
+                {% endif %}
+                <button type="submit" class="btn btn-primary mt-3">{{ 'authenticate.verifyEmail.resendButton'|trans }}</button>
+            </form>
         </div>
     </div>
 </div>
-{% endblock content %}
+{% endblock %}

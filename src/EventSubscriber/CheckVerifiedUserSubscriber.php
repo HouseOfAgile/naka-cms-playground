@@ -8,16 +8,14 @@ use HouseOfAgile\NakaCMSBundle\Security\AccountNotVerifiedAuthenticationExceptio
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Http\Authenticator\Passport\UserPassportInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Event\CheckPassportEvent;
 use Symfony\Component\Security\Http\Event\LoginFailureEvent;
 
 class CheckVerifiedUserSubscriber implements EventSubscriberInterface
 {
-
     private RouterInterface $router;
+
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;
@@ -26,16 +24,14 @@ class CheckVerifiedUserSubscriber implements EventSubscriberInterface
     public function onCheckPassport(CheckPassportEvent $event)
     {
         $passport = $event->getPassport();
-        // if (!$passport instanceof UserPassportInterface) {
-        // throw new \Exception('Unexpected passport type');
-        // }
 
+        // Ensure the passport has a user
         $user = $passport->getUser();
 
-        // if we have an AdminUser we just exit
+        // If we have an AdminUser, we just exit
         if ($user instanceof AdminUser) return;
-        
-        if (!$user instanceof User ) {
+
+        if (!$user instanceof User) {
             throw new \Exception('Unexpected user type');
         }
 
@@ -51,7 +47,6 @@ class CheckVerifiedUserSubscriber implements EventSubscriberInterface
         return [
             CheckPassportEvent::class => ['onCheckPassport', -10],
             LoginFailureEvent::class => 'onLoginFailure',
-
         ];
     }
 
@@ -61,7 +56,21 @@ class CheckVerifiedUserSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $passport = $event->getPassport();
+        if ($passport instanceof Passport) {
+            $user = $passport->getUser();
+            if ($user instanceof User) {
+                $email = $user->getEmail();
 
+                $response = new RedirectResponse(
+                    $this->router->generate('app_verify_resend_email', ['email' => $email])
+                );
+                $event->setResponse($response);
+                return;
+            }
+        }
+
+        // Fallback if user is not available or not of the expected type
         $response = new RedirectResponse(
             $this->router->generate('app_verify_resend_email')
         );

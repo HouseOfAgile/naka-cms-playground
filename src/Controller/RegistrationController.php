@@ -94,9 +94,33 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/verify/resend', name: 'app_verify_resend_email')]
+    public function resendVerifyEmail(
+        Request $request,
+        UserRepository $userRepository,
+        Mailer $mailer,
+        VerifyEmailHelperInterface $verifyEmailHelper
+    ): Response {
+        if ($request->isMethod('POST')) {
+            $email = $request->request->get('email');
+            $user = $userRepository->findOneBy(['email' => $email]);
 
-    public function resendVerifyEmail()
-    {
+            if ($user && !$user->getIsVerified()) {
+                $signatureComponents = $verifyEmailHelper->generateSignature(
+                    'app_verify_email',
+                    $user->getId(),
+                    $user->getEmail(),
+                    ['id' => $user->getId()]
+                );
+
+                $mailer->sendVerifyMessageToNewMember($user, $signatureComponents->getSignedUrl());
+
+                $this->addFlash('success', 'authenticate.flash.verifyEmail.emailSent');
+                return $this->redirectToRoute('app_verify_resend_email');
+            }
+
+            $this->addFlash('error', 'authenticate.flash.verifyEmail.emailNotFoundOrAlreadyVerified');
+        }
+
         return $this->render('@NakaCMS/registration/resend_verify_email.html.twig');
     }
 }

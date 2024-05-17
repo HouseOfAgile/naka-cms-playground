@@ -8,9 +8,22 @@ form.contact.subject: Subject
 form.contact.message: Message
 form.contact.submit: 'Send your message'
 
-common.readMore: 'Read More'
+authenticate.verifyEmail.title: "Verify Email"
+authenticate.verifyEmail.header: "Verify your Email"
+authenticate.verifyEmail.instructions: "A verification email was sent - please click it to enable your account before logging in."
+authenticate.verifyEmail.emailLabel: "Email"
+authenticate.verifyEmail.resendButton: "Re-send Email"
+authenticate.verifyEmail.emailToResend: "We will resend the verification email to %email%"
+authenticate.flash.register.checkYourEmailAndVerifyYourEmail: "Check your email and verify your account."
+authenticate.flash.verifyEmail.accountVerified: "Account Verified! You can now log in."
+authenticate.flash.verifyEmail.emailSent: "A verification email has been sent to your email address."
+authenticate.flash.verifyEmail.emailNotFoundOrAlreadyVerified: "Email not found or already verified."
+authenticate.signUp: 'Sign Up'
+authenticate.login: 'Login'
+
 
 # common address
+common.readMore: 'Read More'
 common.address.street: 'Street'
 common.address.zipCode: 'Zip Code'
 common.address.city: 'City'
