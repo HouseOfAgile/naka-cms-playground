@@ -100,6 +100,9 @@ class RegistrationController extends AbstractController
         Mailer $mailer,
         VerifyEmailHelperInterface $verifyEmailHelper
     ): Response {
+
+        $email = $request->query->get('email', '');
+
         if ($request->isMethod('POST')) {
             $email = $request->request->get('email');
             $user = $userRepository->findOneBy(['email' => $email]);
@@ -121,6 +124,8 @@ class RegistrationController extends AbstractController
             $this->addFlash('error', 'authenticate.flash.verifyEmail.emailNotFoundOrAlreadyVerified');
         }
 
-        return $this->render('@NakaCMS/registration/resend_verify_email.html.twig');
+        return $this->render('@NakaCMS/registration/resend_verify_email.html.twig', [
+            'email' => $email,
+        ]);
     }
 }
