@@ -93,14 +93,15 @@ class RegistrationController extends AbstractController
         return $this->redirectToRoute('app_login');
     }
 
+
     #[Route('/verify/resend', name: 'app_verify_resend_email')]
     public function resendVerifyEmail(
         Request $request,
         UserRepository $userRepository,
         Mailer $mailer,
-        VerifyEmailHelperInterface $verifyEmailHelper
+        VerifyEmailHelperInterface $verifyEmailHelper,
+        EntityManagerInterface $entityManager
     ): Response {
-
         $email = $request->query->get('email', '');
 
         if ($request->isMethod('POST')) {
@@ -108,20 +109,30 @@ class RegistrationController extends AbstractController
             $user = $userRepository->findOneBy(['email' => $email]);
 
             if ($user && !$user->getIsVerified()) {
-                $signatureComponents = $verifyEmailHelper->generateSignature(
-                    'app_verify_email',
-                    $user->getId(),
-                    $user->getEmail(),
-                    ['id' => $user->getId()]
-                );
+                $now = new \DateTime();
+                $lastSent = $user->getLastVerificationEmailSentAt();
 
-                $mailer->sendVerifyMessageToNewMember($user, $signatureComponents->getSignedUrl());
+                if ($lastSent && $lastSent->diff($now)->i < 30) {
+                    $this->addFlash('error', 'You can only request a new verification email every 30 minutes.');
+                } else {
+                    $signatureComponents = $verifyEmailHelper->generateSignature(
+                        'app_verify_email',
+                        $user->getId(),
+                        $user->getEmail(),
+                        ['id' => $user->getId()]
+                    );
 
-                $this->addFlash('success', 'authenticate.flash.verifyEmail.emailSent');
-                return $this->redirectToRoute('app_verify_resend_email');
+                    $mailer->sendVerifyMessageToNewMember($user, $signatureComponents->getSignedUrl());
+
+                    $user->setLastVerificationEmailSentAt($now);
+                    $entityManager->flush();
+
+                    $this->addFlash('success', 'authenticate.flash.verifyEmail.emailSent');
+                    return $this->redirectToRoute('app_verify_resend_email', ['email' => $email]);
+                }
+            } else {
+                $this->addFlash('error', 'authenticate.flash.verifyEmail.emailNotFoundOrAlreadyVerified');
             }
-
-            $this->addFlash('error', 'authenticate.flash.verifyEmail.emailNotFoundOrAlreadyVerified');
         }
 
         return $this->render('@NakaCMS/registration/resend_verify_email.html.twig', [

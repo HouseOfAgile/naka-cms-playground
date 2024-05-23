@@ -55,6 +55,9 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     protected ?bool $isVerified = false;
 
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?\DateTimeInterface $lastVerificationEmailSentAt = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -273,6 +276,17 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->preferredLocale = $preferredLocale;
 
+        return $this;
+    }
+
+    public function getLastVerificationEmailSentAt(): ?\DateTimeInterface
+    {
+        return $this->lastVerificationEmailSentAt;
+    }
+
+    public function setLastVerificationEmailSentAt(?\DateTimeInterface $lastVerificationEmailSentAt): self
+    {
+        $this->lastVerificationEmailSentAt = $lastVerificationEmailSentAt;
         return $this;
     }
 }
