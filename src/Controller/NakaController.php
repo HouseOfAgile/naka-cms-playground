@@ -17,7 +17,7 @@ class NakaController extends BaseController
         $this->pageDecorator = $pageDecorator;
     }
 
-    #[Route(path: '/')]
+    #[Route(path: '/', name: 'app_no_locale')]
     public function indexNoLocale(): Response
     {
         return $this->redirectToRoute('app_homepage', ['_locale' => 'de']);
