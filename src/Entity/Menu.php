@@ -100,14 +100,6 @@ class Menu
     }
 
     /**
-     * @return Collection|Page[]
-     */
-    public function getPages(): Collection
-    {
-        return $this->pages;
-    }
-
-    /**
      * @return Collection|MenuItem[]
      */
     public function getMenuItems(): Collection

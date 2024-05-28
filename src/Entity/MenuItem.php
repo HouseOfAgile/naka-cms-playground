@@ -14,6 +14,7 @@ use HouseOfAgile\NakaCMSBundle\Repository\MenuItemRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableMethodsTrait;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatablePropertiesTrait;
+
 #[ORM\MappedSuperclass(repositoryClass: MenuItemRepository::class)]
 class MenuItem implements TranslatableInterface
 {
@@ -114,10 +115,11 @@ class MenuItem implements TranslatableInterface
     public function getTranslatedName(): ?string
     {
         if ($this->getType() == NakaMenuItemType::TYPE_PAGE && $this->page) {
-            return $this->getPage()->getTitle();
-        } else {
-            return $this->getTitle();
+            if (!empty($this->getPage()->getTitle())) {
+                return $this->getPage()->getTitle();
+            }
         }
+        return $this->getTitle();
     }
 
     public function getId(): ?int
@@ -127,7 +129,7 @@ class MenuItem implements TranslatableInterface
 
     public function getRouteParametersAsArray(): ?array
     {
-        $arr =[];
+        $arr = [];
         foreach ($this->routeParameters as $key => $value) {
             $arr[$value['name']] = $value['val'];
         }

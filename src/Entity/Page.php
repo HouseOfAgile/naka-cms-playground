@@ -34,7 +34,7 @@ class Page implements TranslatableInterface, SluggableInterface, TimestampableIn
     protected $id;
 
     #[ORM\Column(nullable: true)]
-    protected ?bool $active = null;
+    protected ?bool $active = false;
 
     #[ORM\Column(type: 'string', length: 64, nullable: true)]
     protected $name;
