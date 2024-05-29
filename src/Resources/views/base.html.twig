@@ -11,8 +11,8 @@
 			{% endblock master_title %}
 		</title>
 		{% block master_meta %}
-			<meta name="description" content="{% block meta_description %}{{ websiteInfo.translatedDescription | default('common.defaultMetaDescription' | trans ) }}{% endblock %}">
-			<meta name="keywords" content="{% block meta_keywords %}{{ websiteInfo.translatedKeywords | default('common.defaultMetaKeywords' | trans ) }}{% endblock %}">
+			<meta name="description" content="{% block meta_description %}{{ websiteInfo.translatedDescription | default('meta.defaultDescription' | trans ) }}{% endblock %}">
+			<meta name="keywords" content="{% block meta_keywords %}{{ websiteInfo.translatedKeywords | default('meta.defaultKeywords' | trans ) }}{% endblock %}">
 		{% endblock master_meta %}
 		<link
 		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">

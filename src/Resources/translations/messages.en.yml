@@ -21,6 +21,9 @@ authenticate.flash.verifyEmail.emailNotFoundOrAlreadyVerified: "Email not found 
 authenticate.signUp: 'Sign Up'
 authenticate.login: 'Login'
 
+# meta
+meta.defaultDescription: 'meta.defaultDescription to be updated'
+meta.defaultKeywords: 'meta.defaultKeywords to be updated'
 
 # common address
 common.readMore: 'Read More'
@@ -148,6 +151,7 @@ backend.form.user.adminConfiguration: 'Member admin Configuration'
 backend.form.user.userAuthentication: 'Member admin authentication'
 backend.form.user.userDetails: 'Member Details'
 backend.form.user.userPreferences: 'Member Preferences'
+backend.form.user.isVerified.help: 'This member completed the email verification'
 
 backend.form.adminUser.roles.help: 'Set the roles of this user. They are several roles available, refer to the documentation for the details.'
 
