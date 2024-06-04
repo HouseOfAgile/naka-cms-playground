@@ -63,6 +63,9 @@ class DataSyncManager
     protected $appEntitiesDict = [];
     protected $entitiesIdMapping = [];
     protected $assetIdMapping = [];
+    protected $appEntities = [];
+    protected $assetEntities = [];
+    protected $appEntitiesAliases = [];
 
     public function __construct(
         LoggerInterface $scrappingLogger,
@@ -106,13 +109,22 @@ class DataSyncManager
         }
     }
 
-    public function manageNakaCMS(array $appEntities, array $appEntitiesAliases, array $assetEntities, bool $dumpOrUpdate = false, bool $doNotMoveAsset = false): bool
+    public function setupDataSyncManager(array $appEntities, array $appEntitiesAliases, array $assetEntities): void
     {
         $this->updateMappings($assetEntities);
         $this->updateMappings($appEntities);
-        $assetsSynchronized = $this->synchronizeAssets($assetEntities, $dumpOrUpdate, $doNotMoveAsset);
+        $this->appEntities = $appEntities;
+        $this->assetEntities = $assetEntities;
+        $this->appEntitiesAliases = $appEntitiesAliases;
+    }
+
+    public function manageNakaCMS(array $appEntities, array $appEntitiesAliases, array $assetEntities, bool $dumpOrUpdate = false, bool $doNotMoveAsset = false): bool
+    {
+
+        $this->setupDataSyncManager($appEntities, $appEntitiesAliases, $assetEntities);
+        $assetsSynchronized = $this->synchronizeAssets($dumpOrUpdate, $doNotMoveAsset);
         if ($assetsSynchronized) {
-            $contentSynchronized = $this->synchronizeData($appEntities, $appEntitiesAliases, $assetEntities, $dumpOrUpdate);
+            $contentSynchronized = $this->synchronizeData($dumpOrUpdate);
             return $assetsSynchronized && $contentSynchronized;
         }
         return false;
@@ -122,20 +134,17 @@ class DataSyncManager
      * Synchronize data: execute a dump of entities defined in appEntities into YAML files 
      * or update existing YAML files into the current database.
      *
-     * @param array $appEntities
-     * @param array $appEntitiesAliases
-     * @param array $assetEntities
      * @param bool $dumpOrUpdate
      * @return bool
      */
-    public function synchronizeData(array $appEntities, array $appEntitiesAliases, array $assetEntities, bool $dumpOrUpdate = false): bool
+    public function synchronizeData(bool $dumpOrUpdate = false): bool
     {
-        foreach ($appEntities as $type => $appEntityAttr) {
+        foreach ($this->appEntities as $type => $appEntityAttr) {
             $repository = $this->appEntitiesDict[$type];
 
             $dataArray = [];
             if ($dumpOrUpdate) {
-                if (!array_key_exists($type, $assetEntities)) {
+                if (!array_key_exists($type, $this->assetEntities)) {
                     foreach ($repository->findBy([], ['id' => 'ASC']) as $entityItem) {
                         $dataArray[$entityItem->getId()] = $this->dynamicDump($entityItem);
                     }
@@ -157,7 +166,7 @@ class DataSyncManager
                 $dumpedEntities = Yaml::parseFile($filePath);
                 if (count($dumpedEntities) > 0) {
                     foreach ($dumpedEntities as $keyEntity => $dataEntity) {
-                        if (array_key_exists($type, $assetEntities)) {
+                        if (array_key_exists($type, $this->assetEntities)) {
                             $this->logInfo('Asset entity detected');
                             continue;
                         }
@@ -179,12 +188,12 @@ class DataSyncManager
                                 continue;
                             }
 
-                            if (is_array($valAttr) && !array_key_exists($keyAttr, $appEntities[$type])) {
+                            if (is_array($valAttr) && !array_key_exists($keyAttr, $this->appEntities[$type])) {
                                 foreach ($valAttr as $refId) {
-                                    $this->processOneToManyRelation($entity, $keyAttr, $refId, $appEntitiesAliases);
+                                    $this->processOneToManyRelation($entity, $keyAttr, $refId);
                                 }
                             } else {
-                                $this->processSingleValueAttribute($entity, $keyAttr, $valAttr, $appEntities, $appEntitiesAliases, $type);
+                                $this->processSingleValueAttribute($entity, $keyAttr, $valAttr, $type);
                             }
                         }
 
@@ -203,11 +212,26 @@ class DataSyncManager
         return true;
     }
 
-    private function processOneToManyRelation($entity, string $keyAttr, $refId, array $appEntitiesAliases): void
+    public function processSingleYamlEntry($yaml, $entityClass): void
     {
-        if (array_key_exists($keyAttr, $appEntitiesAliases)) {
-            $relatedEntity = is_array($appEntitiesAliases[$keyAttr]) ? $appEntitiesAliases[$keyAttr]['class'] : $appEntitiesAliases[$keyAttr];
-            $addMethod = is_array($appEntitiesAliases[$keyAttr]) ? ucfirst($appEntitiesAliases[$keyAttr]['method']) : 'add' . ucfirst($appEntitiesAliases[$keyAttr]);
+
+        if (!array_key_exists('id', $yaml)) {
+            $entity = new $entityClass();
+            $this->logInfo(sprintf('Create Entity %s', ucfirst($entityClass)));
+        } else {
+            $repository = $this->entityManager->getRepository($entityClass);
+
+            $entity = $repository->findOneBy(['id' => $yaml['id']]);
+
+            $this->logInfo(sprintf('Update Entity %s with id %s', ucfirst($entityClass), $yaml['id']));
+        }
+    }
+
+    private function processOneToManyRelation($entity, string $keyAttr, $refId): void
+    {
+        if (array_key_exists($keyAttr, $this->appEntitiesAliases)) {
+            $relatedEntity = is_array($this->appEntitiesAliases[$keyAttr]) ? $this->appEntitiesAliases[$keyAttr]['class'] : $this->appEntitiesAliases[$keyAttr];
+            $addMethod = is_array($this->appEntitiesAliases[$keyAttr]) ? ucfirst($this->appEntitiesAliases[$keyAttr]['method']) : 'add' . ucfirst($this->appEntitiesAliases[$keyAttr]);
 
             $newRefId = $this->entitiesIdMapping[$relatedEntity][$refId];
             $linkedEntity = $this->appEntitiesDict[$relatedEntity]->findOneBy(['id' => $newRefId]);
@@ -227,10 +251,10 @@ class DataSyncManager
         }
     }
 
-    private function processSingleValueAttribute($entity, string $keyAttr, $valAttr, array $appEntities, array $appEntitiesAliases, string $type): void
+    private function processSingleValueAttribute($entity, string $keyAttr, $valAttr, string $type): void
     {
-        if (array_key_exists($keyAttr, $appEntitiesAliases) || array_key_exists($keyAttr, $this->appEntitiesDict)) {
-            $relatedEntity = array_key_exists($keyAttr, $appEntitiesAliases) ? $appEntitiesAliases[$keyAttr] : $this->appEntitiesDict[$keyAttr];
+        if (array_key_exists($keyAttr, $this->appEntitiesAliases) || array_key_exists($keyAttr, $this->appEntitiesDict)) {
+            $relatedEntity = array_key_exists($keyAttr, $this->appEntitiesAliases) ? $this->appEntitiesAliases[$keyAttr] : $this->appEntitiesDict[$keyAttr];
             $newRefId = $this->entitiesIdMapping[$relatedEntity][$valAttr];
             $linkedEntity = $this->appEntitiesDict[$relatedEntity]->findOneBy(['id' => $newRefId]);
 
@@ -241,7 +265,7 @@ class DataSyncManager
                 if ($keyAttr == 'slug') {
                     $entity->{'set' . ucfirst($keyAttr)}($valAttr);
                 } elseif ($entity->{'get' . ucfirst($keyAttr)}() !== $valAttr) {
-                    $valAttr = $this->convertToAppropriateType($entity, $keyAttr, $valAttr, $appEntities[$type]);
+                    $valAttr = $this->convertToAppropriateType($entity, $keyAttr, $valAttr, $this->appEntities[$type]);
                     $entity->{'set' . ucfirst($keyAttr)}($valAttr);
                 }
             }
@@ -281,19 +305,18 @@ class DataSyncManager
     /**
      * Synchronize assets.
      *
-     * @param array $assetEntities
      * @param bool $dumpOrUpdate
      * @param bool $doNotMoveAsset
      * @return bool
      */
-    public function synchronizeAssets(array $assetEntities, bool $dumpOrUpdate = false, bool $doNotMoveAsset = false): bool
+    public function synchronizeAssets(bool $dumpOrUpdate = false, bool $doNotMoveAsset = false): bool
     {
         if ($dumpOrUpdate && !$doNotMoveAsset) {
             $filesystem = new Filesystem();
             $filesystem->remove($this->assetDir);
         }
 
-        foreach ($assetEntities as $type => $attr) {
+        foreach ($this->assetEntities as $type => $attr) {
             $this->logSuccess(sprintf('Dumping assets for %s', $type));
             $repository = $this->appEntitiesDict[$type];
             $dataArray = [];
