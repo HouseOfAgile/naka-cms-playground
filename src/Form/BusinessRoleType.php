@@ -10,12 +10,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class BusinessRoleType extends AbstractType
 {
     
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('choices', GlobalDataParameter::getBusinessRoles());
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return ChoiceType::class;
     }

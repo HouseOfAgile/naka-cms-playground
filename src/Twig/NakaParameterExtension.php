@@ -17,14 +17,14 @@ class NakaParameterExtension extends AbstractExtension
         $this->nakaParameterManager = $nakaParameterManager;
     }
 
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('nakaParameter', [$this, 'nakaParameter']),
         ];
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('existingNakaSocialParameters', [$this, 'existingNakaSocialParameters']),

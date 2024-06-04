@@ -16,7 +16,7 @@ class OpeningHoursExtension extends AbstractExtension
         $this->openingHoursManager = $openingHoursManager;
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('openingStatus', [$this, 'openingStatus']),

@@ -7,7 +7,7 @@ use Twig\TwigFunction;
 
 class TwigColorExtension extends AbstractExtension
 {
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('getRandomHexColor', [$this, 'getRandomHexColor']),

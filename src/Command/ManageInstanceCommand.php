@@ -8,17 +8,20 @@ use App\NakaData\DataDumperParameter;
 use Exception;
 use HouseOfAgile\NakaCMSBundle\Component\DumperUpdater\DataSyncManager;
 use HouseOfAgile\NakaCMSBundle\Helper\LoggerCommandTrait;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(
+    name: 'naka:instance:manage',
+    description: 'Manage instances config.',
+)]
 class ManageInstanceCommand extends Command
 {
     use LoggerCommandTrait;
-
-    protected static $defaultName = 'naka:instance:manage';
 
     /** @var DataSyncManager */
     protected $dataSyncManager;
@@ -34,7 +37,6 @@ class ManageInstanceCommand extends Command
         parent::configure();
 
         $this
-            ->setDescription('Manage instances config')
             ->addArgument(
                 'mainAction',
                 InputArgument::REQUIRED,

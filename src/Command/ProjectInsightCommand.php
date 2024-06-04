@@ -3,6 +3,7 @@
 namespace HouseOfAgile\NakaCMSBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,10 +16,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  * including detailed information about a specified entity, main Composer libraries,
  * and main Node.js libraries.
  */
+#[AsCommand(
+    name: 'naka:project-insight',
+    description: 'Provides insights into the Symfony project, including entity details, Composer, and Node.js libraries.',
+)]
 class ProjectInsightCommand extends Command
 {
-    protected static $defaultName = 'app:project-insight';
-
     private $entityManager;
     private $projectDir;
 
@@ -29,10 +32,9 @@ class ProjectInsightCommand extends Command
         $this->projectDir = $projectDir;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setDescription('Provides insights into the Symfony project, including entity details, Composer, and Node.js libraries.')
             ->setHelp('This command allows you to get details about a specific entity and lists the main Composer and Node.js libraries used in the project.')
             ->addArgument('entityName', InputArgument::REQUIRED, 'The full class name of the entity to inspect')
             ->addOption('show-composer', null, InputOption::VALUE_NONE, 'Show main Composer libraries')
@@ -40,7 +42,7 @@ class ProjectInsightCommand extends Command
             ->addOption('all', null, InputOption::VALUE_NONE, 'Show all insights');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $entityName = $input->getArgument('entityName');

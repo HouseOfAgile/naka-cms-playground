@@ -285,8 +285,6 @@ class DumperUpdater
                                                     break;
                                             }
                                         }
-                                        // $isDate = !is_bool($valAttr) && $this->isTimestamp($valAttr);
-                                        // $valAttr = $isDate ? new DateTime('@' . $valAttr) : $valAttr;
 
                                         $entity->{'set' . ucfirst($keyAttr)}($valAttr);
                                     }
@@ -305,16 +303,6 @@ class DumperUpdater
                 // dump all entities for debug
                 // dump($this->entitiesIdMapping);
             }
-        }
-        return true;
-    }
-
-    public function isTimestamp($string)
-    {
-        try {
-            new DateTime('@' . $string);
-        } catch (\Exception $e) {
-            return false;
         }
         return true;
     }

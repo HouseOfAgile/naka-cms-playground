@@ -278,16 +278,6 @@ class DataSyncManager
         }
     }
 
-    public function isTimestamp($string): bool
-    {
-        try {
-            new DateTime('@' . $string);
-        } catch (Exception $e) {
-            return false;
-        }
-        return true;
-    }
-
     /**
      * Synchronize assets.
      *

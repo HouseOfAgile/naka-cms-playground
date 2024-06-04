@@ -111,7 +111,7 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         $active = BooleanField::new('active')
             ->setHelp('backend.form.page.active.help')
             // ->setColumns(6)
-            ;
+        ;
 
         $pageType = ChoiceField::new('pageType')
             ->setChoices(NakaPageType::getGuessOptions())
@@ -154,7 +154,7 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         }
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             BeforeEntityPersistedEvent::class => 'generateSlug',

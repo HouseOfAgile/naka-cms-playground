@@ -23,7 +23,7 @@ class StringUtilsExtension extends AbstractExtension
         $this->stringUtils = $stringUtils;
     }
 
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('smartTruncateString', [$this, 'smartTruncateString']),

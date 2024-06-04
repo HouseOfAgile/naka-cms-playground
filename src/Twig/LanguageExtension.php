@@ -8,7 +8,7 @@ use Twig\TwigFilter;
 
 class LanguageExtension extends AbstractExtension
 {
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('englishClean', [$this, 'englishClean']),

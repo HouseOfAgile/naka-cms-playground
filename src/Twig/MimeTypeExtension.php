@@ -9,7 +9,7 @@ use Vich\UploaderBundle\Entity\File as EmbeddedFile;
 class MimeTypeExtension extends AbstractExtension
 {
 
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('isAnImage', [$this, 'isAnImage']),

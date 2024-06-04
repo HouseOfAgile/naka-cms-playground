@@ -22,7 +22,7 @@ final class OneFieldAtLeastListener implements EventSubscriberInterface
         $this->requiredFields = $requiredFieldsArray;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             FormEvents::SUBMIT => 'onSubmit',
