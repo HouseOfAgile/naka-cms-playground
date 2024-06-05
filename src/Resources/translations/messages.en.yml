@@ -276,6 +276,7 @@ footer.followUsOnSocialMedia: 'Follow us on Social Media !'
 
 register.signUpToPlatform.title: 'Signup to the platform'
 register.signUpToPlatform.detail: 'Signup to the platform in order to book an appointment'
+register.inviteToSignUpOnLogin: "<p>If you are not yet member, you can register to the dentist fixer, you will then be able to book an appointment.</p>\n"
 
 # registerForm
 form.member.firstName: 'First Name'
@@ -303,6 +304,7 @@ loginForm.header: 'Sign in to your Dentist Fixer Account'
 loginForm.email: 'Email'
 loginForm.password: 'Password'
 loginForm.signIn: 'Sign In'
+loginForm.forgotPasswordText: "if you forgot your password, you can reset it by following <a href=\"%forgotPasswordRequestLink%\">this link</a>.\n"
 
 # email
 email.welcomeUserVerifyEmail.title: 'Welcome to %applicationName%, please verify your email'
