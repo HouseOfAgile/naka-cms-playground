@@ -8,7 +8,9 @@
 
 {% block body %}
 
-	{% include '@NakaCMS/layout/navbar.html.twig' %}
+	{% block main_navbar %}
+		{% include '@NakaCMS/layout/navbar.html.twig' %}
+	{% endblock main_navbar %}
 
 	<div class="main-wrapper position-relative">
 		{% block main_wrapper %}
@@ -36,7 +38,10 @@
 			</div>
 		{% endblock main_wrapper %}
 	</div>
-	{% include '@NakaCMS/layout/footer.html.twig' %}
+
+	{% block main_footer %}
+		{% include '@NakaCMS/layout/footer.html.twig' %}
+	{% endblock main_footer %}
 
 {% endblock %}
 
