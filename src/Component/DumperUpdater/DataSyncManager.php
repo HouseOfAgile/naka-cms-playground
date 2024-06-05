@@ -165,43 +165,29 @@ class DataSyncManager
 
                 $dumpedEntities = Yaml::parseFile($filePath);
                 if (count($dumpedEntities) > 0) {
-                    foreach ($dumpedEntities as $keyEntity => $dataEntity) {
+                    foreach ($dumpedEntities as $entityKey => $entityData) {
                         if (array_key_exists($type, $this->assetEntities)) {
                             $this->logInfo('Asset entity detected');
                             continue;
                         }
 
-                        $entity = $repository->findOneBy(['id' => $keyEntity]);
+                        $entity = $repository->findOneBy(['id' => $entityKey]);
 
                         if (!$entity) {
                             $entityClass = 'App\\Entity\\' . ucfirst($type);
                             $entity = new $entityClass();
-                            $this->logInfo(sprintf('Create Entity %s with id %s', ucfirst($type), $keyEntity));
+                            $this->logInfo(sprintf('Create Entity %s with id %s', ucfirst($type), $entityKey));
                         } else {
-                            $this->logInfo(sprintf('Update Entity %s with id %s', ucfirst($type), $keyEntity));
+                            $this->logInfo(sprintf('Update Entity %s with id %s', ucfirst($type), $entityKey));
                         }
 
-                        foreach ($dataEntity as $keyAttr => $valAttr) {
-                            $this->logCommand(sprintf('Working on %s', $keyAttr));
-                            if ($valAttr === null) {
-                                $this->logWarning(sprintf('Skipping %s as value is null', $keyAttr));
-                                continue;
-                            }
-
-                            if (is_array($valAttr) && !array_key_exists($keyAttr, $this->appEntities[$type])) {
-                                foreach ($valAttr as $refId) {
-                                    $this->processOneToManyRelation($entity, $keyAttr, $refId);
-                                }
-                            } else {
-                                $this->processSingleValueAttribute($entity, $keyAttr, $valAttr, $type);
-                            }
-                        }
+                        $this->updateEntityFromYamlData($entity, $entityData, $type);
 
                         $this->entityManager->persist($entity);
                         $this->entityManager->flush();
                         $this->logInfo(sprintf('Saved entity %s with id %s', $type, $entity->getId()));
 
-                        $this->entitiesIdMapping[$type][$dataEntity['id']] = $entity->getId();
+                        $this->entitiesIdMapping[$type][$entityData['id']] = $entity->getId();
                     }
                     $this->logSuccess(sprintf('Updated all data for entities %s (%d entries)', $type, count($dumpedEntities)));
                 } else {
@@ -212,19 +198,52 @@ class DataSyncManager
         return true;
     }
 
-    public function processSingleYamlEntry($yaml, $entityClass): void
+    public function updateEntityFromYamlData($entity, $dataEntity, $type = null): object
     {
+        $type = $type ?? $this->getShortClassName($entity);
+        foreach ($dataEntity as $keyAttr => $valAttr) {
+            $this->logCommand(sprintf('Working on %s', $keyAttr));
+            if ($valAttr === null) {
+                $this->logWarning(sprintf('Skipping %s as value is null', $keyAttr));
+                continue;
+            }
 
-        if (!array_key_exists('id', $yaml)) {
-            $entity = new $entityClass();
-            $this->logInfo(sprintf('Create Entity %s', ucfirst($entityClass)));
-        } else {
-            $repository = $this->entityManager->getRepository($entityClass);
-
-            $entity = $repository->findOneBy(['id' => $yaml['id']]);
-
-            $this->logInfo(sprintf('Update Entity %s with id %s', ucfirst($entityClass), $yaml['id']));
+            if (is_array($valAttr) && !array_key_exists($keyAttr, $this->appEntities[$type])) {
+                foreach ($valAttr as $refId) {
+                    $this->processOneToManyRelation($entity, $keyAttr, $refId);
+                }
+            } else {
+                $this->processSingleValueAttribute($entity, $keyAttr, $valAttr, $type);
+            }
         }
+        return $entity;
+    }
+
+    public function getShortClassName($entity): string
+    {
+        $reflection = new \ReflectionClass($entity instanceof Proxy ? get_parent_class($entity) : get_class($entity));
+        return lcfirst($reflection->getShortName());
+    }
+
+    public function processSingleYamlEntry($yamlChangeSet): void
+    {
+        foreach ($yamlChangeSet as $entityClass => $entityData) {
+            if (!array_key_exists('id', $entityData)) {
+                $entity = new $entityClass();
+                $this->logInfo(sprintf('Create Entity %s', ucfirst($entityClass)));
+            } else {
+                $repository = $this->entityManager->getRepository($entityClass);
+
+                $entity = $repository->findOneBy(['id' => $entityData['id']]);
+
+                $this->logInfo(sprintf('Update Entity %s with id %s', ucfirst($entityClass), $entityData['id']));
+            }
+            $this->updateEntityFromYamlData($entity, $entityData);
+        }
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+
+        $this->logInfo(sprintf('Saved entity %s with id %s', $entityClass, $entity->getId()));
     }
 
     private function processOneToManyRelation($entity, string $keyAttr, $refId): void
