@@ -200,21 +200,25 @@ class DataSyncManager
 
     public function updateEntityFromYamlData($entity, $dataEntity, $type = null): object
     {
-        $type = $type ?? $this->getShortClassName($entity);
-        foreach ($dataEntity as $keyAttr => $valAttr) {
-            $this->logCommand(sprintf('Working on %s', $keyAttr));
-            if ($valAttr === null) {
-                $this->logWarning(sprintf('Skipping %s as value is null', $keyAttr));
-                continue;
-            }
-
-            if (is_array($valAttr) && !array_key_exists($keyAttr, $this->appEntities[$type])) {
-                foreach ($valAttr as $refId) {
-                    $this->processOneToManyRelation($entity, $keyAttr, $refId);
+        try {
+            $type = $type ?? $this->getShortClassName($entity);
+            foreach ($dataEntity as $keyAttr => $valAttr) {
+                $this->logCommand(sprintf('Working on %s', $keyAttr));
+                if ($valAttr === null) {
+                    $this->logWarning(sprintf('Skipping %s as value is null', $keyAttr));
+                    continue;
                 }
-            } else {
-                $this->processSingleValueAttribute($entity, $keyAttr, $valAttr, $type);
+
+                if (is_array($valAttr) && !array_key_exists($keyAttr, $this->appEntities[$type])) {
+                    foreach ($valAttr as $refId) {
+                        $this->processOneToManyRelation($entity, $keyAttr, $refId);
+                    }
+                } else {
+                    $this->processSingleValueAttribute($entity, $keyAttr, $valAttr, $type);
+                }
             }
+        } catch (\Throwable $th) {
+            dd($entity, $dataEntity, $type, $th);
         }
         return $entity;
     }
@@ -274,22 +278,36 @@ class DataSyncManager
 
     private function processSingleValueAttribute($entity, string $keyAttr, $valAttr, string $type): void
     {
-        if (array_key_exists($keyAttr, $this->appEntitiesAliases) || array_key_exists($keyAttr, $this->appEntitiesDict)) {
-            $relatedEntity = array_key_exists($keyAttr, $this->appEntitiesAliases) ? $this->appEntitiesAliases[$keyAttr] : $this->appEntitiesDict[$keyAttr];
-            $newRefId = $this->entitiesIdMapping[$relatedEntity][$valAttr];
-            $linkedEntity = $this->appEntitiesDict[$relatedEntity]->findOneBy(['id' => $newRefId]);
 
-            $entity->{'set' . ucfirst($keyAttr)}($linkedEntity);
-            $this->logInfo(sprintf('Set relation from entity %s to entity %s', $entity, $linkedEntity));
-        } else {
-            if ($keyAttr !== 'id') {
-                if ($keyAttr == 'slug') {
-                    $entity->{'set' . ucfirst($keyAttr)}($valAttr);
-                } elseif ($entity->{'get' . ucfirst($keyAttr)}() !== $valAttr) {
-                    $valAttr = $this->convertToAppropriateType($entity, $keyAttr, $valAttr, $this->appEntities[$type]);
-                    $entity->{'set' . ucfirst($keyAttr)}($valAttr);
+        try {
+            $relatedEntity = null;
+            if (array_key_exists($keyAttr, $this->appEntitiesAliases)) {
+                $relatedEntity = $this->appEntitiesAliases[$keyAttr];
+            } elseif (array_key_exists($keyAttr, $this->appEntitiesDict)) {
+                $relatedEntity = $this->appEntitiesDict[$keyAttr];
+            } elseif (array_key_exists($keyAttr, $this->appEntities[$type])) {
+                if (array_key_exists($this->appEntities[$type][$keyAttr], $this->appEntities)){
+                    $relatedEntity = $this->appEntities[$type][$keyAttr];
                 }
             }
+            if ($relatedEntity) {
+                $newRefId = $this->entitiesIdMapping[$relatedEntity][$valAttr];
+                $linkedEntity = $this->appEntitiesDict[$relatedEntity]->findOneBy(['id' => $newRefId]);
+
+                $entity->{'set' . ucfirst($keyAttr)}($linkedEntity);
+                $this->logInfo(sprintf('Set relation from entity %s to entity %s', $entity, $linkedEntity));
+            } else {
+                if ($keyAttr !== 'id') {
+                    if ($keyAttr == 'slug') {
+                        $entity->{'set' . ucfirst($keyAttr)}($valAttr);
+                    } elseif ($entity->{'get' . ucfirst($keyAttr)}() !== $valAttr) {
+                        $valAttr = $this->convertToAppropriateType($entity, $keyAttr, $valAttr, $this->appEntities[$type]);
+                        $entity->{'set' . ucfirst($keyAttr)}($valAttr);
+                    }
+                }
+            }
+        } catch (\Throwable $th) {
+            dd($entity,  $keyAttr, $valAttr,  $type, $th);
         }
     }
 
