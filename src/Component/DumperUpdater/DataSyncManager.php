@@ -225,7 +225,7 @@ class DataSyncManager
         return lcfirst($reflection->getShortName());
     }
 
-    public function processSingleYamlEntry($yamlChangeSet): void
+    public function processSingleYamlEntry($yamlChangeSet): int
     {
         foreach ($yamlChangeSet as $entityClass => $entityData) {
             if (!array_key_exists('id', $entityData)) {
@@ -240,10 +240,12 @@ class DataSyncManager
             }
             $this->updateEntityFromYamlData($entity, $entityData);
         }
+        // WIP: dd($entity);
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
 
         $this->logInfo(sprintf('Saved entity %s with id %s', $entityClass, $entity->getId()));
+        return $entity->getId();
     }
 
     private function processOneToManyRelation($entity, string $keyAttr, $refId): void
