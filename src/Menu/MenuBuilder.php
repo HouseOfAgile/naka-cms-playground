@@ -57,7 +57,7 @@ class MenuBuilder
         return $menu;
     }
 
-    public function addMenuItem(MenuItem $menuItem, ItemInterface $menu, $toUpper = false)
+    public function addMenuItem(MenuItem $menuItem, ItemInterface $menu, bool $toUpper = false)
     {
         switch ($menuItem->getType()) {
             case NakaMenuItemType::TYPE_PAGE:

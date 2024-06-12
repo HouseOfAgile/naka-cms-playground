@@ -35,12 +35,10 @@ class PageController extends AbstractController
     {
         $pages = $pageRepository->findAll();
 
-
-
         $viewParams = [
             'pages' => $pages,
         ];
-        return $this->render('@NakaCMS/naka/page/show-list.html.twig', $viewParams);
+        return $this->render('@NakaCMS/naka/page/show_list.html.twig', $viewParams);
     }
 
     #[Route(path: '/{_locale<%app.supported_locales%>}/{slug}', name: 'view')]
@@ -67,10 +65,10 @@ class PageController extends AbstractController
         }
         switch ($page->getPageType()) {
             case NakaPageType::PAGE_TYPE_BLOCKS_ONLY:
-                return $this->render('@NakaCMS/naka/page/show-page.html.twig', $viewParams);
+                return $this->render('@NakaCMS/naka/page/show_page.html.twig', $viewParams);
                 break;
             case NakaPageType::PAGE_TYPE_CONTENT_ONLY:
-                return $this->render('@NakaCMS/naka/page/show-static-page.html.twig', $viewParams);
+                return $this->render('@NakaCMS/naka/page/show_static_page.html.twig', $viewParams);
                 break;
 
             default:

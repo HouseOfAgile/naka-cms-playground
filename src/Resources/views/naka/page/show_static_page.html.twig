@@ -1,4 +1,5 @@
-{% extends '@NakaCMS/layout/base-layout.html.twig' %}
+{% extends layoutTemplate|default('@NakaCMS/layout/base-layout.html.twig') %}
+
 {% block title %}
 	{{page.title}}
 {% endblock %}
