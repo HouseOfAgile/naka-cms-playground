@@ -2,6 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Component\DumperUpdater;
 
+use App\NakaData\DataDumperParameter;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeZone;
@@ -109,6 +110,23 @@ class DataSyncManager
         }
     }
 
+    public function initDataSyncManager(): void
+    {
+        if (class_exists(DataDumperParameter::class)) {
+            $appEntitiesAliases = DataDumperParameter::APP_ENTITIES_ALIASES;
+            $assetEntities = DataDumperParameter::ASSET_ENTITIES;
+            $appEntities = DataDumperParameter::APP_ENTITIES;
+        } else {
+            throw new Exception('App\Entity\DataDumperParameter Class not Present');
+        }
+
+        $this->updateMappings($assetEntities);
+        $this->updateMappings($appEntities);
+        $this->appEntities = $appEntities;
+        $this->assetEntities = $assetEntities;
+        $this->appEntitiesAliases = $appEntitiesAliases;
+    }
+
     public function setupDataSyncManager(array $appEntities, array $appEntitiesAliases, array $assetEntities): void
     {
         $this->updateMappings($assetEntities);
@@ -122,6 +140,7 @@ class DataSyncManager
     {
 
         $this->setupDataSyncManager($appEntities, $appEntitiesAliases, $assetEntities);
+        
         $assetsSynchronized = $this->synchronizeAssets($dumpOrUpdate, $doNotMoveAsset);
         if ($assetsSynchronized) {
             $contentSynchronized = $this->synchronizeData($dumpOrUpdate);
@@ -201,7 +220,7 @@ class DataSyncManager
     public function updateEntityFromYamlData($entity, $dataEntity, $type = null): object
     {
         try {
-            $type = $type ?? $this->getShortClassName($entity);
+            $type = $type ?? ucfirst($this->getShortClassName($entity));
             foreach ($dataEntity as $keyAttr => $valAttr) {
                 $this->logCommand(sprintf('Working on %s', $keyAttr));
                 if ($valAttr === null) {
@@ -229,7 +248,7 @@ class DataSyncManager
         return lcfirst($reflection->getShortName());
     }
 
-    public function processSingleYamlEntry($yamlChangeSet): int
+    public function processSingleYamlEntry($yamlChangeSet): Object
     {
         foreach ($yamlChangeSet as $entityClass => $entityData) {
             if (!array_key_exists('id', $entityData)) {
@@ -249,7 +268,7 @@ class DataSyncManager
         $this->entityManager->flush();
 
         $this->logInfo(sprintf('Saved entity %s with id %s', $entityClass, $entity->getId()));
-        return $entity->getId();
+        return $entity;
     }
 
     private function processOneToManyRelation($entity, string $keyAttr, $refId): void
@@ -281,6 +300,7 @@ class DataSyncManager
 
         try {
             $relatedEntity = null;
+            dump($this->appEntities);
             if (array_key_exists($keyAttr, $this->appEntitiesAliases)) {
                 $relatedEntity = $this->appEntitiesAliases[$keyAttr];
             } elseif (array_key_exists($keyAttr, $this->appEntitiesDict)) {
