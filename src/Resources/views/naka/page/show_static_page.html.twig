@@ -14,17 +14,17 @@
 				{% if page.pageGallery and page.pageGallery.images|length > 0 %}
 					<img src="{{ vich_uploader_asset(page.pageGallery.images|last)|imagine_filter('creative_dim_down') }}" class="float-end m-4 p-4 col-md-6" alt="{{ page.pageGallery.images|first }}"/>
 				{% endif %}
-				{{page.content | raw}}
+				{{ page.content | raw}}
 			</div>
 		</div>
 
 		{% if page.pageGallery and page.pageGallery.images|length > 1 %}
 			<div class="row">
-					{% for image in page.pageGallery.images|slice(0, page.pageGallery.images|length-1) %}
-				<div class="{{page.pageGallery.images|length > 2 ? 'col-6' : 'col-10 offset-1' }} p-4">
+				{% for image in page.pageGallery.images|slice(0, page.pageGallery.images|length-1) %}
+					<div class="{{page.pageGallery.images|length > 2 ? 'col-6' : 'col-10 offset-1' }} p-4">
 						<img src="{{ vich_uploader_asset(image)|imagine_filter('creative_dim_down') }}" alt="{{ image }}" class="img-fluid w-100"/>
-				</div>
-					{% endfor %}
+					</div>
+				{% endfor %}
 			</div>
 		{% endif %}
 	</div>
