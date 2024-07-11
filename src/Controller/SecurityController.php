@@ -28,7 +28,7 @@ class SecurityController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('@EasyAdmin/page/login.html.twig', [
+        return $this->render('@NakaCMS/security/admin_login.html.twig', [
             // parameters usually defined in Symfony login forms
             'error' => $error,
             'last_username' => $lastUsername,
