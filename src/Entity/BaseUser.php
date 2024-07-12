@@ -17,6 +17,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use AddressTrait;
+
+    const DEFAULT_PREFERRED_LOCALE = 'en';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -269,7 +272,7 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getPreferredLocale(): ?string
     {
-        return $this->preferredLocale;
+        return $this->preferredLocale ?? self::DEFAULT_PREFERRED_LOCALE;
     }
 
     public function setPreferredLocale(?string $preferredLocale): static

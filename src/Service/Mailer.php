@@ -65,20 +65,25 @@ class Mailer
     }
 
 
-    public function sendMessageToAddress($fromAddress, $toAddress, $subject, $templateName, $context, $addDoNotReply = true)
+    public function sendMessageToAddress($fromAddress, $toAddress, $subject, $templateName, $context, $locale = 'en', $addDoNotReply = true)
     {
+        $context = array_merge($context, ['_locale' => $locale]);
         $templatedEmail = (new TemplatedEmail())
             ->from($fromAddress)
             ->to($toAddress)
             ->subject($subject)
             ->htmlTemplate($templateName)
+            ->locale($locale)
             ->context($context);
+
         if ($addDoNotReply) {
             $templatedEmail->replyTo($this->applicationDoNotReplyEmail);
         }
         $this->mailer->send($templatedEmail);
         $this->logger->info(sprintf(
-            'New member email mail sent to office',
+            'New mail sent to %s about %s',
+            $toAddress,
+            $subject,
         ));
     }
 
@@ -90,9 +95,9 @@ class Mailer
             $this->translator->trans('email.welcomeMessageToNewVerifiedMember.subject', ['%applicationName%' => $this->applicationName]),
             '@NakaCMS/email/welcome_new_verified_member.html.twig',
             [
-                // You can pass whatever data you want
                 'user' => $user,
-            ]
+            ],
+            $user->getPreferredLocale()
         );
         $this->logger->info(sprintf(
             'Welcome email has been send to editor %s with email %s',

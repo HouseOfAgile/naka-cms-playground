@@ -49,7 +49,8 @@ class TimeUtilsExtension extends AbstractExtension
 
     public function carbonDate($date, $format = 'human')
     {
-        $locale = $this->requestStack->getCurrentRequest()->getLocale();
+        // in case the requestStack is not set (command line) we use default locale
+        $locale = $this->requestStack->getCurrentRequest() ? $this->requestStack->getCurrentRequest()->getLocale() : 'en';
 
         $dt = Carbon::parse($date)->locale($locale);
 
