@@ -291,6 +291,7 @@ form.member.repeatPassword: 'Repeat Password'
 form.member.password.constraint.pleaseEnterAPassword: 'Please enter a password'
 form.member.password.invalidMessage: 'The password fields must match.'
 form.member.register: 'Register'
+form.member.preferredLocale: 'Preferred Language'
 
 # addressForm
 form.addressForm.street: 'Street'
