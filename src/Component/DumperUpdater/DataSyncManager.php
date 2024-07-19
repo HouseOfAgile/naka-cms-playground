@@ -300,7 +300,6 @@ class DataSyncManager
 
         try {
             $relatedEntity = null;
-            dump($this->appEntities);
             if (array_key_exists($keyAttr, $this->appEntitiesAliases)) {
                 $relatedEntity = $this->appEntitiesAliases[$keyAttr];
             } elseif (array_key_exists($keyAttr, $this->appEntitiesDict)) {
