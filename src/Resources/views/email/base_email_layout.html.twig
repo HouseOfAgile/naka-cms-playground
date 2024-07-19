@@ -1,119 +1,135 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>
-      {% block title %}
-      {% endblock %}
-    </title>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
-      
-      body {
-        margin: 0;
-        padding: 0;
-        background-color: #f3f3f3;
-        font-family: 'Source Sans 3', Arial, sans-serif;
-      }
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        letter-spacing: 0px;
-        font-weight: normal;
-        -webkit-font-smoothing: antialiased;
-        font-family: 'Rubik', Arial, sans-serif;
-        font-weight: 400;
-      }
-      h1 {
-        background-color: #264459;
-        color: #ffffff;
-        padding: 30px 10px 50px;
-        font-weight: normal;
-      }
-      hr {
-        border: none;
-        border-top: 3px solid #264459;
-        margin: 20px;
-      }
-      .container {
-        background-color: #fefefe;
-        width: 580px;
-        margin: 0 auto;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        overflow: hidden;
-      }
-      .header {
-        background-color: #ff8400;
-        padding: 20px;
-        text-align: center;
-      }
-      .header .logo {
-        font-family: 'Caveat', cursive;
-        font-size: 40px;
-        text-decoration: none;
-        color: #ffffff;
-      }
-      .content {
-        padding: 20px;
-      }
-      .footer {
-        background-color: #efefee;
-        padding: 10px 20px;
-      }
-      .email-impact-message {
-        background-color: #264459;
-        color: #ffffff;
-        padding: 20px;
-        text-align: center;
-        font-size: 24px;
-        margin-bottom: 20px;
-      }
-      .email-content {
-        padding: 10px 30px 20px;
-        color: #333;
-      }
-      .text-center {
-        text-align: center;
-      }
-      .btn {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #264459;
-        color: #fefefe;
-        border: 1px solid #fff;
-        border-radius: 3px;
-        font-size: 20px;
-        font-weight: bold;
-        text-decoration: none;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="body">
-      <div class="container">
-        <div class="header">
-          <a href="{{ url('app_homepage', { '_locale': 'de' }) }}" class="logo">Gay Love Spirit</a>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>
+    {% block title %}
+    {% endblock %}
+  </title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f3f3f3;
+      font-family: 'Source Sans 3', Arial, sans-serif;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      letter-spacing: 0px;
+      font-weight: normal;
+      -webkit-font-smoothing: antialiased;
+      font-family: 'Rubik', Arial, sans-serif;
+      font-weight: 400;
+    }
+
+    h1 {
+      background-color: #264459;
+      color: #ffffff;
+      padding: 30px 10px 50px;
+      font-weight: normal;
+    }
+
+    hr {
+      border: none;
+      border-top: 3px solid #264459;
+      margin: 20px;
+    }
+
+    .container {
+      background-color: #fefefe;
+      width: 580px;
+      margin: 0 auto;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .header {
+      background-color: #ff8400;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .header .logo {
+      font-family: 'Caveat', cursive;
+      font-size: 40px;
+      text-decoration: none;
+      color: #ffffff;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .footer {
+      background-color: #efefee;
+      padding: 10px 20px;
+    }
+
+    .email-impact-message {
+      background-color: #264459;
+      color: #ffffff;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .email-content {
+      padding: 10px 30px 20px;
+      color: #333;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #264459;
+      color: #fefefe;
+      border: 1px solid #fff;
+      border-radius: 3px;
+      font-size: 20px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="body">
+    <div class="container">
+      <div class="header">
+        <a href="{{ url('app_homepage', { '_locale': 'de' }) }}" class="logo">Gay Love Spirit</a>
+      </div>
+      <div class="content">
+        <div class="email-impact-message">
+          {% block impact_message %}
+          {% endblock %}
         </div>
-        <div class="content">
-          <div class="email-impact-message">
-            {% block impact_message %}
-            {% endblock %}
-          </div>
-          <div class="email-content">
-            {% block email_content %}
-            {% endblock %}
-          </div>
-          <div class="footer">
-            <div class="block">{{ 'email.signature'|trans({ '%applicationName%': 'Gay Love Spirit' })|raw }}</div>
-            <p class="block bottom text-center">{{ 'email.bottomFooterText'|trans({ '%applicationName%': 'Gay Love Spirit' }) }}</p>
-          </div>
+        <div class="email-content">
+          {% block email_content %}
+          {% endblock %}
+        </div>
+        <div class="footer">
+          <div class="block">{{ 'email.signature'|trans({ '%applicationName%': 'Gay Love Spirit' })|raw }}</div>
+          <p class="block bottom text-center">{{ 'email.bottomFooterText'|trans({ '%applicationName%': 'Gay Love Spirit'
+            }) }}</p>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
