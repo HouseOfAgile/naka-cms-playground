@@ -21,6 +21,9 @@ class NakaCMSExtension extends Extension implements PrependExtensionInterface
         $definition = $container->getDefinition('hoa_naka_cms.hoa_ipsum');
         $definition->setArgument(0, $config['internationalization']['all_locales']);
         $definition->setArgument(1, $config['internationalization']['supported_locales']);
+
+        $container->setParameter('hoa_naka_cms.redirect_url', $config['redirect_url']);
+
     }
 
     public function prepend(ContainerBuilder $container): void

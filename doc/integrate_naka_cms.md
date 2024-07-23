@@ -27,8 +27,8 @@
         $uploadsPath: "%kernel.project_dir%/public/uploads"
         $allLocales: "%all_locales%"
         $applicationName: "%env(APPLICATION_NAME)%"
-        $applicationSenderEmail: "%env(APPLICATION_SENDER_EMAIL)%"
         $applicationSenderEmail: '%env(APPLICATION_SENDER_EMAIL)%'
+        $applicationDoNotReplyEmail: "%env(APPLICATION_DONOTREPLY_EMAIL)%"
         $applicationSenderName: "%env(APPLICATION_SENDER_NAME)%"
         $applicationContactEmail: "%env(APPLICATION_CONTACT_EMAIL)%"
         $applicationContactName: "%env(APPLICATION_CONTACT_NAME)%"
@@ -77,6 +77,23 @@ We need a new twig service in twig.yml
 ```
         websiteInfo: '@HouseOfAgile\NakaCMSBundle\Component\WebsiteInfo\WebsiteInfoService'
 ```
+
+### user preferred locale
+need to configure redirect_url after login to go to an exisiting url
+```
+hoa_naka_cms:
+    redirect_url: 'account_home'
+```
+
+Services need to be configured too
+
+    # We have to add this here somehow
+    HouseOfAgile\NakaCMSBundle\EventSubscriber\UserLocaleSubscriber:
+        arguments:
+            $redirectUrl: '%hoa_naka_cms.redirect_url%'
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
 
 ## Add Services stub
 For ease of work, we add some general services/component

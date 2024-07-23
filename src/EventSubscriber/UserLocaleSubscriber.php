@@ -15,10 +15,14 @@ use Symfony\Component\Security\Http\SecurityEvents;
  */
 class UserLocaleSubscriber implements EventSubscriberInterface
 {
+    private string $redirectUrl;
+
     public function __construct(
         private RequestStack $requestStack,
-		private RouterInterface $router,
-		) {
+        private RouterInterface $router,
+        string $redirectUrl
+    ) {
+        $this->redirectUrl = $redirectUrl;
     }
 
     public function onInteractiveLogin(InteractiveLoginEvent $event): void
@@ -26,18 +30,14 @@ class UserLocaleSubscriber implements EventSubscriberInterface
         $user = $event->getAuthenticationToken()->getUser();
 
         if (method_exists($user, 'getPreferredLocale')) {
-            // User entity might not have the locale attribute
             if (null !== $user->getPreferredLocale()) {
-                // dd($this->requestStack->getMainRequest()->attributes);
                 $this->requestStack->getSession()->set('_locale', $user->getPreferredLocale());
 
-
                 // Generate the URL with the correct locale
-                $linkToAccount = $this->router->generate('account_bookings', [
+                $linkToAccount = $this->router->generate($this->redirectUrl, [
                     '_locale' => $user->getPreferredLocale(),
                 ]);
                 $this->requestStack->getSession()->set('redirect_to', $linkToAccount);
-
             }
         }
     }
@@ -49,3 +49,4 @@ class UserLocaleSubscriber implements EventSubscriberInterface
         ];
     }
 }
+

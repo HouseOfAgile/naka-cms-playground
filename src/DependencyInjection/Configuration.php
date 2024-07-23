@@ -13,20 +13,25 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
-            ->children()
+        ->children()
             ->arrayNode('internationalization')
-            ->children()
-            ->arrayNode('all_locales')
-                ->defaultValue(['en','de','fr'])
-                ->scalarPrototype()->end()
+                ->children()
+                    ->arrayNode('all_locales')
+                        ->defaultValue(['en','de','fr'])
+                        ->scalarPrototype()->end()
+                    ->end()
+                    ->scalarNode('supported_locales')
+                        ->info('String representing the supported locales separated by \'|\'')
+                        ->defaultValue('en|de')
+                    ->end()
+                ->end()
+            ->end() // internationalization
+            ->scalarNode('redirect_url')
+                ->info('The route to redirect to after login')
+                ->defaultValue('account_bookings')
             ->end()
-            ->scalarNode('supported_locales')
-            ->info('String representing the supported locales seprated by \'|\'')
-                ->defaultValue('en|de')
-            ->end()
-            ->end()
-            ->end() // twitter
-        ;
+        ->end()
+    ;
 
         return $treeBuilder;
     }

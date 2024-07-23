@@ -22,3 +22,9 @@ services:
             $uploadsPath: "%kernel.project_dir%/public/uploads"
 
     Symfony\Component\Asset\Context\RequestStackContext: "@assets.context"
+
+    HouseOfAgile\NakaCMSBundle\EventSubscriber\UserLocaleSubscriber:
+        arguments:
+            $redirectUrl: '%hoa_naka_cms.redirect_url%'
+        tags:
+            - { name: 'kernel.event_subscriber' }
