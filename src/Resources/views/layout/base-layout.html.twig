@@ -14,19 +14,19 @@
 
 	<div class="main-wrapper position-relative">
 		{% block main_wrapper %}
-			{% if app.request.hasPreviousSession %}
-				{# read and display all flash messages #}
-				{% for label, messages in app.flashes %}
-					<div class="container my-4">
-						{% for message in messages %}
-							<div class="flash-{{ label }} alert alert-{{ label }}">
-								{{ message|trans }}
-							</div>
-						{% endfor %}
-					</div>
-				{% endfor %}
-			{% endif %}
 			<div class="main-content">
+				{% if app.request.hasPreviousSession %}
+					{# read and display all flash messages #}
+					{% for label, messages in app.flashes %}
+						<div class="container my-4">
+							{% for message in messages %}
+								<div class="flash-{{ label }} alert alert-{{ label }}">
+									{{ message|trans }}
+								</div>
+							{% endfor %}
+						</div>
+					{% endfor %}
+				{% endif %}
 				{% block main %}
 					{% block breadcrumbs %}
 						{% if breadCrumbs is defined and breadCrumbs is not empty %}

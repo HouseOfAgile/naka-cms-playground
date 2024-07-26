@@ -23,6 +23,8 @@ class NakaCMSExtension extends Extension implements PrependExtensionInterface
         $definition->setArgument(1, $config['internationalization']['supported_locales']);
 
         $container->setParameter('hoa_naka_cms.redirect_url', $config['redirect_url']);
+        $container->setParameter('hoa_naka_cms.openai_prompts', $config['openai_prompts']);
+
 
     }
 

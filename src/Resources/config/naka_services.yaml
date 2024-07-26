@@ -1,6 +1,6 @@
 parameters:
-    facebook_page: "https://www.facebook.com/"
-    app.supported_locales: "en|de|fr"
+    facebook_page: 'https://www.facebook.com/'
+    app.supported_locales: 'en|de|fr'
     app.path.asset_pictures: /uploads/asset-pictures
     app.path.asset_website_resources: /uploads/asset-website-resources
     all_locales:
@@ -19,9 +19,9 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
         bind:
-            $uploadsPath: "%kernel.project_dir%/public/uploads"
+            $uploadsPath: '%kernel.project_dir%/public/uploads'
 
-    Symfony\Component\Asset\Context\RequestStackContext: "@assets.context"
+    Symfony\Component\Asset\Context\RequestStackContext: '@assets.context'
 
     HouseOfAgile\NakaCMSBundle\EventSubscriber\UserLocaleSubscriber:
         arguments:
