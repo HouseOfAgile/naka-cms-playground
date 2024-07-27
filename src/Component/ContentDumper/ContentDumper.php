@@ -47,7 +47,7 @@ class ContentDumper
     protected $vichUploaderHelper;
 
     protected $projectDir;
-    protected $devModedevMode;
+    protected $devMode;
 
     public function __construct(
         LoggerInterface $scrappingLogger,
