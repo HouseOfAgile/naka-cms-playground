@@ -140,7 +140,7 @@ class DataSyncManager
     {
 
         $this->setupDataSyncManager($appEntities, $appEntitiesAliases, $assetEntities);
-        
+
         $assetsSynchronized = $this->synchronizeAssets($dumpOrUpdate, $doNotMoveAsset);
         if ($assetsSynchronized) {
             $contentSynchronized = $this->synchronizeData($dumpOrUpdate);
@@ -159,6 +159,8 @@ class DataSyncManager
     public function synchronizeData(bool $dumpOrUpdate = false): bool
     {
         foreach ($this->appEntities as $type => $appEntityAttr) {
+            $startTime = microtime(true);
+
             $repository = $this->appEntitiesDict[$type];
 
             $dataArray = [];
@@ -184,6 +186,12 @@ class DataSyncManager
 
                 $dumpedEntities = Yaml::parseFile($filePath);
                 if (count($dumpedEntities) > 0) {
+                    $entityCounter = 0;
+                    $flushInterval = 2000;
+                    $useCounter = !in_array($type, DataDumperParameter::APP_ENTITIES_SELF_REF);
+
+                    $batchEntities = [];
+
                     foreach ($dumpedEntities as $entityKey => $entityData) {
                         if (array_key_exists($type, $this->assetEntities)) {
                             $this->logInfo('Asset entity detected');
@@ -195,20 +203,48 @@ class DataSyncManager
                         if (!$entity) {
                             $entityClass = 'App\\Entity\\' . ucfirst($type);
                             $entity = new $entityClass();
-                            $this->logInfo(sprintf('Create Entity %s with id %s', ucfirst($type), $entityKey));
+                            $this->logCommand(sprintf('Create Entity %s with id %s', ucfirst($type), $entityKey));
                         } else {
-                            $this->logInfo(sprintf('Update Entity %s with id %s', ucfirst($type), $entityKey));
+                            $this->logCommand(sprintf('Update Entity %s with id %s', ucfirst($type), $entityKey));
                         }
 
                         $this->updateEntityFromYamlData($entity, $entityData, $type);
 
                         $this->entityManager->persist($entity);
-                        $this->entityManager->flush();
-                        $this->logInfo(sprintf('Saved entity %s with id %s', $type, $entity->getId()));
+                        $batchEntities[$entityData['id']] = $entity;
 
-                        $this->entitiesIdMapping[$type][$entityData['id']] = $entity->getId();
+                        $entityCounter++;
+
+                        if ($useCounter && $entityCounter % $flushInterval === 0) {
+                            $this->entityManager->flush();
+
+                            foreach ($batchEntities as $originalId => $persistedEntity) {
+                                $this->entitiesIdMapping[$type][$originalId] = $persistedEntity->getId();
+                            }
+
+                            $this->entityManager->clear();
+                            $batchEntities = [];
+                            $this->logInfo(sprintf('Flushed and cleared entity manager after %d entities', $entityCounter));
+                        }
                     }
-                    $this->logSuccess(sprintf('Updated all data for entities %s (%d entries)', $type, count($dumpedEntities)));
+
+                    // Final flush to ensure all entities are persisted
+                    $this->entityManager->flush();
+
+                    foreach ($batchEntities as $originalId => $persistedEntity) {
+                        $this->entitiesIdMapping[$type][$originalId] = $persistedEntity->getId();
+                    }
+
+                    $this->entityManager->clear();
+
+                    $endTime = microtime(true);
+                    $duration = $endTime - $startTime;
+                    $this->logSuccess(sprintf(
+                        'Updated all data for entities %s (%d entries) in %d seconds',
+                        $type,
+                        count($dumpedEntities),
+                        $duration
+                    ));
                 } else {
                     $this->logWarning(sprintf('We have no entity %s', $type));
                 }
@@ -216,6 +252,7 @@ class DataSyncManager
         }
         return true;
     }
+
 
     public function updateEntityFromYamlData($entity, $dataEntity, $type = null): object
     {
@@ -253,13 +290,13 @@ class DataSyncManager
         foreach ($yamlChangeSet as $entityClass => $entityData) {
             if (!array_key_exists('id', $entityData)) {
                 $entity = new $entityClass();
-                $this->logInfo(sprintf('Create Entity %s', ucfirst($entityClass)));
+                $this->logCommand(sprintf('Create Entity %s', ucfirst($entityClass)));
             } else {
                 $repository = $this->entityManager->getRepository($entityClass);
 
                 $entity = $repository->findOneBy(['id' => $entityData['id']]);
 
-                $this->logInfo(sprintf('Update Entity %s with id %s', ucfirst($entityClass), $entityData['id']));
+                $this->logCommand(sprintf('Update Entity %s with id %s', ucfirst($entityClass), $entityData['id']));
             }
             $this->updateEntityFromYamlData($entity, $entityData);
         }
@@ -281,13 +318,13 @@ class DataSyncManager
             $linkedEntity = $this->appEntitiesDict[$relatedEntity]->findOneBy(['id' => $newRefId]);
 
             $entity->{$addMethod}($linkedEntity);
-            $this->logInfo(sprintf('Added OneToMany relation from entity %s to entity %s', $entity, $linkedEntity));
+            $this->logCommand(sprintf('Added OneToMany relation from entity %s to entity %s', $entity, $linkedEntity));
         } else {
             if (in_array($keyAttr, array_keys($this->appEntitiesDict))) {
                 $linkedEntity = $this->appEntitiesDict[$keyAttr]->findOneBy(['id' => $refId]);
                 $addMethod = substr($keyAttr, -1) === 's' ? substr($keyAttr, 0, -1) : $keyAttr;
                 $entity->{'add' . ucfirst($keyAttr)}($linkedEntity);
-                $this->logInfo(sprintf('Added OneToMany relation from entity %s to entity %s', $entity, $linkedEntity));
+                $this->logCommand(sprintf('Added OneToMany relation from entity %s to entity %s', $entity, $linkedEntity));
             } else {
                 $addMethod = substr($keyAttr, -1) === 's' ? substr($keyAttr, 0, -1) : $keyAttr;
                 $entity->{'add' . ucfirst($addMethod)}($refId);
@@ -305,7 +342,7 @@ class DataSyncManager
             } elseif (array_key_exists($keyAttr, $this->appEntitiesDict)) {
                 $relatedEntity = $this->appEntitiesDict[$keyAttr];
             } elseif (array_key_exists($keyAttr, $this->appEntities[$type])) {
-                if (array_key_exists($this->appEntities[$type][$keyAttr], $this->appEntities)){
+                if (array_key_exists($this->appEntities[$type][$keyAttr], $this->appEntities)) {
                     $relatedEntity = $this->appEntities[$type][$keyAttr];
                 }
             }
@@ -314,7 +351,7 @@ class DataSyncManager
                 $linkedEntity = $this->appEntitiesDict[$relatedEntity]->findOneBy(['id' => $newRefId]);
 
                 $entity->{'set' . ucfirst($keyAttr)}($linkedEntity);
-                $this->logInfo(sprintf('Set relation from entity %s to entity %s', $entity, $linkedEntity));
+                $this->logCommand(sprintf('Set relation from entity %s to entity %s', $entity, $linkedEntity));
             } else {
                 if ($keyAttr !== 'id') {
                     if ($keyAttr == 'slug') {
@@ -425,9 +462,9 @@ class DataSyncManager
             if (!$entity) {
                 $entityClass = 'App\\Entity\\' . ucfirst($type);
                 $entity = new $entityClass();
-                $this->logInfo(sprintf('Create Asset Entity %s with id %s', ucfirst($type), $keyEntity));
+                $this->logCommand(sprintf('Create Asset Entity %s with id %s', ucfirst($type), $keyEntity));
             } else {
-                $this->logInfo(sprintf('Update Asset Entity %s with id %s', ucfirst($type), $keyEntity));
+                $this->logCommand(sprintf('Update Asset Entity %s with id %s', ucfirst($type), $keyEntity));
             }
 
             $fixtureImageFile = new File($dataEntity['imagePath']);

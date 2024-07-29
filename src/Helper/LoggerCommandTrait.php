@@ -88,10 +88,10 @@ trait LoggerCommandTrait
                 }
                 break;
             case 'info':
-                if ($this->showAllLogs) {
+                // if ($this->showAllLogs) {
                     $this->writeConsole('<info>' . $message . '</info>');
                     $this->logger->info($message);
-                }
+                // }
                 break;
             case 'success':
                 $this->writeConsole($message, 'success');
