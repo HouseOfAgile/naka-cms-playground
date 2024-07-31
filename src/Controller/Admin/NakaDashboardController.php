@@ -72,20 +72,16 @@ class NakaDashboardController extends AbstractDashboardController
             ->update(Crud::PAGE_INDEX, Action::EDIT, fn (Action $action) => $action->addCssClass('btn btn-warning text-white'))
             ->update(Crud::PAGE_INDEX, Action::DETAIL, fn (Action $action) => $action->addCssClass('btn btn-info text-white'))
             // ->update(Crud::PAGE_INDEX, Action::BATCH_DELETE, fn (Action $action) => $action->addCssClass('text-white'))
+            
             // We restrict new and delete only for super admin
             // ->setPermission(Action::NEW, 'ROLE_SUPER_ADMIN')
             // ->setPermission(Action::DELETE, 'ROLE_SUPER_ADMIN')
-            ;
+        ;
     }
 
     public function configureAssets(): Assets
     {
         return Assets::new()
-            // ->addJsFile('https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js')
-            // ->addJsFile('https://code.jquery.com/jquery-3.6.0.js')
-            // ->addJsFile('https://code.jquery.com/ui/1.12.1/jquery-ui.min.js')
-            // ->addJsFile('js/somejs.js')
-            // ->addCssFile('https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.3.0/font-awesome-animation.min.css')
             ->addCssFile('css/admin.css');
     }
 }
