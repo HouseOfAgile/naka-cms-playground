@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminControlPanelController extends AdminDashboardController
 {
     public const CONTROL_PANEL_OPERATIONS = [
-        'translation' => '@NakaCMS/backend/control-panel/_panel_translation.html.twig'
+        'translation' => '@NakaCMS/backend/control_panel/_panel_translation.html.twig'
     ];
 
     #[Route(path: '/dashboard', name: 'dashboard')]
@@ -23,7 +23,7 @@ class AdminControlPanelController extends AdminDashboardController
         $viewParams = [
             'controlPanelOperations' => self::CONTROL_PANEL_OPERATIONS
         ];
-        return $this->render('@NakaCMS/backend/control-panel/control_panel_dashboard.html.twig', $viewParams);
+        return $this->render('@NakaCMS/backend/control_panel/control_panel_dashboard.html.twig', $viewParams);
     }
 
     #[Route(path: '/export-translation', name: 'export_translation')]
@@ -48,6 +48,6 @@ class AdminControlPanelController extends AdminDashboardController
         $viewParams = [
             'exportTranslationContent' => $exportTranslationContent,
         ];
-        return $this->render('@NakaCMS/backend/control-panel/export_translation.html.twig', $viewParams);
+        return $this->render('@NakaCMS/backend/control_panel/export_translation.html.twig', $viewParams);
     }
 }
