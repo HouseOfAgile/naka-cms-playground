@@ -1,0 +1,18 @@
+{% extends '@NakaCMS/backend/control_panel/_panel_operation_layout.html.twig' %}
+
+{% block panel_operation %}
+    <div class="row row-cols-1 row-cols-xl-2 my-2">
+        <div class="col">
+            <a href="{{ path("admin_control_panel_export_translation") }}">
+                <div class="cp-item border border-light text-bg-secondary h-100 rounded p-3 mx-2">
+                    <div class="row p-3 ">
+                        <div class="col-12">
+                            <h2 class="fs-4 text-center">{{ 'backend.operation.exportTranslation' | trans }}</h2>
+                            <div class="ps-2">{{ 'backend.operation.exportTranslation.explanation' | trans | raw }}</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+{% endblock panel_operation %}

@@ -1,0 +1,10 @@
+<div class="py-3">
+    <div class="row p-3 border rounded text-bg-light">
+        <div class="col-10 offset-1 text-center py-4">
+            <h1>{{ 'backend.controlPanel.typeOfOperations' | trans({'%typeOfOperation%' : operation}) | capitalize }}</h1>
+        </div>
+        {% block panel_operation %}
+        {% endblock panel_operation %}
+
+    </div>
+</div>
