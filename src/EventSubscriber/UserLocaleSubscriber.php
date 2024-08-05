@@ -3,6 +3,7 @@
 // src/EventSubscriber/UserLocaleSubscriber.php
 namespace HouseOfAgile\NakaCMSBundle\EventSubscriber;
 
+use App\Entity\AdminUser;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
@@ -33,11 +34,17 @@ class UserLocaleSubscriber implements EventSubscriberInterface
             if (null !== $user->getPreferredLocale()) {
                 $this->requestStack->getSession()->set('_locale', $user->getPreferredLocale());
 
-                // Generate the URL with the correct locale
-                $linkToAccount = $this->router->generate($this->redirectUrl, [
-                    '_locale' => $user->getPreferredLocale(),
-                ]);
-                $this->requestStack->getSession()->set('redirect_to', $linkToAccount);
+				if ($user instanceof AdminUser) {
+					$redirectToUrl = $this->router->generate('admin_dashboard', [
+						'_locale' => $user->getPreferredLocale(),
+					]);
+				} else {
+					$redirectToUrl = $this->router->generate($this->redirectUrl, [
+						'_locale' => $user->getPreferredLocale(),
+					]);
+				}
+
+                $this->requestStack->getSession()->set('redirect_to', $redirectToUrl);
             }
         }
     }

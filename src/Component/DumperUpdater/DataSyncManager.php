@@ -150,7 +150,7 @@ class DataSyncManager
     }
 
     /**
-     * Synchronize data: execute a dump of entities defined in appEntities into YAML files 
+     * Synchronize data: execute a dump of entities defined in appEntities into YAML files
      * or update existing YAML files into the current database.
      *
      * @param bool $dumpOrUpdate
@@ -211,20 +211,26 @@ class DataSyncManager
                         $this->updateEntityFromYamlData($entity, $entityData, $type);
 
                         $this->entityManager->persist($entity);
-                        $batchEntities[$entityData['id']] = $entity;
 
-                        $entityCounter++;
+                        if ($useCounter) {
+                            $batchEntities[$entityData['id']] = $entity;
 
-                        if ($useCounter && $entityCounter % $flushInterval === 0) {
-                            $this->entityManager->flush();
+                            $entityCounter++;
+                            if ($entityCounter % $flushInterval === 0) {
+                                $this->entityManager->flush();
 
-                            foreach ($batchEntities as $originalId => $persistedEntity) {
-                                $this->entitiesIdMapping[$type][$originalId] = $persistedEntity->getId();
+                                foreach ($batchEntities as $originalId => $persistedEntity) {
+                                    $this->entitiesIdMapping[$type][$originalId] = $persistedEntity->getId();
+                                }
+
+                                $this->entityManager->clear();
+                                $batchEntities = [];
+                                $this->logInfo(sprintf('Flushed and cleared entity manager after %d entities', $entityCounter));
                             }
+                        } else {
+                            $this->entityManager->flush();
+							$this->entitiesIdMapping[$type][$entityData['id']] = $entity->getId();
 
-                            $this->entityManager->clear();
-                            $batchEntities = [];
-                            $this->logInfo(sprintf('Flushed and cleared entity manager after %d entities', $entityCounter));
                         }
                     }
 
@@ -252,7 +258,6 @@ class DataSyncManager
         }
         return true;
     }
-
 
     public function updateEntityFromYamlData($entity, $dataEntity, $type = null): object
     {
@@ -363,7 +368,7 @@ class DataSyncManager
                 }
             }
         } catch (\Throwable $th) {
-            dd($entity,  $keyAttr, $valAttr,  $type, $th);
+            dd($entity, $keyAttr, $valAttr, $type, $th);
         }
     }
 
@@ -376,7 +381,7 @@ class DataSyncManager
         $property = $reflectionClass->getProperty($keyAttr);
         $proptype = $property->getType();
 
-        if ($proptype instanceof \ReflectionNamedType && enum_exists($proptype->getName())) {
+        if ($proptype instanceof \ReflectionNamedType  && enum_exists($proptype->getName())) {
             $enumClass = $proptype->getName();
             return constant("$enumClass::{$valAttr}");
         }
@@ -541,12 +546,15 @@ class DataSyncManager
             if ($value instanceof Collection && isset($metadata->associationMappings[$propertyName])) {
                 $mapping = $metadata->associationMappings[$propertyName];
                 if ($mapping['type'] === ClassMetadataInfo::MANY_TO_MANY && !isset($mapping['mappedBy'])) {
-                    $data[$propertyName] = array_map(fn ($item) => $item->getId(), $value->toArray());
+                    $data[$propertyName] = array_map(fn($item) => $item->getId(), $value->toArray());
                 }
             } elseif ($value instanceof Collection) {
                 continue;
             } elseif (is_object($value) && method_exists($value, 'getId')) {
-                if ($metadata->associationMappings[$propertyName]['type'] === ClassMetadataInfo::ONE_TO_ONE && isset($metadata->associationMappings[$propertyName]['mappedBy'])) continue;
+                if ($metadata->associationMappings[$propertyName]['type'] === ClassMetadataInfo::ONE_TO_ONE && isset($metadata->associationMappings[$propertyName]['mappedBy'])) {
+                    continue;
+                }
+
                 $data[$propertyName] = $value->getId();
             } elseif ($value instanceof \BackedEnum) {
                 $data[$propertyName] = $value->value;
