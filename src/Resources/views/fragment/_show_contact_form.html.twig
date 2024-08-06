@@ -3,11 +3,11 @@
         <div class="col-md-12">
             <h2 class="display-4 my-3 text-center naka-header">{{ 'contact.contactTitle' | trans | raw }}</h2>
         </div>
-        <div class="col-md-4">
+        <div class="d-none d-xl-block col-xl-4 text-center py-3">
             <img class="img-fluid"
                  src="{{ '/images/logo/logo_transparent.png'| imagine_filter("logo_resize") }}" />
         </div>
-        <div class="col-md-8">
+        <div class="col-12 col-xl-8">
             <div class="jumbotron">
                 <div class="lead my-3">{{ 'contact.contactDetails' | trans | raw }}</div>
             </div>
@@ -40,8 +40,8 @@
                     </div>
                 </div>
                 {% if form.captcha is defined %}
-                    <div class="row m-4">
-                        <div class="col-8 offset-2">{{ form_widget(form.captcha,{ 'attr': {'class': 'form-control' }}) }}</div>
+                    <div class="row m-0 m-xl-4">
+                        <div class="col-12 text-center">{{ form_widget(form.captcha,{ 'attr': {'class': 'form-control' }}) }}</div>
                         <div class="col-8 offset-2 text-center lead">{{ form_help(form.captcha) }}</div>
                     </div>
                 {% endif %}
