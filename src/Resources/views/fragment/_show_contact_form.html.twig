@@ -1,53 +1,60 @@
 <div class="container my-4 naka-contact-form">
-	<div class="row g-0">
-		<div class="col-md-12">
-			<h2 class="display-4 my-3 text-center naka-header">{{'contact.contactTitle'|trans|raw }}</h2>
-		</div>
-
-		<div class="col-md-4">
-			<img class="img-fluid" src="{{ '/images/logo/logo_transparent.png'| imagine_filter('logo_resize') }}"/>
-		</div>
-		<div class="col-md-8">
-			<div class="jumbotron">
-				<div class="lead my-3">{{'contact.contactDetails'|trans|raw }}</div>
-			</div>
-			<hr/>
-			{{ form_start(form) }}
-			<div class="row m-4">
-				<div class="col-3">{{ form_label(form.name) }}</div>
-				<div class="col-9">{{ form_widget(form.name,{ 'attr': {'class': 'form-control' }}) }}</div>
-				<div class="col-9 offset-3">{{ form_help(form.name) }}</div>
-			</div>
-			<div class="row m-4">
-				<div class="col-3">{{ form_label(form.email) }}</div>
-				<div class="col-9">{{ form_widget(form.email,{ 'attr': {'class': 'form-control' }}) }}</div>
-				<div class="col-9 offset-3">{{ form_help(form.email) }}</div>
-			</div>
-			<div class="row m-4">
-				<div class="col-3">{{ form_label(form.subject) }}</div>
-				<div class="col-9">{{ form_widget(form.subject,{ 'attr': {'class': 'form-control' }}) }}</div>
-				<div class="col-9 offset-3">{{ form_help(form.subject) }}</div>
-			</div>
-			<div class="row m-4">
-				<div class="col-3">{{ form_label(form.message) }}</div>
-				<div class="col-9">{{ form_widget(form.message,{ 'attr': {'class': 'form-control' }}) }}</div>
-				<div class="col-9 offset-3">{{ form_help(form.message) }}</div>
-			</div>
-			<div class="row m-4">
-			<div class="col-12">
-				{{ form_rest(form) }}
-			</div>
-			</div>
-			<div class="row m-4">
-				<div class="col-4 offset-4">
-					<button class="btn btn-lg p-2" type="submit">
-						{{ 'form.contact.message' | trans }}
-					</button>
-				</div>
-				{# {{ form_row(form.submit, { 'attr' : { 'class': 'btn btn-block btn-success p-2' } }) }} #}
-			</div>
-
-			{{ form_end(form) }}
-		</div>
-	</div>
+    <div class="row g-0">
+        <div class="col-md-12">
+            <h2 class="display-4 my-3 text-center naka-header">{{ 'contact.contactTitle' | trans | raw }}</h2>
+        </div>
+        <div class="col-md-4">
+            <img class="img-fluid"
+                 src="{{ '/images/logo/logo_transparent.png'| imagine_filter("logo_resize") }}" />
+        </div>
+        <div class="col-md-8">
+            <div class="jumbotron">
+                <div class="lead my-3">{{ 'contact.contactDetails' | trans | raw }}</div>
+            </div>
+            <hr />
+            {{ form_start(form) }}
+                <div class="row m-4 align-items-center">
+                    <div class="col-12 col-xl-6 pt-3">
+                        <div class="form-floating">
+                            {{ form_widget(form.name) }}
+                            {{ form_label(form.name) }}
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-6 pt-3">
+                        <div class="form-floating">
+                            {{ form_widget(form.email) }}
+                            {{ form_label(form.email) }}
+                        </div>
+                    </div>                    
+					<div class="col-12 py-3">
+                        <div class="form-floating">
+                            {{ form_widget(form.subject) }}
+                            {{ form_label(form.subject) }}
+                        </div>
+                    </div>                  
+					<div class="col-12 py-3">
+                        <div class="form-floating">
+                            {{ form_widget(form.message) }}
+                            {{ form_label(form.message) }}
+                        </div>
+                    </div>
+                </div>
+                {% if form.captcha is defined %}
+                    <div class="row m-4">
+                        <div class="col-8 offset-2">{{ form_widget(form.captcha,{ 'attr': {'class': 'form-control' }}) }}</div>
+                        <div class="col-8 offset-2 text-center lead">{{ form_help(form.captcha) }}</div>
+                    </div>
+                {% endif %}
+                <div class="row m-4">
+                    <div class="col-12">{{ form_rest(form) }}</div>
+                </div>
+                <div class="row m-4">
+                    <div class="d-grid gap-2 col-6 mx-auto my-4 p-3">
+                        <button class="btn btn-primary" type="submit">{{ 'form.contact.submit' | trans }}</button>
+                    </div>
+                    {# {{ form_row(form.submit, { 'attr' : { 'class': 'btn btn-block btn-success p-2' } }) }} #}
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
 </div>

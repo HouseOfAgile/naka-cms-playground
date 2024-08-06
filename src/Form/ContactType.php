@@ -20,25 +20,30 @@ class ContactType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'form.contact.name',
                 'attr' => [
+					'placeholder' => 'form.contact.name',
                     'class' => $this::FORM_CONTROL,
                 ]
             ])
             ->add('email', EmailType::class, [
                 'label' => 'form.contact.email',
                 'attr' => [
+					'placeholder' => 'form.contact.email',
                     'class' => $this::FORM_CONTROL,
                 ]
             ])
             ->add('subject', TextType::class, [
                 'label' => 'form.contact.subject',
                 'attr' => [
+					'placeholder' => 'form.contact.subject',
                     'class' => $this::FORM_CONTROL,
                 ]
             ])
             ->add('message', TextareaType::class, [
                 'label' => 'form.contact.message',
                 'attr' => [
+					'placeholder' => 'form.contact.message',
                     'rows' => '6',
+                    'style' => 'height: 140px;',
                     'class' => $this::FORM_CONTROL,
                 ]
             ]);

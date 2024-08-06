@@ -64,7 +64,6 @@ class Mailer
         $this->router = $router;
     }
 
-
     public function sendMessageToAddress($fromAddress, $toAddress, $subject, $templateName, $context, $locale = 'en', $addDoNotReply = true)
     {
         $context = array_merge($context, ['_locale' => $locale]);
@@ -82,7 +81,7 @@ class Mailer
         $this->mailer->send($templatedEmail);
         $this->logger->info(sprintf(
             'New mail sent to %s about %s',
-            $toAddress,
+            $toAddress instanceof Address ? $toAddress->toString(): $toAddress,
             $subject,
         ));
     }

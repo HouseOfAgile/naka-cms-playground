@@ -1,41 +1,38 @@
 {% form_theme form with [
-    '@NakaCMS/admin/form-theme/drag_n_drop_menu.html.twig'
+'@NakaCMS/admin/form-theme/drag_n_drop_menu.html.twig'
 ] %}
-
-
 {% extends '@!EasyAdmin/page/content.html.twig' %}
 
 {% block head_stylesheets %}
-	{{ parent() }}
-	{{ encore_entry_link_tags('dragndrop') }}
-{% endblock %}
+    {{ parent() }}
+    {{ encore_entry_link_tags("dragndrop") }}
+{% endblock head_stylesheets %}
 
 {% block page_title %}
-	{{ 'backend.form.configureMenu.title'|trans }} <span class="bg-secondary p-2 rounded fw-lighter">{{ menu.name }}</span>
+    {{ 'backend.form.configureMenu.title'|trans }} <span class="bg-secondary p-2 rounded fw-lighter">{{ menu.name }}</span>
 {% endblock page_title %}
 
 {% block main %}
-	{{ form_start(form) }}
-	<div class="row my-4">
-		<div class="col-4 offset-1 p-4 bg-light">{{ 'backend.form.configureMenu.detailedHelp'|trans|raw }}</div>
-		<div class="col-7">
-			<div id="sortable" data-new-order-key="naka_menu_newOrder">
-				{% for menuItem in form.menuItems %}
-					<div class="row m-4 sortable-item rounded" data-id="{{ menuItem.vars.value.id }}">
-						<div class="col-12">{{ form_widget(menuItem) }}</div>
-					</div>
-				{% endfor %}
-			</div>
-		</div>
-
-		<div class="d-grid gap-2 col-4 mx-auto my-4">
-			{{ form_widget(form.submit, { 'attr' : { 'class': 'btn btn-success p-4' } }) }}
-		</div>
-		{{ form_end(form) }}
-	</div>
-
+    {{ form_start(form) }}
+        <div class="row my-4">
+            <div class="col-4 offset-1 p-4 bg-light">{{ 'backend.form.configureMenu.detailedHelp'|trans|raw }}</div>
+            <div class="col-7">
+                <div id="sortable" data-new-order-key="naka_menu_newOrder">
+                    {% for menuItem in form.menuItems %}
+                        <div class="row m-4 sortable-item rounded"
+                             data-id="{{ menuItem.vars.value.id }}">
+                            <div class="col-12">{{ form_widget(menuItem) }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="d-grid gap-2 col-4 mx-auto my-4">
+                {{ form_widget(form.submit, { 'attr' : { 'class': 'btn btn-success p-4' } }) }}
+            </div>
+        {{ form_end(form) }}
+    </div>
 {% endblock main %}
 
 {% block body_javascript %}
-	{{ encore_entry_script_tags('dragndrop') }}
+    {{ encore_entry_script_tags("dragndrop") }}
 {% endblock body_javascript %}

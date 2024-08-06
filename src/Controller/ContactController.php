@@ -39,7 +39,7 @@ class ContactController extends AbstractController
 
                 return $this->redirectToRoute('app_homepage');
             } else {
-                $this->addFlash('error', sprintf(
+                $this->addFlash('warning', sprintf(
                     'flash.contact.messageCannotBeSent'
                 ));
             }
