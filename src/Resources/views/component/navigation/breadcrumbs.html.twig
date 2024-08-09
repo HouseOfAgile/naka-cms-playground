@@ -4,16 +4,14 @@
 			<nav aria-label="breadcrumb">
 				<ol class="breadcrumb">
 					{% for breadCrumb in breadCrumbs %}
-						<li class="breadcrumb-item">
-							{% if breadCrumb.route %}
-								<a href="{{ path(breadCrumb.route, breadCrumb.routeParams) }}">Naka
-									{{ breadCrumb.label|trans({}, 'messages') }}
-								</a>
-							{% else %}
-								{{ breadCrumb.label|trans({}, 'messages') }}
-							{% endif %}
-						</li>
-					{% endfor %}
+                        <li class="breadcrumb-item">
+                            {% if breadCrumb.route and breadCrumb.route != app.request.attributes.get('_route') %}
+                                <a href="{{ path(breadCrumb.route, breadCrumb.routeParams) }}">Naka{{ breadCrumb.label|trans({}, 'messages') }}</a>
+                            {% else %}
+                                {{ breadCrumb.label|trans({}, 'messages') }}
+                            {% endif %}
+                        </li>
+                    {% endfor %}
 				</ol>
 			</nav>
 		</div>
