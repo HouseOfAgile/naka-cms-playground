@@ -68,7 +68,10 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString(): string
     {
-        return sprintf('%s [%s]', $this->getFirstName(), $this->getId());
+        return sprintf('%s [#%s: %s]', $this->getFullName(), 
+		$this->getId(),
+		$this->getEmail(),
+	);
     }
 
     public function getFullName($lastNameFirst = true): string
