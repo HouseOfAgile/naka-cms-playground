@@ -31,7 +31,7 @@ class WebsiteAsset implements TimestampableInterface
      *
      * @var File|null
      */
-    #[Vich\UploadableField(mapping: 'asset_website_resources', fileNameProperty: 'asset.name', size: 'asset.size', mimeType: 'asset.mimeType', originalName: 'asset.originalName', dimensions: 'image.dimensions')]
+    #[Vich\UploadableField(mapping: 'asset_website_resources', fileNameProperty: 'asset.name', size: 'asset.size', mimeType: 'asset.mimeType', originalName: 'asset.originalName', dimensions: 'asset.dimensions')]
     protected $assetFile;
 
     /**
@@ -67,9 +67,10 @@ class WebsiteAsset implements TimestampableInterface
     public function __toString()
     {
         return sprintf(
-            'Asset %s [%s]',
+            'WebsiteAsset %s [#%s: %s]',
+            $this->getName(),
+            $this->getId(),
             $this->getAsset()->getName(),
-            $this->getId()
         );
     }
 

@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -46,19 +47,32 @@ class WebsiteAssetCrudController extends AbstractCrudController
     {
         $id = IdField::new('id');
 
+
+        $websiteAssetDetailsTab = FormField::addTab('backend.form.websiteAsset.tab.websiteAssetDetailsTab')
+            ->setIcon('wheel')
+            ->setHelp('backend.form.websiteAsset.tab.websiteAssetDetailsTab.help');
+
+		$name = TextField::new('name')
+		->setLabel('Name')
+		->setHelp('Internal name to be used in Menus and elsewhere');
+
         $asset = ImageField::new('asset.name')
             ->setTemplatePath('@NakaCMS/admin/fields/vich_file.html.twig');
         $assetFile = Field::new('assetFile')->setFormType(VichFileType::class);
         $assetName = TextField::new('asset.name');
 
+
+        $webSiteAssetDetailsFields = [
+            $websiteAssetDetailsTab, $name, $assetFile,
+        ];
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $asset, $assetName];
+            return [$id, $name, $asset, $assetName];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $asset, $assetFile];
+			return array_merge([$id, $asset], $webSiteAssetDetailsFields);
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$assetFile];
+			return array_merge($webSiteAssetDetailsFields);
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$assetFile];
+			return array_merge($webSiteAssetDetailsFields);
         }
     }
 }
