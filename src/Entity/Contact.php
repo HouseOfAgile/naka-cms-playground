@@ -2,6 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use HouseOfAgile\NakaCMSBundle\Repository\ContactRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;

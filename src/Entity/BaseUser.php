@@ -295,4 +295,16 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
         $this->lastVerificationEmailSentAt = $lastVerificationEmailSentAt;
         return $this;
     }
+
+    public function isVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
 }

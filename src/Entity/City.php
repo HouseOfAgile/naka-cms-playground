@@ -124,4 +124,12 @@ class City
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Address>
+     */
+    public function getAddresses(): Collection
+    {
+        return $this->addresses;
+    }
 }

@@ -2,14 +2,13 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
-use HouseOfAgile\NakaCMSBundle\Repository\WebsiteAssetRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
-use Vich\UploaderBundle\Entity\File as EmbeddedFile;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Entity\File as EmbeddedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[Vich\Uploadable]
 #[ORM\MappedSuperclass]
@@ -22,11 +21,14 @@ class WebsiteAsset implements TimestampableInterface
     #[ORM\Column(type: 'integer')]
     protected $id;
 
+    #[ORM\Column(type: 'string', length: 64, nullable: true)]
+    protected $name;
+
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     * 
+     *
      * @Vich\UploadableField(mapping="asset_website_resources", fileNameProperty="asset.name", size="asset.size", mimeType="asset.mimeType", originalName="asset.originalName", dimensions="asset.dimensions")
-     * 
+     *
      * @var File|null
      */
     #[Vich\UploadableField(mapping: 'asset_website_resources', fileNameProperty: 'asset.name', size: 'asset.size', mimeType: 'asset.mimeType', originalName: 'asset.originalName', dimensions: 'image.dimensions')]
@@ -55,7 +57,7 @@ class WebsiteAsset implements TimestampableInterface
      */
     public function dumpConfig(): array
     {
-        $config =  [
+        $config = [
             'id' => $this->getId(),
         ];
 
@@ -71,6 +73,17 @@ class WebsiteAsset implements TimestampableInterface
         );
     }
 
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance

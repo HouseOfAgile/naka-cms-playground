@@ -5,6 +5,7 @@ namespace HouseOfAgile\NakaCMSBundle\Entity;
 use App\Entity\BlockElement;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use HouseOfAgile\NakaCMSBundle\Repository\BlockElementTypeRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;

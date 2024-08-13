@@ -8,6 +8,7 @@ use App\Entity\PageBlockElement;
 use App\Entity\Picture;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use HouseOfAgile\NakaCMSBundle\Repository\BlockElementRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
@@ -276,6 +277,18 @@ class BlockElement implements TimestampableInterface
     }
 
     public function setIsFluid(?bool $isFluid): self
+    {
+        $this->isFluid = $isFluid;
+
+        return $this;
+    }
+
+    public function isFluid(): ?bool
+    {
+        return $this->isFluid;
+    }
+
+    public function setFluid(?bool $isFluid): static
     {
         $this->isFluid = $isFluid;
 

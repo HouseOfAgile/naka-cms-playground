@@ -2,6 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use HouseOfAgile\NakaCMSBundle\Repository\PageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslationInterface;

@@ -122,4 +122,16 @@ class Menu
 
         return $this;
     }
+
+    public function isFixed(): ?bool
+    {
+        return $this->isFixed;
+    }
+
+    public function setFixed(?bool $isFixed): static
+    {
+        $this->isFixed = $isFixed;
+
+        return $this;
+    }
 }

@@ -24,6 +24,11 @@ class PictureGallery
         $this->images = new ArrayCollection();
     }
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public function __toString()
     {
         return (string) 'PictureGallery ' . $this->id;
