@@ -61,7 +61,7 @@ backend.websiteInfo.youNeedAWebsiteInfo: 'You should create and configure one'
 backend.websiteInfo.configureWebsiteInfo: 'Configure Website Info now'
 backend.websiteInfo.editOpeningHours: 'Edit Opening Hours'
 
-backend.websiteAsset.generalHelpForAdmin: 'Here you can add assets that will be available for all people granted access to the admin. This could be pdf, word documents or images.'
+backend.websiteAsset.generalHelpForAdmin: 'Here you can add assets that will be available for all people granted access to the admin. This could be pdf, word documents or images.<br/>Those assets can be used in other entities.'
 backend.websiteAsset.generalHelpForManager: 'Here you can find a list of assets that gives you information on the website.'
 
 backend.crud.menu.action.reorganizeMenu: 'Reorganize Menu'
@@ -224,6 +224,13 @@ backend.form.codeElement.codeElement: 'Code Element'
 backend.form.nakaParameter.path.help: ''
 backend.form.nakaParameter.value.help: ''
 backend.form.nakaParameter.extraInfo.help: ''
+
+backend.form.websiteAsset.tab.websiteAssetDetailsTab: 'Details'
+backend.form.websiteAsset.tab.websiteAssetDetailsTab.help: 'Website documents can be of various types, pdf or images'
+backend.form.websiteAsset.name: 'This is the name that will be shown for this asset when used in the frontend.'
+backend.form.websiteAsset.preview: 'Preview'
+backend.form.websiteAsset.assetDescription: 'Website Document description'
+backend.form.websiteAsset.assetDescription.help: 'Add a description for this website document explaining what it is about. This description is only shown in the backend'
 
 
 backend.operation.exportTranslation: 'Export Translation'

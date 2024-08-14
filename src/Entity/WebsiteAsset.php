@@ -24,6 +24,9 @@ class WebsiteAsset implements TimestampableInterface
     #[ORM\Column(type: 'string', length: 64, nullable: true)]
     protected $name;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    protected $assetDescription;
+
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
@@ -119,5 +122,17 @@ class WebsiteAsset implements TimestampableInterface
     public function getAsset(): ?EmbeddedFile
     {
         return $this->asset;
+    }
+
+    public function getAssetDescription(): ?string
+    {
+        return $this->assetDescription;
+    }
+
+    public function setAssetDescription(?string $assetDescription): static
+    {
+        $this->assetDescription = $assetDescription;
+
+        return $this;
     }
 }

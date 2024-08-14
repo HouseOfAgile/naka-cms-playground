@@ -13,8 +13,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Vich\UploaderBundle\Form\Type\VichFileType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
-use Vich\UploaderBundle\Mapping\Annotation\UploadableField;
 
 class WebsiteAssetCrudController extends AbstractCrudController
 {
@@ -35,7 +33,7 @@ class WebsiteAssetCrudController extends AbstractCrudController
         $actions = parent::configureActions($actions);
         if (!$this->isGranted('ROLE_ADMIN')) {
             $actions
-                ->remove(Crud::PAGE_INDEX, Action::NEW)
+                ->remove(Crud::PAGE_INDEX, Action::NEW )
                 ->remove(Crud::PAGE_INDEX, Action::DELETE)
                 ->remove(Crud::PAGE_INDEX, Action::EDIT);
         }
@@ -45,34 +43,41 @@ class WebsiteAssetCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $id = IdField::new('id');
-
+        $id = IdField::new ('id');
 
         $websiteAssetDetailsTab = FormField::addTab('backend.form.websiteAsset.tab.websiteAssetDetailsTab')
             ->setIcon('wheel')
             ->setHelp('backend.form.websiteAsset.tab.websiteAssetDetailsTab.help');
 
-		$name = TextField::new('name')
-		->setLabel('Name')
-		->setHelp('Internal name to be used in Menus and elsewhere');
+        $name = TextField::new ('name')
+            ->setLabel('Name')
+            ->setHelp('backend.form.websiteAsset.name');
 
-        $asset = ImageField::new('asset.name')
+        $assetDescription = TextField::new ('assetDescription')
+            ->setLabel('backend.form.websiteAsset.assetDescription')
+            ->setHelp('backend.form.websiteAsset.assetDescription.help');
+
+        $assetPreview = ImageField::new ('asset.name')
+            ->setLabel('backend.form.websiteAsset.preview')
             ->setTemplatePath('@NakaCMS/admin/fields/vich_file.html.twig');
-        $assetFile = Field::new('assetFile')->setFormType(VichFileType::class);
-        $assetName = TextField::new('asset.name');
 
+        $assetFile = Field::new ('assetFile')->setFormType(VichFileType::class);
 
         $webSiteAssetDetailsFields = [
-            $websiteAssetDetailsTab, $name, $assetFile,
+            $websiteAssetDetailsTab,
+            FormField::addColumn(6),
+            $name, $assetDescription,
+            FormField::addColumn(6),
+            $assetFile,
         ];
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $name, $asset, $assetName];
+            return [$id, $name, $assetPreview, $assetDescription];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-			return array_merge([$id, $asset], $webSiteAssetDetailsFields);
+            return array_merge([$id, $assetPreview, $assetDescription]);
         } elseif (Crud::PAGE_NEW === $pageName) {
-			return array_merge($webSiteAssetDetailsFields);
+            return array_merge($webSiteAssetDetailsFields);
         } elseif (Crud::PAGE_EDIT === $pageName) {
-			return array_merge($webSiteAssetDetailsFields);
+            return array_merge($webSiteAssetDetailsFields);
         }
     }
 }

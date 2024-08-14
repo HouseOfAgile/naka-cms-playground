@@ -11,7 +11,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Vich\UploaderBundle\Form\Type\VichImageType;
-use Vich\UploaderBundle\Mapping\Annotation\UploadableField;
 
 class PictureCrudController extends AbstractCrudController
 {
@@ -29,19 +28,21 @@ class PictureCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $id = IdField::new('id');
+        $id = IdField::new ('id');
 
-        $image = ImageField::new('image.name')
+        $imagePreview = ImageField::new ('image.name')
             ->setTemplatePath('@NakaCMS/admin/fields/vich_image.html.twig');
-        $imageFile = Field::new('imageFile')->setFormType(VichImageType::class);
-        $imageName = TextField::new('image.name');
-        $name = TextField::new('name')
+
+        $imageFile = Field::new ('imageFile')->setFormType(VichImageType::class);
+
+        $imageName = TextField::new ('image.name');
+        $name = TextField::new ('name')
             ->setLabel('Name')
             ->setHelp('Internal name to be used in Menus and elsewhere');
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $name, $imageName, $image];
+            return [$id, $name, $imageName, $imagePreview];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $image];
+            return [$id, $name, $imagePreview];
         } elseif (Crud::PAGE_NEW === $pageName) {
             return [$name, $imageFile];
         } elseif (Crud::PAGE_EDIT === $pageName) {

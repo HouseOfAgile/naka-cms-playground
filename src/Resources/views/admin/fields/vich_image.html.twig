@@ -4,7 +4,7 @@
 		<img src="{{ vich_uploader_asset(entity.instance, assetVar)|imagine_filter('thumb') }}">
 	</a>
 	<div class="modal fade" id="imageModal{{ field.uniqueId }}" tabindex="-1" aria-labelledby="modal for {{ entity.instance }}" aria-hidden="true">
-		<div class="modal-dialog modal-lg modal-fullscreen-lg-down">
+		<div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title">{{ entity.instance }}
@@ -12,7 +12,7 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<img src="{{ vich_uploader_asset(entity.instance, assetVar)|imagine_filter('creative_dim_down') }}">
+					<img class="img-fluid" src="{{ vich_uploader_asset(entity.instance, assetVar)|imagine_filter('creative_dim_down') }}">
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -2,6 +2,6 @@
 	{% if entity.instance.asset|isAnImage %}
 			{% include '@NakaCMS/admin/fields/vich_image.html.twig' with {'assetVar': 'assetFile'} %}
 	{% else %}
-		<a href="{{ vich_uploader_asset(entity.instance, 'assetFile') }}" target="_blank">{{entity.instance.asset.name}}</a>
+		<a href="{{ vich_uploader_asset(entity.instance, 'assetFile') }}" target="_blank">{{ entity.instance.asset.name }}</a>
 	{% endif %}
 {% endif %}
