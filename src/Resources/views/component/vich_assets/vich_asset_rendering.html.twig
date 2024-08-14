@@ -1,0 +1,24 @@
+{% block asset_rendering %}
+    {% for vichAsset in vichAssets %}
+        <li class="pt-2">
+            {% set mimeType = vichAsset.asset.mimeType %}
+            {% set displayName = vichAsset.name ?: vichAsset.asset.originalName %}
+            {% if mimeType == 'application/pdf' %}
+                <a href="{{ vich_uploader_asset(vichAsset) }}" target="_blank">
+                    <i class="fa-regular fa-file-pdf fa-2x fa-lg pe-2"></i>
+                    {{ displayName }}
+                </a>
+            {% elseif mimeType starts with 'image/' %}
+                <a href="{{ vich_uploader_asset(vichAsset) }}" target="_blank">
+                    <i class="fa-regular fa-file-image fa-2x fa-lg pe-2"></i>
+                    {{ displayName }}
+                </a>
+            {% else %}
+                <a href="{{ vich_uploader_asset(vichAsset) }}" target="_blank">
+                    <i class="fa-regular fa-file fa-2x fa-lg pe-2"></i>
+                    {{ displayName }}
+                </a>
+            {% endif %}
+        </li>
+    {% endfor %}
+{% endblock asset_rendering %}

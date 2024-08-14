@@ -70,10 +70,10 @@ class WebsiteAsset implements TimestampableInterface
     public function __toString()
     {
         return sprintf(
-            'WebsiteAsset %s [#%s: %s]',
+            'Document: %s (%s [#%s])',
             $this->getName(),
-            $this->getId(),
             $this->getAsset()->getName(),
+            $this->getId(),
         );
     }
 
