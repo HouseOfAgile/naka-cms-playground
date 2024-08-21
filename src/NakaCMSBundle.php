@@ -2,8 +2,9 @@
 
 namespace HouseOfAgile\NakaCMSBundle;
 
-use EasyCorp\Bundle\EasyAdminBundle\EasyAdminBundle;
+use HouseOfAgile\NakaCMSBundle\DependencyInjection\Compiler\OpenAICompilerPass;
 use HouseOfAgile\NakaCMSBundle\DependencyInjection\NakaCMSExtension;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -18,5 +19,13 @@ class NakaCMSBundle extends Bundle
             $this->extension = new NakaCMSExtension();
         }
         return $this->extension;
+    }
+
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        // Register the OpenAICompilerPass
+        $container->addCompilerPass(new OpenAICompilerPass());
     }
 }

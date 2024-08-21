@@ -23,23 +23,23 @@ class NakaCMSExtension extends Extension implements PrependExtensionInterface
         $definition->setArgument(1, explode('|', $config['internationalization']['supported_locales']));
 
         $container->setParameter('hoa_naka_cms.redirect_url', $config['redirect_url']);
-        $container->setParameter('hoa_naka_cms.openai_prompts.default_word_count', $config['openai_prompts']['default_word_count']);
-        $container->setParameter('hoa_naka_cms.openai_prompts.additional_instructions', $config['openai_prompts']['additional_instructions']);
-        $container->setParameter('hoa_naka_cms.openai_prompts.prompts', $config['openai_prompts']['prompts']);
+        $container->setParameter('hoa_naka_cms.openai_config.default_word_count', $config['openai_config']['default_word_count']);
+        $container->setParameter('hoa_naka_cms.openai_config.additional_instructions', $config['openai_config']['additional_instructions']);
+        $container->setParameter('hoa_naka_cms.openai_config.prompts', $config['openai_config']['prompts']);
     }
 
     public function prepend(ContainerBuilder $container): void
     {
         $thirdPartyBundlesViewFileLocator = (new FileLocator(__DIR__ . '/../Resources/views/bundles'));
 
-        // Here we want to override some templates from easyadmin
+        // Here we want to override some templates from EasyAdmin
         $container->loadFromExtension('twig', [
             'paths' => [
                 $thirdPartyBundlesViewFileLocator->locate('EasyAdminBundle') => 'EasyAdmin',
             ],
         ]);
     }
-    
+
     public function getAlias(): string
     {
         return 'hoa_naka_cms';

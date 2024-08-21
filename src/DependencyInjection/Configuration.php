@@ -25,13 +25,14 @@ class Configuration implements ConfigurationInterface
                             ->defaultValue('en|de')
                         ->end()
                     ->end()
-                ->end() // internationalization
+                ->end()
                 ->scalarNode('redirect_url')
                     ->info('The route to redirect to after login')
                     ->defaultValue('app_homepage')
                 ->end()
-                ->arrayNode('openai_prompts')
-                    ->info('Prompts configuration for OpenAI API')
+                
+                ->arrayNode('openai_config')  
+                    ->info('Configuration for OpenAI API')
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('default_word_count')
