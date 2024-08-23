@@ -28,3 +28,4 @@ services:
             $redirectUrl: '%hoa_naka_cms.redirect_url%'
         tags:
             - { name: 'kernel.event_subscriber' }
+           
