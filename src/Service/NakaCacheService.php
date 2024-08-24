@@ -7,13 +7,14 @@ use Symfony\Contracts\Cache\CacheInterface;
 class NakaCacheService
 {
     private int $cacheExpirationTime;
-
     private CacheInterface $cache;
+    private bool $isCacheEnabled;
 
-    public function __construct(CacheInterface $cache, int $cacheExpirationTime = 3600)
+    public function __construct(CacheInterface $cache, bool $isCacheEnabled, int $cacheExpirationTime = 3600)
     {
         $this->cache = $cache;
         $this->cacheExpirationTime = $cacheExpirationTime;
+        $this->isCacheEnabled = $isCacheEnabled;
     }
 
     /**
@@ -59,6 +60,11 @@ class NakaCacheService
      */
     public function cacheResult(string $cacheKey, callable $dataFetcher)
     {
+        if (!$this->isCacheEnabled) {
+            // If caching is disabled, just return the result of the dataFetcher directly
+            return $dataFetcher();
+        }
+
         return $this->cache->get($cacheKey, function ($item) use ($dataFetcher) {
             $item->expiresAfter($this->getCacheExpirationTime());
             return $dataFetcher();
@@ -73,6 +79,11 @@ class NakaCacheService
      */
     public function clearCacheForKey(string $cacheKey): bool
     {
+        if (!$this->isCacheEnabled) {
+            // If caching is disabled, there's nothing to clear
+            return false;
+        }
+
         return $this->cache->delete($cacheKey);
     }
 }
