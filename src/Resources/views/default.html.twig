@@ -1,20 +1,14 @@
-{% extends '@NakaCMS/layout/base-layout.html.twig' %}
-
+{% extends "@NakaCMS/layout/base-layout.html.twig" %}
 {% block title %}
-	{{ 'defaultContent.title' |trans}}
-{% endblock %}
-
+    {{ 'defaultContent.title' |trans }}
+{% endblock title %}
 {% block content %}
-	<div class="container-fluid bg-light">
-		<div class="container">
-			<div class="text-center p-4">
-				<div class="display-4">
-					{{ 'defaultContent.text' | trans }}
-				</div>
-			</div>
-		</div>
-	</div>
-{% endblock %}
-
-
-{% block javascripts_extra %}{% endblock %}
+    <div class="container-fluid bg-light">
+        <div class="container">
+            <div class="text-center p-4">
+                <div class="display-4">{{ 'defaultContent.text' | trans }}</div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block javascripts_extra %}{% endblock javascripts_extra %}

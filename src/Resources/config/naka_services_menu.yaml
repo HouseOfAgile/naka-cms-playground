@@ -1,17 +1,23 @@
 services:
-  menu_repository:
-    class: Doctrine\ORM\EntityRepository
-    factory: ["@doctrine.orm.entity_manager", getRepository]
-    arguments:
-      - App\Entity\Menu
+    menu_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
+        arguments:
+            - App\Entity\Menu
 
-  app.menu_builder:
-    class: App\Menu\MenuBuilder
-    arguments: 
-      - "@knp_menu.factory"
-      - "@menu_repository"
-    tags:
-      - { name: knp_menu.menu_builder, method: createMainMenu, alias: main } # The alias is what is used to retrieve the menu
-      - { name: knp_menu.menu_builder, method: createFooterMenu, alias: footer } # The alias is what is used to retrieve the menu
-
-  # ...
+    app.menu_builder:
+        class: App\Menu\MenuBuilder
+        arguments:
+            - '@knp_menu.factory'
+            - '@menu_repository'
+        tags:
+            - {
+                  name: knp_menu.menu_builder,
+                  method: createMainMenu,
+                  alias: main,
+              }
+            - {
+                  name: knp_menu.menu_builder,
+                  method: createFooterMenu,
+                  alias: footer,
+              }

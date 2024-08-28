@@ -1,56 +1,48 @@
-{% extends '@NakaCMS/layout/base-layout.html.twig' %}
-
+{% extends "@NakaCMS/layout/base-layout.html.twig" %}
 {% block title %}
-	{{ 'contact.title' |trans}}
-{% endblock %}
-
+    {{ 'contact.title' |trans }}
+{% endblock title %}
 {% block content %}
-	<div class="container-fluid">
-		<div class="row g-0">
-			<div class="col-md-12">
-				<div id="map" style="height: 400px;"></div>
-			</div>
-		</div>
-	</div>
-	<div class="container">
-		<div class="row g-0">
-			<div class="col-md-6">
-				<div class="h-100 d-flex justify-content-center align-items-center text-center my-4">
-					<ul class="list-unstyled mb-0 ">
-						{% if 'business.address' | nakaParameter is not empty %}
-							<li>
-								<i class="fas fa-map-marker-alt fa-4x my-3 main-text-color"></i>
-								<p>{{ 'business.address' | nakaParameter | raw }}</p>
-							</li>
-						{% endif %}
-						{% if 'business.phone-number' | nakaParameter is not empty %}
-							<li>
-								<i class="fas fa-phone mt-4 fa-4x my-3 main-text-color"></i>
-								<p>{{ 'business.phone-number' | nakaParameter | raw }}</p>
-							</li>
-						{% endif %}
-						{% if 'business.email' | nakaParameter is not empty %}
-							<li>
-								<i class="fas fa-envelope mt-4 fa-4x my-3 main-text-color"></i>
-								<p>{{ 'business.email' | nakaParameter | raw }}</p>
-							</li>
-						{% endif %}
-					</ul>
-				</div>
-			</div>
-			<div class="col-md-6">
-				{% include '@NakaCMS/opening-hours/show-opening-hours.html.twig' with {'openingHours': openingHours } %}
-			</div>
-
-
-		</div>
-	</div>
-
-
-	{% include '@NakaCMS/fragment/_show_contact_form.html.twig' with {'form': contactForm } %}
-{% endblock %}
-
-
+    <div class="container-fluid">
+        <div class="row g-0">
+            <div class="col-md-12">
+                <div id="map" style="height: 400px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row g-0">
+            <div class="col-md-6">
+                <div class="h-100 d-flex justify-content-center align-items-center text-center my-4">
+                    <ul class="list-unstyled mb-0 ">
+                        {% if 'business.address' | nakaParameter is not empty %}
+                            <li>
+                                <i class="fas fa-map-marker-alt fa-4x my-3 main-text-color"></i>
+                                <p>{{ 'business.address' | nakaParameter | raw }}</p>
+                            </li>
+                        {% endif %}
+                        {% if 'business.phone-number' | nakaParameter is not empty %}
+                            <li>
+                                <i class="fas fa-phone mt-4 fa-4x my-3 main-text-color"></i>
+                                <p>{{ 'business.phone-number' | nakaParameter | raw }}</p>
+                            </li>
+                        {% endif %}
+                        {% if 'business.email' | nakaParameter is not empty %}
+                            <li>
+                                <i class="fas fa-envelope mt-4 fa-4x my-3 main-text-color"></i>
+                                <p>{{ 'business.email' | nakaParameter | raw }}</p>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                {% include "@NakaCMS/opening-hours/show-opening-hours.html.twig" with {'openingHours': openingHours } %}
+            </div>
+        </div>
+    </div>
+    {% include "@NakaCMS/fragment/_show_contact_form.html.twig" with {'form': contactForm } %}
+{% endblock content %}
 {% block javascripts_extra %}
-	{{ encore_entry_script_tags('openstreetmap') }}
-{% endblock %}
+    {{ encore_entry_script_tags("openstreetmap") }}
+{% endblock javascripts_extra %}
