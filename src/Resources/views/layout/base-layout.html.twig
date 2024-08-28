@@ -1,48 +1,42 @@
 {# {% extends app.request.xmlHttpRequest ? 'partial_base.html.twig':'base.html.twig' %} #}
-{% extends '@NakaCMS/base.html.twig' %}
-
+{% extends "@NakaCMS/base.html.twig" %}
 {% block stylesheets %}
-	{{ parent() }}
-	<style></style>
-{% endblock %}
-
+    {{ parent() }}
+    <style></style>
+{% endblock stylesheets %}
+{% block content %}
+{% endblock content %}
 {% block body %}
-
-	{% block main_navbar %}
-		{% include '@NakaCMS/layout/navbar.html.twig' %}
-	{% endblock main_navbar %}
-
-	<div class="main-wrapper position-relative">
-		{% block main_wrapper %}
-			<div class="main-content">
-				{% if app.request.hasPreviousSession %}
-					{# read and display all flash messages #}
-					{% for label, messages in app.flashes %}
-						<div class="container my-4">
-							{% for message in messages %}
-								<div class="flash-{{ label }} alert alert-{{ label }}">
-									{{ message|trans }}
-								</div>
-							{% endfor %}
-						</div>
-					{% endfor %}
-				{% endif %}
-				{% block main %}
-					{% block breadcrumbs %}
-						{% if breadCrumbs is defined and breadCrumbs is not empty %}
-							{% include '@NakaCMS/component/navigation/breadcrumbs.html.twig' %}
-						{% endif %}
-					{% endblock %}
-					{{ block('content') }}
-				{% endblock %}
-			</div>
-		{% endblock main_wrapper %}
-	</div>
-
-	{% block main_footer %}
-		{% include '@NakaCMS/layout/footer.html.twig' %}
-	{% endblock main_footer %}
-
-{% endblock %}
-
-{% block footer %}{% endblock %}
+    {% block main_navbar %}
+        {% include "@NakaCMS/layout/navbar.html.twig" %}
+    {% endblock main_navbar %}
+    <div class="main-wrapper position-relative">
+        {% block main_wrapper %}
+            <div class="main-content">
+                {% if app.request.hasPreviousSession %}
+                    {# read and display all flash messages #}
+                    {% for label, messages in app.flashes %}
+                        <div class="container my-4">
+                            {% for message in messages %}
+                                <div class="flash-{{ label }} alert alert-{{ label }}">{{ message|trans }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% block main %}
+                    {% block breadcrumbs %}
+                        {% if breadCrumbs is defined and breadCrumbs is not empty %}
+                            {% include "@NakaCMS/component/navigation/breadcrumbs.html.twig" %}
+                        {% endif %}
+                    {% endblock breadcrumbs %}
+                    {{ block("content") }}
+                {% endblock main %}
+            </div>
+        {% endblock main_wrapper %}
+    </div>
+    {% block main_footer %}
+        {% include "@NakaCMS/layout/footer.html.twig" %}
+    {% endblock main_footer %}
+{% endblock body %}
+{% block footer %}
+{% endblock footer %}
