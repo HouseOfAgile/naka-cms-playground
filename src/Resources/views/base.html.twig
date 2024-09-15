@@ -7,16 +7,19 @@
                 {% block title %}
                     Welcome!
                 {% endblock title %}
+
                 -
                 {{ websiteInfo.translatedTitle |default(application_name) }}
             {% endblock master_title %}
+
         </title>
         {% block master_meta %}
             <meta name="description"
-                  content="{% block meta_description %}{{ websiteInfo.translatedDescription | default('meta.defaultDescription' | trans) }}{% endblock meta_description %}">
+                  content="{%- block meta_description -%}{{ websiteInfo.translatedDescription | default('meta.defaultDescription' | trans) }}{%- endblock meta_description -%}">
             <meta name="keywords"
-                  content="{% block meta_keywords %}{{ websiteInfo.translatedKeywords | default('meta.defaultKeywords' | trans) }}{% endblock meta_keywords %}">
+                  content="{%- block meta_keywords -%}{{ websiteInfo.translatedKeywords | default('meta.defaultKeywords' | trans) }}{%- endblock meta_keywords -%}">
         {% endblock master_meta %}
+
         <link rel="icon" href="data:image/svg+xml,
             <svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22>
                 <text y=%221.2em%22 font-size=%2296%22>⚫️</text>
@@ -28,7 +31,32 @@
                 <link rel="stylesheet"
                       type="text/css"
                       href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+                <style>
+                    /* Style for environment banner */
+                    .environment-banner {
+                        position: fixed;
+                        top: 0;
+                        width: 100%;
+                        z-index: 1000;
+                        background-color: #f44336;
+                        /* Red background for non-prod environments */
+                        color: white;
+                        text-align: center;
+                        font-size: 16px;
+                        padding: 10px;
+                        font-weight: bold;
+                    }
+
+                    /* Add padding to the body only in non-prod environments */
+					{% if app.environment !='prod' %}
+                    body {
+                        padding-top: 50px !important; 
+                        /* Adjust padding for the fixed environment banner */
+                    }
+					{% endif %}
+                </style>
             {% endblock stylesheets %}
+
             {% block javascripts %}
                 {{ encore_entry_script_tags("app") }}
                 {% set ga_id = 'global.google-analytics'| nakaParameter %}
@@ -36,32 +64,38 @@
                     {% include "@NakaCMS/fragment/_google_analytics.html.twig" %}
                 {% endif %}
             {% endblock javascripts %}
+
             {% block stylesheets_extra %}
             {% endblock stylesheets_extra %}
+
         </head>
         <body data-aos-easing="ease-out-back"
               data-aos-duration="1000"
               data-aos-delay="0">
+            {% if app.environment != 'prod' %}
+                <div class="environment-banner">Environment: {{ app.environment | upper }}</div>
+            {% endif %}
             {% block body %}
             {% endblock body %}
+
             {% block javascripts_extra %}
                 <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"
                         data-cfasync="false"></script>
                 <script>
-				window.cookieconsent.initialise({
-"palette": {
-"popup": {
-"background": "#000"
-},
-"button": {
-"background": "#f1d600"
-}
-},
-"theme": "classic"
-});
-			
+                    window.cookieconsent.initialise({
+                        "palette": {
+                            "popup": {
+                                "background": "#000"
+                            },
+                            "button": {
+                                "background": "#f1d600"
+                            }
+                        },
+                        "theme": "classic"
+                    });
                 </script>
                 {{ encore_entry_script_tags("appBottom") }}
             {% endblock javascripts_extra %}
+
         </body>
     </html>
