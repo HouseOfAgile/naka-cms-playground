@@ -32,7 +32,7 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setDefaultSort(['updatedAt' => 'DESC']);
+            ->setDefaultSort(['id' => 'DESC', 'updatedAt' => 'DESC']);
     }
 
     public function configureFilters(Filters $filters): Filters
