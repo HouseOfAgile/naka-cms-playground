@@ -45,7 +45,7 @@ class UserInfoType extends AbstractType
             ])
             ->add('birthDate', BirthdayType::class, [
                 'label' => 'form.member.birthDate',
-                'label_attr' => ['class' => 'p-3'],
+                'label_attr' => ['class' => 'pt-3 px-3'],
                 'help' => 'form.member.birthDate.help',
                 'required' => false,
                 'format' => $locale == 'de' ? 'd.M.y' : 'd/M/y',
