@@ -3,6 +3,7 @@ parameters:
     app.supported_locales: 'en|de|fr'
     app.path.asset_pictures: /uploads/asset-pictures
     app.path.asset_website_resources: /uploads/asset-website-resources
+    app.path.site_images: /uploads/site-images
     all_locales:
         - en
         # - fr
