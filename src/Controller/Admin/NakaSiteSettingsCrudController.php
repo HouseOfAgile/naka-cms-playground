@@ -3,9 +3,12 @@
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
 use App\Entity\NakaSiteSettings;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -14,11 +17,13 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class NakaSiteSettingsCrudController extends AbstractCrudController
 {
-    private AdminUrlGenerator $adminUrlGenerator;
+    protected AdminUrlGenerator $adminUrlGenerator;
+    protected EntityManagerInterface $entityManager;
 
-    public function __construct(AdminUrlGenerator $adminUrlGenerator)
+    public function __construct(AdminUrlGenerator $adminUrlGenerator, EntityManagerInterface $entityManager)
     {
         $this->adminUrlGenerator = $adminUrlGenerator;
+        $this->entityManager = $entityManager;
     }
 
     public static function getEntityFqcn(): string
@@ -52,45 +57,19 @@ class NakaSiteSettingsCrudController extends AbstractCrudController
             ->setLabel('backend.nakaSiteSettings.logoImage.label')
             ->setCustomOption('uploadField', 'logoImageFile');
 
-        $logoTransparentImageFile = Field::new ('logoTransparentImageFile')
-            ->setHelp('backend.nakaSiteSettings.logoTransparentImageFile.help')
-            ->setFormType(VichImageType::class)
-            ->setLabel('backend.nakaSiteSettings.logoTransparentImageFile.label');
-
-        $logoTransparentImagePreview = ImageField::new ('logoTransparentImage.name')
-            ->setHelp('backend.nakaSiteSettings.logoTransparentImageFile.help')
-            ->setTemplatePath('@NakaCMS/admin/fields/vich_image.html.twig')
-            ->setLabel('backend.nakaSiteSettings.logoTransparentImage.label')
-            ->setCustomOption('uploadField', 'logoTransparentImageFile');
-
-        $defaultBackgroundImageFile = Field::new ('defaultBackgroundImageFile')
-            ->setHelp('backend.nakaSiteSettings.defaultBackgroundImageFile.help')
-            ->setFormType(VichImageType::class)
-            ->setLabel('backend.nakaSiteSettings.defaultBackgroundImageFile.label');
-
-        $defaultBackgroundImagePreview = ImageField::new ('defaultBackgroundImage.name')
-            ->setHelp('backend.nakaSiteSettings.defaultBackgroundImageFile.help')
-            ->setTemplatePath('@NakaCMS/admin/fields/vich_image.html.twig')
-            ->setLabel('backend.nakaSiteSettings.defaultBackgroundImage.label')
-            ->setCustomOption('uploadField', 'defaultBackgroundImageFile');
-
         $updatedAt = DateTimeField::new ('updatedAt')
             ->setLabel('backend.nakaSiteSettings.updatedAt.label')
             ->hideOnForm();
 
         if (Crud::PAGE_EDIT === $pageName) {
             return [
-                $logoImageFile,
-                $logoTransparentImageFile,
-                $defaultBackgroundImageFile,
                 $updatedAt,
+                $logoImageFile,
             ];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [
-                $logoImagePreview,
-                $logoTransparentImagePreview,
-                $defaultBackgroundImagePreview,
                 $updatedAt,
+                $logoImagePreview,
             ];
         }
 
@@ -99,22 +78,29 @@ class NakaSiteSettingsCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-
-        dump($actions);
         return $actions
-            ->disable(Action::NEW , Action::DELETE)
-            ->disable(Action::NEW , Action::INDEX)
-        ;
+            ->disable(Action::NEW , Action::DELETE, Action::INDEX);
     }
 
     public function index(AdminContext $context)
     {
+        $settings = $this->entityManager->getRepository(NakaSiteSettings::class)->find(1);
+        if (!$settings) {
+            $settings = new NakaSiteSettings();
+            $settings->setId(1);
+            $this->entityManager->persist($settings);
+            $this->entityManager->flush();
+            $this->addFlash('warning', 'backend.flash.nakaSiteSettingsInitialized');
+        }
+
+        // Redirect to the detail or edit page as desired
         $url = $this->adminUrlGenerator
             ->setController(self::class)
-            ->setAction('detail')
+            ->setAction('detail') // or 'edit' if you prefer
             ->setEntityId(1)
             ->generateUrl();
 
         return $this->redirect($url);
     }
+
 }

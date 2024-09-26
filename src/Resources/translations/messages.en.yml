@@ -277,7 +277,7 @@ backend.adBanner.responsive.help: 'Whether the ad banner is responsive.'
 backend.adBanner.network: 'Network'
 backend.adBanner.network.help: 'The ad network this banner belongs to.'
 
-backend.nakaSiteSettings.pageTitle.detail: 'Edit Global Site Settings'
+backend.nakaSiteSettings.pageTitle.detail: 'Global Site Settings'
 backend.nakaSiteSettings.pageTitle.edit: 'Edit Global Site Settings'
 backend.nakaSiteSettings.generalHelp: |
     <p>Here you can configure the main images used throughout your site. Updating these images will affect the logo and background images displayed to users.</p>
@@ -285,13 +285,10 @@ backend.nakaSiteSettings.generalHelp: |
 backend.nakaSiteSettings.logoImageFile.label: 'Logo Image File'
 backend.nakaSiteSettings.logoImageFile.help: 'Upload the main logo image for your site.'
 backend.nakaSiteSettings.logoImage.label: 'Current Logo Image'
-backend.nakaSiteSettings.logoTransparentImageFile.label: 'Transparent Logo Image File'
-backend.nakaSiteSettings.logoTransparentImageFile.help: 'Upload a transparent version of the logo.'
-backend.nakaSiteSettings.logoTransparentImage.label: 'Current Transparent Logo Image'
-backend.nakaSiteSettings.defaultBackgroundImageFile.label: 'Default Background Image File'
-backend.nakaSiteSettings.defaultBackgroundImageFile.help: 'Upload the default background image for the site.'
-backend.nakaSiteSettings.defaultBackgroundImage.label: 'Current Default Background Image'
+
 backend.nakaSiteSettings.updatedAt.label: 'Last Updated'
+
+backend.flash.nakaSiteSettingsInitialized: 'NakaSiteSettings were not present, they have been initialized'
 
 adNetworkType.googleAdSense: 'Google AdSense'
 admin.form.menuItem.page: 'Related Page'
