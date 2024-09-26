@@ -36,6 +36,7 @@ class PictureCrudController extends AbstractCrudController
         $imageFile = Field::new ('imageFile')->setFormType(VichImageType::class);
 
         $imageName = TextField::new ('image.name');
+		
         $name = TextField::new ('name')
             ->setLabel('Name')
             ->setHelp('Internal name to be used in Menus and elsewhere');

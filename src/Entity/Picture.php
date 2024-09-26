@@ -33,12 +33,11 @@ class Picture implements TimestampableInterface
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     * 
-     * @Vich\UploadableField(mapping="asset_pictures", fileNameProperty="image.name", size="image.size", mimeType="image.mimeType", originalName="image.originalName", dimensions="image.dimensions")
-     * 
+     *
      * @var File|null
      */
-    #[Vich\UploadableField(mapping: 'asset_pictures', fileNameProperty: 'image.name', size: 'image.size', mimeType: 'image.mimeType', originalName: 'image.originalName', dimensions: 'image.dimensions')]
+    #[Vich\UploadableField(mapping: 'asset_pictures', fileNameProperty: 'image.name', size: 'image.size',
+        mimeType: 'image.mimeType', originalName: 'image.originalName', dimensions: 'image.dimensions')]
     protected $imageFile;
 
     /**
@@ -71,25 +70,6 @@ class Picture implements TimestampableInterface
         return $this->id;
     }
 
-    /**
-     * dumpConfig: return array with main config
-     *
-     * @return array
-     */
-    public function dumpConfig(): array
-    {
-        $config =  [
-            'id' => $this->getId(),
-            // 'originalName' => $this->image->getOriginalName(),
-            'name' => $this->getName(),
-            // 'mimeType' => $this->image->getMimeType(),
-            // 'dimensions' => $this->image->getDimensions(),
-            // 'size' => $this->image->getSize(),
-        ];
-
-        return $config;
-    }
-
     public function __toString()
     {
         return sprintf(
@@ -99,7 +79,6 @@ class Picture implements TimestampableInterface
             $this->getImage()->getName(),
         );
     }
-
 
     public function getName(): ?string
     {
@@ -112,7 +91,7 @@ class Picture implements TimestampableInterface
 
         return $this;
     }
-    
+
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this

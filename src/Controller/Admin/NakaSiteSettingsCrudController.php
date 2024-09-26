@@ -3,13 +3,12 @@
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
 use App\Entity\NakaSiteSettings;
-
-use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
@@ -21,64 +20,98 @@ class NakaSiteSettingsCrudController extends AbstractCrudController
     {
         $this->adminUrlGenerator = $adminUrlGenerator;
     }
+
     public static function getEntityFqcn(): string
     {
         return NakaSiteSettings::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->showEntityActionsInlined(false)
+            ->overrideTemplates([
+                'crud/detail' => '@NakaCMS/backend/crud/naka-site-settings/detail.html.twig',
+                'crud/edit' => '@NakaCMS/backend/crud/naka-site-settings/edit.html.twig',
+            ])
+            ->setPageTitle('detail', 'backend.nakaSiteSettings.pageTitle.detail')
+            ->setPageTitle('edit', 'backend.nakaSiteSettings.pageTitle.edit')
+        ;
+    }
+
     public function configureFields(string $pageName): iterable
     {
-        $logoImageFile = TextField::new ('logoImageFile')
+        $logoImageFile = Field::new ('logoImageFile')
             ->setHelp('backend.nakaSiteSettings.logoImageFile.help')
             ->setFormType(VichImageType::class)
-            ->setLabel('Logo Image')
-            ->onlyOnForms();
+            ->setLabel('backend.nakaSiteSettings.logoImageFile.label');
 
-        $logoImage = ImageField::new ('logoImage.name')
-            ->setBasePath('/%app.path.site_images%/')
-            ->setLabel('Logo Image')
-            ->onlyOnDetail();
+        $logoImagePreview = ImageField::new ('logoImage.name')
+            ->setHelp('backend.nakaSiteSettings.logoImageFile.help')
+            ->setTemplatePath('@NakaCMS/admin/fields/vich_image.html.twig')
+            ->setLabel('backend.nakaSiteSettings.logoImage.label')
+            ->setCustomOption('uploadField', 'logoImageFile');
 
-        $logoTransparentImageFile = TextField::new ('logoTransparentImageFile')
+        $logoTransparentImageFile = Field::new ('logoTransparentImageFile')
+            ->setHelp('backend.nakaSiteSettings.logoTransparentImageFile.help')
             ->setFormType(VichImageType::class)
-            ->setLabel('Transparent Logo Image')
-            ->onlyOnForms();
+            ->setLabel('backend.nakaSiteSettings.logoTransparentImageFile.label');
 
-        $logoTransparentImage = ImageField::new ('logoTransparentImage.name')
-            ->setBasePath('/%app.path.site_images%/')
-            ->setLabel('Transparent Logo Image')
-            ->onlyOnDetail();
+        $logoTransparentImagePreview = ImageField::new ('logoTransparentImage.name')
+            ->setHelp('backend.nakaSiteSettings.logoTransparentImageFile.help')
+            ->setTemplatePath('@NakaCMS/admin/fields/vich_image.html.twig')
+            ->setLabel('backend.nakaSiteSettings.logoTransparentImage.label')
+            ->setCustomOption('uploadField', 'logoTransparentImageFile');
 
-        $defaultBackgroundImageFile = TextField::new ('defaultBackgroundImageFile')
+        $defaultBackgroundImageFile = Field::new ('defaultBackgroundImageFile')
+            ->setHelp('backend.nakaSiteSettings.defaultBackgroundImageFile.help')
             ->setFormType(VichImageType::class)
-            ->setLabel('Default Background Image')
-            ->onlyOnForms();
+            ->setLabel('backend.nakaSiteSettings.defaultBackgroundImageFile.label');
 
-        $defaultBackgroundImage = ImageField::new ('defaultBackgroundImage.name')
-            ->setBasePath('/%app.path.site_images%/')
-            ->setLabel('Default Background Image')
-            ->onlyOnDetail();
+        $defaultBackgroundImagePreview = ImageField::new ('defaultBackgroundImage.name')
+            ->setHelp('backend.nakaSiteSettings.defaultBackgroundImageFile.help')
+            ->setTemplatePath('@NakaCMS/admin/fields/vich_image.html.twig')
+            ->setLabel('backend.nakaSiteSettings.defaultBackgroundImage.label')
+            ->setCustomOption('uploadField', 'defaultBackgroundImageFile');
 
         $updatedAt = DateTimeField::new ('updatedAt')
-            ->setLabel('Last Updated')
+            ->setLabel('backend.nakaSiteSettings.updatedAt.label')
             ->hideOnForm();
 
-        return [
-            $logoImageFile,
-            $logoImage,
-            $logoTransparentImageFile,
-            $logoTransparentImage,
-            $defaultBackgroundImageFile,
-            $defaultBackgroundImage,
-            $updatedAt,
-        ];
+        if (Crud::PAGE_EDIT === $pageName) {
+            return [
+                $logoImageFile,
+                $logoTransparentImageFile,
+                $defaultBackgroundImageFile,
+                $updatedAt,
+            ];
+        } elseif (Crud::PAGE_DETAIL === $pageName) {
+            return [
+                $logoImagePreview,
+                $logoTransparentImagePreview,
+                $defaultBackgroundImagePreview,
+                $updatedAt,
+            ];
+        }
+
+        return [];
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+
+        dump($actions);
+        return $actions
+            ->disable(Action::NEW , Action::DELETE)
+            ->disable(Action::NEW , Action::INDEX)
+        ;
     }
 
     public function index(AdminContext $context)
     {
         $url = $this->adminUrlGenerator
             ->setController(self::class)
-            ->setAction('edit')
+            ->setAction('detail')
             ->setEntityId(1)
             ->generateUrl();
 

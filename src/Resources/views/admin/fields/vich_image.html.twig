@@ -1,23 +1,48 @@
+<style>
+    .ea-detail .field-group .field-label {
+        width: 250px;
+    }
+</style>
 {% if field.value %}
-	{% set assetVar = assetVar | default('imageFile') %}
-	<a href="#" data-bs-toggle="modal" data-bs-target="#imageModal{{ field.uniqueId }}">
-		<img src="{{ vich_uploader_asset(entity.instance, assetVar)|imagine_filter('thumb') }}">
-	</a>
-	<div class="modal fade" id="imageModal{{ field.uniqueId }}" tabindex="-1" aria-labelledby="modal for {{ entity.instance }}" aria-hidden="true">
-		<div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">{{ entity.instance }}
-					</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<img class="img-fluid" src="{{ vich_uploader_asset(entity.instance, assetVar)|imagine_filter('creative_dim_down') }}">
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
+    {% set uploadField = field.customOptions.get('uploadField') %}
+    {% if uploadField is not defined %}
+        {% set propertyParts = field.propertyPath|split('.') %}
+        {% if propertyParts|length > 1 %}
+            {% set uploadField = propertyParts[0] ~ 'File' %}
+        {% else %}
+            {% set uploadField = "imageFile" %}
+        {% endif %}
+    {% endif %}
+    <a href="#"
+       data-bs-toggle="modal"
+       data-bs-target="#imageModal{{ field.uniqueId }}">
+        <img src="{{ vich_uploader_asset(entity.instance, uploadField) |imagine_filter('thumb') }}">
+    </a>
+    {% if field.help is not empty %}<p class="text-muted mt-2">{{ field.help|trans }}</p>{% endif %}
+    <div class="modal fade"
+         id="imageModal{{ field.uniqueId }}"
+         tabindex="-1"
+         aria-labelledby="modal for {{ entity.instance }}"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ entity.instance }}</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="{{ 'vichImage.close'|trans }}"></button>
+                </div>
+                <div class="modal-body">
+                    <img class="img-fluid"
+                         src="{{ vich_uploader_asset(entity.instance, uploadField) |imagine_filter('creative_dim_down') }}">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'vichImage.close'|trans }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    {{ 'vichImage.imageIsNotSet'|trans }}
 {% endif %}

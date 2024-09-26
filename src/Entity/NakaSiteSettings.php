@@ -3,15 +3,18 @@
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use HouseOfAgile\NakaCMSBundle\Repository\NakaSiteSettingsRepository;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Entity\File as EmbeddedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Vich\UploaderBundle\Mapping\Annotation\Uploadable;
 use Vich\UploaderBundle\Mapping\Annotation\UploadableField;
 
-#[ORM\MappedSuperclass]
-#[Uploadable]
-class NakaSiteSettings
+#[Vich\Uploadable]
+#[ORM\MappedSuperclass(repositoryClass: NakaSiteSettingsRepository::class)]
+class NakaSiteSettings implements TimestampableInterface
 {
     use TimestampableTrait;
 
@@ -76,6 +79,15 @@ class NakaSiteSettings
         return $this->id;
     }
 
+	public function __toString()
+    {
+        return sprintf(
+            'NakaSiteSettings [%s]: %s',
+            $this->getId(),
+            $this->getLogoImage()->getName(),
+        );
+    }
+
     // Logo Image
     public function setLogoImageFile(?File $file = null): void
     {
@@ -102,11 +114,11 @@ class NakaSiteSettings
     }
 
     // Transparent Logo Image
-    public function setLogoTransparentImageFile(?File $file = null): void
+    public function setLogoTransparentImageFile(?File $logoTransparentImageFile = null): void
     {
-        $this->logoTransparentImageFile = $file;
+        $this->logoTransparentImageFile = $logoTransparentImageFile;
 
-        if (null !== $file) {
+        if (null !== $logoTransparentImageFile) {
             $this->setUpdatedAt(new \DateTimeImmutable());
         }
     }
@@ -127,11 +139,11 @@ class NakaSiteSettings
     }
 
     // Default Background Image
-    public function setDefaultBackgroundImageFile(?File $file = null): void
+    public function setDefaultBackgroundImageFile(?File $defaultBackgroundImageFile = null): void
     {
-        $this->defaultBackgroundImageFile = $file;
+        $this->defaultBackgroundImageFile = $defaultBackgroundImageFile;
 
-        if (null !== $file) {
+        if (null !== $defaultBackgroundImageFile) {
             $this->setUpdatedAt(new \DateTimeImmutable());
         }
     }
