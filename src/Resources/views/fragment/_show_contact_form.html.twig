@@ -5,7 +5,7 @@
         </div>
         <div class="d-none d-xl-block col-xl-4 text-center py-3">
             <img class="img-fluid"
-                 src="{{ '/images/logo/logo_transparent.png'| imagine_filter("logo_resize") }}" />
+                 src="{{ getNakaSiteSetting('logoImage', 'images/logo/logo_transparent.png') | imagine_filter("logo_resize") }}" />
         </div>
         <div class="col-12 col-xl-8">
             <div class="jumbotron">
