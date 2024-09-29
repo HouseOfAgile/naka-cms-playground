@@ -13,21 +13,21 @@ trait AddressTrait
      */
     #[ORM\Column(type: 'string', nullable: true)]
     #[Assert\NotBlank(groups: ['Address'])]
-    private $street;
+    protected $street;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'string', nullable: true)]
     #[Assert\NotBlank(groups: ['Address'])]
-    private $zipCode;
+    protected $zipCode;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'string', nullable: true)]
     #[Assert\NotBlank(groups: ['Address'])]
-    private $city;
+    protected $city;
 
     /**
      * Country name in ISO format.
@@ -37,7 +37,7 @@ trait AddressTrait
      */
     #[ORM\Column(type: 'string', nullable: true, length: 3)]
     #[Assert\NotBlank(groups: ['Address'])]
-    private $country;
+    protected $country;
 
     /**
      * @return string

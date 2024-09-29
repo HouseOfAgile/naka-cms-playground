@@ -156,6 +156,7 @@ backend.form.user.details: 'User Details'
 backend.form.user.adminConfiguration: 'Member admin Configuration'
 backend.form.user.userAuthentication: 'Member admin authentication'
 backend.form.user.userDetails: 'Member Details'
+backend.form.user.userAddress: 'Member Address'
 backend.form.user.userPreferences: 'Member Preferences'
 backend.form.user.isVerified.help: 'This member completed the email verification'
 
@@ -284,7 +285,7 @@ backend.nakaSiteSettings.generalHelp: |
     <p>Please ensure you upload images in the correct format and size for optimal display.</p>
 backend.nakaSiteSettings.logoImageFile.label: 'Logo Image File'
 backend.nakaSiteSettings.logoImageFile.help: 'Upload the main logo image for your site.'
-backend.nakaSiteSettings.logoImage.label: 'Current Logo Image'
+backend.nakaSiteSettings.logoImage.label: 'Global Logo Image'
 
 backend.nakaSiteSettings.updatedAt.label: 'Last Updated'
 

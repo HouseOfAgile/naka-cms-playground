@@ -18,6 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\LocaleField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use HouseOfAgile\NakaCMSBundle\Entity\BaseUser;
+use HouseOfAgile\NakaCMSBundle\Form\Backend\BackendAddressType;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -53,7 +54,6 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
         return BaseUser::class;
     }
 
-
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -67,40 +67,53 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
     {
         $actions = parent::configureActions($actions);
         return $actions
-            // ->add(Crud::PAGE_INDEX, Action::NEW)
+        // ->add(Crud::PAGE_INDEX, Action::NEW)
         ;
     }
 
     public function configureFields(string $pageName): iterable
     {
-        $id = IntegerField::new('id', 'ID');
+        $id = IntegerField::new ('id', 'ID');
 
-        $firstName = TextField::new('firstName', 'backend.form.user.firstName')
-            ->setHelp('backend.form.user.firstName.help');
+        $firstName = TextField::new ('firstName', 'backend.form.user.firstName')
+            ->setHelp('backend.form.user.firstName.help')
+            ->setColumns(6);
 
-        $lastName = TextField::new('lastName', 'backend.form.user.lastName')
-            ->setHelp('backend.form.user.lastName.help');
+        $lastName = TextField::new ('lastName', 'backend.form.user.lastName')
+            ->setHelp('backend.form.user.lastName.help')
+            ->setColumns(6);
 
-        $email = TextField::new('email', 'backend.form.user.email')
+        $address = Field::new ('addressFields')
+            ->setFormType(BackendAddressType::class)
+            ->setFormTypeOptions([
+                'label' => false,
+            ]);
+        // ->setVirtual(true); // Mark the field as virtual to prevent EasyAdmin mapping
+
+        $lastName = TextField::new ('lastName', 'backend.form.user.lastName')
+            ->setHelp('backend.form.user.lastName.help')
+            ->setColumns(6);
+
+        $email = TextField::new ('email', 'backend.form.user.email')
             ->setHelp('backend.form.user.email.help');
 
-        $birthDate = DateField::new('birthDate', 'backend.form.user.birthDate')
+        $birthDate = DateField::new ('birthDate', 'backend.form.user.birthDate')
             ->setHelp('backend.form.user.birthDate.help');
-        $preferredLocale = LocaleField::new('preferredLocale', 'backend.form.user.preferredLocale')
+        $preferredLocale = LocaleField::new ('preferredLocale', 'backend.form.user.preferredLocale')
             ->includeOnly($this->allLocales)
             ->setHelp('backend.form.user.preferredLocale.help');
 
-        $isVerified = BooleanField::new('isVerified')
+        $isVerified = BooleanField::new ('isVerified')
             ->setHelp('backend.form.user.isVerified.help')
             ->setColumns(6);
-        $roles = ChoiceField::new('roles', 'backend.form.user.roles')
+        $roles = ChoiceField::new ('roles', 'backend.form.user.roles')
             ->setChoices([
                 'backend.form.user.role.user' => 'ROLE_USER',
                 'backend.form.user.role.admin' => 'ROLE_ADMIN',
             ])->allowMultipleChoices()
             ->setHelp('backend.form.user.roles.help');
 
-        $password = Field::new('plainPassword', 'backend.form.user.password')
+        $password = Field::new ('plainPassword', 'backend.form.user.password')
             ->onlyOnForms()
             ->setFormType(RepeatedType::class)
             ->setFormTypeOptions([
@@ -114,12 +127,19 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
             FormField::addTab('backend.form.user.details'),
 
             FormField::addColumn(8),
-            FormField::addFieldset('backend.form.user.userDetails'),
-            $firstName, $lastName, $email,
+            FormField::addFieldset('backend.form.user.userDetails')
+			->setIcon('fa fa-info'),
+            $firstName, $lastName,
+            $email,
             $birthDate,
             FormField::addColumn(4),
-            FormField::addFieldset('backend.form.user.userPreferences'),
+
+            FormField::addFieldset('backend.form.user.userPreferences')
+			->setIcon('fa fa-heart'),
             $preferredLocale,
+            FormField::addFieldset('backend.form.user.userAddress')
+                ->setIcon('fa fa-map-marker'),
+            $address,
         ];
 
         $tabUserAdminFields = [
@@ -152,7 +172,6 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
             $mainUserfields = array_merge($tabUserfields);
         }
 
-
         if (Crud::PAGE_INDEX === $pageName) {
             return $mainUserfields;
         } elseif (Crud::PAGE_DETAIL === $pageName) {
@@ -177,16 +196,17 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
     public function encodePassword($event)
     {
         $user = $event->getEntityInstance();
-        if ($user instanceof BaseUser && $user->getPlainPassword()) {
+
+        if ($user instanceof BaseUser && !empty($user->getPlainPassword())) {
+            // Only hash the password if it's not empty
             $hashedPassword = $this->passwordHasher->hashPassword(
                 $user,
                 $user->getPlainPassword()
             );
             $user->setPassword($hashedPassword);
-            $user->setPlainPassword(null);
+            $user->setPlainPassword(null); // Clear the plain password after setting
         }
     }
-
 
     public function welcomeNewUser($event)
     {
