@@ -42,7 +42,7 @@ backend.common.pageBlockElement: 'Page block element'
 
 backend.loginForm.title: 'NakaCMS login'
 
-backend.dashboard.title: 'Welcome to the %applicationName% backend'
+backend.dashboard.title: '%applicationName% backend'
 backend.dashboardAdmin.generalHelp: |
     <p>This is the general backend for administration of the NakaCMS Instance.</p>
     <p>Depending on your role access, you can work on the content or the general configuration of the platform.</p>
