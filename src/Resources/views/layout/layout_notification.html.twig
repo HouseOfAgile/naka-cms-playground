@@ -1,16 +1,14 @@
-{% extends '@NakaCMS/layout/base-layout.html.twig' %}
+{% extends "@NakaCMS/layout/base-layout.html.twig" %}
 
 {% block stylesheets %}
-	{{ parent() }}
-	<style></style>
-{% endblock %}
+    {{ parent() }}
+    <style></style>
+{% endblock stylesheets %}
 
 {% block main %}
-	<div class="container my-5 py-5">
-		<div class="row">
-			<div class="col-6 offset-3 global-notification-style p-5">
-					{{ block('content') }}
-			</div>
-		</div>
-	</div>
-{% endblock %}
+    <div class="container my-5 py-5">
+        <div class="row">
+            <div class="col-6 offset-3 global-notification-style p-5">{{ block("content") }}</div>
+        </div>
+    </div>
+{% endblock main %}
