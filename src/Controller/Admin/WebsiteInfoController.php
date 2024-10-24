@@ -53,9 +53,6 @@ class WebsiteInfoController extends AdminDashboardController
                 $data = $form->getData();
                 $openingHoursArray = json_decode($data['openingHours'], true);
                 $openingHoursManager->setOpeningHoursData($openingHoursArray);
-                // $em = $this->getDoctrine()->getManager();
-                // $em->persist($newBlockElement);
-                // $em->flush();
                 $this->addFlash('success', sprintf('flash.openingHours.openingHoursUpdated'));
                 return $this->redirectToRoute('website_info_view_opening_hours', []);
             } else {

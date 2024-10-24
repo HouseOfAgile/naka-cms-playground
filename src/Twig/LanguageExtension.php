@@ -20,12 +20,12 @@ class LanguageExtension extends AbstractExtension
 
     public function englishClean($code)
     {
-        return str_replace('en', 'gb', $code);
+        return str_replace('en', 'gb', strtolower($code));
     }
 
-    public function getLanguage($code)
+    public function getLanguage($code, $displayedLocale = null)
     {
-        return Languages::getName($code);
+        return Languages::getName($code, $displayedLocale);
     }
 
     public function getAlpha2($alpha3Code)
