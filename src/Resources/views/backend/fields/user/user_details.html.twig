@@ -1,0 +1,40 @@
+<div class="list-group list-group-flush border">
+    <div class="list-group-item">
+        <div class="row align-items-center">
+            <div class="col-4 g-0">
+                <span class="ps-1">{{ 'backend.form.user.fullName' | trans }}</span>
+            </div>
+            <div class="col-8 g-0 fs-5 py-2">
+                <span><strong>{{ entity.instance.lastName }}</strong> {{ entity.instance.firstName }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="list-group-item">
+        <div class="row align-items-center">
+            <div class="col-4 g-0">
+                <span class="ps-1">{{ 'backend.form.user.preferredLocale' | trans }}</span>
+            </div>
+            <div class="col-8 g-0">
+                <span>{{ entity.instance.preferredLocale | getLanguage }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="list-group-item">
+        <div class="row align-items-center">
+            <div class="col-4 g-0">
+                <span class="ps-1">{{ 'backend.form.user.verificationStatus' | trans }}</span>
+            </div>
+            <div class="col-8 g-0 p-2">
+                <div class="p-2">
+				{% if entity.instance.isVerified %}
+                    <i class="fa-solid fa-lg fa-circle-check text-success"></i>
+                    {{ 'verification.emailVerified' | trans }}
+					{% else %}
+                    <i class="fa-solid fa-lg fa-circle-xmark text-danger"></i>
+                    {{ 'verification.emailNotVerified' | trans }}
+					{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

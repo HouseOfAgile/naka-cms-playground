@@ -73,7 +73,7 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
 
     public function configureFields(string $pageName): iterable
     {
-        $id = IntegerField::new ('id', 'ID');
+        $id = IntegerField::new ('id', 'ID')->onlyOnIndex();
 
         $firstName = TextField::new ('firstName', 'backend.form.user.firstName')
             ->setHelp('backend.form.user.firstName.help')
@@ -83,16 +83,16 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
             ->setHelp('backend.form.user.lastName.help')
             ->setColumns(6);
 
+        $userDetails = TextField::new ('userDetails', 'backend.form.user.userDetails')
+            ->setHelp('backend.form.user.lastName.help')
+            ->setColumns(6)
+            ->setTemplatePath('@NakaCMS/backend/fields/user/user_details.html.twig');
+
         $address = Field::new ('addressFields')
             ->setFormType(BackendAddressType::class)
             ->setFormTypeOptions([
                 'label' => false,
             ]);
-        // ->setVirtual(true); // Mark the field as virtual to prevent EasyAdmin mapping
-
-        $lastName = TextField::new ('lastName', 'backend.form.user.lastName')
-            ->setHelp('backend.form.user.lastName.help')
-            ->setColumns(6);
 
         $email = TextField::new ('email', 'backend.form.user.email')
             ->setHelp('backend.form.user.email.help');
@@ -106,6 +106,7 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
         $isVerified = BooleanField::new ('isVerified')
             ->setHelp('backend.form.user.isVerified.help')
             ->setColumns(6);
+
         $roles = ChoiceField::new ('roles', 'backend.form.user.roles')
             ->setChoices([
                 'backend.form.user.role.user' => 'ROLE_USER',
@@ -128,14 +129,14 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
 
             FormField::addColumn(8),
             FormField::addFieldset('backend.form.user.userDetails')
-			->setIcon('fa fa-info'),
-            $firstName, $lastName,
+                ->setIcon('fa fa-info'),
+            $id, $firstName, $lastName,
             $email,
             $birthDate,
             FormField::addColumn(4),
 
             FormField::addFieldset('backend.form.user.userPreferences')
-			->setIcon('fa fa-heart'),
+                ->setIcon('fa fa-heart'),
             $preferredLocale,
             FormField::addFieldset('backend.form.user.userAddress')
                 ->setIcon('fa fa-map-marker'),
@@ -173,9 +174,9 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
         }
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return $mainUserfields;
+            return [$id, $lastName, $firstName, $email, $userDetails, $isVerified];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return array_merge([$id], $mainUserfields);
+            return array_merge($mainUserfields);
         } elseif (Crud::PAGE_NEW === $pageName) {
             return array_merge($mainUserfields);
         } elseif (Crud::PAGE_EDIT === $pageName) {

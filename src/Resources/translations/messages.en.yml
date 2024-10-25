@@ -24,6 +24,11 @@ authenticate.flash.verifyEmail.emailNotFoundOrAlreadyVerified: 'Email not found 
 authenticate.signUp: 'Sign Up'
 authenticate.login: 'Login'
 
+verification.phoneVerified: 'Phone Verified'
+verification.phoneNotVerified: 'Phone is not verified'
+verification.emailVerified: 'Email Verified'
+verification.emailNotVerified: 'Email is not verified'
+
 # meta
 meta.defaultDescription: 'meta.defaultDescription to be updated'
 meta.defaultKeywords: 'meta.defaultKeywords to be updated'
@@ -135,6 +140,7 @@ backend.form.blockElement.isFluid.help: 'Set isFluid to true if you want the blo
 
 backend.form.menu.menuItems: 'List of items in that menu'
 
+backend.form.user.fullName: 'Full Name'
 backend.form.user.firstName: 'First Name'
 backend.form.user.firstName.help: 'Please enter your first name.'
 backend.form.user.lastName: 'Last Name'
@@ -159,6 +165,7 @@ backend.form.user.userDetails: 'Member Details'
 backend.form.user.userAddress: 'Member Address'
 backend.form.user.userPreferences: 'Member Preferences'
 backend.form.user.isVerified.help: 'This member completed the email verification'
+backend.form.user.verificationStatus: 'Verification Status'
 
 backend.form.adminUser.roles.help: 'Set the roles of this user. They are several roles available, refer to the documentation for the details.'
 
