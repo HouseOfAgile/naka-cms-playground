@@ -70,6 +70,26 @@ class Picture implements TimestampableInterface
         return $this->id;
     }
 
+    /**
+     * dumpConfig: return array with main config
+     *
+     * @return array
+     */
+    public function dumpConfig(): array
+    {
+        $config =  [
+            'id' => $this->getId(),
+            // 'originalName' => $this->image->getOriginalName(),
+            'name' => $this->getName(),
+            // 'mimeType' => $this->image->getMimeType(),
+            // 'dimensions' => $this->image->getDimensions(),
+            // 'size' => $this->image->getSize(),
+        ];
+
+        return $config;
+    }
+
+
     public function __toString()
     {
         return sprintf(
