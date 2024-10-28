@@ -15,7 +15,7 @@
 {% block main %}
     {{ form_start(form) }}
         <div class="row my-4">
-            <div class="col-4 offset-1 p-4 bg-light">{{ 'backend.form.configureMenu.detailedHelp'|trans|raw }}</div>
+            <div class="col-4 offset-1 p-4 text-bg-light rounded shadow">{{ 'backend.form.configureMenu.detailedHelp'|trans|raw }}</div>
             <div class="col-7">
                 <div id="sortable" data-new-order-key="naka_menu_newOrder">
                     {% for menuItem in form.menuItems %}

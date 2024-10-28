@@ -27,7 +27,6 @@ class MenuAdminController extends AdminDashboardController
     ): \Symfony\Component\HttpFoundation\Response {
 
         $form = $this->createForm(NakaMenuType::class, $menu, [
-            // 'items' => ,
             'orderedMenuItemsArray' => $menu->getOrderedMenuItemsArray()
         ]);
         $form->handleRequest($request);

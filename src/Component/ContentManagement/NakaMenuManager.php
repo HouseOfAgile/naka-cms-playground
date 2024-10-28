@@ -22,7 +22,6 @@ class NakaMenuManager
     /** @var MenuItemRepository */
     protected $menuItemRepository;
 
-
     public function __construct(
         EntityManagerInterface $entityManager,
         MenuRepository $menuRepository,
@@ -76,8 +75,8 @@ class NakaMenuManager
         $position = 1;
         foreach ($newOrder as $menuItemId) {
             $menuItem = $this->menuItemRepository->findOneBy(['id' => $menuItemId]);
-            $menuItem->setPosition($position);
-            $position++;
+			$menuItem->setPosition($position);
+			            $position++;
             $this->entityManager->persist($menuItem);
         }
         $this->entityManager->flush();

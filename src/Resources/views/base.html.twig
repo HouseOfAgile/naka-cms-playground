@@ -32,21 +32,6 @@
                       type="text/css"
                       href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
                 <style>
-                    /* Style for environment banner */
-                    .environment-banner {
-                        position: fixed;
-                        top: 0;
-                        width: 100%;
-                        z-index: 1000;
-                        background-color: #f44336;
-                        /* Red background for non-prod environments */
-                        color: white;
-                        text-align: center;
-                        font-size: 16px;
-                        padding: 10px;
-                        font-weight: bold;
-                    }
-
                     /* Add padding to the body only in non-prod environments */
 					{% if app.environment !='prod' %}
                     body {

@@ -11,7 +11,9 @@ class NakaMenuItemType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('name', null, ['empty_data'=>'']);
+        $builder->add('name', null, [
+            'empty_data' => '',
+            'disabled' => true]);
         $builder->add('position');
 
     }
@@ -22,6 +24,6 @@ class NakaMenuItemType extends AbstractType
             'data_class' => MenuItem::class,
         ]);
         $resolver->setDefault('block_prefix', 'sortable_block');
-        $resolver->setDefault('attr',  ['class' => 'bg-info text-light rounded']);
+        $resolver->setDefault('attr', ['class' => 'bg-info text-light rounded']);
     }
 }
