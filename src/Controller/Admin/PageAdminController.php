@@ -48,7 +48,7 @@ class PageAdminController extends AdminDashboardController
                     ->setAction(Action::INDEX)
                     ->generateUrl());
             } else {
-                $this->addFlash('error', sprintf('Cannot add page \'%s\', check logs', $page));
+                $this->addFlash('danger', sprintf('Cannot add page \'%s\', check logs', $page));
             }
         }
         $viewParams = [
@@ -90,7 +90,7 @@ class PageAdminController extends AdminDashboardController
                     ->setAction(Action::INDEX)
                     ->generateUrl());
             } else {
-                $this->addFlash('error', sprintf('Cannot add page \'%s\', check logs', $page));
+                $this->addFlash('danger', sprintf('Cannot add page \'%s\', check logs', $page));
             }
         }
         $viewParams = [

@@ -56,7 +56,7 @@ class WebsiteInfoController extends AdminDashboardController
                 $this->addFlash('success', sprintf('flash.openingHours.openingHoursUpdated'));
                 return $this->redirectToRoute('website_info_view_opening_hours', []);
             } else {
-                $this->addFlash('error', sprintf('There was an error during updating of the opening hours'));
+                $this->addFlash('danger', sprintf('There was an error during updating of the opening hours'));
             }
         }
         $viewParams = [

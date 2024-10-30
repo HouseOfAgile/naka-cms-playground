@@ -9,13 +9,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use HouseOfAgile\NakaCMSBundle\Component\Communication\NotificationManager;
 use HouseOfAgile\NakaCMSBundle\Repository\UserRepository;
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
-use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -82,7 +82,7 @@ class RegistrationController extends AbstractController
                 $user->getEmail(),
             );
         } catch (VerifyEmailExceptionInterface $e) {
-            $this->addFlash('error', $e->getReason());
+            $this->addFlash('danger', $e->getReason());
             return $this->redirectToRoute('app_register');
         }
         $user->setIsVerified(true);
@@ -93,7 +93,6 @@ class RegistrationController extends AbstractController
         return $this->redirectToRoute('app_login');
     }
 
-
     #[Route('/verify/resend', name: 'app_verify_resend_email')]
     public function resendVerifyEmail(
         Request $request,
@@ -103,18 +102,44 @@ class RegistrationController extends AbstractController
         EntityManagerInterface $entityManager
     ): Response {
         $email = $request->query->get('email', '');
+        $user = null;
+
+        if ($this->getUser() instanceof User) {
+            /** @var User $user */
+            $user = $this->getUser();
+            $email = $user->getEmail();
+        }
 
         if ($request->isMethod('POST')) {
             $email = $request->request->get('email');
-            $user = $userRepository->findOneBy(['email' => $email]);
 
-            if ($user && !$user->getIsVerified()) {
+            if ($this->getUser() instanceof User) {
+                // User is logged in
+                /** @var User $user */
+                $user = $this->getUser();
+
+                // Check if the email is already used by another account
+                $existingUser = $userRepository->findOneBy(['email' => $email]);
+                if ($existingUser && $existingUser->getId() !== $user->getId()) {
+                    $this->addFlash('danger', 'This email is already in use by another account.');
+                    return $this->redirectToRoute('app_verify_resend_email');
+                }
+
+                // Update the user's email
+                $user->setEmail($email);
+                $user->setIsVerified(false); // Reset verification status
+
+                // Check if a verification email was sent in the last 30 minutes
                 $now = new \DateTime();
                 $lastSent = $user->getLastVerificationEmailSentAt();
 
-                if ($lastSent && $lastSent->diff($now)->i < 30) {
-                    $this->addFlash('error', 'You can only request a new verification email every 30 minutes.');
+                if ($lastSent && ($now->getTimestamp() - $lastSent->getTimestamp()) < 10) {
+                    $this->addFlash('danger', 'You can only request a new verification email every 30 minutes.');
+                    return $this->redirectToRoute('app_verify_resend_email', ['email' => $email]);
                 } else {
+                    $entityManager->flush();
+
+                    // Generate new verification email
                     $signatureComponents = $verifyEmailHelper->generateSignature(
                         'app_verify_email',
                         $user->getId(),
@@ -131,7 +156,38 @@ class RegistrationController extends AbstractController
                     return $this->redirectToRoute('app_verify_resend_email', ['email' => $email]);
                 }
             } else {
-                $this->addFlash('error', 'authenticate.flash.verifyEmail.emailNotFoundOrAlreadyVerified');
+                // User is not logged in, attempt to find user by email
+                $user = $userRepository->findOneBy(['email' => $email]);
+
+                if ($user && !$user->getIsVerified()) {
+                    // Check if a verification email was sent in the last 30 minutes
+                    $now = new \DateTime();
+                    $lastSent = $user->getLastVerificationEmailSentAt();
+
+                    if ($lastSent && ($now->getTimestamp() - $lastSent->getTimestamp()) < 10) {
+                        $this->addFlash('danger', 'You can only request a new verification email every 30 minutes.');
+                        return $this->redirectToRoute('app_verify_resend_email', ['email' => $email]);
+                    } else {
+                        // Generate new verification email
+                        $signatureComponents = $verifyEmailHelper->generateSignature(
+                            'app_verify_email',
+                            $user->getId(),
+                            $user->getEmail(),
+                            ['id' => $user->getId()]
+                        );
+
+                        $mailer->sendVerifyMessageToNewMember($user, $signatureComponents->getSignedUrl());
+
+                        $user->setLastVerificationEmailSentAt($now);
+                        $entityManager->flush();
+
+                        $this->addFlash('success', 'authenticate.flash.verifyEmail.newEmailSent');
+                        return $this->redirectToRoute('app_verify_resend_email', ['email' => $email]);
+                    }
+                } else {
+                    $this->addFlash('danger', 'authenticate.flash.verifyEmail.emailNotFoundOrAlreadyVerified');
+                    return $this->redirectToRoute('app_register');
+                }
             }
         }
 
@@ -139,4 +195,5 @@ class RegistrationController extends AbstractController
             'email' => $email,
         ]);
     }
+
 }

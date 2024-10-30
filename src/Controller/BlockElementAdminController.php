@@ -51,7 +51,7 @@ class BlockElementAdminController extends SuperAdminDashboardController
                 $this->addFlash('success', sprintf('Block Element %s has been created!', $newBlockElement->getId()));
                 return $this->redirToAction();
             } else {
-                $this->addFlash('error', sprintf('There is an error while creating this BlockElement!'));
+                $this->addFlash('danger', sprintf('There is an error while creating this BlockElement!'));
             }
         }
         $viewParams = [
@@ -95,7 +95,7 @@ class BlockElementAdminController extends SuperAdminDashboardController
                     return $this->redirToAction();
                 }
             } else {
-                $this->addFlash('error', sprintf('There was an error while updating this BlockElement!'));
+                $this->addFlash('danger', sprintf('There was an error while updating this BlockElement!'));
             }
         }
         $viewParams = [

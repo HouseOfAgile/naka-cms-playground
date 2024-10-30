@@ -1,28 +1,56 @@
 {% extends '@NakaCMS/layout/base-layout.html.twig' %}
 
-{% block title %}{{ 'authenticate.verifyEmail.title'|trans }}{% endblock %}
+{% block title %}
+    {{ 'authenticate.verifyEmail.title'|trans }}
+{% endblock title %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="login-form bg-light mt-4 p-4">
-            <h1 class="h3 mb-3 font-weight-normal">{{ 'authenticate.verifyEmail.header'|trans }}</h1>
-            <p>
-                {{ 'authenticate.verifyEmail.instructions'|trans }}
-            </p>
-            <form method="post" action="{{ path('app_verify_resend_email') }}">
-                {% if not email %}
-                    <div class="form-group">
-                        <label for="email">{{ 'authenticate.verifyEmail.emailLabel'|trans }}</label>
-                        <input type="email" id="email" name="email" class="form-control" required>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8 global-main-form-style">
+                <div class="row">
+                    <div class="col-10 offset-1 text-center py-4">
+                        <div class="text-center">
+                            <h1 class="fs-3 py-2 mb-0">{{ 'authenticate.verifyEmail.header'|trans }}</h1>
+                        </div>
+                        {% for type, messages in app.flashes %}
+                            {% for message in messages %}<div class="alert alert-{{ type }} text-center">{{ message|trans }}</div>{% endfor %}
+                        {% endfor %}
+                        <div class="row">
+                            <div class="col-10 offset-1 text-center py-3">
+                                <i class="fa fa-envelope  fa-3x mb-3 text-white"></i>
+                                <br>
+                                <div class="py-3 text-start">{{ 'authenticate.verifyEmail.instructions'|trans }}</div>
+                                <div class="py-3 text-start">
+                                    {{ 'authenticate.verifyEmail.verificationEmailSentToThisEmail'|trans({'%email%': email}) | raw }}
+                                </div>
+                            </div>
+                        </div>
+                        <form method="post" action="{{ path("app_verify_resend_email") }}">
+                            <div class="form-group">
+                                <input type="hidden"
+                                       id="email"
+                                       name="email"
+                                       class="form-control form-control-lg"
+                                       value="{{ email }}"
+                                       required>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg mx-2">
+                                    <i class="fa fa-paper-plane"></i>
+                                    {{ 'authenticate.verifyEmail.resendButton'|trans }}
+                                </button>
+                                <a href="{{ path("app_contact") }}"
+                                   class="btn btn-secondary btn-lg mx-2">{{ 'authenticate.verifyEmail.contactUs'|trans }}</a>
+                            </div>
+                            <div class="py-3 text-center">
+                                <a href="{{ path("app_login") }}"
+                                   class="btn btn-secondary btn-lg mx-2">{{ 'authenticate.verifyEmail.backToLogin'|trans }}</a>
+                            </div>
+                        </div>
                     </div>
-                {% else %}
-                    <input type="hidden" name="email" value="{{ email }}">
-                    <p>{{ 'authenticate.verifyEmail.emailToResend'|trans({'%email%': email}) }}</p>
-                {% endif %}
-                <button type="submit" class="btn btn-primary mt-3">{{ 'authenticate.verifyEmail.resendButton'|trans }}</button>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-{% endblock %}
+{% endblock content %}
