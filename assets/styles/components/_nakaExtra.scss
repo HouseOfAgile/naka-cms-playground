@@ -1,0 +1,16 @@
+/* Style for environment banner */
+.environment-banner {
+    position        : fixed;
+    top             : 0;
+    width           : 100%;
+    z-index         : 1000;
+    background-color: #f44336;
+    color           : white;
+    text-align      : center;
+    font-size       : 16px;
+    padding         : 10px;
+    font-weight     : bold;
+    line-height     : 30px;
+    height          : 50px;
+
+}
