@@ -15,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use HouseOfAgile\NakaCMSBundle\Admin\Field\TranslationField;
@@ -43,17 +44,17 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
 
     public function configureActions(Actions $actions): Actions
     {
-        $pageId = fn (Page $page): array => [
+        $pageId = fn(Page $page): array=> [
             'page' => $page->getId(),
         ];
-        $addBlockToPage = Action::new('addBlockToPage', 'Add Block to Page', 'fa fa-plus')
+        $addBlockToPage = Action::new ('addBlockToPage', 'Add Block to Page', 'fa fa-plus')
             ->linkToRoute('add_block_to_page', $pageId)
             ->addCssClass('btn btn-success text-white');
-        $addPageToMenu = Action::new('addPageToMenu', 'Add Page to Menu', 'fa fa-plus')
+        $addPageToMenu = Action::new ('addPageToMenu', 'Add Page to Menu', 'fa fa-plus')
             ->linkToRoute('add_page_to_menu', $pageId)
             ->addCssClass('btn btn-info text-white');
 
-        $reorganizeBlocksInPage = Action::new('configureMenu', 'backend.crud.page.action.reorganizeBlocksInPage', 'fa fa-wheel')
+        $reorganizeBlocksInPage = Action::new ('configureMenu', 'backend.crud.page.action.reorganizeBlocksInPage', 'fa fa-wheel')
             ->linkToRoute('reorganize_blocks_in_page', $pageId)
             ->displayIf(static function ($entity) {
                 return count($entity->getPageBlockElements()) > 1;
@@ -88,8 +89,7 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
             // ],
         ];
 
-        $id = IdField::new('id');
-        $slug = TextField::new('slug');
+        $id = IdField::new ('id');
 
         $pageConfigurationTab = FormField::addTab('backend.form.page.pageConfigurationTab')
             ->setHelp('backend.form.page.pageConfigurationTab.help');
@@ -100,20 +100,24 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         $pageTranslationTab = FormField::addTab('backend.form.page.mainPageTranslationsPanel')
             ->setHelp('backend.form.page.mainPageTranslationsPanel.help');
 
-        $translations = TranslationField::new('translations', 'Translations', $fieldsConfig)
+        $translations = TranslationField::new ('translations', 'Translations', $fieldsConfig)
             ->setRequired(false)
             ->hideOnIndex();
 
-        $name = TextField::new('name')
+        $name = TextField::new ('name')
             ->setLabel('Name')
-            ->setHelp('backend.form.page.name.help');
-
-        $active = BooleanField::new('active')
+            ->setHelp('backend.form.page.name.help')
+            ->setColumns(6);
+        $slug = SlugField::new ('slug')
+            ->setHelp('backend.form.page.slug.help')
+            ->setTargetFieldName('name')
+            ->setColumns(6);
+        $active = BooleanField::new ('active')
             ->setHelp('backend.form.page.active.help')
-            // ->setColumns(6)
+        // ->setColumns(6)
         ;
 
-        $pageType = ChoiceField::new('pageType')
+        $pageType = ChoiceField::new ('pageType')
             ->setChoices(NakaPageType::getGuessOptions())
             ->setHelp('backend.form.page.pageType.help')
             ->setFormTypeOption('required', true);
@@ -121,11 +125,11 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         $pageConfigurationPanel = FormField::addPanel('backend.form.page.pageConfigurationPanel')
             ->setHelp('backend.form.page.pageConfigurationPanel.help');
         // no pageGallery for now on page level
-        $pageGallery = AssociationField::new('pageGallery', 'backend.form.page.pageGallery')
+        $pageGallery = AssociationField::new ('pageGallery', 'backend.form.page.pageGallery')
             ->setHelp('backend.form.page.pageGallery.help')
             ->setFormTypeOption('required', false);
 
-        $pageBlockElements = AssociationField::new('pageBlockElements', 'backend.form.page.pageBlockElements')
+        $pageBlockElements = AssociationField::new ('pageBlockElements', 'backend.form.page.pageBlockElements')
             ->setFormTypeOption('by_reference', false)
             ->setHelp('backend.form.page.pageBlockElements.help');
         // $category = AssociationField::new('category', 'backend.form.page.category');
@@ -138,7 +142,7 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
             ];
         } elseif (Crud::PAGE_NEW === $pageName) {
             return [
-                $pageConfigurationTab, $pageDetailsPanel, $name, $pageType, $pageGallery,  $pageBlockElements,
+                $pageConfigurationTab, $pageDetailsPanel, $name, $pageType, $pageGallery, $pageBlockElements,
                 // $pageConfigurationPanel, $category,
                 $pageTranslationTab, $translations,
 
@@ -146,7 +150,7 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         } elseif (Crud::PAGE_EDIT === $pageName) {
             return [
 
-                $pageConfigurationTab, $pageDetailsPanel, $active, $name, $slug, $pageType, $pageGallery,  $pageBlockElements,
+                $pageConfigurationTab, $pageDetailsPanel, $active, $name, $slug, $pageType, $pageGallery, $pageBlockElements,
                 // $pageConfigurationPanel, $category,
                 $pageTranslationTab, $translations,
 
