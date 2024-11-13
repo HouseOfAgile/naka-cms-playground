@@ -105,9 +105,6 @@ backend.form.page.pageType.help: 'The type of the page, can be of three main typ
 backend.form.page.pageConfigurationPanel: 'Page Configuration'
 backend.form.page.pageConfigurationPanel.help: 'Here you can select the blocks on that page, connect a gallery, set the category'
 
-backend.form.page.bannerPicture.help: 'Banner picture should have a ration of 1200px * 300px'
-backend.form.page.slidePicture.help: 'Slide picture should have a ration of 600px * 400px'
-
 backend.form.addPageToMenu.title: 'Add a page to a menu'
 backend.form.addPageToMenu.detailedHelp: |
     <p>There are various menu available in Naka. You can add a page to a menu by selecting the menu you want your page to be in.</p>

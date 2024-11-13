@@ -137,6 +137,16 @@ class MenuItem implements TranslatableInterface
         return $arr;
     }
 
+    public function getRouteParameterSlug(): ?string
+	{
+		foreach ($this->routeParameters as $key => $value) {
+			if ($value['name'] == 'slug') {
+				return $value['val'];
+			}
+		}
+		return null;
+	}
+
     public function getName(): ?string
     {
         return $this->name;
