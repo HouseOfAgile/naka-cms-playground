@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
@@ -53,7 +54,7 @@ class WebsiteAssetCrudController extends AbstractCrudController
             ->setLabel('Name')
             ->setHelp('backend.form.websiteAsset.name');
 
-        $assetDescription = TextField::new ('assetDescription')
+        $assetDescription = TextEditorField::new ('assetDescription')
             ->setLabel('backend.form.websiteAsset.assetDescription')
             ->setHelp('backend.form.websiteAsset.assetDescription.help');
 
