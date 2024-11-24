@@ -67,6 +67,7 @@ class DataSyncManager
     protected $appEntities = [];
     protected $assetEntities = [];
     protected $appEntitiesAliases = [];
+    protected bool $excludeUpdatedAt = false;
 
     public function __construct(
         LoggerInterface $scrappingLogger,
@@ -97,6 +98,11 @@ class DataSyncManager
     public function setIo(SymfonyStyle $io): void
     {
         $this->setLoaderCommandIo($io);
+    }
+
+    public function setExcludeUpdatedAt(bool $excludeUpdatedAt): void
+    {
+        $this->excludeUpdatedAt = $excludeUpdatedAt;
     }
 
     private function updateMappings(array $entities): void
@@ -229,7 +235,7 @@ class DataSyncManager
                             }
                         } else {
                             $this->entityManager->flush();
-							$this->entitiesIdMapping[$type][$entityData['id']] = $entity->getId();
+                            $this->entitiesIdMapping[$type][$entityData['id']] = $entity->getId();
 
                         }
                     }
@@ -518,7 +524,9 @@ class DataSyncManager
             $propertyName = $property->getName();
             $getter = 'get' . ucfirst($propertyName);
 
-            if (in_array($propertyName, ['__isInitialized__', 'translatable'])) {
+			// Skip some properties, Exclude updatedAt if requested
+            if (in_array($propertyName, ['__isInitialized__', 'translatable']) ||
+                ($this->excludeUpdatedAt && $propertyName === 'updatedAt')) {
                 continue;
             }
             $value = method_exists($entity, $getter) ? $entity->$getter() : $property->getValue($entity);

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace HouseOfAgile\NakaCMSBundle\Command;
 
@@ -12,6 +12,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -31,7 +32,6 @@ class ManageInstanceCommand extends Command
         parent::__construct();
         $this->dataSyncManager = $dataSyncManager;
     }
-
     protected function configure(): void
     {
         parent::configure();
@@ -47,6 +47,12 @@ class ManageInstanceCommand extends Command
                 InputArgument::OPTIONAL,
                 'Do not move asset during dump (true or false)',
                 false
+            )
+            ->addOption(
+                'exclude-updated-at',
+                null,
+                InputOption::VALUE_NONE,
+                'Exclude the updatedAt field when dumping entities'
             );
     }
 
@@ -66,9 +72,13 @@ class ManageInstanceCommand extends Command
 
         $dumpOrUpdate = $input->getArgument('mainAction') === 'dump';
         $doNotMoveAsset = filter_var($input->getArgument('doNotMoveAsset'), FILTER_VALIDATE_BOOLEAN);
+        $excludeUpdatedAt = $input->getOption('exclude-updated-at');
+
+        $this->dataSyncManager->setExcludeUpdatedAt($excludeUpdatedAt);
 
         $synchronizationStatus = $this->dataSyncManager->manageNakaCMS($appEntities, $appEntitiesAliases, $assetEntities, $dumpOrUpdate, $doNotMoveAsset);
 
         return $synchronizationStatus ? Command::SUCCESS : Command::FAILURE;
     }
+
 }
