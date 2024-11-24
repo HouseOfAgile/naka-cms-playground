@@ -36,22 +36,6 @@ class City
         return $this->id;
     }
 
-    /**
-     * dumpConfig: return array with main config
-     *
-     * @return array
-     */
-    public function dumpConfig(): array
-    {
-        $config =  [
-            'id' => $this->id,
-            'name' => $this->getName(),
-            'country' => $this->getCountry(),
-        ];
-
-        return $config;
-    }
-
     public function __toString()
     {
         return sprintf(

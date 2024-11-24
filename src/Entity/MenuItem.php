@@ -6,7 +6,6 @@ use App\Entity\Menu;
 use App\Entity\Page;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use HouseOfAgile\NakaCMSBundle\DBAL\Types\NakaMenuItemType;
@@ -63,33 +62,6 @@ class MenuItem implements TranslatableInterface
         $this->menus = new ArrayCollection();
     }
 
-    /**
-     * dumpConfig: return array with main config
-     *
-     * @return array
-     */
-    public function dumpConfig(): array
-    {
-        $config =  [
-            'id' => $this->id,
-            'name' => $this->getName(),
-            'type' => $this->getType(),
-            'route' => $this->getRoute(),
-            'orderId' => $this->getOrderId(),
-            'position' => $this->getPosition(),
-            'routeParameters' => $this->getRouteParameters(),
-            'uri' => $this->getUri(),
-            'menuItemTranslations' => array_map(function ($mi) {
-                return $mi->getId();
-            }, $this->getTranslations()->toArray()),
-        ];
-        if ($this->getPage() != null) {
-            $config['page'] = $this->getPage()->getId();
-        }
-
-        return $config;
-    }
-
     public function __toString()
     {
         return sprintf(
@@ -138,14 +110,14 @@ class MenuItem implements TranslatableInterface
     }
 
     public function getRouteParameterSlug(): ?string
-	{
-		foreach ($this->routeParameters as $key => $value) {
-			if ($value['name'] == 'slug') {
-				return $value['val'];
-			}
-		}
-		return null;
-	}
+    {
+        foreach ($this->routeParameters as $key => $value) {
+            if ($value['name'] == 'slug') {
+                return $value['val'];
+            }
+        }
+        return null;
+    }
 
     public function getName(): ?string
     {

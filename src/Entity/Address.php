@@ -52,25 +52,6 @@ class Address
     }
 
     /**
-     * dumpConfig: return array with main config
-     *
-     * @return array
-     */
-    public function dumpConfig(): array
-    {
-        $config =  [
-            'id' => $this->id,
-            'street' => $this->getStreet(),
-            'postcode' => $this->getPostcode(),
-        ];
-
-        if ($this->getCity() != null) {
-            $config['city'] = $this->getCity()->getId();
-        }
-        return $config;
-    }
-
-    /**
      * @return string
      */
     public function getFullAddress()

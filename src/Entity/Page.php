@@ -125,28 +125,6 @@ class Page implements TranslatableInterface, SluggableInterface, TimestampableIn
     }
 
     /**
-     * dumpConfig: return array with main config
-     *
-     * @return array
-     */
-    public function dumpConfig(): array
-    {
-        $config =  [
-            'id' => $this->id,
-            'active' => $this->getActive(),
-            'name' => $this->getName(),
-            'slug' => $this->getSlug(),
-            'pageType' => $this->getPageType(),
-            'pageGallery' => $this->getPageGallery() ? $this->getPageGallery()->getId() : null,
-            'pageTranslations' => array_map(function ($pt) {
-                return $pt->getId();
-            }, $this->getTranslations()->toArray()),
-        ];
-
-        return $config;
-    }
-
-    /**
      * @return string[]
      */
     public function getSluggableFields(): array

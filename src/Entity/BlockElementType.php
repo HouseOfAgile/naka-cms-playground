@@ -50,24 +50,6 @@ class BlockElementType implements TimestampableInterface
         );
     }
 
-    /**
-     * dumpConfig: return array with main config
-     *
-     * @return array
-     */
-    public function dumpConfig(): array
-    {
-        $config =  [
-            'id' => $this->id,
-            'type' => $this->getType(),
-            'htmlCode' => $this->getHtmlCode(),
-            'cssCode' => $this->getCssCode(),
-            'jsCode' => $this->getJsCode(),
-        ];
-
-        return $config;
-    }
-
     public function getId(): ?int
     {
         return $this->id;

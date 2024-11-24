@@ -42,24 +42,6 @@ class PageBlockElement
         );
     }
 
-
-    /**
-     * dumpConfig: return array with main config
-     *
-     * @return array
-     */
-    public function dumpConfig(): array
-    {
-        $config =  [
-            'id' => $this->id,
-            'position' => $this->getPosition(),
-            'blockElement' => $this->getBlockElement() ? $this->getBlockElement()->getId() : null,
-            'page' => $this->getPage() ? $this->getPage()->getId() : null,
-        ];
-
-        return $config;
-    }
-
     public function getTitle(): ?string
     {
         return  $this->getBlockElement() ? $this->getBlockElement() : $this->__toString();

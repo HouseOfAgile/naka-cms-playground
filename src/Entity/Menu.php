@@ -42,24 +42,6 @@ class Menu
         );
     }
 
-    /**
-     * dumpConfig: return array with main config
-     *
-     * @return array
-     */
-    public function dumpConfig(): array
-    {
-        $config =  [
-            'id' => $this->id,
-            'name' => $this->getName(),
-            'menuItems' => array_map(function ($mi) {
-                return $mi->getId();
-            }, $this->getMenuItems()->toArray()),
-        ];
-
-        return $config;
-    }
-
     public function getOrderedMenuItemsArray(): array
     {
         return  array_map(

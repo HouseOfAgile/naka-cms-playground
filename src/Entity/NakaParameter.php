@@ -2,7 +2,6 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\MappedSuperclass]
@@ -21,23 +20,6 @@ class NakaParameter
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $extraInfo;
-
-    /**
-     * dumpConfig: return array with main config
-     *
-     * @return array
-     */
-    public function dumpConfig(): array
-    {
-        $config =  [
-            'id' => $this->id,
-            'path' => $this->getPath(),
-            'value' => $this->getValue(),
-            'extraInfo' => $this->getExtraInfo(),
-        ];
-
-        return $config;
-    }
 
     public function __toString()
     {

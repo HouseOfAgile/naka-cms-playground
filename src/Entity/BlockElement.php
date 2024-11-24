@@ -77,35 +77,6 @@ class BlockElement implements TimestampableInterface
         );
     }
 
-    /**
-     * dumpConfig: return array with main config
-     *
-     * @return array
-     */
-    public function dumpConfig(): array
-    {
-        $config =  [
-            'id' => $this->id,
-            'name' => $this->getName(),
-            'extraCssClass' => $this->getExtraCssClass(),
-            'htmlCode' => $this->getHtmlCode(),
-            'cssCode' => $this->getCssCode(),
-            'jsCode' => $this->getJsCode(),
-            'isFluid' => $this->getIsFluid(),
-            'blockConfig' => $this->getblockConfig(),
-            'gallery' => $this->getGallery() ? $this->getGallery()->getId() : null,
-            // 'pageBlockElements' => array_map(function ($pbe) {
-            //     return $pbe->getId();
-            // }, $this->getPageBlockElements()->toArray()),
-        ];
-
-        if ($this->getBlockElementType() != null) {
-            $config['blockElementType'] = $this->getBlockElementType()->getId();
-        }
-
-        return $config;
-    }
-
     public function getId(): ?int
     {
         return $this->id;

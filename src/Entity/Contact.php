@@ -47,24 +47,6 @@ class Contact
         );
     }
 
-    /**
-     * dumpConfig: return array with main config
-     *
-     * @return array
-     */
-    public function dumpConfig(): array
-    {
-        $config =  [
-            'id' => $this->id,
-            'name' => $this->getName(),
-            'email' => $this->getEmail(),
-            'subject' => $this->getSubject(),
-            'message' => $this->getMessage(),
-        ];
-
-        return $config;
-    }
-
     public function getName(): ?string
     {
         return $this->name;

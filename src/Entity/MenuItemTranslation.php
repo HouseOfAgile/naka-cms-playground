@@ -38,24 +38,6 @@ class MenuItemTranslation implements TranslationInterface
         return $this->id;
     }
     
-    /**
-     * dumpConfig: return array with main config
-     *
-     * @return array
-     */
-    public function dumpConfig(): array
-    {
-        $config =  [
-            'id' => $this->id,
-            'title' => $this->getTitle(),
-            'locale' => $this->getLocale(),
-        ];
-
-        return $config;
-    }
-
-
-
     public function getTitle(): ?string
     {
         return $this->title;

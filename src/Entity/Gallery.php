@@ -32,26 +32,6 @@ class Gallery
         $this->blockElements = new ArrayCollection();
     }
 
-    /**
-     * dumpConfig: return array with main config
-     *
-     * @return array
-     */
-    public function dumpConfig(): array
-    {
-        $config =  [
-            'id' => $this->getId(),
-            'name' => $this->getname(),
-        ];
-
-        if (count($this->getPictures()) > 0) {
-            $config['pictures'] = array_map(function ($picture) {
-                return $picture->getId();
-            }, $this->getPictures()->toArray());
-        }
-        return $config;
-    }
-
     public function __toString()
     {
         return sprintf(

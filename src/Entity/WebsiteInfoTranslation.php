@@ -31,7 +31,7 @@ class WebsiteInfoTranslation implements TranslationInterface
     {
         $this->locale = 'en';
     }
-    
+
     public function __toString()
     {
         return sprintf(
@@ -39,22 +39,6 @@ class WebsiteInfoTranslation implements TranslationInterface
             $this->id,
             substr($this->getTitle(), 0, 39)
         );
-    }
-    /**
-     * dumpConfig: return array with main config
-     *
-     * @return array
-     */
-    public function dumpConfig(): array
-    {
-        $config =  [
-            'id' => $this->id,
-            'title' => $this->getTitle(),
-            'catchPhrase' => $this->getCatchPhrase(),
-            'locale' => $this->getLocale(),
-        ];
-
-        return $config;
     }
 
     public function getTitle(): ?string

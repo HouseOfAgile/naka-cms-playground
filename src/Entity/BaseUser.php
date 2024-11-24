@@ -97,33 +97,6 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
         return (string) $this->getUsername();
     }
 
-    /**
-     * dumpConfig: return array with main config
-     *
-     * @return array
-     */
-    public function dumpConfig(): array
-    {
-        $config =  [
-            'id' => $this->id,
-            'email' => $this->getEmail(),
-            'password' => $this->getPassword(),
-            'firstName' => $this->getFirstName(),
-            'birthDate' => $this->getBirthDate(),
-            'lastName' => $this->getLastName(),
-            'roles' => $this->getRoles(),
-            'street' => $this->getStreet(),
-            'zipCode' => $this->getZipCode(),
-            'city' => $this->getCity(),
-            'isVerified' => $this->getIsVerified(),
-            'country' => $this->getCountry(),
-            'preferredLocale' => $this->getPreferredLocale(),
-        ];
-
-
-        return $config;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;

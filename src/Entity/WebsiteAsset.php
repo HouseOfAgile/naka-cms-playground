@@ -62,6 +62,8 @@ class WebsiteAsset implements TimestampableInterface
     {
         $config = [
             'id' => $this->getId(),
+            'name' => $this->getName(),
+			'assetDescription' => $this->getAssetDescription(),
         ];
 
         return $config;

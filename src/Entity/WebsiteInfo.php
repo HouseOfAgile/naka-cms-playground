@@ -33,23 +33,6 @@ class WebsiteInfo implements TranslatableInterface
     {
         return $this->id;
     }
-    /**
-     * dumpConfig: return array with main config
-     *
-     * @return array
-     */
-    public function dumpConfig(): array
-    {
-        $config =  [
-            'id' => $this->id,
-            'openingHours' => json_encode($this->getOpeningHours()),
-            'websiteInfoTranslations' => array_map(function ($pt) {
-                return $pt->getId();
-            }, $this->getTranslations()->toArray()),
-        ];
-
-        return $config;
-    }
 
     public function getOpeningHours(): ?array
     {

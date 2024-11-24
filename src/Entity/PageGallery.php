@@ -32,26 +32,6 @@ class PageGallery
         $this->pages = new ArrayCollection();
     }
 
-    /**
-     * dumpConfig: return array with main config
-     *
-     * @return array
-     */
-    public function dumpConfig(): array
-    {
-        $config =  [
-            'id' => $this->getId(),
-            'name' => $this->getName(),
-        ];
-
-        if (count($this->getImages()) > 0) {
-            $config['galleryImages'] = array_map(function ($image) {
-                return $image->getId();
-            }, $this->getImages()->toArray());
-        }
-        return $config;
-    }
-
     public function __toString()
     {
         return sprintf(
