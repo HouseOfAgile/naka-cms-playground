@@ -144,7 +144,6 @@ class DataSyncManager
 
     public function manageNakaCMS(array $appEntities, array $appEntitiesAliases, array $assetEntities, bool $dumpOrUpdate = false, bool $doNotMoveAsset = false): bool
     {
-
         $this->setupDataSyncManager($appEntities, $appEntitiesAliases, $assetEntities);
 
         $assetsSynchronized = $this->synchronizeAssets($dumpOrUpdate, $doNotMoveAsset);
@@ -194,9 +193,12 @@ class DataSyncManager
                 if (count($dumpedEntities) > 0) {
                     $entityCounter = 0;
                     $flushInterval = 2000;
-                    $useCounter = !in_array($type, DataDumperParameter::APP_ENTITIES_SELF_REF);
 
                     $batchEntities = [];
+                    $deferredSelfRelations = [];
+
+                    // Determine if this entity has self-referential relationships
+                    $isSelfReferential = in_array($type, DataDumperParameter::APP_ENTITIES_SELF_REF);
 
                     foreach ($dumpedEntities as $entityKey => $entityData) {
                         if (array_key_exists($type, $this->assetEntities)) {
@@ -214,11 +216,15 @@ class DataSyncManager
                             $this->logCommand(sprintf('Update Entity %s with id %s', ucfirst($type), $entityKey));
                         }
 
-                        $this->updateEntityFromYamlData($entity, $entityData, $type);
+                        $this->updateEntityFromYamlData($entity, $entityData, $type, $isSelfReferential, $deferredSelfRelations);
 
                         $this->entityManager->persist($entity);
 
-                        if ($useCounter) {
+                        if ($isSelfReferential) {
+                            $this->entityManager->flush();
+                            $this->entitiesIdMapping[$type][$entityData['id']] = $entity->getId();
+                            $this->entityManager->clear();
+                        } else {
                             $batchEntities[$entityData['id']] = $entity;
 
                             $entityCounter++;
@@ -233,21 +239,44 @@ class DataSyncManager
                                 $batchEntities = [];
                                 $this->logInfo(sprintf('Flushed and cleared entity manager after %d entities', $entityCounter));
                             }
-                        } else {
-                            $this->entityManager->flush();
-                            $this->entitiesIdMapping[$type][$entityData['id']] = $entity->getId();
-
                         }
                     }
 
-                    // Final flush to ensure all entities are persisted
-                    $this->entityManager->flush();
+                    // Final flush for non-self-referential entities
+                    if (!$isSelfReferential) {
+                        $this->entityManager->flush();
 
-                    foreach ($batchEntities as $originalId => $persistedEntity) {
-                        $this->entitiesIdMapping[$type][$originalId] = $persistedEntity->getId();
+                        foreach ($batchEntities as $originalId => $persistedEntity) {
+                            $this->entitiesIdMapping[$type][$originalId] = $persistedEntity->getId();
+                        }
+
+                        $this->entityManager->clear();
                     }
 
-                    $this->entityManager->clear();
+                    // Second pass: set self-referential relationships
+                    if ($isSelfReferential && !empty($deferredSelfRelations)) {
+						$this->logInfo(sprintf('Updating Self referencing %s entities', $type));
+
+                        foreach ($deferredSelfRelations as $relationData) {
+                            $entityId = $this->entitiesIdMapping[$type][$relationData['entityOriginalId']];
+                            $entity = $repository->find($entityId);
+                            $keyAttr = $relationData['keyAttr'];
+                            $valAttr = $relationData['valAttr'];
+                            $type = $relationData['type'];
+
+                            if (is_array($valAttr)) {
+                                foreach ($valAttr as $refId) {
+                                    $this->processOneToManyRelation($entity, $keyAttr, $refId);
+                                }
+                            } else {
+                                $this->processSingleValueAttribute($entity, $keyAttr, $valAttr, $type);
+                            }
+
+                            $this->entityManager->persist($entity);
+                            $this->entityManager->flush();
+                        }
+                        $this->entityManager->clear();
+                    }
 
                     $endTime = microtime(true);
                     $duration = $endTime - $startTime;
@@ -265,7 +294,7 @@ class DataSyncManager
         return true;
     }
 
-    public function updateEntityFromYamlData($entity, $dataEntity, $type = null): object
+    public function updateEntityFromYamlData($entity, $dataEntity, $type = null, bool $deferSelfRelations = false, array &$deferredSelfRelations = []): object
     {
         try {
             $type = $type ?? ucfirst($this->getShortClassName($entity));
@@ -273,6 +302,18 @@ class DataSyncManager
                 $this->logCommand(sprintf('Working on %s', $keyAttr));
                 if ($valAttr === null) {
                     $this->logWarning(sprintf('Skipping %s as value is null', $keyAttr));
+                    continue;
+                }
+
+                $isSelfReferentialField = $deferSelfRelations && in_array($keyAttr, DataDumperParameter::SELF_REFERENTIAL_FIELDS[$type] ?? []);
+
+                if ($isSelfReferentialField) {
+                    $deferredSelfRelations[] = [
+                        'entityOriginalId' => $dataEntity['id'],
+                        'keyAttr' => $keyAttr,
+                        'valAttr' => $valAttr,
+                        'type' => $type,
+                    ];
                     continue;
                 }
 
@@ -325,40 +366,55 @@ class DataSyncManager
             $relatedEntity = is_array($this->appEntitiesAliases[$keyAttr]) ? $this->appEntitiesAliases[$keyAttr]['class'] : $this->appEntitiesAliases[$keyAttr];
             $addMethod = is_array($this->appEntitiesAliases[$keyAttr]) ? ucfirst($this->appEntitiesAliases[$keyAttr]['method']) : 'add' . ucfirst($this->appEntitiesAliases[$keyAttr]);
 
-            $newRefId = $this->entitiesIdMapping[$relatedEntity][$refId];
+            $newRefId = $this->entitiesIdMapping[$relatedEntity][$refId] ?? null;
+            if (!$newRefId) {
+                $this->logWarning(sprintf('Reference ID %s for entity %s not found in ID mapping', $refId, $relatedEntity));
+                return;
+            }
             $linkedEntity = $this->appEntitiesDict[$relatedEntity]->findOneBy(['id' => $newRefId]);
 
             $entity->{$addMethod}($linkedEntity);
             $this->logCommand(sprintf('Added OneToMany relation from entity %s to entity %s', $entity, $linkedEntity));
         } else {
-            if (in_array($keyAttr, array_keys($this->appEntitiesDict))) {
-                $linkedEntity = $this->appEntitiesDict[$keyAttr]->findOneBy(['id' => $refId]);
-                $addMethod = substr($keyAttr, -1) === 's' ? substr($keyAttr, 0, -1) : $keyAttr;
-                $entity->{'add' . ucfirst($keyAttr)}($linkedEntity);
+            if (array_key_exists($keyAttr, $this->appEntitiesDict)) {
+                $relatedEntity = $keyAttr;
+                $newRefId = $this->entitiesIdMapping[$relatedEntity][$refId] ?? null;
+                if (!$newRefId) {
+                    $this->logWarning(sprintf('Reference ID %s for entity %s not found in ID mapping', $refId, $relatedEntity));
+                    return;
+                }
+                $linkedEntity = $this->appEntitiesDict[$relatedEntity]->findOneBy(['id' => $newRefId]);
+
+                $addMethod = 'add' . ucfirst($relatedEntity);
+                $entity->{$addMethod}($linkedEntity);
                 $this->logCommand(sprintf('Added OneToMany relation from entity %s to entity %s', $entity, $linkedEntity));
             } else {
-                $addMethod = substr($keyAttr, -1) === 's' ? substr($keyAttr, 0, -1) : $keyAttr;
-                $entity->{'add' . ucfirst($addMethod)}($refId);
+				$updatedAttr = substr($keyAttr, -1) === 's' ? substr($keyAttr, 0, -1) : $keyAttr ;
+                $addMethod = 'add' . ucfirst($updatedAttr);
+                $entity->{$addMethod}($refId);
             }
         }
     }
 
     private function processSingleValueAttribute($entity, string $keyAttr, $valAttr, string $type): void
     {
-
         try {
             $relatedEntity = null;
             if (array_key_exists($keyAttr, $this->appEntitiesAliases)) {
                 $relatedEntity = $this->appEntitiesAliases[$keyAttr];
             } elseif (array_key_exists($keyAttr, $this->appEntitiesDict)) {
-                $relatedEntity = $this->appEntitiesDict[$keyAttr];
+                $relatedEntity = $keyAttr;
             } elseif (array_key_exists($keyAttr, $this->appEntities[$type])) {
                 if (array_key_exists($this->appEntities[$type][$keyAttr], $this->appEntities)) {
                     $relatedEntity = $this->appEntities[$type][$keyAttr];
                 }
             }
             if ($relatedEntity) {
-                $newRefId = $this->entitiesIdMapping[$relatedEntity][$valAttr];
+                $newRefId = $this->entitiesIdMapping[$relatedEntity][$valAttr] ?? null;
+                if (!$newRefId) {
+                    $this->logWarning(sprintf('Reference ID %s for entity %s not found in ID mapping', $valAttr, $relatedEntity));
+                    return;
+                }
                 $linkedEntity = $this->appEntitiesDict[$relatedEntity]->findOneBy(['id' => $newRefId]);
 
                 $entity->{'set' . ucfirst($keyAttr)}($linkedEntity);
@@ -524,7 +580,7 @@ class DataSyncManager
             $propertyName = $property->getName();
             $getter = 'get' . ucfirst($propertyName);
 
-			// Skip some properties, Exclude updatedAt if requested
+            // Skip some properties, Exclude updatedAt if requested
             if (in_array($propertyName, ['__isInitialized__', 'translatable']) ||
                 ($this->excludeUpdatedAt && $propertyName === 'updatedAt')) {
                 continue;
