@@ -2,6 +2,15 @@
 frontend.goToAdmin: 'Go to Admin'
 main.returnToAdmin: 'Return to Admin'
 
+error.metaTitle: "Something went wrong"
+error.title: "An Error Occurred"
+error.message.general: "We encountered an unexpected issue. Please try again later."
+error.message.notFound: "The page you are looking for was not found."
+error.message.internal: "An internal server error occurred."
+error.message.unknown: "An unknown error occurred."
+error.backToHomepage: "Back to Homepage"
+error.contactSupport: "Contact Support"
+
 vichImage.close: 'Close'
 vichImage.imageIsNotSet: 'Image is not set'
 

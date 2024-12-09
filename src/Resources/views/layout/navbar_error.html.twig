@@ -1,0 +1,35 @@
+<nav id="main-navbar"
+     class="navbar fixed-top navbar-expand-md navbar-light bg-white shadow-lg">
+    <div class="container py-2">
+        <div class="collapse navbar-collapse flex-grow-1"
+             id="navbarSupportedContent">
+            {# align menu in the middle #}
+            <div class="main-menu">{{ knp_menu_render("main") }}</div>
+        </div>
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="btn-group m-2" role="group" aria-label="Admin links">
+                <a href="{{ path("admin_dashboard") }}"
+                   role="button"
+                   class="admin-link nav-item nav-link btn btn-success text-white p-2">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                    {{ 'frontend.goToAdmin'|trans }}
+                </a>
+                <a href="{{ path("logout") }}"
+                   role="button"
+                   class="nav-item nav-link btn btn-danger text-white p-2">
+                    <i class="fa fa-sign-out-alt"></i>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-12 pt-3">
+            <a class="navbar-brand" href="{{ path("app_homepage") }}">
+                <img class="img-fluid p-4"
+                     src="{{ '/asset/logo_spitzmuehle_transparent.png'| imagine_filter("logo_resize") }}" />
+            </a>
+        </div>
+    </div>
+</div>
