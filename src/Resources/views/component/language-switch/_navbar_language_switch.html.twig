@@ -1,0 +1,24 @@
+<ul class="navbar-nav mx-4 my-2">
+    <li class="nav-item dropdown fs-6">
+        <a class="nav-link dropdown-toggle"
+           href="#"
+           id="dropdown-language"
+           role="button"
+           data-bs-toggle="dropdown"
+           aria-expanded="false">
+            <span class="fi fi-{{ app.request.locale | englishClean }} rounded-1 px-4"></span>
+            {{ app.request.locale|locale_name(app.request.locale) |u.title }}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right"
+             aria-labelledby="dropdown-language">
+            {% for locale in all_locales %}
+                {% if locale != app.request.locale %}
+                    <a class="dropdown-item"
+                       href="{{ path(app.request.attributes.get('_route') , app.request.attributes.get('_route_params')|merge({_locale: locale})) }}">
+                        <span class="fi fi-{{ locale | englishClean }} rounded-1 px-4"></span>
+                    {{ locale | locale_name | u.title }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </li>
+</ul>
