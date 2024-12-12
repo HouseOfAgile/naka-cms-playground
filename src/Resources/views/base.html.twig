@@ -20,19 +20,20 @@
                   content="{%- block meta_keywords -%}{{ websiteInfo.translatedKeywords | default('meta.defaultKeywords' | trans) }}{%- endblock meta_keywords -%}">
         {% endblock master_meta %}
 
-        <link rel="icon" href="data:image/svg+xml,
-            <svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22>
-                <text y=%221.2em%22 font-size=%2296%22>⚫️</text>
-            </svg>
-            ">
+        {% block favicon %}
+            <link rel="icon" href="data:image/svg+xml,
+                <svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22>
+                    <text y=%221.2em%22 font-size=%2296%22>⚫️</text>
+                </svg>
+                ">
+            {% endblock favicon %}
+
             {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
             {% block stylesheets %}
                 {{ encore_entry_link_tags("app") }}
                 <link rel="stylesheet"
                       type="text/css"
                       href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
-                <style>
-                </style>
             {% endblock stylesheets %}
 
             {% block javascripts %}
@@ -49,7 +50,8 @@
         </head>
         <body data-aos-easing="ease-out-back"
               data-aos-duration="1000"
-              data-aos-delay="0"{% if app.environment != 'prod' %} class="offset-body"{% endif %}>
+              data-aos-delay="0"
+              {% if app.environment != 'prod' %}class="offset-body"{% endif %}>
             {% if app.environment != 'prod' %}
                 <div class="environment-banner fixed-top">Environment: {{ app.environment | upper }}</div>
             {% endif %}
