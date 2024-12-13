@@ -512,14 +512,15 @@ class DataSyncManager
                 } catch (IOExceptionInterface $exception) {
                     echo "An error occurred while copying asset at " . $exception->getPath();
                 }
-
                 $this->dumpFile($dataArray, $type);
+
                 $this->logSuccess(sprintf('Configuration has been dumped for asset definition (%s)', $type));
             } else {
                 $this->updateAssetsFromYaml($type, $repository);
             }
             $this->logSuccess(sprintf('Updated all assets of type %s', $type));
         }
+
 
         return true;
     }
@@ -550,6 +551,9 @@ class DataSyncManager
             }
             if (array_key_exists('name', $dataEntity) && $dataEntity['name'] != null) {
                 $entity->setName($dataEntity['name']);
+            }
+            if (array_key_exists('assetDescription', $dataEntity) && $dataEntity['assetDescription'] != null) {
+                $entity->setAssetDescription($dataEntity['assetDescription']);
             }
 
             $this->entityManager->persist($entity);
