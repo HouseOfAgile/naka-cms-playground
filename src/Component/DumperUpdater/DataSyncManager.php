@@ -255,7 +255,7 @@ class DataSyncManager
 
                     // Second pass: set self-referential relationships
                     if ($isSelfReferential && !empty($deferredSelfRelations)) {
-						$this->logInfo(sprintf('Updating Self referencing %s entities', $type));
+                        $this->logInfo(sprintf('Updating Self referencing %s entities', $type));
 
                         foreach ($deferredSelfRelations as $relationData) {
                             $entityId = $this->entitiesIdMapping[$type][$relationData['entityOriginalId']];
@@ -389,7 +389,7 @@ class DataSyncManager
                 $entity->{$addMethod}($linkedEntity);
                 $this->logCommand(sprintf('Added OneToMany relation from entity %s to entity %s', $entity, $linkedEntity));
             } else {
-				$updatedAttr = substr($keyAttr, -1) === 's' ? substr($keyAttr, 0, -1) : $keyAttr ;
+                $updatedAttr = substr($keyAttr, -1) === 's' ? substr($keyAttr, 0, -1) : $keyAttr;
                 $addMethod = 'add' . ucfirst($updatedAttr);
                 $entity->{$addMethod}($refId);
             }
@@ -439,13 +439,18 @@ class DataSyncManager
         if ($keyAttr == 'createdAt' || $keyAttr == 'updatedAt') {
             return new DateTime('@' . $valAttr, new DateTimeZone('Europe/Berlin'));
         }
+
         $reflectionClass = new \ReflectionClass($entity);
         $property = $reflectionClass->getProperty($keyAttr);
         $proptype = $property->getType();
 
         if ($proptype instanceof \ReflectionNamedType  && enum_exists($proptype->getName())) {
             $enumClass = $proptype->getName();
-            return constant("$enumClass::{$valAttr}");
+            try {
+                return $enumClass::from($valAttr);
+            } catch (\ValueError $e) {
+                throw new \InvalidArgumentException("Invalid value '{$valAttr}' for enum {$enumClass}");
+            }
         }
 
         switch ($entityAttributes[$keyAttr] ?? null) {
