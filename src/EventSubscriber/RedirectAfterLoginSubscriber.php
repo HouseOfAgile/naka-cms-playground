@@ -22,8 +22,13 @@ class RedirectAfterLoginSubscriber implements EventSubscriberInterface
 
     public function onKernelResponse(ResponseEvent $event): void
     {
-        $session = $this->requestStack->getSession();
+		$request = $event->getRequest();
 
+        // Ensure the session is available
+        if (!$request->hasSession()) {
+            return;
+        }
+        $session = $this->requestStack->getSession();
         $token = $this->tokenStorage->getToken();
         $user = $token ? $token->getUser() : null;
 

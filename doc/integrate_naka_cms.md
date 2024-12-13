@@ -21,6 +21,18 @@
     HouseOfAgile\NakaCMSBundle\NakaCMSBundle::class => ['all' => true],
 
 ```
+
+* Add mandatory env parameters
+
+APPLICATION_SENDER_EMAIL: used to define sender email for 
+APPLICATION_SENDER_NAME: name of the application email used 
+APPLICATION_DONOTREPLY_EMAIL: used to define donotreply email
+APPLICATION_CONTACT_EMAIL: Email used for contact/communication
+APPLICATION_CONTACT_NAME: Name of the email used for contact/communication
+
+MAINTENANCE_MODE: bool, show a simple maintenance page if set to true for all requests
+
+
 * Add the services bindings
 ```
     bind:
