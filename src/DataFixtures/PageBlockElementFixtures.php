@@ -24,7 +24,7 @@ class PageBlockElementFixtures  extends BaseFixture implements DependentFixtureI
         $manager->flush();
     }
 
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return array(
             BlockElementFixtures::class,
