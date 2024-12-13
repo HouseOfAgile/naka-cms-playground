@@ -11,6 +11,11 @@ error.message.unknown: "An unknown error occurred."
 error.backToHomepage: "Back to Homepage"
 error.contactSupport: "Contact Support"
 
+maintenance.title: "Maintenance Mode"
+maintenance.message: "We’re currently performing updates to improve your experience. Please check back soon."
+maintenance.apology: "We apologize for any inconvenience caused. Thank you for your patience."
+maintenance.returnHome: "Return to Homepage"
+
 vichImage.close: 'Close'
 vichImage.imageIsNotSet: 'Image is not set'
 

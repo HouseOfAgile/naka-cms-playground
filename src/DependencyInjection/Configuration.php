@@ -1,5 +1,4 @@
 <?php
-
 namespace HouseOfAgile\NakaCMSBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -30,7 +29,6 @@ class Configuration implements ConfigurationInterface
                     ->info('The route to redirect to after login')
                     ->defaultValue('app_homepage')
                 ->end()
-                
                 ->arrayNode('openai_config')  
                     ->info('Configuration for OpenAI API')
                     ->addDefaultsIfNotSet()
@@ -55,8 +53,29 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+                ->booleanNode('maintenance_mode')
+                    ->info('Enable or disable global maintenance mode')
+                    ->defaultFalse()
+                ->end()
+                ->arrayNode('access_control')
+                    ->info('Granular access control for platform features')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('restricted_routes')
+                            ->info('Route-specific access control')
+                            ->useAttributeAsKey('name')
+                            ->booleanPrototype()
+                                ->defaultTrue()
+                            ->end()
+                            ->defaultValue([
+                                'app_login' => true,
+                                'app_register' => true,
+                                'booking_new' => false,
+                            ])
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }
