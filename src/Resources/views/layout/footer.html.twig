@@ -17,7 +17,7 @@
                 </p>
                 <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
                     <strong>{{ websiteInfo.websiteInfo.translate.title |default(application_name) }}</strong>, 2021 -
-                    {{ 'now'|date("Y") }}, v.{{ application_version }}{{ app.environment == 'dev' ? (' - [' ~ app.environment ~ ']') :'' }}
+                    {{ 'now'|date("Y") }}, v.{{ application_version }}{{ app.environment == 'dev' or app.environment == 'staging'? (' - [' ~ app.environment ~ ']') :'' }}
                     <br />
                     {% if trademarkOn is defined and trademarkOn %}
                         <small class="text-muted">Made with
