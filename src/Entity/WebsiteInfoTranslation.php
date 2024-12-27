@@ -37,7 +37,7 @@ class WebsiteInfoTranslation implements TranslationInterface
         return sprintf(
             'WebsiteInfoTranslation #%s %s',
             $this->id,
-            substr($this->getTitle(), 0, 39)
+			$this->getTitle() !== null ? substr($this->getTitle(), 0, 39) : '(No Title)'
         );
     }
 
