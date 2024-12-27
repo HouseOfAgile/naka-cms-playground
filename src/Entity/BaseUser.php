@@ -84,7 +84,7 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
     }
     public function getHumanName(): string
     {
-        return sprintf('%s [%s]', $this->getFirstName(), $this->getEmail());
+        return sprintf('%s [%s]', $this->getFullName(), $this->getEmail());
     }
 
     /**

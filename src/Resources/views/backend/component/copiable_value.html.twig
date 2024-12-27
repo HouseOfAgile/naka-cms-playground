@@ -1,0 +1,7 @@
+{# Check if layout is defined and set a dynamic layout class #}
+<div class="{{ layoutStyle|default('d-flex align-items-center justify-content-between') }}">
+    {% if onlyButton is not defined %}
+            <span>{{ value }}</span>
+    {% endif %}
+        <span>{% include '@NakaCMS/backend/fields/common/_add_copy_button.html.twig' with {'value': value } %}</span>
+</div>
