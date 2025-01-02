@@ -64,7 +64,7 @@
 					<ul class="nav nav-tabs" id="CodeTab" role="tablist">
 						{% for codeElement in ['htmlCode','cssCode','jsCode'] %}
 							<li class="nav-item">
-								<a class="nav-link {{ loop.index0 == 0 ? ' active' : '' }}" id="{{ codeElement }}-tab" data-bs-toggle="tab" data-bs-target="#{{ codeElement }}-content" type="button" role="tab" aria-controls="{{ codeElement }}-tab" aria-selected="{{ loop.index0 == 0 ? 'true' : 'false' }}">{{ ('generator.'~codeElement)|trans}}</a>
+								<a class="nav-link {{ loop.index0 == 0 ? ' active' : '' }}" id="{{ codeElement }}-tab" data-bs-toggle="tab" data-bs-target="#{{ codeElement }}-content" type="button" role="tab" aria-controls="{{ codeElement }}-tab" aria-selected="{{ loop.index0 == 0 ? 'true' : 'false' }}">{{ ('generator.'~codeElement)|trans }}</a>
 							</li>
 						{% endfor %}
 					</ul>
@@ -104,9 +104,7 @@
 		</div>
 	</div>
 
-
-
-{% endblock %}
+{% endblock content %}
 {% block content_extra %}{% endblock content_extra %}
 
 {# use body_javascript as it is at the end of the page so other js libraries are already loaded #}
@@ -212,4 +210,4 @@
 	});
 </script>
 			
-{% endblock %}
+{% endblock body_javascript %}

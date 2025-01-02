@@ -1,52 +1,48 @@
 {% block content %}
-	<div class="row">
-		<div class="col-10 offset-1">
-			<h2 class="text-center display-4 mt-4 p-2">{{ 'openingHours.title' | trans}}</h2>
-			<h4 class="text-center lead mt-2 p-2">
-				{% if openingStatusBool() %}
-					<span class="my-3 text-success">
-						<i class="fas fa-calendar-check fa-2x"></i> {{ openingStatus() }}
-					</span>
-				{% else %}
-					<span class="my-3 text-danger">
-						<i class="fas fa-calendar-times fa-2x"></i> {{ openingStatus() }}
-					</span>
-
-				{% endif %}
-			</h4>
-		</div>
-		<div class="col-10 offset-1">
-			<table class="table table-hover text-center">
-				{# <thead class="thead">
+    <div class="row">
+        <div class="col-10 offset-1">
+            <h2 class="text-center display-4 mt-4 p-2">{{ 'openingHours.title' | trans }}</h2>
+            <h4 class="text-center lead mt-2 p-2">
+                {% if openingStatusBool() %}
+                    <span class="my-3 text-success">
+                        <i class="fas fa-calendar-check fa-2x"></i> {{ openingStatus() }}
+                    </span>
+                {% else %}
+                    <span class="my-3 text-danger">
+                        <i class="fas fa-calendar-times fa-2x"></i> {{ openingStatus() }}
+                    </span>
+                {% endif %}
+            </h4>
+        </div>
+        <div class="col-10 offset-1">
+            <table class="table table-hover text-center">
+                {# <thead class="thead">
 					<th>{{ 'openingHours.day' | trans}}</th>
 					<th>{{ 'openingHours.hours' | trans}}</th>
-				</thead> #}
-				<tbody>
-
-					{% for day in ['monday','tuesday','wednesday', 'thursday', 'friday', 'saturday', 'sunday'] %}
-						<tr class="bg-gradient text-white {{day in openingHours|keys and openingHours[day]|length > 0 ? 'bg-success' : 'bg-danger'}}" style="--bs-bg-opacity: .8;">
-							<td>{{day|carbonWeekDay}}</td>
-							<td>
-								{% if day in openingHours|keys %}
-									{% if openingHours[day]|length > 0 %}
-										{% for range in openingHours[day] %}
-											{{range}}
-												{% if not loop.last %}
-													/
-												{% endif %}
-											{% endfor %}
-										{% else %}
-											{{ 'openingHours.closed' | trans}}
-										{% endif %}
-									{% else %}
-										{{ 'openingHours.closed' | trans}}
-									{% endif %}
-								</td>
-							</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		</div>
-	</div>
-{% endblock %}
+</thead> #}
+                <tbody>
+                    {% for day in ['monday','tuesday','wednesday', 'thursday', 'friday', 'saturday', 'sunday'] %}
+                        <tr class="bg-gradient text-white {{ day in openingHours|keys and openingHours[day]|length > 0 ? 'bg-success' : 'bg-danger' }}"
+                            style="--bs-bg-opacity: .8">
+                            <td>{{ day|carbonWeekDay }}</td>
+                            <td>
+                                {% if day in openingHours|keys %}
+                                    {% if openingHours[day]|length > 0 %}
+                                        {% for range in openingHours[day] %}
+                                            {{ range }}
+                                            {% if not loop.last %}/{% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {{ 'openingHours.closed' | trans }}
+                                    {% endif %}
+                                {% else %}
+                                    {{ 'openingHours.closed' | trans }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

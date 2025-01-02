@@ -1,16 +1,24 @@
 {% extends '@NakaCMS/layout/base-layout.html.twig' %}
 
-{% block title %}show Single block element
-{% endblock %}
-{% block stylesheets_extra %}
-	<style>
-		{{blockElement.cssCode|raw}}
-	</style>
-{% endblock %}
-{% block content %}asdd
-	{{ blockElementDecorated.htmlCode|raw }}
+{% block title %}
+    show Single block element
+{% endblock title %}
 
-{% endblock %}
+{% block stylesheets_extra %}
+    <style>
+        {
+                {
+                blockElement.cssCode|raw
+            }
+        }
+    </style>
+{% endblock stylesheets_extra %}
+
+{% block content %}
+    asdd
+    {{ blockElementDecorated.htmlCode|raw }}
+{% endblock content %}
+
 {% block javascripts_extra %}
-	{{ blockElement.jsCode|raw }}
-{% endblock %}
+    {{ blockElement.jsCode|raw }}
+{% endblock javascripts_extra %}

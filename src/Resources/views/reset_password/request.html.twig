@@ -2,7 +2,7 @@
 
 {% block title %}
 	{{ 'form.resetPassword.request.title' | trans }}
-{% endblock %}
+{% endblock title %}
 
 {% block content %}
 	{% for flash_error in app.flashes('reset_password_error') %}
@@ -32,4 +32,4 @@
 			</div>
 		</div>
 	</div>
-{% endblock %}
+{% endblock content %}

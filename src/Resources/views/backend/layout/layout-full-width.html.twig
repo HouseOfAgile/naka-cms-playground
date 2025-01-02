@@ -2,7 +2,7 @@
 	<head>
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
 		<title>
-			{% block title %}{% endblock %}
+			{% block title %}{% endblock title %}
 		</title>
 		{% block stylesheets %}
 			<link rel="stylesheet" href="{{ asset('css/admin.css') }}">
@@ -74,20 +74,20 @@
 						{% block content_explanation_wrapper %}
 							{% if block('content_explanation') is not empty %}
 								<hr class="my-4"/>
-								<div class="lead"> {% block content_explanation %}{% endblock %}
+								<div class="lead"> {% block content_explanation %}{% endblock content_explanation %}
 									</div>
 								{% endif %}
 							{% endblock content_explanation_wrapper %}
 						</div>
 						<div class="{{ form_size is defined ? form_size :'col-8 offset-2' }}">
-							{% block content %}{% endblock %}
+							{% block content %}{% endblock content %}
 						</div>
 						<div class="col-12">
 
-							{% block content_extra %}{% endblock %}
+							{% block content_extra %}{% endblock content_extra %}
 						</div>
 					</div>
-				{% endblock %}
+				{% endblock main %}
 
 			</div>
 			{% block body_javascript %}

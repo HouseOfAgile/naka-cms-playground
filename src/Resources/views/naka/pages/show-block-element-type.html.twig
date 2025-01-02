@@ -4,10 +4,10 @@
 	<style>
 		{{blockElementType.cssCode|raw}}
 	</style>
-{% endblock %}
-{% block content %}asdd
+{% endblock stylesheets_extra %}
+{% block content %}
 	{% include '@NakaCMS/naka/fragment/show-'~ blockElementType.type ~'.html.twig' %}
-{% endblock %}
+{% endblock content %}
 {% block javascripts_extra %}
 	{{ blockElementType.jsCode|raw }}
-{% endblock %}
+{% endblock javascripts_extra %}

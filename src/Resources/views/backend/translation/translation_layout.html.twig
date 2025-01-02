@@ -3,11 +3,11 @@
 {% set form_size = 'col-12' %}
 
 {% block title %}
-	{% block lexik_title %}{% endblock %}
+	{% block lexik_title %}{% endblock lexik_title %}
 	-
 	{{ app.request.server.get('APPLICATION_NAME') }}
 	Translation
-{% endblock %}
+{% endblock title %}
 {% block stylesheets %}
 	{{ parent() }}
 	{% block lexik_stylesheets %}
@@ -15,7 +15,7 @@
 		<link rel="stylesheet" href="{{ asset('bundles/lexiktranslation/ng-table/ng-table.min.css') }}">
 		{{ encore_entry_link_tags('backendTranslation') }}
 
-	{% endblock %}
+	{% endblock lexik_stylesheets %}
 {% endblock stylesheets %}
 
 {% block flash_message %}
@@ -59,7 +59,7 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular.min.js"></script>
 		<script src="{{ asset('bundles/lexiktranslation/ng-table/ng-table.min.js') }}"></script>
-	{% endblock %}
+	{% endblock lexik_javascript_footer %}
 	{{ encore_entry_script_tags('backendTranslation') }}
 
 {% endblock body_javascript %}

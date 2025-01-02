@@ -7,7 +7,7 @@
 		{% endfor %}
 	</style>
 
-{% endblock %}
+{% endblock stylesheets_extra %}
 
 {% block content %}
 	{% if blockElements|length >0 %}
@@ -26,7 +26,7 @@
 			</div>
 		{% endfor %}
 	{% endif %}
-{% endblock %}
+{% endblock content %}
 
 {% block javascripts_extra %}
 	{{ parent() }}
@@ -34,4 +34,4 @@
 		{{ blockElement.jsCode|raw }}
 	{% endfor %}
 	<script></script>
-{% endblock %}
+{% endblock javascripts_extra %}

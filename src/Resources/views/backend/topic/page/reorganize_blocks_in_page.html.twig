@@ -7,7 +7,7 @@
 {% block head_stylesheets %}
 	{{ parent() }}
 	{{ encore_entry_link_tags('dragndrop') }}
-{% endblock %}
+{% endblock head_stylesheets %}
 
 {% block page_title %}
 	{{ 'backend.form.reorganizeBlocksInPage.title'|trans }} <span class="bg-secondary p-2 rounded fw-lighter">{{ page.name }}</span>

@@ -1,31 +1,45 @@
 {% extends '@!EasyAdmin/page/content.html.twig' %}
-{% form_theme form 'bootstrap_5_layout.html.twig' %}
 
-{% block content_title %}{% endblock content_title %}
-{% block global_actions %}{% endblock global_actions %}
-{% block content_help %}{% endblock content_help %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{% block content_title %}
+{% endblock content_title %}
+
+{% block global_actions %}
+{% endblock global_actions %}
+
+{% block content_help %}
+{% endblock content_help %}
 
 {% block main %}
-	<div class="row">
-		<div class="{{ form_size is defined ? form_size :'col-8 offset-2' }}">
-			<div class="jumbotron">
-				<h2 class="text-center my-4">
-					{% block form_title %}
-						{{ block('content_title') }}
-					{% endblock %}
-				</h2>
-				{% block form_explanation_wrapper %}
-					{% if block('form_explanation') is not empty %}
-						<hr class="my-4"/>
-						<div class="lead"> {% block form_explanation %}{% endblock form_explanation %}
-							</div>
-						{% endif %}
-					{% endblock form_explanation_wrapper %}
-				</div>
-			</div>
-			<div class="{{ form_size is defined ? form_size :'col-8 offset-2' }}">
-				{% block form_content %}{% endblock %}
-			</div>
-			{% block form_extra %}{% endblock %}
-		</div>
-	{% endblock %}
+    <div class="row">
+        <div class="{{ form_size is defined ? form_size :'col-8 offset-2' }}">
+            <div class="jumbotron">
+                <h2 class="text-center my-4">
+                    {% block form_title %}
+                        {{ block("content_title") }}
+                    {% endblock form_title %}
+
+                </h2>
+                {% block form_explanation_wrapper %}
+                    {% if block('form_explanation') is not empty %}
+                        <hr class="my-4" />
+                        <div class="lead">
+                            {% block form_explanation %}
+                            {% endblock form_explanation %}
+
+                        </div>
+                    {% endif %}
+                {% endblock form_explanation_wrapper %}
+
+            </div>
+        </div>
+        <div class="{{ form_size is defined ? form_size :'col-8 offset-2' }}">
+            {% block form_content %}
+            {% endblock form_content %}
+
+        </div>
+        {% block form_extra %}
+        {% endblock form_extra %}
+
+    </div>
+{% endblock main %}

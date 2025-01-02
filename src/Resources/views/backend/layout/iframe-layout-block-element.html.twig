@@ -27,7 +27,7 @@
 
 {% block javascripts %}
 	{{ _self.encore_absolute_script_tags('app')|replace({'</script>': '<\\/script>'})|raw }}
-{% endblock %}
+{% endblock javascripts %}
 
 {% block javascripts_extra %}
 	${ jsCode || ''}

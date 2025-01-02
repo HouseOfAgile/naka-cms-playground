@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width" />
   <title>
     {% block title %}
-    {% endblock %}
+    {% endblock title %}
   </title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
@@ -130,11 +130,11 @@
       <div class="content">
         <div class="email-impact-message">
           {% block impact_message %}
-          {% endblock %}
+          {% endblock impact_message %}
         </div>
         <div class="email-content">
           {% block email_content %}
-          {% endblock %}
+          {% endblock email_content %}
         </div>
         <div class="footer">
           <div class="footer-signature">{{ 'email.signature'|trans({ '%applicationName%': 'Dentist Fixer' })|raw }}
