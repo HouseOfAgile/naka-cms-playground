@@ -44,7 +44,7 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
     protected $lastName;
 
     #[Assert\PasswordStrength([
-        'minScore' => PasswordStrength::STRENGTH_MEDIUM,
+        'minScore' => PasswordStrength::STRENGTH_WEAK,
     ])]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $plainPassword;
