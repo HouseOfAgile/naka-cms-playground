@@ -1,150 +1,154 @@
 <!DOCTYPE html>
 <html lang="de">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>
+            {% block title %}
+            {% endblock title %}
+        </title>
+        {% block master_meta %}
+            <meta name="description"
+                  content="{%- block meta_description -%}{{ websiteInfo.translatedDescription | default('meta.defaultDescription' | trans) }}{%- endblock meta_description -%}">
+            <meta name="keywords"
+                  content="{%- block meta_keywords -%}{{ websiteInfo.translatedKeywords | default('meta.defaultKeywords' | trans) }}{%- endblock meta_keywords -%}">
+        {% endblock master_meta %}
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width" />
-  <title>
-    {% block title %}
-    {% endblock title %}
-  </title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
 
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #f3f3f3;
-      color: #333;
-      font-family: 'Source Sans 3', Arial, sans-serif;
-    }
+            body {
+                margin: 0;
+                padding: 0;
+                background-color: #f3f3f3;
+                color: #333;
+                font-family: 'Source Sans 3', Arial, sans-serif;
+            }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      letter-spacing: 0px;
-      font-weight: normal;
-      -webkit-font-smoothing: antialiased;
-      font-family: 'Rubik', Arial, sans-serif;
-      font-weight: 400;
-    }
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                letter-spacing: 0px;
+                font-weight: normal;
+                -webkit-font-smoothing: antialiased;
+                font-family: 'Rubik', Arial, sans-serif;
+                font-weight: 400;
+            }
 
-    h1 {
-      color: #ffffff;
-      padding: 10px;
-      font-weight: normal;
-      border-radius: 10px;
-    }
+            h1 {
+                color: #ffffff;
+                padding: 10px;
+                font-weight: normal;
+                border-radius: 10px;
+            }
 
-    hr {
-      border: none;
-      border-top: 3px solid #264459;
-      margin: 20px;
-    }
+            hr {
+                border: none;
+                border-top: 3px solid #264459;
+                margin: 20px;
+            }
 
-    .container {
-      background-color: #fefefe;
-      width: 580px;
-      margin: 0 auto;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      overflow: hidden;
-    }
+            .container {
+                background-color: #fefefe;
+                width: 580px;
+                margin: 0 auto;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                overflow: hidden;
+            }
 
-    .header {
-      padding: 20px 20px 10px 20px;
-      text-align: center;
-    }
+            .header {
+                padding: 20px 20px 10px 20px;
+                text-align: center;
+            }
 
-    .header .logo {
-      font-family: 'Caveat', cursive;
-      font-size: 40px;
-      text-decoration: none;
-      color: #ffffff;
-    }
+            .header .logo {
+                font-family: 'Caveat', cursive;
+                font-size: 40px;
+                text-decoration: none;
+                color: #ffffff;
+            }
 
-    .content {
-      margin: 20px;
-      padding: 40px 20px 20px 20px;
-      background-color: #efefee;
-      border-radius: 10px;
-    }
+            .content {
+                margin: 20px;
+                padding: 40px 20px 20px 20px;
+                background-color: #efefee;
+                border-radius: 10px;
+            }
 
-    .footer {
-      padding: 20px;
-    }
+            .footer {
+                padding: 20px;
+            }
 
-    .email-impact-message {
-      background-color: #041a99;
-      color: #ffffff;
-      padding: 10px;
-      font-size: 14px;
-      text-align: center;
-      margin-bottom: 10px;
-      border-radius: 8px;
-    }
+            .email-impact-message {
+                background-color: #041a99;
+                color: #ffffff;
+                padding: 10px;
+                font-size: 14px;
+                text-align: center;
+                margin-bottom: 10px;
+                border-radius: 8px;
+            }
 
-    .email-content {
-      padding: 20px;
-    }
+            .email-content {
+                padding: 20px;
+            }
 
-    .footer-signature {
-      padding-bottom: 20px;
-    }
+            .footer-signature {
+                padding-bottom: 20px;
+            }
 
-    .text-center {
-      text-align: center;
-    }
+            .text-center {
+                text-align: center;
+            }
 
-    .email-lead {
-      font-size: 12px;
-    }
+            .email-lead {
+                font-size: 12px;
+            }
 
-    .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #9933CC;
-      text-transform: uppercase;
-      text-align: "center";
-      font-weight: 700;
-      color: white;
-      color: #fefefe;
-      border: 1px solid #fff;
-      border-radius: 50px;
-      font-size: 16px;
-      font-weight: bold;
-      text-decoration: none;
-    }
-  </style>
-</head>
+            .btn {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #9933CC;
+                text-transform: uppercase;
+                text-align: "center";
+                font-weight: 700;
+                color: white;
+                color: #fefefe;
+                border: 1px solid #fff;
+                border-radius: 50px;
+                font-size: 16px;
+                font-weight: bold;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="body">
+            <div class="container">
+                <div class="header">
+                    <a href="{{ url('app_homepage', {'_locale': 'de'}) }}" class="logo">Dentist Fixer</a>
+                </div>
+                <div class="content">
+                    <div class="email-impact-message">
+                        {% block impact_message %}
+                        {% endblock impact_message %}
 
-<body>
-  <div class="body">
-    <div class="container">
-      <div class="header">
-        <a href="{{ url('app_homepage', { '_locale': 'de' }) }}" class="logo">Dentist Fixer</a>
-      </div>
-      <div class="content">
-        <div class="email-impact-message">
-          {% block impact_message %}
-          {% endblock impact_message %}
+                    </div>
+                    <div class="email-content">
+                        {% block email_content %}
+                        {% endblock email_content %}
+
+                    </div>
+                    <div class="footer">
+                        <div class="footer-signature">{{ 'email.signature'|trans({"%applicationName%": "Dentist Fixer"}) |raw }}</div>
+                        <p class="block bottom text-center">{{ 'email.bottomFooterText'|trans({"%applicationName%": "Dentist Fixer"}) }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="email-content">
-          {% block email_content %}
-          {% endblock email_content %}
-        </div>
-        <div class="footer">
-          <div class="footer-signature">{{ 'email.signature'|trans({ '%applicationName%': 'Dentist Fixer' })|raw }}
-          </div>
-          <p class="block bottom text-center">{{ 'email.bottomFooterText'|trans({ '%applicationName%': 'Dentist Fixer'
-            }) }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</body>
-
+    </body>
 </html>
