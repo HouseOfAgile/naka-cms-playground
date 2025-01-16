@@ -1,5 +1,4 @@
 <?php
-
 namespace HouseOfAgile\NakaCMSBundle\Component\DumperUpdater;
 
 use App\NakaData\DataDumperParameter;
@@ -14,6 +13,8 @@ use Exception;
 use HouseOfAgile\NakaCMSBundle\Helper\LoggerCommandTrait;
 use HouseOfAgile\NakaCMSBundle\Service\UploaderHelper;
 use League\Flysystem\FilesystemOperator;
+use libphonenumber\PhoneNumberFormat;
+use libphonenumber\PhoneNumberUtil;
 use Psr\Log\LoggerInterface;
 use ReflectionProperty;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -61,12 +62,12 @@ class DataSyncManager
     /** @var UploaderHelper */
     protected $uploaderHelper;
 
-    protected $appEntitiesDict = [];
-    protected $entitiesIdMapping = [];
-    protected $assetIdMapping = [];
-    protected $appEntities = [];
-    protected $assetEntities = [];
-    protected $appEntitiesAliases = [];
+    protected $appEntitiesDict       = [];
+    protected $entitiesIdMapping     = [];
+    protected $assetIdMapping        = [];
+    protected $appEntities           = [];
+    protected $assetEntities         = [];
+    protected $appEntitiesAliases    = [];
     protected bool $excludeUpdatedAt = false;
 
     public function __construct(
@@ -78,15 +79,15 @@ class DataSyncManager
         UploaderHelper $uploaderHelper,
         string $projectDir
     ) {
-        $this->logger = $scrappingLogger;
-        $this->entityManager = $entityManager;
-        $this->filesystem = $assetPicturesFsFilesystem;
-        $this->uploadHandler = $uploadHandler;
+        $this->logger             = $scrappingLogger;
+        $this->entityManager      = $entityManager;
+        $this->filesystem         = $assetPicturesFsFilesystem;
+        $this->uploadHandler      = $uploadHandler;
         $this->vichUploaderHelper = $vichUploaderHelper;
-        $this->uploaderHelper = $uploaderHelper;
-        $this->projectDir = $projectDir;
-        $this->dataDumpDir = $projectDir . '/naka-cms/active/data/content';
-        $this->assetDir = $projectDir . '/naka-cms/active/data/resources';
+        $this->uploaderHelper     = $uploaderHelper;
+        $this->projectDir         = $projectDir;
+        $this->dataDumpDir        = $projectDir . '/naka-cms/active/data/content';
+        $this->assetDir           = $projectDir . '/naka-cms/active/data/resources';
     }
 
     /**
@@ -108,11 +109,11 @@ class DataSyncManager
     private function updateMappings(array $entities): void
     {
         foreach ($entities as $entityName => $entityAttributes) {
-            $entityClass = 'App\\Entity\\' . ucfirst($entityName);
-            $repository = $this->entityManager->getRepository($entityClass);
-            $this->appEntitiesDict[$entityName] = $repository;
+            $entityClass                          = 'App\\Entity\\' . ucfirst($entityName);
+            $repository                           = $this->entityManager->getRepository($entityClass);
+            $this->appEntitiesDict[$entityName]   = $repository;
             $this->entitiesIdMapping[$entityName] = [];
-            $this->assetIdMapping[$entityName] = [];
+            $this->assetIdMapping[$entityName]    = [];
         }
     }
 
@@ -120,16 +121,16 @@ class DataSyncManager
     {
         if (class_exists(DataDumperParameter::class)) {
             $appEntitiesAliases = DataDumperParameter::APP_ENTITIES_ALIASES;
-            $assetEntities = DataDumperParameter::ASSET_ENTITIES;
-            $appEntities = DataDumperParameter::APP_ENTITIES;
+            $assetEntities      = DataDumperParameter::ASSET_ENTITIES;
+            $appEntities        = DataDumperParameter::APP_ENTITIES;
         } else {
             throw new Exception('App\Entity\DataDumperParameter Class not Present');
         }
 
         $this->updateMappings($assetEntities);
         $this->updateMappings($appEntities);
-        $this->appEntities = $appEntities;
-        $this->assetEntities = $assetEntities;
+        $this->appEntities        = $appEntities;
+        $this->assetEntities      = $assetEntities;
         $this->appEntitiesAliases = $appEntitiesAliases;
     }
 
@@ -137,8 +138,8 @@ class DataSyncManager
     {
         $this->updateMappings($assetEntities);
         $this->updateMappings($appEntities);
-        $this->appEntities = $appEntities;
-        $this->assetEntities = $assetEntities;
+        $this->appEntities        = $appEntities;
+        $this->assetEntities      = $assetEntities;
         $this->appEntitiesAliases = $appEntitiesAliases;
     }
 
@@ -170,7 +171,7 @@ class DataSyncManager
 
             $dataArray = [];
             if ($dumpOrUpdate) {
-                if (!array_key_exists($type, $this->assetEntities)) {
+                if (! array_key_exists($type, $this->assetEntities)) {
                     foreach ($repository->findBy([], ['id' => 'ASC']) as $entityItem) {
                         $dataArray[$entityItem->getId()] = $this->dynamicDump($entityItem);
                     }
@@ -183,8 +184,8 @@ class DataSyncManager
                 $this->logInfo(sprintf('Updating data for entity %s', $type));
 
                 $filesystem = new Filesystem();
-                $filePath = sprintf('%s/%s.yml', $this->dataDumpDir, $type);
-                if (!$filesystem->exists($filePath)) {
+                $filePath   = sprintf('%s/%s.yml', $this->dataDumpDir, $type);
+                if (! $filesystem->exists($filePath)) {
                     $this->logWarning(sprintf('No file for entity %s, skipping', $type));
                     continue;
                 }
@@ -194,7 +195,7 @@ class DataSyncManager
                     $entityCounter = 0;
                     $flushInterval = 2000;
 
-                    $batchEntities = [];
+                    $batchEntities         = [];
                     $deferredSelfRelations = [];
 
                     // Determine if this entity has self-referential relationships
@@ -208,9 +209,9 @@ class DataSyncManager
 
                         $entity = $repository->findOneBy(['id' => $entityKey]);
 
-                        if (!$entity) {
+                        if (! $entity) {
                             $entityClass = 'App\\Entity\\' . ucfirst($type);
-                            $entity = new $entityClass();
+                            $entity      = new $entityClass();
                             $this->logCommand(sprintf('Create Entity %s with id %s', ucfirst($type), $entityKey));
                         } else {
                             $this->logCommand(sprintf('Update Entity %s with id %s', ucfirst($type), $entityKey));
@@ -243,7 +244,7 @@ class DataSyncManager
                     }
 
                     // Final flush for non-self-referential entities
-                    if (!$isSelfReferential) {
+                    if (! $isSelfReferential) {
                         $this->entityManager->flush();
 
                         foreach ($batchEntities as $originalId => $persistedEntity) {
@@ -254,15 +255,15 @@ class DataSyncManager
                     }
 
                     // Second pass: set self-referential relationships
-                    if ($isSelfReferential && !empty($deferredSelfRelations)) {
+                    if ($isSelfReferential && ! empty($deferredSelfRelations)) {
                         $this->logInfo(sprintf('Updating Self referencing %s entities', $type));
 
                         foreach ($deferredSelfRelations as $relationData) {
                             $entityId = $this->entitiesIdMapping[$type][$relationData['entityOriginalId']];
-                            $entity = $repository->find($entityId);
-                            $keyAttr = $relationData['keyAttr'];
-                            $valAttr = $relationData['valAttr'];
-                            $type = $relationData['type'];
+                            $entity   = $repository->find($entityId);
+                            $keyAttr  = $relationData['keyAttr'];
+                            $valAttr  = $relationData['valAttr'];
+                            $type     = $relationData['type'];
 
                             if (is_array($valAttr)) {
                                 foreach ($valAttr as $refId) {
@@ -278,7 +279,7 @@ class DataSyncManager
                         $this->entityManager->clear();
                     }
 
-                    $endTime = microtime(true);
+                    $endTime  = microtime(true);
                     $duration = $endTime - $startTime;
                     $this->logSuccess(sprintf(
                         'Updated all data for entities %s (%d entries) in %d seconds',
@@ -310,14 +311,14 @@ class DataSyncManager
                 if ($isSelfReferentialField) {
                     $deferredSelfRelations[] = [
                         'entityOriginalId' => $dataEntity['id'],
-                        'keyAttr' => $keyAttr,
-                        'valAttr' => $valAttr,
-                        'type' => $type,
+                        'keyAttr'          => $keyAttr,
+                        'valAttr'          => $valAttr,
+                        'type'             => $type,
                     ];
                     continue;
                 }
 
-                if (is_array($valAttr) && !array_key_exists($keyAttr, $this->appEntities[$type])) {
+                if (is_array($valAttr) && ! array_key_exists($keyAttr, $this->appEntities[$type])) {
                     foreach ($valAttr as $refId) {
                         $this->processOneToManyRelation($entity, $keyAttr, $refId);
                     }
@@ -340,7 +341,7 @@ class DataSyncManager
     public function processSingleYamlEntry($yamlChangeSet): Object
     {
         foreach ($yamlChangeSet as $entityClass => $entityData) {
-            if (!array_key_exists('id', $entityData)) {
+            if (! array_key_exists('id', $entityData)) {
                 $entity = new $entityClass();
                 $this->logCommand(sprintf('Create Entity %s', ucfirst($entityClass)));
             } else {
@@ -364,10 +365,10 @@ class DataSyncManager
     {
         if (array_key_exists($keyAttr, $this->appEntitiesAliases)) {
             $relatedEntity = is_array($this->appEntitiesAliases[$keyAttr]) ? $this->appEntitiesAliases[$keyAttr]['class'] : $this->appEntitiesAliases[$keyAttr];
-            $addMethod = is_array($this->appEntitiesAliases[$keyAttr]) ? ucfirst($this->appEntitiesAliases[$keyAttr]['method']) : 'add' . ucfirst($this->appEntitiesAliases[$keyAttr]);
+            $addMethod     = is_array($this->appEntitiesAliases[$keyAttr]) ? ucfirst($this->appEntitiesAliases[$keyAttr]['method']) : 'add' . ucfirst($this->appEntitiesAliases[$keyAttr]);
 
             $newRefId = $this->entitiesIdMapping[$relatedEntity][$refId] ?? null;
-            if (!$newRefId) {
+            if (! $newRefId) {
                 $this->logWarning(sprintf('Reference ID %s for entity %s not found in ID mapping', $refId, $relatedEntity));
                 return;
             }
@@ -378,8 +379,8 @@ class DataSyncManager
         } else {
             if (array_key_exists($keyAttr, $this->appEntitiesDict)) {
                 $relatedEntity = $keyAttr;
-                $newRefId = $this->entitiesIdMapping[$relatedEntity][$refId] ?? null;
-                if (!$newRefId) {
+                $newRefId      = $this->entitiesIdMapping[$relatedEntity][$refId] ?? null;
+                if (! $newRefId) {
                     $this->logWarning(sprintf('Reference ID %s for entity %s not found in ID mapping', $refId, $relatedEntity));
                     return;
                 }
@@ -390,7 +391,7 @@ class DataSyncManager
                 $this->logCommand(sprintf('Added OneToMany relation from entity %s to entity %s', $entity, $linkedEntity));
             } else {
                 $updatedAttr = substr($keyAttr, -1) === 's' ? substr($keyAttr, 0, -1) : $keyAttr;
-                $addMethod = 'add' . ucfirst($updatedAttr);
+                $addMethod   = 'add' . ucfirst($updatedAttr);
                 $entity->{$addMethod}($refId);
             }
         }
@@ -411,14 +412,14 @@ class DataSyncManager
             }
             if ($relatedEntity) {
                 $newRefId = $this->entitiesIdMapping[$relatedEntity][$valAttr] ?? null;
-                if (!$newRefId) {
+                if (! $newRefId) {
                     $this->logWarning(sprintf('Reference ID %s for entity %s not found in ID mapping', $valAttr, $relatedEntity));
                     return;
                 }
                 $linkedEntity = $this->appEntitiesDict[$relatedEntity]->findOneBy(['id' => $newRefId]);
 
                 $entity->{'set' . ucfirst($keyAttr)}($linkedEntity);
-                $this->logCommand(sprintf('Set relation from entity %s to entity %s', $entity, $linkedEntity));
+                // $this->logCommand(sprintf('Set relation from entity %s to entity %s', $entity, $linkedEntity));
             } else {
                 if ($keyAttr !== 'id') {
                     if ($keyAttr == 'slug') {
@@ -441,8 +442,8 @@ class DataSyncManager
         }
 
         $reflectionClass = new \ReflectionClass($entity);
-        $property = $reflectionClass->getProperty($keyAttr);
-        $proptype = $property->getType();
+        $property        = $reflectionClass->getProperty($keyAttr);
+        $proptype        = $property->getType();
 
         if ($proptype instanceof \ReflectionNamedType  && enum_exists($proptype->getName())) {
             $enumClass = $proptype->getName();
@@ -460,6 +461,14 @@ class DataSyncManager
                 return $valAttr ? new DateTimeImmutable('@' . $valAttr, new DateTimeZone('Europe/Berlin')) : $valAttr;
             case 'Ulid':
                 return Ulid::fromString($valAttr);
+            case 'PhoneNumber':
+                $phoneNumberUtil = PhoneNumberUtil::getInstance();
+                try {
+                    $parsedPhoneNumber = $phoneNumberUtil->parse($valAttr, null);
+                    return $parsedPhoneNumber;
+                } catch (\Exception $e) {
+                    $this->logWarning(sprintf('Invalid phone number format: %s', $valAttr));
+                }
             case 'Json':
                 return json_decode($valAttr, true);
             case 'DynamicContent':
@@ -478,7 +487,7 @@ class DataSyncManager
      */
     public function synchronizeAssets(bool $dumpOrUpdate = false, bool $doNotMoveAsset = false): bool
     {
-        if ($dumpOrUpdate && !$doNotMoveAsset) {
+        if ($dumpOrUpdate && ! $doNotMoveAsset) {
             $filesystem = new Filesystem();
             $filesystem->remove($this->assetDir);
         }
@@ -486,19 +495,19 @@ class DataSyncManager
         foreach ($this->assetEntities as $type => $attr) {
             $this->logSuccess(sprintf('Dumping assets for %s', $type));
             $repository = $this->appEntitiesDict[$type];
-            $dataArray = [];
+            $dataArray  = [];
 
             if ($dumpOrUpdate) {
                 try {
                     foreach ($repository->findAll() as $entityItem) {
                         $fileAttributeName = method_exists($entityItem, 'getImageFile') ? 'imageFile' : (method_exists($entityItem, 'getAssetFile') ? 'assetFile' : false);
-                        if (!$fileAttributeName) {
+                        if (! $fileAttributeName) {
                             throw new Exception('Unrecognized asset entity');
                         }
 
                         $pathAsset = $this->projectDir . '/public' . $this->vichUploaderHelper->asset($entityItem, $fileAttributeName);
 
-                        if (!$doNotMoveAsset) {
+                        if (! $doNotMoveAsset) {
                             $newPathAsset = $this->assetDir . '/' . basename($pathAsset);
                             $this->logInfo(sprintf('Moving asset from %s to %s', $pathAsset, $newPathAsset));
                             $filesystem->copy($pathAsset, $newPathAsset, true);
@@ -506,7 +515,7 @@ class DataSyncManager
                             $newPathAsset = $pathAsset;
                         }
 
-                        $dataArray[$entityItem->getId()] = $entityItem->dumpConfig();
+                        $dataArray[$entityItem->getId()]              = $entityItem->dumpConfig();
                         $dataArray[$entityItem->getId()]['imagePath'] = $newPathAsset;
                     }
                 } catch (IOExceptionInterface $exception) {
@@ -521,7 +530,6 @@ class DataSyncManager
             $this->logSuccess(sprintf('Updated all assets of type %s', $type));
         }
 
-
         return true;
     }
 
@@ -532,17 +540,17 @@ class DataSyncManager
         foreach ($dumpedEntities as $keyEntity => $dataEntity) {
             $entity = $repository->findOneBy(['id' => $keyEntity]);
 
-            if (!$entity) {
+            if (! $entity) {
                 $entityClass = 'App\\Entity\\' . ucfirst($type);
-                $entity = new $entityClass();
+                $entity      = new $entityClass();
                 $this->logCommand(sprintf('Create Asset Entity %s with id %s', ucfirst($type), $keyEntity));
             } else {
                 $this->logCommand(sprintf('Update Asset Entity %s with id %s', ucfirst($type), $keyEntity));
             }
 
             $fixtureImageFile = new File($dataEntity['imagePath']);
-            $imageFilePath = $this->uploaderHelper->uploadPicture($fixtureImageFile, UploaderHelper::PAGE_PICTURE);
-            $uploadedFile = new UploadedFile($imageFilePath, basename($imageFilePath), null, null, true);
+            $imageFilePath    = $this->uploaderHelper->uploadPicture($fixtureImageFile, UploaderHelper::PAGE_PICTURE);
+            $uploadedFile     = new UploadedFile($imageFilePath, basename($imageFilePath), null, null, true);
 
             if (method_exists($entity, 'setImageFile')) {
                 $entity->setImageFile($uploadedFile);
@@ -579,7 +587,7 @@ class DataSyncManager
         $reflection = new \ReflectionClass($entity instanceof Proxy ? get_parent_class($entity) : get_class($entity));
         $properties = $reflection->getProperties();
 
-        $data = [];
+        $data     = [];
         $metadata = $this->entityManager->getClassMetadata(get_class($entity));
 
         $ulidFormat = method_exists($entity, 'getUlidFormat') ? $entity->getUlidFormat() : 'toRfc4122';
@@ -587,7 +595,7 @@ class DataSyncManager
         foreach ($properties as $property) {
             $property->setAccessible(true);
             $propertyName = $property->getName();
-            $getter = 'get' . ucfirst($propertyName);
+            $getter       = 'get' . ucfirst($propertyName);
 
             // Skip some properties, Exclude updatedAt if requested
             if (in_array($propertyName, ['__isInitialized__', 'translatable']) ||
@@ -600,6 +608,11 @@ class DataSyncManager
                 $data[lcfirst($reflection->getShortName()) . ucfirst($propertyName)] = array_map(function ($item) {
                     return $item->getId();
                 }, $value->toArray());
+                continue;
+            }
+            if ($propertyName === 'phoneNumber' && $value instanceof \libphonenumber\PhoneNumber) {
+                $phoneNumberUtil     = PhoneNumberUtil::getInstance();
+                $data[$propertyName] = $phoneNumberUtil->format($value, PhoneNumberFormat::E164);
                 continue;
             }
 
@@ -618,7 +631,7 @@ class DataSyncManager
 
             if ($value instanceof Collection && isset($metadata->associationMappings[$propertyName])) {
                 $mapping = $metadata->associationMappings[$propertyName];
-                if ($mapping['type'] === ClassMetadataInfo::MANY_TO_MANY && !isset($mapping['mappedBy'])) {
+                if ($mapping['type'] === ClassMetadataInfo::MANY_TO_MANY && ! isset($mapping['mappedBy'])) {
                     $data[$propertyName] = array_map(fn($item) => $item->getId(), $value->toArray());
                 }
             } elseif ($value instanceof Collection) {
@@ -655,26 +668,26 @@ class DataSyncManager
     private function updateDynamicContent($dataString): string
     {
         preg_match_all('!%%[\s]?\'?picture-([^\'|\||%]*)\|?([^\'|%]*)\'?[\s]?%%!', $dataString, $pictureMatches);
-        if (!empty(array_filter($pictureMatches))) {
+        if (! empty(array_filter($pictureMatches))) {
             foreach ($pictureMatches[0] as $id => $pictureMatch) {
                 $oldId = $pictureMatches[1][$id];
-                if (!array_key_exists($oldId, $this->entitiesIdMapping['Picture'])) {
+                if (! array_key_exists($oldId, $this->entitiesIdMapping['Picture'])) {
                     $this->logWarning(sprintf('Unknown picture reference %s', $oldId));
                     return $dataString;
                 }
 
-                $newId = $this->entitiesIdMapping['Picture'][$oldId];
+                $newId       = $this->entitiesIdMapping['Picture'][$oldId];
                 $matchRegexp = sprintf(
                     '!%%%%[\s]?\'?picture-%s%s\'?[\s]?%%%%!',
                     $pictureMatches[1][$id],
-                    !empty($pictureMatches[2][$id]) ? '\|' . $pictureMatches[2][$id] : ''
+                    ! empty($pictureMatches[2][$id]) ? '\|' . $pictureMatches[2][$id] : ''
                 );
                 $dataString = preg_replace(
                     $matchRegexp,
                     sprintf(
                         '%%%% \'picture-%s%s\' %%%%',
                         $newId,
-                        !empty($pictureMatches[2][$id]) ? '\|' . $pictureMatches[2][$id] : ''
+                        ! empty($pictureMatches[2][$id]) ? '\|' . $pictureMatches[2][$id] : ''
                     ),
                     $dataString
                 );
