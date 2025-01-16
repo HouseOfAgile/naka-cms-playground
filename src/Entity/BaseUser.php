@@ -1,21 +1,23 @@
 <?php
-
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use HouseOfAgile\NakaCMSBundle\Entity\AppTrait\AddressTrait;
 use HouseOfAgile\NakaCMSBundle\Repository\UserRepository;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints\PasswordStrength;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 #[ORM\MappedSuperclass(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
+class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface, TimestampableInterface
 {
+    use TimestampableTrait;
     use AddressTrait;
 
     const DEFAULT_PREFERRED_LOCALE = 'en';
@@ -44,8 +46,8 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
     protected $lastName;
 
     #[Assert\PasswordStrength([
-        'minScore' => PasswordStrength::STRENGTH_WEAK,
-    ])]
+            'minScore' => PasswordStrength::STRENGTH_WEAK,
+        ])]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $plainPassword;
 
@@ -58,7 +60,7 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     protected ?bool $isVerified = false;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[ORM\Column(type : 'datetime', nullable: true)]
     protected ?\DateTimeInterface $lastVerificationEmailSentAt = null;
 
     public function getId(): ?int
@@ -68,10 +70,10 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString(): string
     {
-        return sprintf('%s [#%s: %s]', $this->getFullName(), 
-		$this->getId(),
-		$this->getEmail(),
-	);
+        return sprintf('%s [#%s: %s]', $this->getFullName(),
+            $this->getId(),
+            $this->getEmail(),
+        );
     }
 
     public function getFullName($lastNameFirst = true): string
@@ -140,7 +142,7 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addRole($role): self
     {
-        if (!in_array($role, $this->roles)) {
+        if (! in_array($role, $this->roles)) {
             $this->roles[] = $role;
         }
 
@@ -175,7 +177,7 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
      * @see UserInterface
      * @return void
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         $this->plainPassword = null;
@@ -222,7 +224,7 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->birthDate;
     }
 
-    public function setBirthDate(?\DateTimeInterface $birthDate): self
+    public function setBirthDate( ? \DateTimeInterface $birthDate) : self
     {
         $this->birthDate = $birthDate;
 
@@ -263,7 +265,7 @@ class BaseUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->lastVerificationEmailSentAt;
     }
 
-    public function setLastVerificationEmailSentAt(?\DateTimeInterface $lastVerificationEmailSentAt): self
+    public function setLastVerificationEmailSentAt( ? \DateTimeInterface $lastVerificationEmailSentAt) : self
     {
         $this->lastVerificationEmailSentAt = $lastVerificationEmailSentAt;
         return $this;
