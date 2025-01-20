@@ -2,13 +2,13 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
+use App\Entity\ContactMessage;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use HouseOfAgile\NakaCMSBundle\Entity\ContactMessage;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 
 class ContactMessageCrudController extends AbstractCrudController
 {

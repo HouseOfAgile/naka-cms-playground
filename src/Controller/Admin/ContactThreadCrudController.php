@@ -1,7 +1,8 @@
 <?php
-
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
+use App\Entity\ContactThread;
+use App\Entity\ContactMessage;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -15,13 +16,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use HouseOfAgile\NakaCMSBundle\Config\ContactThreadStatus;
 use HouseOfAgile\NakaCMSBundle\Controller\Admin\ContactMessageCrudController;
-use HouseOfAgile\NakaCMSBundle\Entity\ContactThread;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class ContactThreadCrudController extends AbstractCrudController
 {
-    protected AdminUrlGenerator $adminUrlGenerator;
-    protected EntityManagerInterface $entityManager;
+    private AdminUrlGenerator $adminUrlGenerator;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(AdminUrlGenerator $adminUrlGenerator, EntityManagerInterface $entityManager)
     {
@@ -34,44 +34,46 @@ class ContactThreadCrudController extends AbstractCrudController
         return ContactThread::class;
     }
 
-    /**
-     * Add custom actions for marking spam and answering a thread.
-     */
     public function configureActions(Actions $actions): Actions
     {
-        // Custom 'Mark as Spam' action
-        $markSpam = Action::new('markSpam', 'Mark as Spam', 'fa fa-ban')
+        // 'Mark as Spam' action
+        $markSpam = Action::new ('markSpam', 'Mark as Spam', 'fa fa-ban')
             ->linkToCrudAction('markSpam')
             ->setCssClass('btn btn-danger')
             ->displayIf(static function ($entity) {
                 return $entity instanceof ContactThread
-                    && $entity->getStatus() !== ContactThreadStatus::SPAM;
+                && $entity->getStatus() !== ContactThreadStatus::SPAM;
             });
 
-        // Custom 'Answer' action
-        $answer = Action::new('answer', 'Answer', 'fa fa-reply')
+        // 'Answer' action
+        $answer = Action::new ('answer', 'Answer', 'fa fa-reply')
             ->linkToCrudAction('answer')
             ->setCssClass('btn btn-success')
             ->displayIf(static function ($entity) {
                 return $entity instanceof ContactThread
-                    && $entity->getStatus() !== ContactThreadStatus::ANSWERED;
+                && $entity->getStatus() !== ContactThreadStatus::ANSWERED
+                && $entity->getStatus() !== ContactThreadStatus::SPAM;
             });
 
         return $actions
-            ->add(Crud::PAGE_INDEX, $markSpam)
-            ->add(Crud::PAGE_INDEX, $answer)
-            ->add(Crud::PAGE_DETAIL, $markSpam)
-            ->add(Crud::PAGE_DETAIL, $answer);
+            // ->remove(Crud::PAGE_INDEX, Action::DETAIL)
+            ->remove(Crud::PAGE_INDEX, Action::EDIT)
+            ->remove(Crud::PAGE_INDEX, Action::DELETE)
+            // ->add(Crud::PAGE_INDEX, $markSpam)
+            // ->add(Crud::PAGE_INDEX, $answer)
+            // ->add(Crud::PAGE_DETAIL, $markSpam)
+            // ->add(Crud::PAGE_DETAIL, $answer)
+			;
     }
 
     /**
-     * Controller method for marking a thread as spam
+     * Mark a thread as spam
      */
     public function markSpam(AdminContext $context): RedirectResponse
     {
         /** @var ContactThread $thread */
         $thread = $context->getEntity()->getInstance();
-        if (!$thread instanceof ContactThread) {
+        if (! $thread instanceof ContactThread) {
             $this->addFlash('error', 'Unable to mark spam: entity not recognized.');
             return $this->redirectBackOrIndex($context->getReferrer());
         }
@@ -84,18 +86,17 @@ class ContactThreadCrudController extends AbstractCrudController
     }
 
     /**
-     * Controller method for answering a thread
+     * Mark a thread as answered
      */
     public function answer(AdminContext $context): RedirectResponse
     {
         /** @var ContactThread $thread */
         $thread = $context->getEntity()->getInstance();
-        if (!$thread instanceof ContactThread) {
+        if (! $thread instanceof ContactThread) {
             $this->addFlash('error', 'Unable to answer: entity not recognized.');
             return $this->redirectBackOrIndex($context->getReferrer());
         }
 
-        // Mark the thread as answered
         $thread->setStatus(ContactThreadStatus::ANSWERED);
         $this->entityManager->flush();
 
@@ -104,7 +105,7 @@ class ContactThreadCrudController extends AbstractCrudController
     }
 
     /**
-     * Helper: redirects to the referrer if not null, otherwise fallback to index.
+     * Helper: redirects to referrer or index if referrer is null
      */
     private function redirectBackOrIndex(?string $referrer): RedirectResponse
     {
@@ -112,7 +113,7 @@ class ContactThreadCrudController extends AbstractCrudController
             return $this->redirect($referrer);
         }
 
-        // fallback: go to the index page
+        // fallback: go to index page
         $url = $this->adminUrlGenerator
             ->setController(self::class)
             ->setAction(Action::INDEX)
@@ -124,51 +125,38 @@ class ContactThreadCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')
-                ->onlyOnIndex(),
+            IdField::new ('id')->onlyOnIndex(),
 
-            TextField::new('subject'),
+            // subject
+            TextField::new ('subject'),
 
-            // We can manually set enum choices here for clarity:
-            ChoiceField::new('status')
+            // status
+            ChoiceField::new ('status')
                 ->setChoices([
-                    'New' => ContactThreadStatus::NEW,
+                    'New'      => ContactThreadStatus::NEW ,
                     'Answered' => ContactThreadStatus::ANSWERED,
-                    'Spam' => ContactThreadStatus::SPAM,
-                ]),
+                    'Spam'     => ContactThreadStatus::SPAM,
+                ])
+                ->hideOnDetail()->hideOnForm()->hideOnIndex(),
 
-            TextField::new('name')
-                ->hideOnIndex(),
+            // show name & email
+            TextField::new ('name'),
+            TextField::new ('email'),
 
-            TextField::new('email')
-                ->hideOnIndex(),
+            TextField::new ('firstMessageText', 'Message (truncated to 50 chars)')
+                ->onlyOnIndex()
+                ->formatValue(function (?string $value, ?ContactThread $thread) {
+                    if (! $thread) {
+                        return '';
+                    }
+                    // Grab the first message text, truncated to 50 chars
+                    return $thread->getFirstMessageText(50);
+                }),
 
-            // Show messages (sub-form) on "edit" or "new" forms
-            // so admin can create replies if needed
-            CollectionField::new('messages')
+            // allow sub-form for messages in create/edit
+            CollectionField::new ('messages')
                 ->onlyOnForms()
                 ->useEntryCrudForm(ContactMessageCrudController::class),
-
-            // show the first message in the detail page
-            TextField::new('firstMessage', 'Initial Message')
-                ->onlyOnDetail()
-                ->formatValue(function($value, $entity) {
-                    if (!$entity instanceof ContactThread) {
-                        return '';
-                    }
-
-                    // get the first message from $entity->getMessages()
-                    $messages = $entity->getMessages();
-                    if ($messages->count() === 0) {
-                        return '';
-                    }
-
-                    // The "first" method on Doctrine's collection
-                    // returns the first element in iteration order
-                    $firstMessage = $messages->first()->getMessage();
-
-                    return $firstMessage;
-                }),
         ];
     }
 }

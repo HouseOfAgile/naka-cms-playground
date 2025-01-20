@@ -2,6 +2,7 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
+use App\Entity\ContactMessage;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,25 +16,25 @@ class ContactThread
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private ?int $id = null;
+    protected ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank]
-    private ?string $subject = null;
+    protected ?string $subject = null;
 
     /**
      * This is our enum-based status field.
      * Enums require Doctrine to be >= 2.13 and DBAL >= 3.2 for enumType mapping.
      */
     #[ORM\Column(type: 'string', enumType: ContactThreadStatus::class, length: 20)]
-    private ContactThreadStatus $status = ContactThreadStatus::NEW;
+    protected ContactThreadStatus $status = ContactThreadStatus::NEW;
 
     #[ORM\Column(type: 'string', length: 60, nullable: true)]
-    private ?string $name = null;
+    protected ?string $name = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Assert\Email]
-    private ?string $email = null;
+    protected ?string $email = null;
 
     /**
      * One thread has many messages (the conversation).
@@ -43,6 +44,7 @@ class ContactThread
         targetEntity: ContactMessage::class,
         cascade: ['persist', 'remove']
     )]
+    #[ORM\OrderBy(['createdAt' => 'ASC'])]
     private Collection $messages;
 
     public function __construct()
@@ -56,6 +58,27 @@ class ContactThread
         return $this->id;
     }
 
+	    /**
+     * Return the *first* (earliest) message text, or an empty string if none.
+     * Optionally accept a max length to truncate the text if desired.
+     */
+    public function getFirstMessageText(int $maxLength = null): string
+    {
+        if ($this->messages->count() === 0) {
+            return '';
+        }
+        /** @var ContactMessage $firstMessage */
+        $firstMessage = $this->messages->first(); // earliest due to OrderBy
+
+        $messageText = $firstMessage->getMessage() ?? '';
+
+        if ($maxLength && mb_strlen($messageText) > $maxLength) {
+            return mb_substr($messageText, 0, $maxLength) . '...';
+        }
+
+        return $messageText;
+    }
+	
     public function getSubject(): ?string
     {
         return $this->subject;

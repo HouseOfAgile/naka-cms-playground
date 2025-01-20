@@ -2,10 +2,11 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Entity;
 
+use App\Entity\ContactThread;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use HouseOfAgile\NakaCMSBundle\Repository\ContactMessageRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\MappedSuperclass(repositoryClass: ContactMessageRepository::class)]
 class ContactMessage
@@ -13,22 +14,22 @@ class ContactMessage
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private ?int $id = null;
+    protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: ContactThread::class, inversedBy: 'messages')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?ContactThread $thread = null;
+    protected ?ContactThread $thread = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank]
-    private ?string $message = null;
+    protected ?string $message = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private \DateTimeImmutable $createdAt;
+    protected \DateTimeImmutable $createdAt;
 
     // If "true", this message was posted by an Admin from the backend
     #[ORM\Column(type: 'boolean')]
-    private bool $isFromAdmin = false;
+    protected bool $isFromAdmin = false;
 
     public function __construct()
     {
