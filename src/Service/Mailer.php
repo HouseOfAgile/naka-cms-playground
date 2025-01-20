@@ -1,17 +1,16 @@
 <?php
-
 namespace HouseOfAgile\NakaCMSBundle\Service;
 
+use App\Entity\ContactMessage;
+use App\Entity\ContactThread;
 use HouseOfAgile\NakaCMSBundle\Entity\BaseUser;
-use HouseOfAgile\NakaCMSBundle\Entity\Contact;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\NamedAddress;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
-use Symfony\Component\Mime\Address;
 
 class Mailer
 {
@@ -49,24 +48,24 @@ class Mailer
         UrlGeneratorInterface $router,
 
     ) {
-        $this->mailer = $mailer;
-        $this->twig = $twig;
-        $this->logger = $generalLogger;
-        $this->applicationName = $applicationName;
-        $this->applicationSenderEmail = $applicationSenderEmail;
+        $this->mailer                     = $mailer;
+        $this->twig                       = $twig;
+        $this->logger                     = $generalLogger;
+        $this->applicationName            = $applicationName;
+        $this->applicationSenderEmail     = $applicationSenderEmail;
         $this->applicationDoNotReplyEmail = $applicationDoNotReplyEmail;
-        $this->applicationSenderName = $applicationSenderName;
-        $this->applicationContactEmail = $applicationContactEmail;
-        $this->applicationContactName = $applicationContactName;
-        $this->senderAddress = new Address($applicationSenderEmail, $applicationSenderName);
-        $this->contactAddress = new Address($applicationContactEmail, $applicationContactName);
-        $this->translator = $translator;
-        $this->router = $router;
+        $this->applicationSenderName      = $applicationSenderName;
+        $this->applicationContactEmail    = $applicationContactEmail;
+        $this->applicationContactName     = $applicationContactName;
+        $this->senderAddress              = new Address($applicationSenderEmail, $applicationSenderName);
+        $this->contactAddress             = new Address($applicationContactEmail, $applicationContactName);
+        $this->translator                 = $translator;
+        $this->router                     = $router;
     }
 
     public function sendMessageToAddress($fromAddress, $toAddress, $subject, $templateName, $context, $locale = 'en', $addDoNotReply = true)
     {
-        $context = array_merge($context, ['_locale' => $locale]);
+        $context        = array_merge($context, ['_locale' => $locale]);
         $templatedEmail = (new TemplatedEmail())
             ->from($fromAddress)
             ->to($toAddress)
@@ -81,7 +80,7 @@ class Mailer
         $this->mailer->send($templatedEmail);
         $this->logger->info(sprintf(
             'New mail sent to %s about %s',
-            $toAddress instanceof Address ? $toAddress->toString(): $toAddress,
+            $toAddress instanceof Address ? $toAddress->toString() : $toAddress,
             $subject,
         ));
     }
@@ -113,7 +112,7 @@ class Mailer
             $this->translator->trans('email.welcomeUserVerifyEmail.title', ['%applicationName%' => $this->applicationName]),
             '@NakaCMS/email/welcome_new_member_verify.html.twig',
             [
-                'user' => $user,
+                'user'       => $user,
                 'verifyLink' => $verifyLink,
             ]
         );
@@ -124,7 +123,7 @@ class Mailer
         ));
     }
 
-    public function sendContactNotificationEmail(Contact $contact)
+    public function sendContactNotificationEmail(ContactThread $thread, ContactMessage $message): void
     {
         $this->sendMessageToAddress(
             $this->senderAddress,
@@ -132,12 +131,13 @@ class Mailer
             $this->translator->trans('email.office.newContactMessage.subject', ['%applicationName%' => $this->applicationName]),
             '@NakaCMS/email/new_contact_message.html.twig',
             [
-                'contact' => $contact,
+                'thread' => $thread,
+                'message' => $message,
             ]
         );
         $this->logger->info(sprintf(
             'New contact Message from email %s',
-            $contact->getEmail()
+            $thread->getEmail()
         ));
     }
 

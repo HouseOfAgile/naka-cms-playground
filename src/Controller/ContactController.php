@@ -1,10 +1,11 @@
 <?php
-
 namespace HouseOfAgile\NakaCMSBundle\Controller;
 
+use App\Entity\ContactMessage;
+use App\Entity\ContactThread;
+use App\Form\ContactThreadType;
 use Doctrine\ORM\EntityManagerInterface;
 use HouseOfAgile\NakaCMSBundle\Component\OpeningHours\OpeningHoursManager;
-use HouseOfAgile\NakaCMSBundle\Form\ContactType;
 use HouseOfAgile\NakaCMSBundle\Service\Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,36 +21,45 @@ class ContactController extends AbstractController
         OpeningHoursManager $openingHoursManager,
         Mailer $mailer
     ): Response {
-
-        $form = $this->createForm(ContactType::class, null, []);
+        // Create a new ContactThread (instead of old Contact entity)
+        $form = $this->createForm(ContactThreadType::class);
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                // $data = $form->getData();
-                $contact = $form->getData();
-                $em->persist($contact);
-                $em->flush();
-                $this->addFlash(
-                    'success',
-                    'flash.contact.messageSent'
-                );
-                $mailer->sendContactNotificationEmail($contact);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var ContactThread $contactThread */
+            $contactThread = $form->getData();
 
-                return $this->redirectToRoute('app_homepage');
-            } else {
-                $this->addFlash('warning', sprintf(
-                    'flash.contact.messageCannotBeSent'
-                ));
-            }
+            // Retrieve the user's message from the "mapped => false" field
+            $messageText = $form->get('message')->getData();
+
+            // Create the first ContactMessage
+            $contactMessage = new ContactMessage();
+            $contactMessage->setMessage($messageText);
+            $contactMessage->setIsFromAdmin(false); // user-submitted message
+
+            // Link them
+            $contactThread->addMessage($contactMessage);
+
+            // Persist the entire thread (this also persists the message due to cascade)
+            $em->persist($contactThread);
+            $em->flush();
+
+            // Send your email notification
+            // (Adjust your mailer to accept a ContactThread + ContactMessage)
+            $mailer->sendContactNotificationEmail($contactThread, $contactMessage);
+
+            // Add flash & redirect
+            $this->addFlash('success', 'flash.contact.messageSent');
+            return $this->redirectToRoute('app_homepage');
         }
-        // get content from contact page if it exist
+
+        // If form not submitted or invalid, display again
         $viewParams = [
-            'contactForm' => $form->createView(),
+            'contactForm'          => $form->createView(),
             'contactBlockElements' => [],
-            'openingHours' => $openingHoursManager->getOpeningHoursData(),
+            'openingHours'         => $openingHoursManager->getOpeningHoursData(),
         ];
-        return $this->render('@NakaCMS/contact.html.twig', $viewParams);
+        return $this->render('contact.html.twig', $viewParams);
     }
 }
