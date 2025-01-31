@@ -1,4 +1,5 @@
 <?php
+
 namespace HouseOfAgile\NakaCMSBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -24,12 +25,14 @@ class Configuration implements ConfigurationInterface
                             ->defaultValue('en|de')
                         ->end()
                     ->end()
-                ->end()
+                ->end() // end internationalization
+
                 ->scalarNode('redirect_url')
                     ->info('The route to redirect to after login')
                     ->defaultValue('app_homepage')
                 ->end()
-                ->arrayNode('openai_config')  
+
+                ->arrayNode('openai_config')
                     ->info('Configuration for OpenAI API')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -52,11 +55,28 @@ class Configuration implements ConfigurationInterface
                             ])
                         ->end()
                     ->end()
-                ->end()
+                ->end() // end openai_config
+
                 ->booleanNode('maintenance_mode')
                     ->info('Enable or disable global maintenance mode')
                     ->defaultFalse()
                 ->end()
+
+                ->booleanNode('future_maintenance_warning')
+                    ->info('Enable or disable a scheduled maintenance warning')
+                    ->defaultFalse()
+                ->end()
+
+                ->scalarNode('maintenance_start')
+                    ->info('Date/Time (string) when maintenance begins')
+                    ->defaultNull()
+                ->end()
+
+                ->integerNode('maintenance_duration')
+                    ->info('Duration of scheduled maintenance in minutes')
+                    ->defaultValue(0)
+                ->end()
+
                 ->arrayNode('access_control')
                     ->info('Granular access control for platform features')
                     ->addDefaultsIfNotSet()
@@ -74,7 +94,7 @@ class Configuration implements ConfigurationInterface
                             ])
                         ->end()
                     ->end()
-                ->end()
+                ->end() // end access_control
             ->end();
 
         return $treeBuilder;

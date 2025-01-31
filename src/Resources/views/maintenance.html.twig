@@ -6,13 +6,41 @@
 
 {% block content %}
 <div class="container text-center my-5">
-    <h1 class="my-3">{{ title|default('maintenance.title'|trans) }}</h1>
+
+    <h1 class="my-3">
+        {{ title|default('maintenance.title'|trans) }}
+    </h1>
+
     <div class="mb-4 py-4">
-        <img class="img-fluid" src="{{ getNakaSiteSetting('logoImage', 'images/logo/logo_transparent.png') | imagine_filter('logo_resize') }}" alt="{{ application_name }} Logo">
+        <img class="img-fluid"
+             src="{{ getNakaSiteSetting('logoImage', 'images/logo/logo_transparent.png') | imagine_filter('logo_resize') }}"
+             alt="{{ application_name }} Logo">
     </div>
 
-    <p class="lead">{{ message|default('maintenance.message'|trans) }}</p>
-    <p class="text-muted">{{ 'maintenance.apology'|trans }}</p>
-    <a href="{{ path('app_homepage') }}" class="btn btn-primary mt-3">{{ 'maintenance.returnHome'|trans }}</a>
+    {# Main maintenance message #}
+    <div class="alert alert-info" role="alert">
+        <p class="lead mb-0">
+            {{ message|default('maintenance.message'|trans) }}
+        </p>
+    </div>
+
+    {# Show times if available #}
+    {% if maintenance_start is defined and maintenance_start and maintenance_duration is defined and maintenance_duration %}
+        {% set startDateTime = date(maintenance_start) %}
+        {% set endDateTime   = clone(startDateTime)|modify('+' ~ maintenance_duration ~ ' minutes') %}
+        <p class="mt-4">
+            <strong>{{ 'maintenance.start'|trans }}:</strong> {{ startDateTime|date('Y-m-d H:i') }}<br/>
+            <strong>{{ 'maintenance.duration'|trans }}:</strong> {{ maintenance_duration }} {{ 'maintenance.minutes'|trans }}<br/>
+            <strong>{{ 'maintenance.end'|trans }}:</strong> {{ endDateTime|date('Y-m-d H:i') }}
+        </p>
+    {% endif %}
+
+    <p class="text-muted mt-3">
+        {{ 'maintenance.apology'|trans }}
+    </p>
+
+    <a href="{{ path('app_homepage') }}" class="btn btn-primary mt-3">
+        {{ 'maintenance.returnHome'|trans }}
+    </a>
 </div>
 {% endblock content %}
