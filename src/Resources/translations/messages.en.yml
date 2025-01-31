@@ -13,6 +13,12 @@ error.contactSupport: "Contact Support"
 
 maintenance.title: "Maintenance Mode"
 maintenance.message: "We’re currently performing updates to improve your experience. Please check back soon."
+maintenance.scheduled: "Scheduled Maintenance" 
+maintenance.inProgress: "Maintenance in Progress"
+maintenance.start: "Start"
+maintenance.end: "End"
+maintenance.duration: "Duration"
+maintenance.minutes: "minutes"
 maintenance.apology: "We apologize for any inconvenience caused. Thank you for your patience."
 maintenance.returnHome: "Return to Homepage"
 

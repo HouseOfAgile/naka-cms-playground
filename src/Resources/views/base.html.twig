@@ -2,8 +2,7 @@
 <html lang="{{ app.request.locale }}">
     <head>
         <meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>
             {% block master_title %}
                 {% block title %}
@@ -53,38 +52,50 @@
         <body data-aos-easing="ease-out-back"
               data-aos-duration="1000"
               data-aos-delay="0">
-              {# {% if app.environment != 'prod' %}class="offset-body"{% endif %}> #}
-
-{# 1) ENV / ADMIN BAR (navbar) #}
-        {% if app.environment != 'prod' or is_granted('ROLE_ADMIN') %}
-            <nav class="navbar navbar-dark bg-dark navbar-expand-lg sticky-top small">
-                <div class="container-fluid">
-                    {% if app.environment != 'prod' %}
-                        <span class="navbar-text me-3">
-                            {{ 'Environment'|trans }}: {{ app.environment|upper }}
-                        </span>
-                    {% endif %}
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <span class="navbar-text">
-                            {{ 'Admin Tools'|trans }}
-                            {# Add admin links, dropdown, etc. here if desired #}
-                        </span>
-                    {% endif %}
+            {# {% if app.environment != 'prod' %}class="offset-body"{% endif %}> #}
+            {# 1) ENV / ADMIN BAR (navbar) #}
+            {% if app.environment != 'prod' or is_granted('ROLE_ADMIN') %}
+                <nav class="navbar navbar-dark bg-dark navbar-expand-lg sticky-top small">
+                    <div class="container-fluid">
+                        {% if app.environment != 'prod' %}
+                            <span class="navbar-text me-3">{{ 'Environment'|trans }}: {{ app.environment|upper }}</span>
+                        {% endif %}
+						{# we do not show admin topbar yet #}
+                        {% if is_granted('ROLE_ADMIN') and false %}
+                            <span class="navbar-text">
+                                <div class="btn-group m-2" role="group" aria-label="Admin group">
+                                    <a href="{{ path("admin_dashboard") }}"
+                                       role="button"
+                                       class=" btn btn-success text-white p-2">
+                                        <span class="d-none d-sm-block">
+                                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                                        {{ 'frontend.goToAdmin'|trans }}s</span>
+                                    </a>
+                                    <a href="{{ path("logout") }}" role="button" class="btn btn-danger p-2">
+                                        <i class="fa fa-sign-out-alt"></i>
+                                    </a>
+                                </div>
+                                {{ 'Admin Tools'|trans }}
+                                {# Add admin links, dropdown, etc. here if desired #}
+                            </span>
+                        {% endif %}
+                    </div>
+                </nav>
+            {% endif %}
+            {# 2) MAINTENANCE WARNINGS #}
+            {% for flash in app.flashes('warning') %}
+                <div class="alert alert-warning alert-dismissible fade show sticky-top mb-0"
+                     role="alert"
+                     style="z-index: 1080">
+                    <div class="container">
+                        {{ flash }}
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                    </div>
                 </div>
-            </nav>
-        {% endif %}
-
-        {# 2) MAINTENANCE WARNINGS #}
-        {% for flash in app.flashes('warning') %}
-            <div class="alert alert-warning alert-dismissible fade show sticky-top mb-0" role="alert" style="z-index: 1080;">
-                <div class="container">
-                    {{ flash }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
-        {% endfor %}
-
-
+            {% endfor %}
             {% block body %}
             {% endblock body %}
 

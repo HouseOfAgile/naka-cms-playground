@@ -87,7 +87,7 @@ class PlatformAccessControlSubscriber
                             '⚠️ %s: %s (Duration: %d min)',
                             // The next two can be plain text or translator calls. 
                             // If you prefer translation in Twig, pass a string with a key. 
-                            'maintenance.scheduled', 
+                            'Maintenance Scheduled', 
                             $maintenanceStart->format('Y-m-d H:i'),
                             $this->maintenanceDuration
                         ));
@@ -95,7 +95,7 @@ class PlatformAccessControlSubscriber
                         // Maintenance is happening now, but not in full mode
                         $session->getFlashBag()->add('warning', sprintf(
                             '⚠️ %s: %s (Ends approx: %s)',
-                            'maintenance.inProgress',
+                            'Maintenance in Progress',
                             $maintenanceStart->format('Y-m-d H:i'),
                             $maintenanceEnd->format('Y-m-d H:i')
                         ));
