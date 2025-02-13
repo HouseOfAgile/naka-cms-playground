@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path: '/test', requirements: ['_locale' => 'en|de|fr'], name: 'naka_test_')]
+#[Route(path: '/test', requirements: ['_locale' =>'%app.supported_locales%'], name: 'naka_test_')]
 class TestController extends AbstractController
 {
     /** @var ContentDumper */

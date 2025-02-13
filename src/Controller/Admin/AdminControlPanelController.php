@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path: '/control-panel/{_locale<%app.supported_locales%>}', requirements: ['_locale' => 'en|de|fr'], name: 'admin_control_panel_')]
+#[Route(path: '/control-panel/{_locale<%app.supported_locales%>}', requirements: ['_locale' =>'%app.supported_locales%'], name: 'admin_control_panel_')]
 class AdminControlPanelController extends AdminDashboardController
 {
     public const CONTROL_PANEL_OPERATIONS = [

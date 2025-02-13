@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path: '/page', requirements: ['_locale' => 'en|de|fr'], name: 'page_')]
+#[Route(path: '/page', requirements: ['_locale' =>'%app.supported_locales%'], name: 'page_')]
 class PageController extends AbstractController
 {
     /** @var BreadcrumbService */

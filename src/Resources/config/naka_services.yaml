@@ -1,6 +1,5 @@
 parameters:
-    facebook_page: 'https://www.facebook.com/'
-    app.supported_locales: 'en|de|fr'
+    app.supported_locales: 'en|de|fr|es|it'
     app.path.asset_pictures: /uploads/asset-pictures
     app.path.asset_website_resources: /uploads/asset-website-resources
     app.path.site_images: /uploads/site-images
