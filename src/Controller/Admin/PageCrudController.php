@@ -1,5 +1,4 @@
 <?php
-
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
 use App\Entity\Page;
@@ -65,22 +64,24 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
             ->add(Crud::PAGE_INDEX, $addBlockToPage)
             ->add(Crud::PAGE_INDEX, $addPageToMenu)
             ->add(Crud::PAGE_INDEX, $reorganizeBlocksInPage)
-            // ->add(Crud::PAGE_INDEX, $viewPerformanceStrategy)
+            ->remove(Crud::PAGE_INDEX, Action::DELETE)
+            ->remove(Crud::PAGE_DETAIL, Action::DELETE);
+        // ->add(Crud::PAGE_INDEX, $viewPerformanceStrategy)
         ;
     }
 
     public function configureFields(string $pageName): iterable
     {
         $fieldsConfig = [
-            'title' => [
+            'title'   => [
                 'field_type' => TextareaType::class,
-                'required' => true,
-                'label' => 'Title',
+                'required'   => true,
+                'label'      => 'Title',
             ],
             'content' => [
                 'field_type' => CKEditorType::class,
-                'required' => true,
-                'label' => 'Content',
+                'required'   => true,
+                'label'      => 'Content',
             ],
             // 'text' => [
             //     'field_type' => CKEditorType::class,
@@ -162,7 +163,7 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
     {
         return [
             BeforeEntityPersistedEvent::class => 'generateSlug',
-            BeforeEntityUpdatedEvent::class => 'generateSlug',
+            BeforeEntityUpdatedEvent::class   => 'generateSlug',
         ];
     }
 
@@ -171,7 +172,7 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
     {
         /** @var Page $page */
         $page = $event->getEntityInstance();
-        if (!($page instanceof Page)) {
+        if (! ($page instanceof Page)) {
             return;
         }
         $page->generateSlug();
