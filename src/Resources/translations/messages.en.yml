@@ -436,3 +436,5 @@ email.office.newMember.youHaveANewMessage: |
 breadCrumb.home: 'Home'
 
 adManagement.showDummyAd: 'We should have an ad here'
+
+internal.environment: 'Environment'

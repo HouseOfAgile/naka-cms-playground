@@ -58,7 +58,7 @@
                 <nav class="navbar navbar-dark bg-dark navbar-expand-lg sticky-top small">
                     <div class="container-fluid">
                         {% if app.environment != 'prod' %}
-                            <span class="navbar-text me-3">{{ 'Environment'|trans }}: {{ app.environment|upper }}</span>
+                            <span class="navbar-text me-3">{{ 'internal.environment'|trans }}: {{ app.environment|upper }}</span>
                         {% endif %}
 						{# we do not show admin topbar yet #}
                         {% if is_granted('ROLE_ADMIN') and false %}
