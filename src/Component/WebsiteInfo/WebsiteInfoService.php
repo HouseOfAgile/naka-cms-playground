@@ -30,6 +30,7 @@ class WebsiteInfoService
         $this->entityManager = $entityManager;
         $this->websiteInfoRepository = $websiteInfoRepository;
         $this->requestStack = $requestStack;
+        $this->loadMainWebsiteInfo();
     }
 
     public function isMainWebsiteInfoSet()
@@ -37,7 +38,7 @@ class WebsiteInfoService
         return $this->websiteInfo != null;
     }
 
-    public function setMainWebsiteInfo()
+    public function loadMainWebsiteInfo()
     {
         if ($this->websiteInfo == null) {
             $this->websiteInfo =  $this->websiteInfoRepository->find(1);

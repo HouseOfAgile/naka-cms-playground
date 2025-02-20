@@ -2,7 +2,9 @@
 <html lang="{{ app.request.locale }}">
     <head>
         <meta charset="UTF-8">
-        {# <meta name="viewport" content="width=device-width, initial-scale=1"> #}
+        {% if app.environment == 'staging' %}
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		{% endif %}
         <title>
             {% block master_title %}
                 {% block title %}
@@ -60,7 +62,7 @@
                         {% if app.environment != 'prod' %}
                             <span class="navbar-text me-3">{{ 'internal.environment'|trans }}: {{ app.environment|upper }}</span>
                         {% endif %}
-						{# we do not show admin topbar yet #}
+                        {# we do not show admin topbar yet #}
                         {% if is_granted('ROLE_ADMIN') and false %}
                             <span class="navbar-text">
                                 <div class="btn-group m-2" role="group" aria-label="Admin group">

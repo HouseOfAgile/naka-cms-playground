@@ -4,14 +4,15 @@ namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
 use App\Controller\Admin\AdminDashboardController;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path: '/control-panel/{_locale<%app.supported_locales%>}', requirements: ['_locale' =>'%app.supported_locales%'], name: 'admin_control_panel_')]
-class AdminControlPanelController extends AdminDashboardController
+#[Route(path: '/naka-control-panel/{_locale<%app.supported_locales%>}', requirements: ['_locale' =>'%app.supported_locales%'], name: 'naka_control_panel_')]
+class NakaAdminControlPanelController extends AbstractController
 {
     public const CONTROL_PANEL_OPERATIONS = [
         'translation' => '@NakaCMS/backend/control_panel/_panel_translation.html.twig'

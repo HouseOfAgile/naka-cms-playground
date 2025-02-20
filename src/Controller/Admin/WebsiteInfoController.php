@@ -4,6 +4,7 @@ namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
 use App\Controller\Admin\AdminDashboardController;
 use App\Repository\WebsiteInfoRepository;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Option\EA;
 use HouseOfAgile\NakaCMSBundle\Component\OpeningHours\OpeningHoursManager;
 use HouseOfAgile\NakaCMSBundle\Form\OpeningHoursType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,7 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path: '/admin/website-info', name: 'admin_website_info_')]
+#[Route(path: '/admin/website-info', name: 'admin_website_info_', defaults: [
+    EA::DASHBOARD_CONTROLLER_FQCN => AdminDashboardController::class,
+])]
 class WebsiteInfoController extends AbstractController
 {
     #[Route(path: '/view', name: 'dashboard')]

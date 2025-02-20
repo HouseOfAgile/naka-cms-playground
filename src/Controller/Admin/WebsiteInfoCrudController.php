@@ -86,7 +86,7 @@ class WebsiteInfoCrudController extends AbstractCrudController
     {
         $submitButtonName = $context->getRequest()->request->all()['ea']['newForm']['btn'];
         if ('saveAndReturn' === $submitButtonName) {
-            return $this->redirectToRoute('website_info_dashboard');
+            return $this->redirectToRoute('admin_website_info_dashboard');
         }
 
         return parent::getRedirectResponseAfterSave($context, $action);
