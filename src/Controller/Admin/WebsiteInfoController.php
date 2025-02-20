@@ -6,14 +6,15 @@ use App\Controller\Admin\AdminDashboardController;
 use App\Repository\WebsiteInfoRepository;
 use HouseOfAgile\NakaCMSBundle\Component\OpeningHours\OpeningHoursManager;
 use HouseOfAgile\NakaCMSBundle\Form\OpeningHoursType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path: '/website-info')]
-class WebsiteInfoController extends AdminDashboardController
+#[Route(path: '/admin/website-info', name: 'admin_website_info_')]
+class WebsiteInfoController extends AbstractController
 {
-    #[Route(path: '/view', name: 'website_info_dashboard')]
+    #[Route(path: '/view', name: 'dashboard')]
     public function viewWebsiteInfo(Request $request, WebsiteInfoRepository $websiteInfoRepository): Response
     {
         $viewParams = [
@@ -23,7 +24,7 @@ class WebsiteInfoController extends AdminDashboardController
         return $this->render('@NakaCMS/backend/topic/website-info/show_website_info.html.twig', $viewParams);
     }
 
-    #[Route(path: '/opening-hours', name: 'website_info_view_opening_hours')]
+    #[Route(path: '/opening-hours', name: 'view_opening_hours')]
     public function viewOpeningHours(
         Request $request,
         OpeningHoursManager $openingHoursManager
@@ -35,7 +36,7 @@ class WebsiteInfoController extends AdminDashboardController
         return $this->render('@NakaCMS/backend/topic/website-info/show_opening_hours.html.twig', $viewParams);
     }
 
-    #[Route(path: '/opening-hours/edit', name: 'website_info_edit_opening_hours')]
+    #[Route(path: '/opening-hours/edit', name: 'edit_opening_hours')]
     public function editOpeningHours(
         Request $request,
         OpeningHoursManager $openingHoursManager
@@ -54,7 +55,7 @@ class WebsiteInfoController extends AdminDashboardController
                 $openingHoursArray = json_decode($data['openingHours'], true);
                 $openingHoursManager->setOpeningHoursData($openingHoursArray);
                 $this->addFlash('success', sprintf('flash.openingHours.openingHoursUpdated'));
-                return $this->redirectToRoute('website_info_view_opening_hours', []);
+                return $this->redirectToRoute('admin_website_info_view_opening_hours', []);
             } else {
                 $this->addFlash('danger', sprintf('There was an error during updating of the opening hours'));
             }

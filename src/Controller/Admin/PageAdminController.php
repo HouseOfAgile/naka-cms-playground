@@ -13,12 +13,13 @@ use HouseOfAgile\NakaCMSBundle\Form\BlocksInPagePositionType;
 use HouseOfAgile\NakaCMSBundle\Form\ChooseBlockElementTypeType;
 use HouseOfAgile\NakaCMSBundle\Form\ChooseMenuForPageType;
 use HouseOfAgile\NakaCMSBundle\Repository\MenuRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/page')]
-class PageAdminController extends AdminDashboardController
+class PageAdminController extends AbstractController
 {
     #[Route(path: '/{page}/add-page-to-menu', name: 'add_page_to_menu')]
     public function addPageToMenuAction(

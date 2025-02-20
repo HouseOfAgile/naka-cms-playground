@@ -2,7 +2,6 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Controller;
 
-use App\Controller\Admin\SuperAdminDashboardController;
 use App\Entity\BlockElement;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -12,13 +11,14 @@ use HouseOfAgile\NakaCMSBundle\Component\ContentManagement\PageBlockManager;
 use HouseOfAgile\NakaCMSBundle\Controller\Admin\BlockElementCrudController;
 use HouseOfAgile\NakaCMSBundle\Form\BlockElementType;
 use HouseOfAgile\NakaCMSBundle\Form\ChooseBlockElementTypeType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\ClickableInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/block-element')]
-class BlockElementAdminController extends SuperAdminDashboardController
+class BlockElementAdminController extends AbstractController
 {
 
     /** @var AdminUrlGenerator */

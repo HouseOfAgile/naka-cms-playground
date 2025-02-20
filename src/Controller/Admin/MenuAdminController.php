@@ -12,12 +12,13 @@ use HouseOfAgile\NakaCMSBundle\Controller\Admin\MenuCrudController;
 use HouseOfAgile\NakaCMSBundle\Controller\Admin\MenuItemCrudController;
 use HouseOfAgile\NakaCMSBundle\Form\NakaMenuType;
 use HouseOfAgile\NakaCMSBundle\Repository\MenuRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/menu')]
-class MenuAdminController extends AdminDashboardController
+class MenuAdminController extends AbstractController
 {
     #[Route(path: '/{menu}/configure', name: 'configure_menu')]
     public function configureMenu(
