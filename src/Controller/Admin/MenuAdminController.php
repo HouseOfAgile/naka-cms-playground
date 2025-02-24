@@ -1,26 +1,23 @@
 <?php
-
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
 use App\Controller\Admin\AdminDashboardController;
 use App\Entity\Menu;
 use App\Entity\MenuItem;
 use Doctrine\ORM\EntityManagerInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Option\EA;
 use HouseOfAgile\NakaCMSBundle\Component\ContentManagement\NakaMenuManager;
-use HouseOfAgile\NakaCMSBundle\Controller\Admin\MenuCrudController;
-use HouseOfAgile\NakaCMSBundle\Controller\Admin\MenuItemCrudController;
 use HouseOfAgile\NakaCMSBundle\Form\NakaMenuType;
-use HouseOfAgile\NakaCMSBundle\Repository\MenuRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/menu')]
 class MenuAdminController extends AbstractController
 {
-    #[Route(path: '/{menu}/configure', name: 'configure_menu')]
+    #[Route(path: '/{menu}/configure', name: 'configure_menu', defaults: [
+            EA::DASHBOARD_CONTROLLER_FQCN => AdminDashboardController::class,
+        ])]
     public function configureMenu(
         Request $request,
         Menu $menu,
@@ -28,25 +25,22 @@ class MenuAdminController extends AbstractController
     ): \Symfony\Component\HttpFoundation\Response {
 
         $form = $this->createForm(NakaMenuType::class, $menu, [
-            'orderedMenuItemsArray' => $menu->getOrderedMenuItemsArray()
+            'orderedMenuItemsArray' => $menu->getOrderedMenuItemsArray(),
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $newOrderString = $form->get("newOrder")->getData();
-                $newOrder = explode(',', $newOrderString);
-                $result =$nakaMenuManager->updateMenuItemPosition($menu, $newOrder);
+                $newOrder       = explode(',', $newOrderString);
+                $result         = $nakaMenuManager->updateMenuItemPosition($menu, $newOrder);
                 if ($result) {
                     $this->addFlash('success', sprintf('Menu \'%s\' has been configured', $menu));
                 } else {
                     $this->addFlash('warning', sprintf('Menu \'%s\' cannot been configured', $menu));
                 }
 
-                return $this->redirect($this->adminUrlGenerator
-                    ->setController(MenuCrudController::class)
-                    ->setAction(Action::INDEX)
-                    ->generateUrl());
+                return $this->redirectToRoute('admin_menu_index');
             }
         }
         $viewParams = [
@@ -70,11 +64,9 @@ class MenuAdminController extends AbstractController
 
             $this->addFlash('success', sprintf('MenuItem \'%s\' has been duplicated into \'%s\'', $menuItem, $newMenuItem));
         } else {
+
             $this->addFlash('danger', sprintf('Cannot duplicate MenuItem \'%s\', check logs', $menuItem));
         }
-        return $this->redirect($this->adminUrlGenerator
-            ->setController(MenuItemCrudController::class)
-            ->setAction(Action::INDEX)
-            ->generateUrl());
+        return $this->redirectToRoute('admin_menu_index');
     }
 }
