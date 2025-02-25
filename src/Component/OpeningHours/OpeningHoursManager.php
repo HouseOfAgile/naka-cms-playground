@@ -27,7 +27,7 @@ class OpeningHoursManager
         $this->websiteInfoService = $websiteInfoService;
         $this->translator = $translator;
 
-        if ($this->websiteInfoService->isOpeningHoursSet()) {
+        if ($this->websiteInfoService->isOpeningHoursSet() && false) {
             // if ($this->websiteInfoService->getWebsiteInfo()) {
             $this->openingHoursData = $this->websiteInfoService->getWebsiteInfo()->getOpeningHours();
         } else {
