@@ -54,7 +54,6 @@
         <body data-aos-easing="ease-out-back"
               data-aos-duration="1000"
               data-aos-delay="0">
-            {# {% if app.environment != 'prod' %}class="offset-body"{% endif %}> #}
             {# 1) ENV / ADMIN BAR (navbar) #}
             {% if app.environment != 'prod' or is_granted('ROLE_ADMIN') %}
                 <nav class="navbar navbar-dark bg-dark navbar-expand-lg sticky-top small">
