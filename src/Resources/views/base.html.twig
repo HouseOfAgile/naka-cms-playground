@@ -2,9 +2,7 @@
 <html lang="{{ app.request.locale }}">
     <head>
         <meta charset="UTF-8">
-        {% if app.environment == 'staging' %}
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		{% endif %}
         <title>
             {% block master_title %}
                 {% block title %}
@@ -51,9 +49,7 @@
             {% endblock stylesheets_extra %}
 
         </head>
-        <body data-aos-easing="ease-out-back"
-              data-aos-duration="1000"
-              data-aos-delay="0">
+        <body>
             {# 1) ENV / ADMIN BAR (navbar) #}
             {% if app.environment != 'prod' or is_granted('ROLE_ADMIN') %}
                 <nav class="navbar navbar-dark bg-dark navbar-expand-lg sticky-top small">
@@ -61,14 +57,13 @@
                         {% if app.environment != 'prod' %}
                             <span class="navbar-text me-3">{{ 'internal.environment'|trans }}: {{ app.environment|upper }}</span>
                         {% endif %}
-                        {# we do not show admin topbar yet #}
-                        {% if is_granted('ROLE_ADMIN') and false %}
+                        {% if is_granted('ROLE_ADMIN') %}
                             <span class="navbar-text">
                                 <div class="btn-group m-2" role="group" aria-label="Admin group">
                                     <a href="{{ path("admin_dashboard") }}"
                                        role="button"
                                        class=" btn btn-success text-white p-2">
-                                        <span class="d-none d-sm-block">
+                                        <span class=" d-sm-block">
                                             <i class="fa-solid fa-screwdriver-wrench"></i>
                                         {{ 'frontend.goToAdmin'|trans }}s</span>
                                     </a>
@@ -76,8 +71,6 @@
                                         <i class="fa fa-sign-out-alt"></i>
                                     </a>
                                 </div>
-                                {{ 'Admin Tools'|trans }}
-                                {# Add admin links, dropdown, etc. here if desired #}
                             </span>
                         {% endif %}
                     </div>
