@@ -49,9 +49,15 @@ class OpenAIService
             $this->defaultModel = 'gpt-4o-mini';
         }
     }
-
-    public function getFirstNamePresentation(string $firstName, string $promptKey): string
+    public function getFirstNamePresentation(string $firstName, ?string $promptKey = null): string
     {
+        if (!$promptKey) {
+            if (empty($this->prompts)) {
+                throw new \InvalidArgumentException("No prompts are configured.");
+            }
+            $promptKey = array_rand($this->prompts);
+        }
+
         if (!isset($this->prompts[$promptKey])) {
             throw new \InvalidArgumentException("Prompt not found: " . $promptKey);
         }
@@ -65,9 +71,9 @@ class OpenAIService
 
         $cacheKey = $this->cacheKeyGenerator->generate('openai_name_description', [$firstName, $promptKey]);
         return $this->cache->get($cacheKey, function (ItemInterface $item) use ($prompt) {
-            $item->expiresAfter(3600); // Cache for 1 hour
+            $item->expiresAfter(3600);
 
-            $maxTokens = $this->defaultWordCount * 2.2; // Rough estimation of tokens to words ratio
+            $maxTokens = $this->defaultWordCount * 2.2;
 
             $response = $this->openaiClient->chat()->create([
                 'model' => $this->defaultModel,
@@ -76,7 +82,6 @@ class OpenAIService
                 ],
                 'max_tokens' => $maxTokens,
             ]);
-
 
             if ($this->devMode && isset($response['usage'])) {
                 $this->trackCurrentUsage($response['usage']);
@@ -94,6 +99,7 @@ class OpenAIService
             }
         });
     }
+
 
     public function trackCurrentUsage($usage): void
     {
