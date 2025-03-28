@@ -193,7 +193,7 @@ class RestCURLService
                 }
             );
 
-            curl_setopt($ch, CURLOPT_VERBOSE, true);
+            // curl_setopt($ch, CURLOPT_VERBOSE, true);
 
             // Log curl errors here
             $response = curl_exec($ch);
