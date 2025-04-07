@@ -58,7 +58,7 @@ class ContactThreadCrudController extends AbstractCrudController
         return $actions
             // ->remove(Crud::PAGE_INDEX, Action::DETAIL)
             ->remove(Crud::PAGE_INDEX, Action::EDIT)
-            ->remove(Crud::PAGE_INDEX, Action::DELETE)
+            // ->remove(Crud::PAGE_INDEX, Action::DELETE)
             // ->add(Crud::PAGE_INDEX, $markSpam)
             // ->add(Crud::PAGE_INDEX, $answer)
             // ->add(Crud::PAGE_DETAIL, $markSpam)
