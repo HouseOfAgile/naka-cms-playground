@@ -4,10 +4,11 @@
         <ul class="a2lix_translationsLocales nav nav-tabs" role="tablist">
         {% for translationsFields in form %}
             {% set locale = translationsFields.vars.name %}
+            {% set localeLanguage = locale | getLanguage %}
 
             <li class="nav-item" role="presentation">
                 <a href="#{{ translationsFields.vars.id }}_a2lix_translations-fields" class="nav-link {% if app.request.locale == locale %}active{% endif %}" data-bs-toggle="tab" role="tab">
-                    {{ translationsFields.vars.label|default(locale|humanize)|trans }}
+                    {{ translationsFields.vars.label|default(localeLanguage|humanize)|trans }}
                     {% if form.vars.default_locale == locale %}{{ '[Default]'|trans }}{% endif %}
                     {% if translationsFields.vars.required %}*{% endif %}
                 </a>
@@ -19,7 +20,7 @@
         {% for translationsFields in form %}
             {% set locale = translationsFields.vars.name %}
 
-            <div id="{{ translationsFields.vars.id }}_a2lix_translations-fields" class="tab-pane {% if app.request.locale == locale %}show active{% endif %} {% if not form.vars.valid %}sonata-ba-field-error{% endif %}" role="tabpanel">
+            <div id="{{ translationsFields.vars.id }}_a2lix_translations-fields" class="tab-pane p-3 {% if app.request.locale == locale %}show active{% endif %} {% if not form.vars.valid %}sonata-ba-field-error{% endif %}" role="tabpanel">
                 {{ form_errors(translationsFields) }}
                 {{ form_widget(translationsFields) }}
             </div>
