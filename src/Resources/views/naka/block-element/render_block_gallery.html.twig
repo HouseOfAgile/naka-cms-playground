@@ -8,7 +8,7 @@
 						<a href="{{ vich_uploader_asset(picture)|imagine_filter('creative_dim_down') }}" class=" btn btn-dark">{{ 'thumbnail.viewLarger'|trans }}</a>
 					</div>
 				</div>
-				<img data-original="{{ vich_uploader_asset(picture)|imagine_filter('creative_dim_down') }}" src="{{ vich_uploader_asset(picture)|imagine_filter('thumb_medium') }}" alt="{{ picture }}" class="img-fluid pointer-zoom-in"/>
+				<img data-original="{{ vich_uploader_asset(picture)|imagine_filter('creative_dim_down') }}" src="{{ vich_uploader_asset(picture)|imagine_filter('thumb_medium') }}" alt="{{ picture.altText }}" class="img-fluid pointer-zoom-in"/>
 			</div>
 		</div>
 	{% endfor %}

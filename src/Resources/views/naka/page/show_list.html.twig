@@ -20,7 +20,7 @@
 							<ul class="glide__slides">
 								{% for image in page.pageGallery.images %}
 									<li class="glide__slide">
-										<img src="{{ vich_uploader_asset(image)|imagine_filter('squared_thumbnail_medium') }}" alt="{{ image }}"/>
+										<img src="{{ vich_uploader_asset(image)|imagine_filter('squared_thumbnail_medium') }}" alt="{{ image.altText }}"/>
 									</li>
 								{% endfor %}
 							</ul>
