@@ -1,0 +1,26 @@
+{% extends '@!EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}
+    <h1 class="mb-4">{{ title }}</h1>
+{% endblock content_title %}
+
+{% block main %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                {# ─── Back‑to‑index link (hidden on the index page itself) ─── #}
+                {% if current_page is defined and current_page != 'index' %}
+                    <a href="{{ path('admin_tech_guide_index', {'_locale': app.request.locale}) }}"
+                       class="btn btn-outline-secondary mb-3">
+                        {{ 'techGuide.backToIndex'|trans }}
+                    </a>
+                {% endif %}
+
+                <div class="markdown-body p-4">
+                    {{ content|raw }}
+                </div>
+            </div>
+        </div> 
+    </div>
+{% endblock main %}

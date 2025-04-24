@@ -4,7 +4,7 @@ namespace HouseOfAgile\NakaCMSBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use HouseOfAgile\NakaCMSBundle\Entity\ContactThread;
+use App\Entity\ContactThread;
 
 /**
  * @extends ServiceEntityRepository<ContactThread>

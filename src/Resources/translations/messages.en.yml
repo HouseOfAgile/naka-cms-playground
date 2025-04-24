@@ -65,6 +65,9 @@ common.address.city: 'City'
 common.address.country: 'Country'
 common.defaultMetaDescription: 'common.defaultMetaDescription to be updated'
 common.defaultMetaKeywords: 'common.defaultMetaKeywords to be updated'
+
+techGuide.backToIndex: 'Back to index'
+
 backend.common.position: Position
 backend.common.menuItem: 'MenuItem'
 backend.common.pageBlockElement: 'Page block element'
