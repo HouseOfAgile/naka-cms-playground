@@ -115,7 +115,7 @@ backend.form.page.pageConfigurationTab: 'Page configuration'
 backend.form.page.pageConfigurationTab.help: 'General configuration for the page'
 
 page.mainPageTranslationsPanel: 'Main page translations'
-backend.form.page.mainPageTranslationsPanel: 'Page Translation'
+backend.form.page.mainPageTranslationsPanel: 'Page Translation and SEO'
 backend.form.page.mainPageTranslationsPanel.help: |
     <p>Those are the internationalized translation for the page details in the various supported languages.</p>
     <p>The content will give an insight on the page, and will be used for SEO.</p>

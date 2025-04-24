@@ -1,0 +1,26 @@
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg sticky-top small">
+    <div class="container-fluid">
+        {% if app.environment != 'prod' %}
+            <span class="navbar-text me-3">{{ 'internal.environment'|trans }}: {{ app.environment|upper }}</span>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item px-2">
+                    <span class="navbar-text">
+                        <div class="btn-group" role="group" aria-label="Admin group">
+                            <a href="{{ path("admin_dashboard") }}"
+                               class="btn btn-success text-white p-2">
+                                <i class="fa-solid fa-screwdriver-wrench"></i>
+                                {{ 'frontend.goToAdmin'|trans }}
+                            </a>
+                            {# --- Admin-mode toggle button --- #}
+                            <a href="{{ path("logout") }}" class="btn btn-danger p-2">
+                                <i class="fa fa-sign-out-alt"></i>
+                            </a>
+                        </div>
+                    </span>
+                </li>
+            </ul>
+        {% endif %}
+    </div>
+</nav>
