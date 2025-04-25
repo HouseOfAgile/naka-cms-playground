@@ -1,5 +1,5 @@
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg sticky-top small">
-    <div class="container-fluid">
+    <div class="container-fluid justify-content-between">
         {% if app.environment != 'prod' %}
             <span class="navbar-text me-3">{{ 'internal.environment'|trans }}: {{ app.environment|upper }}</span>
         {% endif %}
