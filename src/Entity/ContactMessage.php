@@ -79,6 +79,11 @@ class ContactMessage
         return $this->isFromAdmin;
     }
 
+	public function getIsFromAdmin(): bool
+    {
+		return $this->isFromAdmin;
+	}
+	
     public function setIsFromAdmin(bool $isFromAdmin): self
     {
         $this->isFromAdmin = $isFromAdmin;

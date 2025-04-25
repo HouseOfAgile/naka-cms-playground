@@ -437,7 +437,7 @@ class DataSyncManager
 
     private function convertToAppropriateType($entity, string $keyAttr, $valAttr, array $entityAttributes)
     {
-        if ($keyAttr == 'createdAt' || $keyAttr == 'updatedAt') {
+		if (!isset($entityAttributes[$keyAttr]) && ($keyAttr === 'createdAt' || $keyAttr === 'updatedAt')) {
             return new DateTime('@' . $valAttr, new DateTimeZone('Europe/Berlin'));
         }
 
