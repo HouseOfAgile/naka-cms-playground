@@ -105,7 +105,8 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
 
         $isVerified = BooleanField::new ('isVerified')
             ->setHelp('backend.form.user.isVerified.help')
-            ->setColumns(6);
+            ->setColumns(6)
+			->renderAsSwitch(false);
 
         $roles = ChoiceField::new ('roles', 'backend.form.user.roles')
             ->setChoices([
