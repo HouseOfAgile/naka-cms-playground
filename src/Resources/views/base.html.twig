@@ -56,8 +56,10 @@
                     </div>
                 </div>
             {% endfor %}
-            {% block body %}
-            {% endblock body %}
+            {% block body_wrapper %}
+                {% block body %}
+                {% endblock body %}
+            {% endblock body_wrapper %}
             {% block javascripts_extra %}
                 <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"
                         data-cfasync="false"></script>
