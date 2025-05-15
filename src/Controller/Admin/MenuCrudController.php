@@ -1,4 +1,5 @@
 <?php
+
 namespace HouseOfAgile\NakaCMSBundle\Controller\Admin;
 
 use App\Entity\Menu;
@@ -20,16 +21,18 @@ class MenuCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        $menuId = fn(Menu $menu): array=> [
+        $menuId = fn(Menu $menu): array => [
             'menu' => $menu->getId(),
         ];
-        $configureMenu = Action::new ('configureMenu', 'backend.crud.menu.action.reorganizeMenu', 'fa-solid fa-arrow-up-a-z')
+        $configureMenu = Action::new('configureMenu', 'backend.crud.menu.action.reorganizeMenu', 'fa-solid fa-arrow-up-a-z')
             ->linkToRoute('configure_menu', $menuId)
             ->addCssClass('btn btn-success');
-
+        if (!$this->isGranted('ROLE_SUPER_ADMIN')) {
+            $actions
+                ->remove(Crud::PAGE_INDEX, Action::NEW);
+        }
         return $actions
             ->add(Crud::PAGE_INDEX, $configureMenu)
-            ->remove(Crud::PAGE_INDEX, Action::NEW )
             ->remove(Crud::PAGE_INDEX, Action::DELETE)
             // ->add(Crud::PAGE_INDEX, $viewPerformanceStrategy)
         ;
@@ -37,12 +40,12 @@ class MenuCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $id      = IdField::new ('id');
-        $name    = TextField::new ('name');
-        $isFixed = BooleanField::new ('isFixed')
+        $id      = IdField::new('id');
+        $name    = TextField::new('name');
+        $isFixed = BooleanField::new('isFixed')
             ->setHelp('backend.form.menu.isFixed.help');
 
-        $menuItems = AssociationField::new ('menuItems', 'backend.form.menu.menuItems');
+        $menuItems = AssociationField::new('menuItems', 'backend.form.menu.menuItems');
         /** @var Menu $thisEntity */
         $thisEntity = $this->getContext()->getEntity()->getInstance();
         // here we check if this menu is fixed to not be able to change the name

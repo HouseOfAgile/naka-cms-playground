@@ -25,6 +25,18 @@ class LanguageExtension extends AbstractExtension
 
     public function getLanguage($code, $displayedLocale = null)
     {
+        $code = strtolower($code);
+
+        // Rewrite specific country codes to appropriate language codes
+        if ($code === 'us') {
+            $code = 'en';
+        }
+
+        // Avoid crashing if the code is invalid or unknown
+        if (!Languages::exists($code)) {
+            return strtoupper($code); // fallback display (e.g. "US")
+        }
+
         return Languages::getName($code, $displayedLocale);
     }
 

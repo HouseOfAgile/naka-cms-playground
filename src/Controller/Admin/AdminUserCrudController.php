@@ -41,7 +41,8 @@ class AdminUserCrudController extends BaseUserCrudController
         ])->allowMultipleChoices()
             // ->renderAsBadges()
             ->setHelp('backend.form.adminUser.roles.help')
-            ->setPermission('ROLE_SUPER_ADMIN');;
+            ->setPermission('ROLE_SUPER_ADMIN')
+            ;
 
         // $fieldsFromBaseUser = array_merge($fieldsFromBaseUser,[$roles]);
         if ($this->isGranted('ROLE_SUPER_ADMIN')) {
