@@ -7,19 +7,25 @@ use DeepL\Translator;
 class DeepLTranslationService
 {
     private Translator $translator;
+    private int $apiCallDelayMs;
 
-    public function __construct(string $authKey)
+    public function __construct(string $authKey, int $apiCallDelayMs = 0)
     {
         $this->translator = new Translator($authKey);
+        $this->apiCallDelayMs = $apiCallDelayMs;
     }
 
     public function translate(string $text, string $sourceLang, string $targetLang): string
     {
+        // Apply delay if configured
+        if ($this->apiCallDelayMs > 0) {
+            usleep($this->apiCallDelayMs * 1000); // Convert ms to microseconds
+        }
+
         $targetLang = $this->updateLanguageCode($targetLang);
         if ($this->containsHtml($text)) {
             $result = $this->translator->translateText($text, $sourceLang, $targetLang, [
                 'tag_handling' => 'xml', // Tells DeepL to preserve HTML/XML tags
-                // Specify 'ignore_tags' to protect parts of the text from translation
             ]);
         } else {
             $result = $this->translator->translateText($text, $sourceLang, $targetLang);

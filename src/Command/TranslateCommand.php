@@ -1,4 +1,5 @@
 <?php
+
 namespace HouseOfAgile\NakaCMSBundle\Command;
 
 use HouseOfAgile\NakaCMSBundle\Service\DeepLTranslationService;
@@ -22,6 +23,7 @@ class TranslateCommand extends Command
     private DeepLTranslationService $deepLTranslationService;
     private string $translationsDir;
     private array $allLocales;
+    private int $apiCallDelayMs;
 
     // Flag & counters
     private bool $skipExistingTranslations = false;
@@ -41,12 +43,14 @@ class TranslateCommand extends Command
     public function __construct(
         DeepLTranslationService $deepLTranslationService,
         string $translationsDir,
-        array $allLocales
+        array $allLocales,
+        int $apiCallDelayMs = 0
     ) {
-        parent::__construct();
         $this->deepLTranslationService = $deepLTranslationService;
         $this->translationsDir         = $translationsDir;
-        $this->allLocales              = $allLocales;
+        $this->allLocales             = $allLocales;
+        $this->apiCallDelayMs         = $apiCallDelayMs;
+        parent::__construct();
     }
 
     protected function configure(): void
@@ -56,7 +60,8 @@ class TranslateCommand extends Command
             ->addArgument('targetLang', InputArgument::OPTIONAL, 'The target language code. If omitted, translates to all configured locales except the source.')
             ->addOption('force', 'f', InputOption::VALUE_NONE, 'Force update all translations without confirmation.')
             ->addOption('skip-existing', null, InputOption::VALUE_NONE, 'Skip updating existing translations.')
-            ->addOption('domain', null, InputOption::VALUE_OPTIONAL, 'The translation domain to process (default: all).');
+            ->addOption('domain', null, InputOption::VALUE_OPTIONAL, 'The translation domain to process (default: all).')
+            ->addOption('delay', null, InputOption::VALUE_OPTIONAL, 'Delay between DeepL API calls in milliseconds.', 0);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -65,16 +70,23 @@ class TranslateCommand extends Command
 
         $sourceLang = strtolower($input->getArgument('sourceLang'));
         $targetLang = $input->getArgument('targetLang')
-        ? [strtolower($input->getArgument('targetLang'))]
-        : array_diff(array_map('strtolower', $this->allLocales), [$sourceLang]);
+            ? [strtolower($input->getArgument('targetLang'))]
+            : array_diff(array_map('strtolower', $this->allLocales), [$sourceLang]);
 
         $this->skipExistingTranslations = $input->getOption('skip-existing');
         $domain                         = $input->getOption('domain');
         $forceUpdate                    = $input->getOption('force');
+        $this->apiCallDelayMs           = (int) $input->getOption('delay');
+
+        // Validate delay
+        if ($this->apiCallDelayMs < 0) {
+            $io->error('Delay must be a non-negative integer.');
+            return Command::FAILURE;
+        }
 
         // Map & validate source language
         $deepLSourceLang = $this->deepLSupportedLanguages[$sourceLang] ?? $sourceLang;
-        if (! in_array($deepLSourceLang, $this->getDeepLSupportedLanguages(), true)) {
+        if (!in_array($deepLSourceLang, $this->getDeepLSupportedLanguages(), true)) {
             $io->error("Invalid source language: $deepLSourceLang (mapped from '$sourceLang'). Must be a valid DeepL-supported language.");
             return Command::FAILURE;
         }
@@ -88,7 +100,7 @@ class TranslateCommand extends Command
         // Process each target language
         foreach ($targetLang as $lang) {
             $deepLTargetLang = $this->deepLSupportedLanguages[$lang] ?? $lang;
-            if (! in_array($deepLTargetLang, $this->getDeepLSupportedLanguages(), true)) {
+            if (!in_array($deepLTargetLang, $this->getDeepLSupportedLanguages(), true)) {
                 $io->warning("Skipping unsupported target language: $lang (mapped to '$deepLTargetLang').");
                 continue;
             }
@@ -114,8 +126,8 @@ class TranslateCommand extends Command
         foreach ($targetLang as $lang) {
             $finder  = new Finder();
             $pattern = $domain
-            ? "{$domain}.{$sourceLang}.*"
-            : "*.$sourceLang.*";
+                ? "{$domain}.{$sourceLang}.*"
+                : "*.$sourceLang.*";
 
             $finder->in($this->translationsDir)
                 ->files()
@@ -138,13 +150,12 @@ class TranslateCommand extends Command
     {
         $progressBar->setFormat(
             " %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% " .
-            "Memory: %memory:6s% | New: %newKeys%, Updated: %updatedKeys%, Skipped: %skippedKeys%"
+                "Memory: %memory:6s% | New: %newKeys%, Updated: %updatedKeys%, Skipped: %skippedKeys%"
         );
         $progressBar->setMessage('0', 'newKeys');
         $progressBar->setMessage('0', 'updatedKeys');
         $progressBar->setMessage('0', 'skippedKeys');
     }
-
     private function translateLanguage(
         string $sourceLang,
         string $targetLang,
@@ -155,8 +166,8 @@ class TranslateCommand extends Command
     ): void {
         $finder  = new Finder();
         $pattern = $domain
-        ? "{$domain}.{$sourceLang}.*"
-        : "*.$sourceLang.*";
+            ? "{$domain}.{$sourceLang}.*"
+            : "*.$sourceLang.*";
 
         $finder->in($this->translationsDir)
             ->files()
@@ -187,7 +198,6 @@ class TranslateCommand extends Command
 
                 // Check if there's already a translation
                 if (isset($targetContent[$key])) {
-                    // If skipping or not forced, confirm updates
                     if (
                         $this->skipExistingTranslations
                         || (
@@ -283,8 +293,22 @@ class TranslateCommand extends Command
     private function getDeepLSupportedLanguages(): array
     {
         return [
-            'en', 'de', 'fr', 'es', 'it', 'nl', 'pl', 'ru',
-            'ja', 'zh', 'cs', 'pt', 'sv', 'da', 'fi', 'hu',
+            'en',
+            'de',
+            'fr',
+            'es',
+            'it',
+            'nl',
+            'pl',
+            'ru',
+            'ja',
+            'zh',
+            'cs',
+            'pt',
+            'sv',
+            'da',
+            'fi',
+            'hu',
         ];
     }
 }
