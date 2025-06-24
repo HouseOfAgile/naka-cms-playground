@@ -1,24 +1,16 @@
 {% extends '@!EasyAdmin/page/content.html.twig' %}
-
 {% block page_title %}
     {{ 'backend.dashboard.title'|trans({'%applicationName%': application_name}) }}
 {% endblock page_title %}
-
 {% block global_actions %}
 {% endblock global_actions %}
-
 {% block content_help %}
 {% endblock content_help %}
-
 {% block main %}
     <div class="row">
-        <div class="col-8 offset-2 p-5">
-            <div class="p-4 mb-4 text-bg-light rounded-3">
-                <div class="row py-3">
-                    <div class="col-md-10 offset-1">
-                        {{ is_granted("ROLE_ADMIN") ? 'backend.dashboardAdmin.generalHelp' | trans | raw :'backend.dashboardManager.generalHelp' | trans | raw }}
-                    </div>
-                </div>
+        <div class="col-12 col-md-8 offset-md-2 p-2 p-md-5">
+            <div class="text-bg-light rounded-3 p-3">
+                {{ is_granted("ROLE_ADMIN") ? 'backend.dashboardAdmin.generalHelp' | trans | raw :'backend.dashboardManager.generalHelp' | trans | raw }}
             </div>
         </div>
     </div>
