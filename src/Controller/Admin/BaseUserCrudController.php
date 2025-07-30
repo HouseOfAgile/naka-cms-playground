@@ -67,55 +67,54 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
     {
         $actions = parent::configureActions($actions);
         return $actions
-        // ->add(Crud::PAGE_INDEX, Action::NEW)
+            // ->add(Crud::PAGE_INDEX, Action::NEW)
         ;
     }
 
     public function configureFields(string $pageName): iterable
     {
-        $id = IntegerField::new ('id', 'ID')->onlyOnIndex();
+        $id = IntegerField::new('id', 'ID')->onlyOnIndex();
 
-        $firstName = TextField::new ('firstName', 'backend.form.user.firstName')
+        $firstName = TextField::new('firstName', 'backend.form.user.firstName')
             ->setHelp('backend.form.user.firstName.help')
             ->setColumns(6);
 
-        $lastName = TextField::new ('lastName', 'backend.form.user.lastName')
+        $lastName = TextField::new('lastName', 'backend.form.user.lastName')
             ->setHelp('backend.form.user.lastName.help')
             ->setColumns(6);
 
-        $userDetails = TextField::new ('userDetails', 'backend.form.user.userDetails')
+        $userDetails = TextField::new('userDetails', 'backend.form.user.userDetails')
             ->setHelp('backend.form.user.lastName.help')
             ->setColumns(6)
             ->setTemplatePath('@NakaCMS/backend/fields/user/user_details.html.twig');
 
-        $address = Field::new ('addressFields')
+        $address = Field::new('addressFields')
             ->setFormType(BackendAddressType::class)
             ->setFormTypeOptions([
                 'label' => false,
             ]);
 
-        $email = TextField::new ('email', 'backend.form.user.email')
+        $email = TextField::new('email', 'backend.form.user.email')
             ->setHelp('backend.form.user.email.help');
 
-        $birthDate = DateField::new ('birthDate', 'backend.form.user.birthDate')
+        $birthDate = DateField::new('birthDate', 'backend.form.user.birthDate')
             ->setHelp('backend.form.user.birthDate.help');
-        $preferredLocale = LocaleField::new ('preferredLocale', 'backend.form.user.preferredLocale')
+        $preferredLocale = LocaleField::new('preferredLocale', 'backend.form.user.preferredLocale')
             ->includeOnly($this->allLocales)
             ->setHelp('backend.form.user.preferredLocale.help');
 
-        $isVerified = BooleanField::new ('isVerified')
+        $isVerified = BooleanField::new('isVerified')
             ->setHelp('backend.form.user.isVerified.help')
-            ->setColumns(6)
-			->renderAsSwitch(false);
+            ->setColumns(6);
 
-        $roles = ChoiceField::new ('roles', 'backend.form.user.roles')
+        $roles = ChoiceField::new('roles', 'backend.form.user.roles')
             ->setChoices([
                 'backend.form.user.role.user' => 'ROLE_USER',
                 'backend.form.user.role.admin' => 'ROLE_ADMIN',
             ])->allowMultipleChoices()
             ->setHelp('backend.form.user.roles.help');
 
-        $password = Field::new ('plainPassword', 'backend.form.user.password')
+        $password = Field::new('plainPassword', 'backend.form.user.password')
             ->onlyOnForms()
             ->setFormType(RepeatedType::class)
             ->setFormTypeOptions([
@@ -131,7 +130,9 @@ class BaseUserCrudController extends AbstractCrudController implements EventSubs
             FormField::addColumn(8),
             FormField::addFieldset('backend.form.user.userDetails')
                 ->setIcon('fa fa-info'),
-            $id, $firstName, $lastName,
+            $id,
+            $firstName,
+            $lastName,
             $email,
             $birthDate,
             FormField::addColumn(4),
