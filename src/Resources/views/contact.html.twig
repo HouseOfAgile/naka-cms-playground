@@ -44,5 +44,6 @@
     {% include "@NakaCMS/fragment/_show_contact_form.html.twig" with {'form': contactForm } %}
 {% endblock content %}
 {% block javascripts_extra %}
+    {{ parent() }}
     {{ encore_entry_script_tags("openstreetmap") }}
 {% endblock javascripts_extra %}

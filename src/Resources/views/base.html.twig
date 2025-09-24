@@ -1,75 +1,73 @@
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>
-            {%- block master_title -%}
-                {%- block title -%}
-                    Welcome!
-                {%- endblock title -%} - {{ websiteInfo.translatedTitle |default(application_name) }}
-            {%- endblock master_title -%}
-        </title>
-        {% block master_meta %}
-            <meta name="description"
-                  content="{%- block meta_description -%}{{ websiteInfo.translatedDescription | default('meta.defaultDescription' | trans) }}{%- endblock meta_description -%}">
-            <meta name="keywords"
-                  content="{%- block meta_keywords -%}{{ websiteInfo.translatedKeywords | default('meta.defaultKeywords' | trans) }}{%- endblock meta_keywords -%}">
-        {% endblock master_meta %}
-        {% block favicon %}
-            <link rel="icon"
-                  href="data:image/svg+xml, <svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22> <text y=%221.2em%22 font-size=%2296%22>⚫️</text> </svg> ">
-            {% endblock favicon %}
-            {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-            {% block stylesheets %}
-                {{ encore_entry_link_tags("app") }}
-                <link rel="stylesheet"
-                      type="text/css"
-                      href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
-            {% endblock stylesheets %}
-            {% block javascripts %}
-                {{ encore_entry_script_tags("app") }}
-                {% set gtm_id = 'global.google-tag-manager'| nakaParameter %}
-                {% if gtm_id %}
-                    {% include "@NakaCMS/fragment/_google_tag_manager_head.html.twig" %}
-                {% endif %}
-                {% set ga_id = 'global.google-analytics'| nakaParameter %}
-                {% if ga_id %}
-                    {% include "@NakaCMS/fragment/_google_analytics.html.twig" %}
-                {% endif %}
-            {% endblock javascripts %}
-            {% block stylesheets_extra %}
-            {% endblock stylesheets_extra %}
-        </head>
-        <body>
-            {% set gtm_id = 'global.google-tag-manager'| nakaParameter %}
-            {% if gtm_id %}
-                {% include "@NakaCMS/fragment/_google_tag_manager_body.html.twig" %}
-            {% endif %}
-            {# 1) ENV / ADMIN BAR (navbar) #}
-            {% if app.environment != 'prod' or is_granted('ROLE_ADMIN') %}
-                {% include "@NakaCMS/layout/navbar_admin.html.twig" %}
-            {% endif %}
-            {# 2) MAINTENANCE WARNINGS #}
-            {% for flash in app.flashes('warning') %}
-                <div class="alert alert-warning alert-dismissible fade show sticky-top mb-0"
-                     role="alert"
-                     style="z-index: 1080">
-                    <div class="container">
-                        {{ flash|trans }}
-                        <button type="button"
-                                class="btn-close"
-                                data-bs-dismiss="alert"
-                                aria-label="Close"></button>
-                    </div>
-                </div>
-            {% endfor %}
-            {% block body_wrapper %}
-                {% block body %}
-                {% endblock body %}
-            {% endblock body_wrapper %}
-            {% block javascripts_extra %}
-                {{ encore_entry_script_tags("appBottom") }}
-            {% endblock javascripts_extra %}
-        </body>
-    </html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      {%- block master_title -%}
+        {%- block title -%}
+          Welcome!
+        {%- endblock -%}- {{ websiteInfo.translatedTitle|default(application_name) }}
+      {%- endblock -%}
+    </title>
+    {% block master_meta %}
+      <meta name="description"
+        content="{%- block meta_description -%}
+          {{ websiteInfo.translatedDescription|default('meta.defaultDescription'|trans) }}
+        {%- endblock -%}" />
+      <meta name="keywords"
+        content="{%- block meta_keywords -%}
+          {{ websiteInfo.translatedKeywords|default('meta.defaultKeywords'|trans) }}
+        {%- endblock -%}" />
+    {% endblock %}
+    {% block favicon %}
+      <link rel="icon" href="data:image/svg+xml, <svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22> <text y=%221.2em%22 font-size=%2296%22>⚫️</text> </svg> " />
+    {% endblock %}
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+    {% block stylesheets %}
+      {{ encore_entry_link_tags('app') }}
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+    {% endblock %}
+    {% block javascripts %}
+      {{ encore_entry_script_tags('app') }}
+      {% set gtm_id = 'global.google-tag-manager'|nakaParameter %}
+      {% if gtm_id %}
+        {% include '@NakaCMS/fragment/_google_tag_manager_head.html.twig' %}
+      {% endif %}
+      {% set ga_id = 'global.google-analytics'|nakaParameter %}
+      {% if ga_id %}
+        {% include '@NakaCMS/fragment/_google_analytics.html.twig' %}
+      {% endif %}
+    {% endblock %}
+    {% block stylesheets_extra %}
+
+    {% endblock %}
+  </head>
+  <body>
+    {% set gtm_id = 'global.google-tag-manager'|nakaParameter %}
+    {% if gtm_id %}
+      {% include '@NakaCMS/fragment/_google_tag_manager_body.html.twig' %}
+    {% endif %}
+    {# 1) ENV / ADMIN BAR (navbar) #}
+    {% if app.environment != 'prod' or is_granted('ROLE_ADMIN') %}
+      {% include '@NakaCMS/layout/navbar_admin.html.twig' %}
+    {% endif %}
+    {# 2) MAINTENANCE WARNINGS #}
+    {% for flash in app.flashes('warning') %}
+      <div class="alert alert-warning alert-dismissible fade show sticky-top mb-0" role="alert" style="z-index: 1080">
+        <div class="container">
+          {{ flash|trans }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+    {% endfor %}
+    {% block body_wrapper %}
+      {% block body %}
+
+      {% endblock %}
+    {% endblock %}
+    {% block javascripts_extra %}
+      {{ encore_entry_script_tags('appBottom') }}
+    {% endblock %}
+  </body>
+</html>

@@ -1,13 +1,12 @@
 {% extends '@NakaCMS/layout/base-layout.html.twig' %}
 
 {% block stylesheets_extra %}
-	<style>
-		{{blockElementType.cssCode|raw}}
-	</style>
-{% endblock stylesheets_extra %}
+  <style></style>
+{% endblock %}
 {% block content %}
-	{% include '@NakaCMS/naka/fragment/show-'~ blockElementType.type ~'.html.twig' %}
-{% endblock content %}
+  {% include '@NakaCMS/naka/fragment/show-' ~ blockElementType.type ~ '.html.twig' %}
+{% endblock %}
 {% block javascripts_extra %}
-	{{ blockElementType.jsCode|raw }}
-{% endblock javascripts_extra %}
+  {{ parent() }}
+  {{ blockElementType.jsCode|raw }}
+{% endblock %}
