@@ -29,6 +29,10 @@
             {% endblock stylesheets %}
             {% block javascripts %}
                 {{ encore_entry_script_tags("app") }}
+                {% set gtm_id = 'global.google-tag-manager'| nakaParameter %}
+                {% if gtm_id %}
+                    {% include "@NakaCMS/fragment/_google_tag_manager_head.html.twig" %}
+                {% endif %}
                 {% set ga_id = 'global.google-analytics'| nakaParameter %}
                 {% if ga_id %}
                     {% include "@NakaCMS/fragment/_google_analytics.html.twig" %}
@@ -38,6 +42,10 @@
             {% endblock stylesheets_extra %}
         </head>
         <body>
+            {% set gtm_id = 'global.google-tag-manager'| nakaParameter %}
+            {% if gtm_id %}
+                {% include "@NakaCMS/fragment/_google_tag_manager_body.html.twig" %}
+            {% endif %}
             {# 1) ENV / ADMIN BAR (navbar) #}
             {% if app.environment != 'prod' or is_granted('ROLE_ADMIN') %}
                 {% include "@NakaCMS/layout/navbar_admin.html.twig" %}

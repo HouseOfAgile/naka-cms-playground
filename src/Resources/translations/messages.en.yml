@@ -1,6 +1,6 @@
 # Some translations that are common
-frontend.goToAdmin: 'Go to Admin'
-main.returnToAdmin: 'Return to Admin'
+frontend.goToAdmin: "Go to Admin"
+main.returnToAdmin: "Return to Admin"
 
 error.metaTitle: "Something went wrong"
 error.title: "An Error Occurred"
@@ -13,7 +13,7 @@ error.contactSupport: "Contact Support"
 
 maintenance.title: "Maintenance Mode"
 maintenance.message: "We’re currently performing updates to improve your experience. Please check back soon."
-maintenance.scheduled: "Scheduled Maintenance" 
+maintenance.scheduled: "Scheduled Maintenance"
 maintenance.inProgress: "Maintenance in Progress"
 maintenance.start: "Start"
 maintenance.end: "End"
@@ -22,184 +22,184 @@ maintenance.minutes: "minutes"
 maintenance.apology: "We apologize for any inconvenience caused. Thank you for your patience."
 maintenance.returnHome: "Return to Homepage"
 
-vichImage.close: 'Close'
-vichImage.imageIsNotSet: 'Image is not set'
+vichImage.close: "Close"
+vichImage.imageIsNotSet: "Image is not set"
 
 form.contact.name: Name
 form.contact.email: Email
 form.contact.subject: Subject
 form.contact.message: Message
-form.contact.submit: 'Send your message'
+form.contact.submit: "Send your message"
 
-authenticate.verifyEmail.title: 'Verify Email'
-authenticate.verifyEmail.header: 'Verify your Email'
-authenticate.verifyEmail.instructions: 'A verification email was sent to your email address. Please click on the link in the email to verify your account.'
-authenticate.verifyEmail.verificationEmailSentToThisEmail: 'The verification email was sent to <strong>%email%</strong>, if this is not your email, please contact us.'
-authenticate.verifyEmail.emailLabel: 'Email'
-authenticate.verifyEmail.backToLogin: 'Return to Login'
-authenticate.verifyEmail.contactUs: 'Contact Us'
-authenticate.verifyEmail.resendButton: 'Re-send Email'
-authenticate.verifyEmail.emailToResend: 'We will resend the verification email to %email%'
-authenticate.flash.register.checkYourEmailAndVerifyYourEmail: 'Check your email and verify your account.'
-authenticate.flash.verifyEmail.accountVerified: 'Account Verified! You can now log in.'
-authenticate.flash.verifyEmail.emailSent: 'A verification email has been sent to your email address.'
-authenticate.flash.verifyEmail.newEmailSent: 'A new verification email has been sent to your address.'
-authenticate.flash.verifyEmail.emailNotFoundOrAlreadyVerified: 'Email not found or already verified.'
-authenticate.signUp: 'Sign Up'
-authenticate.login: 'Login'
+authenticate.verifyEmail.title: "Verify Email"
+authenticate.verifyEmail.header: "Verify your Email"
+authenticate.verifyEmail.instructions: "A verification email was sent to your email address. Please click on the link in the email to verify your account."
+authenticate.verifyEmail.verificationEmailSentToThisEmail: "The verification email was sent to <strong>%email%</strong>, if this is not your email, please contact us."
+authenticate.verifyEmail.emailLabel: "Email"
+authenticate.verifyEmail.backToLogin: "Return to Login"
+authenticate.verifyEmail.contactUs: "Contact Us"
+authenticate.verifyEmail.resendButton: "Re-send Email"
+authenticate.verifyEmail.emailToResend: "We will resend the verification email to %email%"
+authenticate.flash.register.checkYourEmailAndVerifyYourEmail: "Check your email and verify your account."
+authenticate.flash.verifyEmail.accountVerified: "Account Verified! You can now log in."
+authenticate.flash.verifyEmail.emailSent: "A verification email has been sent to your email address."
+authenticate.flash.verifyEmail.newEmailSent: "A new verification email has been sent to your address."
+authenticate.flash.verifyEmail.emailNotFoundOrAlreadyVerified: "Email not found or already verified."
+authenticate.signUp: "Sign Up"
+authenticate.login: "Login"
 
-verification.phoneVerified: 'Phone Verified'
-verification.phoneNotVerified: 'Phone is not verified'
-verification.emailVerified: 'Email Verified'
-verification.emailNotVerified: 'Email is not verified'
+verification.phoneVerified: "Phone Verified"
+verification.phoneNotVerified: "Phone is not verified"
+verification.emailVerified: "Email Verified"
+verification.emailNotVerified: "Email is not verified"
 
 # meta
-meta.defaultDescription: 'meta.defaultDescription to be updated'
-meta.defaultKeywords: 'meta.defaultKeywords to be updated'
+meta.defaultDescription: "meta.defaultDescription to be updated"
+meta.defaultKeywords: "meta.defaultKeywords to be updated"
 
 # common address
-common.readMore: 'Read More'
-common.address.street: 'Street'
-common.address.zipCode: 'Zip Code'
-common.address.city: 'City'
-common.address.country: 'Country'
-common.defaultMetaDescription: 'common.defaultMetaDescription to be updated'
-common.defaultMetaKeywords: 'common.defaultMetaKeywords to be updated'
+common.readMore: "Read More"
+common.address.street: "Street"
+common.address.zipCode: "Zip Code"
+common.address.city: "City"
+common.address.country: "Country"
+common.defaultMetaDescription: "common.defaultMetaDescription to be updated"
+common.defaultMetaKeywords: "common.defaultMetaKeywords to be updated"
 
-techGuide.backToIndex: 'Back to index'
+techGuide.backToIndex: "Back to index"
 
 backend.common.position: Position
-backend.common.menuItem: 'MenuItem'
-backend.common.pageBlockElement: 'Page block element'
+backend.common.menuItem: "MenuItem"
+backend.common.pageBlockElement: "Page block element"
 
-backend.loginForm.title: 'NakaCMS login'
+backend.loginForm.title: "NakaCMS login"
 
-backend.dashboard.title: '%applicationName% backend'
+backend.dashboard.title: "%applicationName% backend"
 backend.dashboardAdmin.generalHelp: |
     <p>This is the general backend for administration of the NakaCMS Instance.</p>
     <p>Depending on your role access, you can work on the content or the general configuration of the platform.</p>
 
-backend.dashboardManager.generalHelp: 'This backend give you the ability to manage the specifics of this NakaCMS instance.'
+backend.dashboardManager.generalHelp: "This backend give you the ability to manage the specifics of this NakaCMS instance."
 
 backend.menu.websiteInfo: Website Info
 backend.menu.openingHours: Opening Hours
-backend.menu.websiteAsset: 'Website Documents'
-backend.menu.translations: 'Translations'
-backend.menu.controlPanel: 'Control Panel'
-backend.menu.section.adManagement: 'Ad Management'
-backend.menu.adNetworks: 'Ad Networks'
-backend.menu.adBanners: 'Ad Banners'
+backend.menu.websiteAsset: "Website Documents"
+backend.menu.translations: "Translations"
+backend.menu.controlPanel: "Control Panel"
+backend.menu.section.adManagement: "Ad Management"
+backend.menu.adNetworks: "Ad Networks"
+backend.menu.adBanners: "Ad Banners"
 
-backend.websiteInfo.title: 'Website info for %applicationName%'
-backend.websiteInfo.thereIsNoWebsiteInfo: 'There is no website info yet'
-backend.websiteInfo.youNeedAWebsiteInfo: 'You should create and configure one'
-backend.websiteInfo.configureWebsiteInfo: 'Configure Website Info now'
-backend.websiteInfo.editOpeningHours: 'Edit Opening Hours'
+backend.websiteInfo.title: "Website info for %applicationName%"
+backend.websiteInfo.thereIsNoWebsiteInfo: "There is no website info yet"
+backend.websiteInfo.youNeedAWebsiteInfo: "You should create and configure one"
+backend.websiteInfo.configureWebsiteInfo: "Configure Website Info now"
+backend.websiteInfo.editOpeningHours: "Edit Opening Hours"
 
-backend.websiteAsset.generalHelpForAdmin: 'Here you can add assets that will be available for all people granted access to the admin. This could be pdf, word documents or images.<br/>Those assets can be used in other entities.'
-backend.websiteAsset.generalHelpForManager: 'Here you can find a list of assets that gives you information on the website.'
+backend.websiteAsset.generalHelpForAdmin: "Here you can add assets that will be available for all people granted access to the admin. This could be pdf, word documents or images.<br/>Those assets can be used in other entities."
+backend.websiteAsset.generalHelpForManager: "Here you can find a list of assets that gives you information on the website."
 
-backend.crud.menu.action.reorganizeMenu: 'Reorganize Menu'
-backend.form.menu.isFixed.help: 'this parameter control if the menu is fixed or not, i.e., this menu cannot be deleted, usually useful for the main menus'
+backend.crud.menu.action.reorganizeMenu: "Reorganize Menu"
+backend.form.menu.isFixed.help: "this parameter control if the menu is fixed or not, i.e., this menu cannot be deleted, usually useful for the main menus"
 
-backend.crud.page.action.reorganizeBlocksInPage: 'Reorganize blocks'
+backend.crud.page.action.reorganizeBlocksInPage: "Reorganize blocks"
 
-backend.form.page.pageDetailsPanel: 'Page Details'
-backend.form.page.name.help: 'Internal name to be used in Menus and elsewhere. It should be unique. It is used to generate the slug when creating the page.'
-backend.form.page.slug.help: 'The slug is the part of the URL that identifies the page using human-readable keywords. It is used to generate the URL of the page. You can modify id by clicking on the lock button.'
+backend.form.page.pageDetailsPanel: "Page Details"
+backend.form.page.name.help: "Internal name to be used in Menus and elsewhere. It should be unique. It is used to generate the slug when creating the page."
+backend.form.page.slug.help: "The slug is the part of the URL that identifies the page using human-readable keywords. It is used to generate the URL of the page. You can modify id by clicking on the lock button."
 
-backend.form.page.active.help: 'Set active to true if the page is active. If inactive, the page will not be shown'
+backend.form.page.active.help: "Set active to true if the page is active. If inactive, the page will not be shown"
 
-backend.form.page.pageDetailsPanel.help: 'Those are the main settings of the page'
-backend.form.page.pageConfigurationTab: 'Page configuration'
-backend.form.page.pageConfigurationTab.help: 'General configuration for the page'
+backend.form.page.pageDetailsPanel.help: "Those are the main settings of the page"
+backend.form.page.pageConfigurationTab: "Page configuration"
+backend.form.page.pageConfigurationTab.help: "General configuration for the page"
 
-page.mainPageTranslationsPanel: 'Main page translations'
-backend.form.page.mainPageTranslationsPanel: 'Page Translation and SEO'
+page.mainPageTranslationsPanel: "Main page translations"
+backend.form.page.mainPageTranslationsPanel: "Page Translation and SEO"
 backend.form.page.mainPageTranslationsPanel.help: |
     <p>Those are the internationalized translation for the page details in the various supported languages.</p>
     <p>The content will give an insight on the page, and will be used for SEO.</p>
-backend.form.page.category: 'Category of the page'
-backend.form.page.pageBlockElements: 'All related PageBlock Elements'
-backend.form.page.pageBlockElements.help: 'Here you can select the pageblock you want to have on that page, you can later change and order them through the config layout Page.'
-backend.form.page.pageGallery: 'Related Gallery'
-backend.form.page.pageGallery.help: 'This is the gallery holding the images that will be used in the <strong>content</strong> part of the page'
+backend.form.page.category: "Category of the page"
+backend.form.page.pageBlockElements: "All related PageBlock Elements"
+backend.form.page.pageBlockElements.help: "Here you can select the pageblock you want to have on that page, you can later change and order them through the config layout Page."
+backend.form.page.pageGallery: "Related Gallery"
+backend.form.page.pageGallery.help: "This is the gallery holding the images that will be used in the <strong>content</strong> part of the page"
 
-backend.form.page.pageType.help: 'The type of the page, can be of three main types'
+backend.form.page.pageType.help: "The type of the page, can be of three main types"
 
-backend.form.page.pageConfigurationPanel: 'Page Configuration'
-backend.form.page.pageConfigurationPanel.help: 'Here you can select the blocks on that page, connect a gallery, set the category'
+backend.form.page.pageConfigurationPanel: "Page Configuration"
+backend.form.page.pageConfigurationPanel.help: "Here you can select the blocks on that page, connect a gallery, set the category"
 
-backend.form.addPageToMenu.title: 'Add a page to a menu'
+backend.form.addPageToMenu.title: "Add a page to a menu"
 backend.form.addPageToMenu.detailedHelp: |
     <p>There are various menu available in Naka. You can add a page to a menu by selecting the menu you want your page to be in.</p>
 
-backend.form.chooseMenuForPage.menu: 'Select the menu you want to add this page to'
-backend.form.chooseBlockToAdd.title: 'Choose the type of block to add to the page %page%'
+backend.form.chooseMenuForPage.menu: "Select the menu you want to add this page to"
+backend.form.chooseBlockToAdd.title: "Choose the type of block to add to the page %page%"
 backend.form.chooseBlockToAdd.detailedHelp: |
     <p>You need to choose the type of the block you want to add to the page.</p>
     <p>Each blocks have various type and presets that you can later on change.</p>
 
-backend.form.chooseBlockToAdd.name: 'Name of that block'
-backend.form.chooseBlockElementType.blockElementType: 'The type of the block'
+backend.form.chooseBlockToAdd.name: "Name of that block"
+backend.form.chooseBlockElementType.blockElementType: "The type of the block"
 backend.form.chooseBlockElementType.blockElementType.help: |
     there are various existing standard block that you can choose from, you will then have a standard block content that you can adapt to your need.
 
-backend.form.position.help: 'Set the position of this element, the lower will be in front, the higher will be in the end.'
+backend.form.position.help: "Set the position of this element, the lower will be in front, the higher will be in the end."
 
-backend.form.blockElementType.type: 'The type of this block element'
-backend.form.blockElementType.htmlCode: 'The html code of that block element'
-backend.form.blockElementType.cssCode: 'The css code of that block element'
-backend.form.blockElementType.jsCode: 'The javascript code for that block element'
+backend.form.blockElementType.type: "The type of this block element"
+backend.form.blockElementType.htmlCode: "The html code of that block element"
+backend.form.blockElementType.cssCode: "The css code of that block element"
+backend.form.blockElementType.jsCode: "The javascript code for that block element"
 
-backend.form.blockElement.panelSetting: 'Block Element Settings'
-backend.form.blockElement.extraCssClass.help: 'Add global css classes to this specific block'
-backend.form.blockElement.type: 'Block Element Type'
-backend.form.blockElement.type.help: 'The type of this block, which will then be used when creating or adding a block to a page, and will provide a basis for the newly created Block Element. You cannot change it once it has been set.'
-backend.form.blockElement.panelCodeElement: 'Code elements of this Block Element'
-backend.form.blockElement.panelCodeElement.help: 'Fill up the code composing this BlockElement'
-backend.form.blockElement.htmlCode: 'The HTML code of this Block Element'
-backend.form.blockElement.cssCode: 'The CSS extra code needed for this Block Element'
-backend.form.blockElement.jsCode: 'The javascript extra code needed for this Block Element'
-backend.form.blockElement.gallery.help: 'Set a gallery to be used in the block Element'
-backend.form.blockElement.isFluid.help: 'Set isFluid to true if you want the block to be using the full width of the screen (fluid container)'
+backend.form.blockElement.panelSetting: "Block Element Settings"
+backend.form.blockElement.extraCssClass.help: "Add global css classes to this specific block"
+backend.form.blockElement.type: "Block Element Type"
+backend.form.blockElement.type.help: "The type of this block, which will then be used when creating or adding a block to a page, and will provide a basis for the newly created Block Element. You cannot change it once it has been set."
+backend.form.blockElement.panelCodeElement: "Code elements of this Block Element"
+backend.form.blockElement.panelCodeElement.help: "Fill up the code composing this BlockElement"
+backend.form.blockElement.htmlCode: "The HTML code of this Block Element"
+backend.form.blockElement.cssCode: "The CSS extra code needed for this Block Element"
+backend.form.blockElement.jsCode: "The javascript extra code needed for this Block Element"
+backend.form.blockElement.gallery.help: "Set a gallery to be used in the block Element"
+backend.form.blockElement.isFluid.help: "Set isFluid to true if you want the block to be using the full width of the screen (fluid container)"
 
-backend.form.menu.menuItems: 'List of items in that menu'
+backend.form.menu.menuItems: "List of items in that menu"
 
-backend.form.user.fullName: 'Full Name'
-backend.form.user.firstName: 'First Name'
-backend.form.user.firstName.help: 'Please enter your first name.'
-backend.form.user.lastName: 'Last Name'
-backend.form.user.lastName.help: 'Set the last name of this user'
-backend.form.user.email: 'Email'
-backend.form.user.email.help: 'Set the email for this user'
-backend.form.user.birthDate: 'Birth Date'
-backend.form.user.birthDate.help: 'Set birth date for this user'
-backend.form.user.preferredLocale: 'Preferred Locale'
-backend.form.user.preferredLocale.help: 'The preferred language of this user.'
-backend.form.user.roles: 'Roles'
-backend.form.user.roles.help: 'Set the roles of this user. They are several roles available, refer to the documentation for the details.'
-backend.form.user.role.user: 'User'
-backend.form.user.role.admin: 'Administrator'
-backend.form.user.password: 'New Password'
-backend.form.user.password.new: 'New password'
-backend.form.user.password.repeat: 'Repeat password'
-backend.form.user.details: 'User Details'
-backend.form.user.adminConfiguration: 'Member admin Configuration'
-backend.form.user.userAuthentication: 'Member admin authentication'
-backend.form.user.userDetails: 'Member Details'
-backend.form.user.userAddress: 'Member Address'
-backend.form.user.userPreferences: 'Member Preferences'
-backend.form.user.isVerified.help: 'This member completed the email verification'
-backend.form.user.verificationStatus: 'Verification Status'
+backend.form.user.fullName: "Full Name"
+backend.form.user.firstName: "First Name"
+backend.form.user.firstName.help: "Please enter your first name."
+backend.form.user.lastName: "Last Name"
+backend.form.user.lastName.help: "Set the last name of this user"
+backend.form.user.email: "Email"
+backend.form.user.email.help: "Set the email for this user"
+backend.form.user.birthDate: "Birth Date"
+backend.form.user.birthDate.help: "Set birth date for this user"
+backend.form.user.preferredLocale: "Preferred Locale"
+backend.form.user.preferredLocale.help: "The preferred language of this user."
+backend.form.user.roles: "Roles"
+backend.form.user.roles.help: "Set the roles of this user. They are several roles available, refer to the documentation for the details."
+backend.form.user.role.user: "User"
+backend.form.user.role.admin: "Administrator"
+backend.form.user.password: "New Password"
+backend.form.user.password.new: "New password"
+backend.form.user.password.repeat: "Repeat password"
+backend.form.user.details: "User Details"
+backend.form.user.adminConfiguration: "Member admin Configuration"
+backend.form.user.userAuthentication: "Member admin authentication"
+backend.form.user.userDetails: "Member Details"
+backend.form.user.userAddress: "Member Address"
+backend.form.user.userPreferences: "Member Preferences"
+backend.form.user.isVerified.help: "This member completed the email verification"
+backend.form.user.verificationStatus: "Verification Status"
 
-backend.form.adminUser.roles.help: 'Set the roles of this user. They are several roles available, refer to the documentation for the details.'
+backend.form.adminUser.roles.help: "Set the roles of this user. They are several roles available, refer to the documentation for the details."
 
-backend.crud.pageBlockElement.relatedToPage: 'Related to page'
-backend.crud.pageBlockElement.notLinkedToAnyPage: 'Not linked to any page'
-backend.crud.pageBlockElement.page: 'Linked Page'
-backend.crud.pageBlockElement.relatedPage: 'Related Page'
-backend.crud.pageBlockElement.blockElement: 'From BlockElement'
+backend.crud.pageBlockElement.relatedToPage: "Related to page"
+backend.crud.pageBlockElement.notLinkedToAnyPage: "Not linked to any page"
+backend.crud.pageBlockElement.page: "Linked Page"
+backend.crud.pageBlockElement.relatedPage: "Related Page"
+backend.crud.pageBlockElement.blockElement: "From BlockElement"
 
 backend.crud.menu.generalHelp: |
     <p>A menu can have many menu items, which could be of any type among page, route, uri.</p>
@@ -216,22 +216,23 @@ backend.crud.nakaParameter.generalHelp: |
     <li>Social Naka parameters: link to social platforms: starting with <strong>social-page-link.</strong> followed by the name of the platform ('instagram', 'twitter', 'youtube', 'linkedin')</li>
     <li>Business parameters: used on the contact page
     <ul>
-    <li><strong>business.address</strong></li>
-    <li><strong>business.phone-number</strong></li>
-    <li><strong>business.email</strong></li>
+    <li><strong>business.address</strong>: company address</li>
+    <li><strong>business.phone-number</strong>: contact phone number</li>
+    <li><strong>business.email</strong>: contact email address</li>
     </ul>
     </li>
     <li>General Naka parameters
     <ul>
-    <li><strong>global.google-analytics</strong>: the id of the google analytics account</li>
+    <li><strong>global.google-analytics</strong>: the Google Analytics tracking ID (e.g., G-XXX)</li>
+    <li><strong>global.google-tag-manager</strong>: the Google Tag Manager container ID (e.g., GTM-XXX)</li>
     </ul>
     </li>
     </ul>
 
 backend.formPage.editBlockElement.title: Edition of a block element
-backend.form.menuItem.configurationPanel: 'MenuItem Configuration'
-backend.form.menuItem.typePanel: 'MenuItem type'
-backend.form.menuItem.typePanel.help: 'The type of the menuItem determines how the link will be rendered, as well as its translations '
+backend.form.menuItem.configurationPanel: "MenuItem Configuration"
+backend.form.menuItem.typePanel: "MenuItem type"
+backend.form.menuItem.typePanel.help: "The type of the menuItem determines how the link will be rendered, as well as its translations "
 backend.form.menuItem.type.help: |
     Each menuitem can have a type among:
         <ul>
@@ -240,101 +241,101 @@ backend.form.menuItem.type.help: |
         <li><strong>uri</strong>: This is to link to an external url, translations have to be provided</li>
         </ul>
     Depending on the type, you have to set the correct fields (for route, you have to set the route and the routeParameters)
-backend.form.menuItem.translations.help: 'Translations for the menuItem are used when the type of the menuItem is route or uri'
+backend.form.menuItem.translations.help: "Translations for the menuItem are used when the type of the menuItem is route or uri"
 backend.form.configureMenu.menuItem: MenuItem
-backend.form.configureMenu.title: 'Configure  menu'
+backend.form.configureMenu.title: "Configure  menu"
 backend.form.configureMenu.detailedHelp: |
     <p>You can rearrange the menuItems from a menu by drag'n dropping them. You can move the menuItems to rearrange them.</p>
     <p>The position is shown in the black bubble, menu Items order is based on that number, from the smallest to the biggest.</p>
     <p>If there is a question mark, it just means the position has not been set for that element, and thus this element will be shown on top.</p>
 backend.form.configureMenu.submit: Reorganize Menu
-backend.form.reorganizeBlocksInPage.title: 'Reorganize blocks in page'
+backend.form.reorganizeBlocksInPage.title: "Reorganize blocks in page"
 backend.form.reorganizeBlocksInPage.detailedHelp: |
     <p>You can rearrange the pageBlockElements from a page by drag'n dropping them. You can move the pageBlockElements to rearrange them.</p>
     <p>The position is shown in the black bubble, block elements in the page are ordered based on that number, from the smallest to the biggest.</p>
     <p>If there is a question mark, it just means the position has not been set for that element, and thus this element will be shown on top.</p>
-backend.form.reorganizeBlocksInPage.submit: 'Reorganize blocks in page'
-backend.form.codeElement.codeElement: 'Code Element'
+backend.form.reorganizeBlocksInPage.submit: "Reorganize blocks in page"
+backend.form.codeElement.codeElement: "Code Element"
 
-backend.form.nakaParameter.path.help: ''
-backend.form.nakaParameter.value.help: ''
-backend.form.nakaParameter.extraInfo.help: ''
+backend.form.nakaParameter.path.help: ""
+backend.form.nakaParameter.value.help: ""
+backend.form.nakaParameter.extraInfo.help: ""
 
-backend.form.websiteAsset.tab.websiteAssetDetailsTab: 'Details'
-backend.form.websiteAsset.tab.websiteAssetDetailsTab.help: 'Website documents can be of various types, pdf or images'
-backend.form.websiteAsset.name: 'This is the name that will be shown for this asset when used in the frontend.'
-backend.form.websiteAsset.preview: 'Preview'
-backend.form.websiteAsset.assetDescription: 'Website Document description'
-backend.form.websiteAsset.assetDescription.help: 'Add a description for this website document explaining what it is about. This description is only shown in the backend'
+backend.form.websiteAsset.tab.websiteAssetDetailsTab: "Details"
+backend.form.websiteAsset.tab.websiteAssetDetailsTab.help: "Website documents can be of various types, pdf or images"
+backend.form.websiteAsset.name: "This is the name that will be shown for this asset when used in the frontend."
+backend.form.websiteAsset.preview: "Preview"
+backend.form.websiteAsset.assetDescription: "Website Document description"
+backend.form.websiteAsset.assetDescription.help: "Add a description for this website document explaining what it is about. This description is only shown in the backend"
 
-backend.operation.exportTranslation: 'Export Translation'
-backend.operation.exportTranslation.title: 'Export Translation'
-backend.operation.exportTranslation.explanation: 'This operation dumps the current values of the translations defined in the Static translation screen.'
-backend.operation.exportTranslation.exportTranslationDone: 'Export Translation done'
-backend.operation.exportTranslation.exportTranslationOutput: 'Export Translation output'
+backend.operation.exportTranslation: "Export Translation"
+backend.operation.exportTranslation.title: "Export Translation"
+backend.operation.exportTranslation.explanation: "This operation dumps the current values of the translations defined in the Static translation screen."
+backend.operation.exportTranslation.exportTranslationDone: "Export Translation done"
+backend.operation.exportTranslation.exportTranslationOutput: "Export Translation output"
 
-backend.controlPanel.typeOfOperations: '%typeOfOperation% Operation'
-backend.controlPanel.title: 'Control panel'
-backend.controlPanel.exportTranslations: 'Export Translations'
+backend.controlPanel.typeOfOperations: "%typeOfOperation% Operation"
+backend.controlPanel.title: "Control panel"
+backend.controlPanel.exportTranslations: "Export Translations"
 
-backend.adNetwork.entityLabelInSingular: 'Ad Network'
-backend.adNetwork.entityLabelInPlural: 'Ad Networks'
-backend.adNetwork.helpIndex: 'Manage the different ad networks here.'
-backend.adNetwork.helpEdit: 'Edit the ad network details.'
-backend.adNetwork.helpNew: 'Create a new ad network.'
-backend.adNetwork.name: 'Name'
-backend.adNetwork.name.help: 'The name of the ad network.'
-backend.adNetwork.type: 'Type'
-backend.adNetwork.type.help: 'The type of the ad network (e.g., AdSense, Generic).'
-backend.adNetwork.client: 'Client'
-backend.adNetwork.client.help: 'The client ID for the ad network.'
-backend.adNetwork.scripts: 'Scripts'
-backend.adNetwork.scripts.help: 'Scripts required for the ad network.'
-backend.adNetwork.banners: 'Banners'
-backend.adNetwork.banners.help: 'The banners associated with this ad network.'
+backend.adNetwork.entityLabelInSingular: "Ad Network"
+backend.adNetwork.entityLabelInPlural: "Ad Networks"
+backend.adNetwork.helpIndex: "Manage the different ad networks here."
+backend.adNetwork.helpEdit: "Edit the ad network details."
+backend.adNetwork.helpNew: "Create a new ad network."
+backend.adNetwork.name: "Name"
+backend.adNetwork.name.help: "The name of the ad network."
+backend.adNetwork.type: "Type"
+backend.adNetwork.type.help: "The type of the ad network (e.g., AdSense, Generic)."
+backend.adNetwork.client: "Client"
+backend.adNetwork.client.help: "The client ID for the ad network."
+backend.adNetwork.scripts: "Scripts"
+backend.adNetwork.scripts.help: "Scripts required for the ad network."
+backend.adNetwork.banners: "Banners"
+backend.adNetwork.banners.help: "The banners associated with this ad network."
 
-backend.adBanner.entityLabelInSingular: 'Ad Banner'
-backend.adBanner.entityLabelInPlural: 'Ad Banners'
-backend.adBanner.helpIndex: 'Manage the different ad banners here.'
-backend.adBanner.helpEdit: 'Edit the ad banner details.'
-backend.adBanner.helpNew: 'Create a new ad banner.'
-backend.adBanner.name: 'Name'
-backend.adBanner.name.help: 'The name of the ad banner.'
-backend.adBanner.style: 'Style'
-backend.adBanner.style.help: 'The CSS style of the ad banner.'
-backend.adBanner.slot: 'Slot'
-backend.adBanner.slot.help: 'The ad slot ID for the banner.'
-backend.adBanner.format: 'Format'
-backend.adBanner.format.help: 'The format of the ad banner (e.g., auto, rectangle, vertical).'
-backend.adBanner.responsive: 'Responsive'
-backend.adBanner.responsive.help: 'Whether the ad banner is responsive.'
-backend.adBanner.network: 'Network'
-backend.adBanner.network.help: 'The ad network this banner belongs to.'
+backend.adBanner.entityLabelInSingular: "Ad Banner"
+backend.adBanner.entityLabelInPlural: "Ad Banners"
+backend.adBanner.helpIndex: "Manage the different ad banners here."
+backend.adBanner.helpEdit: "Edit the ad banner details."
+backend.adBanner.helpNew: "Create a new ad banner."
+backend.adBanner.name: "Name"
+backend.adBanner.name.help: "The name of the ad banner."
+backend.adBanner.style: "Style"
+backend.adBanner.style.help: "The CSS style of the ad banner."
+backend.adBanner.slot: "Slot"
+backend.adBanner.slot.help: "The ad slot ID for the banner."
+backend.adBanner.format: "Format"
+backend.adBanner.format.help: "The format of the ad banner (e.g., auto, rectangle, vertical)."
+backend.adBanner.responsive: "Responsive"
+backend.adBanner.responsive.help: "Whether the ad banner is responsive."
+backend.adBanner.network: "Network"
+backend.adBanner.network.help: "The ad network this banner belongs to."
 
-backend.nakaSiteSettings.pageTitle.detail: 'Global Site Settings'
-backend.nakaSiteSettings.pageTitle.edit: 'Edit Global Site Settings'
+backend.nakaSiteSettings.pageTitle.detail: "Global Site Settings"
+backend.nakaSiteSettings.pageTitle.edit: "Edit Global Site Settings"
 backend.nakaSiteSettings.generalHelp: |
     <p>Here you can configure the main images used throughout your site. Updating these images will affect the logo and background images displayed to users.</p>
     <p>Please ensure you upload images in the correct format and size for optimal display.</p>
-backend.nakaSiteSettings.logoImageFile.label: 'Logo Image File'
-backend.nakaSiteSettings.logoImageFile.help: 'Upload the main logo image for your site.'
-backend.nakaSiteSettings.logoImage.label: 'Global Logo Image'
+backend.nakaSiteSettings.logoImageFile.label: "Logo Image File"
+backend.nakaSiteSettings.logoImageFile.help: "Upload the main logo image for your site."
+backend.nakaSiteSettings.logoImage.label: "Global Logo Image"
 
-backend.nakaSiteSettings.updatedAt.label: 'Last Updated'
+backend.nakaSiteSettings.updatedAt.label: "Last Updated"
 
-backend.flash.nakaSiteSettingsInitialized: 'NakaSiteSettings were not present, they have been initialized'
+backend.flash.nakaSiteSettingsInitialized: "NakaSiteSettings were not present, they have been initialized"
 
-adNetworkType.googleAdSense: 'Google AdSense'
-admin.form.menuItem.page: 'Related Page'
+adNetworkType.googleAdSense: "Google AdSense"
+admin.form.menuItem.page: "Related Page"
 
-websiteInfo.globalSettings: 'Global Settings'
-websiteInfo.generalExplanation: 'You can have a look here to the global settings of the website, as well as customizing the main translation'
-websiteInfo.globalTranslations: 'Global Translations'
-websiteInfo.globalParameter: 'Global Parameters'
-websiteInfo.globalParameter.help: 'Those parameters are global and have to be changed manually'
-websiteInfo.globalTranslations.help: 'Those translations are used mainly in the footer'
-websiteInfo.value: 'Value'
-thumbnail.viewLarger: 'View Larger'
+websiteInfo.globalSettings: "Global Settings"
+websiteInfo.generalExplanation: "You can have a look here to the global settings of the website, as well as customizing the main translation"
+websiteInfo.globalTranslations: "Global Translations"
+websiteInfo.globalParameter: "Global Parameters"
+websiteInfo.globalParameter.help: "Those parameters are global and have to be changed manually"
+websiteInfo.globalTranslations.help: "Those translations are used mainly in the footer"
+websiteInfo.value: "Value"
+thumbnail.viewLarger: "View Larger"
 
 contact.contactTitle: Contact Us
 contact.contactDetails: |
@@ -347,77 +348,77 @@ form.editOpeningHours.detailedHelp: |
     <div class="py-1"><strong>"monday":["09:00-12:00","13:00-18:00"]</strong> means the office will be open between 9:00 and 12:00 and then open again at 13:00 and then close at 18:00.</div>
     <div class="py-1"><strong>"exceptions":{"2024-11-11":["09:00-12:00"],"2024-12-25":[]}</strong> means the office will be close on 2024-11-11 between 9:00 and 12:00 and will be close al day on 2024-12-25.</div>
     <div class="py-1"><strong>"exceptions":{"01-01":[],"12-25":['09:00-12:00']}</strong> means the office will be close on each 1st of January and each 25th of December between 9:00 and 12:00.</div>
-form.openingHours.updateOpeningHours: 'Update Opening Hours'
+form.openingHours.updateOpeningHours: "Update Opening Hours"
 # flash
-flash.openingHours.openingHoursUpdated: 'Opening hours have been updated !'
-flash.contact.messageSent: 'Your contact message has been sent, we will answer you as quick as we can'
-flash.contact.messageCannotBeSent: 'Your contact message cannot be sent, contact us by phone or with your email application.'
+flash.openingHours.openingHoursUpdated: "Opening hours have been updated !"
+flash.contact.messageSent: "Your contact message has been sent, we will answer you as quick as we can"
+flash.contact.messageCannotBeSent: "Your contact message cannot be sent, contact us by phone or with your email application."
 
-openingHours.title: 'Opening Hours'
-openingHours.day: 'Day'
-openingHours.hours: 'Hours'
-openingHours.closed: 'Closed'
-openingHours.weAreOpen: 'We are open'
-openingHours.weAreClosed: 'We are closed'
+openingHours.title: "Opening Hours"
+openingHours.day: "Day"
+openingHours.hours: "Hours"
+openingHours.closed: "Closed"
+openingHours.weAreOpen: "We are open"
+openingHours.weAreClosed: "We are closed"
 
-team.title: 'Our team looks forward to seeing you.'
+team.title: "Our team looks forward to seeing you."
 
-footer.mainText: 'Business in Berlin'
-footer.followUsOnSocialMedia: 'Follow us on Social Media !'
+footer.mainText: "Business in Berlin"
+footer.followUsOnSocialMedia: "Follow us on Social Media !"
 
-register.signUpToPlatform.title: 'Signup to the platform'
-register.signUpToPlatform.detail: 'Signup to the platform in order to book an appointment'
+register.signUpToPlatform.title: "Signup to the platform"
+register.signUpToPlatform.detail: "Signup to the platform in order to book an appointment"
 register.inviteToSignUpOnLogin: "<p>If you are not yet member, you can register to the dentist fixer, you will then be able to book an appointment.</p>\n"
 
 # registerForm
-form.member.firstName: 'First Name'
-form.member.lastName: 'Last Name'
-form.member.birthDate: 'Birth Date'
-form.member.address: 'Address'
-form.member.email: 'Email'
-form.member.agreeTerms: 'Agree to the terms'
-form.member.agreeTerms.constraint.isTrue: 'You should agree to our terms.'
-form.member.password: 'Password'
-form.member.repeatPassword: 'Repeat Password'
-form.member.password.constraint.pleaseEnterAPassword: 'Please enter a password'
-form.member.password.invalidMessage: 'The password fields must match.'
-form.member.register: 'Register'
-form.member.preferredLocale: 'Preferred Language'
+form.member.firstName: "First Name"
+form.member.lastName: "Last Name"
+form.member.birthDate: "Birth Date"
+form.member.address: "Address"
+form.member.email: "Email"
+form.member.agreeTerms: "Agree to the terms"
+form.member.agreeTerms.constraint.isTrue: "You should agree to our terms."
+form.member.password: "Password"
+form.member.repeatPassword: "Repeat Password"
+form.member.password.constraint.pleaseEnterAPassword: "Please enter a password"
+form.member.password.invalidMessage: "The password fields must match."
+form.member.register: "Register"
+form.member.preferredLocale: "Preferred Language"
 
 # addressForm
-form.addressForm.street: 'Street'
-form.addressForm.zipcode: 'Zip Code'
-form.addressForm.city: 'City'
-form.addressForm.country: 'Country'
+form.addressForm.street: "Street"
+form.addressForm.zipcode: "Zip Code"
+form.addressForm.city: "City"
+form.addressForm.country: "Country"
 
 # loginForm
-loginForm.title: 'Sign in to your Dentist Fixer Account'
-loginForm.header: 'Sign in to your Dentist Fixer Account'
-loginForm.email: 'Email'
-loginForm.password: 'Password'
-loginForm.signIn: 'Sign In'
+loginForm.title: "Sign in to your Dentist Fixer Account"
+loginForm.header: "Sign in to your Dentist Fixer Account"
+loginForm.email: "Email"
+loginForm.password: "Password"
+loginForm.signIn: "Sign In"
 loginForm.forgotPasswordText: "if you forgot your password, you can reset it by following <a href=\"%forgotPasswordRequestLink%\">this link</a>.\n"
 
 # email
-email.welcomeUserVerifyEmail.title: 'Welcome to %applicationName%, please verify your email'
-email.welcomeUserVerifyEmail.impactMessage: 'Nice to meet you %firstName%'
+email.welcomeUserVerifyEmail.title: "Welcome to %applicationName%, please verify your email"
+email.welcomeUserVerifyEmail.impactMessage: "Nice to meet you %firstName%"
 email.welcomeUserVerifyEmail.content: |
     <p>Welcome the the %applicationName% platform.</p>
     <p>Before you can access your account, we need to verify your email, click on the following link or copy and paste the following link.</p>
     <p>Link to copy and paste: <pre>%verifyLink%</pre></p>
-email.welcomeUserVerifyEmail.clickHereToVerifyYourEmail: 'Click here to verify your email'
-email.resetPassword.subject: 'Reset password for %applicationName%!'
-email.resetPassword.title: 'Reset password for %applicationName%!'
-email.resetPassword.impactMessage: 'You have requested to reset your password on the %applicationName% website'
+email.welcomeUserVerifyEmail.clickHereToVerifyYourEmail: "Click here to verify your email"
+email.resetPassword.subject: "Reset password for %applicationName%!"
+email.resetPassword.title: "Reset password for %applicationName%!"
+email.resetPassword.impactMessage: "You have requested to reset your password on the %applicationName% website"
 email.resetPassword.content: |
     <p>Hi!</p>
     <p>To reset your password, please visit the following link</p>
     <p>This link will expire in %expireLimit%.</p>
     <p>Cheers!</p>
 
-email.welcomeMessageToNewVerifiedMember.subject: 'Welcome to %applicationName%!'
-email.welcomeMessageToNewVerifiedMember.title: 'Welcome %name%, you are now a member on %applicationName%'
-email.welcomeMessageToNewVerifiedMember.impactMessage: 'You are now a member on %applicationName%'
+email.welcomeMessageToNewVerifiedMember.subject: "Welcome to %applicationName%!"
+email.welcomeMessageToNewVerifiedMember.title: "Welcome %name%, you are now a member on %applicationName%"
+email.welcomeMessageToNewVerifiedMember.impactMessage: "You are now a member on %applicationName%"
 email.welcomeMessageToNewVerifiedMember.content: |
     <p class="block">
     Welcome to <strong>the %applicationName%</strong>,
@@ -426,18 +427,18 @@ email.welcomeMessageToNewVerifiedMember.content: |
     You can now access the %applicationName% platform, browse and book our events. 
     </p>
 
-email.office.newContactMessage.subject: 'New contact message on %applicationName%!'
-email.office.newContactMessage.title: 'New contact message on %applicationName%!'
-email.office.newContactMessage.youHaveANewMessage: 'You  have received a new contact message.'
+email.office.newContactMessage.subject: "New contact message on %applicationName%!"
+email.office.newContactMessage.title: "New contact message on %applicationName%!"
+email.office.newContactMessage.youHaveANewMessage: "You  have received a new contact message."
 
-email.office.newMember.subject: 'A new %applicationName% member just completed the email verification.'
-email.office.newMember.title: 'New member on %applicationName% platform'
+email.office.newMember.subject: "A new %applicationName% member just completed the email verification."
+email.office.newMember.title: "New member on %applicationName% platform"
 email.office.newMember.youHaveANewMessage: |
     <p>A user just finished the verification of his email. He is now able to book.</p>
     <p>Here are the details:</p>
 
-breadCrumb.home: 'Home'
+breadCrumb.home: "Home"
 
-adManagement.showDummyAd: 'We should have an ad here'
+adManagement.showDummyAd: "We should have an ad here"
 
-internal.environment: 'Environment'
+internal.environment: "Environment"

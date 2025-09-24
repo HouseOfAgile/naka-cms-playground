@@ -32,7 +32,7 @@ class PageTranslation implements TranslationInterface
         return sprintf(
             'PageTranslation #%s %s',
             $this->id,
-			$this->getTitle() !== null ? substr($this->getTitle(), 0, 39) : '(No Title)'
+            $this->getTitle() !== null ? substr($this->getTitle(), 0, 39) : '(No Title)'
         );
     }
 
