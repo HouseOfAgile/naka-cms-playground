@@ -13,6 +13,11 @@ parameters:
         # - he
         # - cs
 
+    # Slack notification defaults
+    slack_default_enabled: false
+    slack_default_rate_limit: 300
+    slack_default_webhook: ''
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -27,5 +32,18 @@ services:
     HouseOfAgile\NakaCMSBundle\EventSubscriber\UserLocaleSubscriber:
         arguments:
             $redirectUrl: '%hoa_naka_cms.redirect_url%'
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    # Slack Notification Service (autowired via global bind)
+    HouseOfAgile\NakaCMSBundle\Service\SlackNotificationService: ~
+
+    # Exception Subscriber for error notifications (autowired via global bind)
+    HouseOfAgile\NakaCMSBundle\EventSubscriber\ExceptionSubscriber:
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    # User Registration Subscriber for registration notifications (autowired via global bind)
+    HouseOfAgile\NakaCMSBundle\EventSubscriber\UserRegistrationSubscriber:
         tags:
             - { name: 'kernel.event_subscriber' }

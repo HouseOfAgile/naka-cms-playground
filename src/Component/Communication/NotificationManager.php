@@ -6,6 +6,7 @@ namespace HouseOfAgile\NakaCMSBundle\Component\Communication;
 
 use App\Service\Mailer;
 use Doctrine\ORM\EntityManagerInterface;
+use HouseOfAgile\NakaCMSBundle\Service\SlackNotificationService;
 use Psr\Log\LoggerInterface;
 
 class NotificationManager
@@ -19,21 +20,32 @@ class NotificationManager
     /** @var Mailer */
     protected $mailer;
 
+    /** @var SlackNotificationService */
+    protected $slackService;
+
     public function __construct(
         EntityManagerInterface $entityManager,
         LoggerInterface $bookingLogger,
         Mailer $mailer,
+        SlackNotificationService $slackService
     ) {
         $this->entityManager = $entityManager;
         $this->logger = $bookingLogger;
         $this->mailer = $mailer;
+        $this->slackService = $slackService;
     }
 
     public function notificationNewMemberVerified($user)
     {
         $this->mailer->sendWelcomeMessageToNewVerifiedMember($user);
         $this->mailer->sendNewMemberNotificationToOffice($user);
-
     }
 
+    /**
+     * Get the Slack notification service
+     */
+    public function getSlackService(): SlackNotificationService
+    {
+        return $this->slackService;
+    }
 }
