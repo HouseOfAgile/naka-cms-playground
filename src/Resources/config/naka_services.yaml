@@ -1,16 +1,22 @@
 parameters:
-    app.supported_locales: 'en|de|fr|es|it'
+    app.supported_locales: 'en|fr|de|es|it|zh'
     app.path.asset_pictures: /uploads/asset-pictures
     app.path.asset_website_resources: /uploads/asset-website-resources
     app.path.site_images: /uploads/site-images
     all_locales:
         - en
-        # - fr
+        - fr
         - de
-        # - es
-        # - it
+        - es
+        - it
+        - zh
         # - he
         # - cs
+
+    # Slack notification defaults
+    slack_default_enabled: false
+    slack_default_rate_limit: 300
+    slack_default_webhook: ''
 
 services:
     # default configuration for services in *this* file
@@ -19,12 +25,38 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
         bind:
-            $uploadsPath: '%kernel.project_dir%/public/uploads'
+            $uploadsPath: "%kernel.project_dir%/public/uploads"
 
-    Symfony\Component\Asset\Context\RequestStackContext: '@assets.context'
+    Symfony\Component\Asset\Context\RequestStackContext: "@assets.context"
 
     HouseOfAgile\NakaCMSBundle\EventSubscriber\UserLocaleSubscriber:
         arguments:
-            $redirectUrl: '%hoa_naka_cms.redirect_url%'
+            $redirectUrl: "%hoa_naka_cms.redirect_url%"
+        tags:
+            - { name: "kernel.event_subscriber" }
+
+    # Slack Notification Service (autowired via global bind)
+    HouseOfAgile\NakaCMSBundle\Service\SlackNotificationService: ~
+
+    # Exception Subscriber for error notifications (autowired via global bind)
+    HouseOfAgile\NakaCMSBundle\EventSubscriber\ExceptionSubscriber:
+        tags:
+            - { name: "kernel.event_subscriber" }
+
+    # User Registration Subscriber for registration notifications (autowired via global bind)
+    HouseOfAgile\NakaCMSBundle\EventSubscriber\UserRegistrationSubscriber:
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    # Slack Notification Service (autowired via global bind)
+    HouseOfAgile\NakaCMSBundle\Service\SlackNotificationService: ~
+
+    # Exception Subscriber for error notifications (autowired via global bind)
+    HouseOfAgile\NakaCMSBundle\EventSubscriber\ExceptionSubscriber:
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    # User Registration Subscriber for registration notifications (autowired via global bind)
+    HouseOfAgile\NakaCMSBundle\EventSubscriber\UserRegistrationSubscriber:
         tags:
             - { name: 'kernel.event_subscriber' }

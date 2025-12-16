@@ -74,4 +74,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult();
         return $randomOwner ? $randomOwner[0] : null;
     }
+
+    /**
+     * Count users created since a specific date/time
+     *
+     * @param \DateTimeInterface $since The date/time to count from
+     * @return int Number of users created since the specified date
+     */
+    public function countUsersSince(\DateTimeInterface $since): int
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+            ->where('u.createdAt >= :since')
+            ->setParameter('since', $since)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

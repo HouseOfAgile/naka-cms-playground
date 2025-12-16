@@ -139,11 +139,27 @@ class TranslateCommand extends Command
                 }
 
                 $sourceContent = Yaml::parseFile($file->getRealPath());
-                $totalTranslations += is_array($sourceContent) ? count($sourceContent) : 0;
+                $totalTranslations += is_array($sourceContent) ? $this->countTranslatableKeys($sourceContent) : 0;
             }
         }
 
         return $totalTranslations;
+    }
+
+    /**
+     * Recursively count all translatable string values in an array structure.
+     */
+    private function countTranslatableKeys(array $array): int
+    {
+        $count = 0;
+        foreach ($array as $value) {
+            if (is_array($value)) {
+                $count += $this->countTranslatableKeys($value);
+            } elseif (is_string($value) && trim($value) !== '') {
+                $count++;
+            }
+        }
+        return $count;
     }
 
     private function initializeProgressBar(ProgressBar $progressBar): void
@@ -188,27 +204,72 @@ class TranslateCommand extends Command
                 continue; // skip invalid or empty YAML
             }
 
-            foreach ($sourceContent as $key => $value) {
-                // Skip empty/null
-                if (! is_string($value) || trim($value) === '') {
-                    $io->note("Skipping empty or null key: $key");
-                    $this->unchangedKeys++;
-                    continue;
-                }
+            // Recursively translate all keys (including nested ones)
+            $targetContent = $this->translateArray(
+                $sourceContent,
+                $targetContent,
+                $sourceLang,
+                $targetLang,
+                $io,
+                $forceUpdate,
+                $progressBar
+            );
 
-                // Check if there's already a translation
-                if (isset($targetContent[$key])) {
-                    if (
-                        $this->skipExistingTranslations
-                        || (
-                            ! $forceUpdate
-                            && ! $io->confirm("Key '$key' has an existing translation. Update? Existing: '{$targetContent[$key]}'", false)
-                        )
-                    ) {
+            file_put_contents($targetFile, Yaml::dump($targetContent, 10, 2));
+        }
+    }
+
+    /**
+     * Recursively translate array values, handling nested structures.
+     */
+    private function translateArray(
+        array $sourceArray,
+        array $targetArray,
+        string $sourceLang,
+        string $targetLang,
+        SymfonyStyle $io,
+        bool $forceUpdate,
+        ProgressBar $progressBar,
+        string $keyPath = ''
+    ): array {
+        foreach ($sourceArray as $key => $value) {
+            $currentPath = $keyPath ? "$keyPath.$key" : $key;
+
+            if (is_array($value)) {
+                // Recursively handle nested arrays
+                $targetArray[$key] = $this->translateArray(
+                    $value,
+                    $targetArray[$key] ?? [],
+                    $sourceLang,
+                    $targetLang,
+                    $io,
+                    $forceUpdate,
+                    $progressBar,
+                    $currentPath
+                );
+            } elseif (is_string($value) && trim($value) !== '') {
+                // Translate string values
+                if (isset($targetArray[$key])) {
+                    // Check if the existing translation is the same as the source (not translated)
+                    $needsTranslation = ($targetArray[$key] === $value);
+
+                    if (!$needsTranslation && $this->skipExistingTranslations) {
                         $this->unchangedKeys++;
                         continue;
                     }
-                    $this->existingKeysUpdated++;
+
+                    if (!$needsTranslation && !$forceUpdate) {
+                        // Has proper translation, skip it
+                        $this->unchangedKeys++;
+                        continue;
+                    }
+
+                    if ($needsTranslation || $forceUpdate) {
+                        $this->existingKeysUpdated++;
+                    } else {
+                        $this->unchangedKeys++;
+                        continue;
+                    }
                 } else {
                     $this->newKeysAdded++;
                 }
@@ -227,12 +288,22 @@ class TranslateCommand extends Command
                 // 3. Re-insert placeholders
                 $finalTranslated = $this->restorePlaceholders($translatedValue, $placeholderMap);
 
-                $targetContent[$key] = $finalTranslated;
+                $targetArray[$key] = $finalTranslated;
                 $this->updateProgressBar($progressBar);
+            } else {
+                // Empty or null values
+                if (is_string($value)) {
+                    $io->note("Skipping empty or null key: $currentPath");
+                    $this->unchangedKeys++;
+                }
+                // Keep the original value for non-string types
+                if (!isset($targetArray[$key])) {
+                    $targetArray[$key] = $value;
+                }
             }
-
-            file_put_contents($targetFile, Yaml::dump($targetContent, 4, 2));
         }
+
+        return $targetArray;
     }
 
     /**
