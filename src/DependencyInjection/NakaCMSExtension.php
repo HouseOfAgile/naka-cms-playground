@@ -26,6 +26,10 @@ class NakaCMSExtension extends Extension
             $config['internationalization']['supported_locales']
         );
 
+        // Set app.supported_locales parameter to match hoa_naka_cms.internationalization.supported_locales
+        // This ensures routing and other components use the correct locales without 'us' suffix
+        $container->setParameter('app.supported_locales', $config['internationalization']['supported_locales']);
+
         // Set redirect URL
         $container->setParameter('hoa_naka_cms.redirect_url', $config['redirect_url']);
 
