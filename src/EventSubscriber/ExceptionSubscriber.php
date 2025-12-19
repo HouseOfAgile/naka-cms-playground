@@ -19,15 +19,18 @@ class ExceptionSubscriber implements EventSubscriberInterface
     private SlackNotificationService $slackService;
     private LoggerInterface $logger;
     private string $environment;
+    private array $allLocales;
 
     public function __construct(
         SlackNotificationService $slackService,
         LoggerInterface $generalLogger,
-        string $appEnv
+        string $appEnv,
+        array $allLocales
     ) {
         $this->slackService = $slackService;
         $this->logger = $generalLogger;
         $this->environment = $appEnv;
+        $this->allLocales = $allLocales;
     }
 
     public static function getSubscribedEvents(): array
@@ -113,15 +116,13 @@ class ExceptionSubscriber implements EventSubscriberInterface
      */
     private function isMissingLocalePrefix(string $path): bool
     {
-        $supportedLocales = ['en', 'fr', 'de', 'es', 'it', 'zh'];
-
         // Skip root URL
         if ($path === '/') {
             return false;
         }
 
         // Check if path starts with any supported locale
-        foreach ($supportedLocales as $locale) {
+        foreach ($this->allLocales as $locale) {
             if (str_starts_with($path, '/' . $locale . '/')) {
                 return false; // Has locale prefix
             }

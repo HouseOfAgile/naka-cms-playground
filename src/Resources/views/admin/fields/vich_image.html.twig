@@ -16,7 +16,7 @@
     <a href="#"
        data-bs-toggle="modal"
        data-bs-target="#imageModal{{ field.uniqueId }}">
-        <img src="{{ vich_uploader_asset(entity.instance, uploadField) |imagine_filter('thumb') }}" alt="{{ entity.instance.altText }}"
+        <img src="{{ vich_uploader_asset(entity.instance, uploadField) |imagine_filter('thumb') }}" alt="{{ entity.instance.altText ?? entity.instance }}"
 			 class="img-fluid rounded-3"
 			 style="max-width: 250px; max-height: 250px;">
     </a>
@@ -37,7 +37,7 @@
                 </div>
                 <div class="modal-body">
                     <img class="img-fluid"
-                         src="{{ vich_uploader_asset(entity.instance, uploadField) |imagine_filter('creative_dim_down') }}" alt="{{ entity.instance.altText }}">
+                         src="{{ vich_uploader_asset(entity.instance, uploadField) |imagine_filter('creative_dim_down') }}" alt="{{ entity.instance.altText ?? entity.instance }}">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'vichImage.close'|trans }}</button>

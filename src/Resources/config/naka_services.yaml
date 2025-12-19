@@ -1,22 +1,15 @@
 parameters:
-    app.supported_locales: 'en|fr|de|es|it|zh'
+    app.supported_locales: "en|fr|de|es|it"
     app.path.asset_pictures: /uploads/asset-pictures
     app.path.asset_website_resources: /uploads/asset-website-resources
     app.path.site_images: /uploads/site-images
-    all_locales:
-        - en
-        - fr
-        - de
-        - es
-        - it
-        - zh
-        # - he
-        # - cs
+    # all_locales is inherited from main config/services.yaml
+    # Do not redefine here to avoid inconsistencies
 
     # Slack notification defaults
     slack_default_enabled: false
     slack_default_rate_limit: 300
-    slack_default_webhook: ''
+    slack_default_webhook: ""
 
 services:
     # default configuration for services in *this* file
@@ -25,6 +18,7 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
         bind:
+            $appEnv: "%kernel.environment%"
             $uploadsPath: "%kernel.project_dir%/public/uploads"
 
     Symfony\Component\Asset\Context\RequestStackContext: "@assets.context"
@@ -42,19 +36,6 @@ services:
     HouseOfAgile\NakaCMSBundle\EventSubscriber\ExceptionSubscriber:
         tags:
             - { name: "kernel.event_subscriber" }
-
-    # User Registration Subscriber for registration notifications (autowired via global bind)
-    HouseOfAgile\NakaCMSBundle\EventSubscriber\UserRegistrationSubscriber:
-        tags:
-            - { name: 'kernel.event_subscriber' }
-
-    # Slack Notification Service (autowired via global bind)
-    HouseOfAgile\NakaCMSBundle\Service\SlackNotificationService: ~
-
-    # Exception Subscriber for error notifications (autowired via global bind)
-    HouseOfAgile\NakaCMSBundle\EventSubscriber\ExceptionSubscriber:
-        tags:
-            - { name: 'kernel.event_subscriber' }
 
     # User Registration Subscriber for registration notifications (autowired via global bind)
     HouseOfAgile\NakaCMSBundle\EventSubscriber\UserRegistrationSubscriber:
