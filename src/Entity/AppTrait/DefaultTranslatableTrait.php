@@ -21,6 +21,8 @@ trait DefaultTranslatableTrait
         } else {
             if ($entity->translate('en')->{$methodName}() !== null) {
                 return $entity->translate('en')->{$methodName}();
+            } elseif ($entity->translate('fr')->{$methodName}() !== null) {
+                return $entity->translate('fr')->{$methodName}();
             } elseif ($entity->translate('de')->{$methodName}() !== null) {
                 return $entity->translate('de')->{$methodName}();
             } else {
