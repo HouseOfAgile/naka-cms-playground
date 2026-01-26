@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use HouseOfAgile\NakaCMSBundle\Component\Communication\NotificationManager;
 use HouseOfAgile\NakaCMSBundle\Repository\UserRepository;
+use Psr\Log\LoggerInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -69,7 +70,8 @@ class RegistrationController extends AbstractController
         VerifyEmailHelperInterface $verifyEmailHelper,
         NotificationManager $notificationManager,
         UserRepository $userRepository,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        LoggerInterface $logger
     ): Response {
         $user = $userRepository->find($request->query->get('id'));
         if (!$user) {
@@ -88,7 +90,20 @@ class RegistrationController extends AbstractController
         $user->setIsVerified(true);
         $entityManager->flush();
         $this->addFlash('success', 'Account Verified! You can now log in.');
-        $notificationManager->notificationNewMemberVerified($user);
+
+        // Send notification emails - catch any email delivery failures
+        // so they don't break the verification flow
+        try {
+            $notificationManager->notificationNewMemberVerified($user);
+        } catch (\Throwable $e) {
+            // Log the error but don't fail the verification
+            // The user is already verified in the database
+            $logger->error('Failed to send verification notification emails: ' . $e->getMessage(), [
+                'user_id' => $user->getId(),
+                'email' => $user->getEmail(),
+                'exception' => $e,
+            ]);
+        }
 
         return $this->redirectToRoute('app_login');
     }
