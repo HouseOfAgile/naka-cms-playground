@@ -3,22 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>
-      {%- block master_title -%}
-        {%- block title -%}
-          Welcome!
-        {%- endblock -%}- {{ websiteInfo.translatedTitle|default(application_name) }}
-      {%- endblock -%}
-    </title>
+    <title>{%- block master_title -%}{%- block title -%}Welcome!{%- endblock -%}- {{ websiteInfo.translatedTitle|default(application_name) }}{%- endblock -%}</title>
+
     {% block master_meta %}
-      <meta name="description"
-        content="{%- block meta_description -%}
-          {{ websiteInfo.translatedDescription|default('meta.defaultDescription'|trans) }}
-        {%- endblock -%}" />
-      <meta name="keywords"
-        content="{%- block meta_keywords -%}
-          {{ websiteInfo.translatedKeywords|default('meta.defaultKeywords'|trans) }}
-        {%- endblock -%}" />
+      {% set meta_description_value = block('meta_description')|striptags|trim %}
+      {% if meta_description_value is same as('') %}
+        {% set meta_description_value = websiteInfo.translatedDescription|default('meta.defaultDescription'|trans) %}
+      {% endif %}
+      {% set meta_keywords_value = block('meta_keywords')|striptags|trim %}
+      {% if meta_keywords_value is same as('') %}
+        {% set meta_keywords_value = websiteInfo.translatedKeywords|default('meta.defaultKeywords'|trans) %}
+      {% endif %}
+      <meta name="description" content="{{ meta_description_value }}" />
+      <meta name="keywords" content="{{ meta_keywords_value }}" />
     {% endblock %}
     {% block favicon %}
       <link rel="icon" href="data:image/svg+xml, <svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22> <text y=%221.2em%22 font-size=%2296%22>⚫️</text> </svg> " />
@@ -29,7 +26,7 @@
       <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
     {% endblock %}
     {% block javascripts %}
-      {{ encore_entry_script_tags('app') }}
+      {{ encore_entry_script_tags('app', null, '_default', {'defer': true}) }}
       {% set gtm_id = 'global.google-tag-manager'|nakaParameter %}
       {% if gtm_id %}
         {% include '@NakaCMS/fragment/_google_tag_manager_head.html.twig' %}
@@ -67,7 +64,7 @@
       {% endblock %}
     {% endblock %}
     {% block javascripts_extra %}
-      {{ encore_entry_script_tags('appBottom') }}
+      {{ encore_entry_script_tags('appBottom', null, '_default', {'defer': true}) }}
     {% endblock %}
     <div id="vue-portal-target"></div>
   </body>
