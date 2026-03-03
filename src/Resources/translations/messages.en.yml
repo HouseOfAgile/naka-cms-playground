@@ -223,7 +223,10 @@ backend.crud.nakaParameter.generalHelp: |
     </li>
     <li>General Naka parameters
     <ul>
+    <li><strong>global.google-tag</strong>: the Google Tag ID for the main platform (e.g., G-XXX)</li>
+    <li><strong>global.google-tag-blog</strong>: the Google Tag ID for the blog (e.g., G-XXX)</li>
     <li><strong>global.google-analytics</strong>: the Google Analytics tracking ID (e.g., G-XXX)</li>
+    <li><strong>global.google-analytics-blog</strong>: the blog Google Analytics tracking ID (legacy fallback)</li>
     <li><strong>global.google-tag-manager</strong>: the Google Tag Manager container ID (e.g., GTM-XXX)</li>
     </ul>
     </li>
