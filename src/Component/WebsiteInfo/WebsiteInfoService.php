@@ -30,23 +30,29 @@ class WebsiteInfoService
         $this->entityManager = $entityManager;
         $this->websiteInfoRepository = $websiteInfoRepository;
         $this->requestStack = $requestStack;
-        $this->loadMainWebsiteInfo();
     }
 
     public function isMainWebsiteInfoSet()
     {
-        return $this->websiteInfo != null;
+        return null !== $this->getWebsiteInfo();
     }
 
     public function loadMainWebsiteInfo()
     {
         if ($this->websiteInfo == null) {
-            $this->websiteInfo =  $this->websiteInfoRepository->find(1);
+            try {
+                $this->websiteInfo = $this->websiteInfoRepository->find(1);
+            } catch (\Throwable $throwable) {
+                // During first boot the database/schema may not exist yet.
+                // Keep website info null so bootstrap commands can still run.
+                $this->websiteInfo = null;
+            }
         }
     }
 
     public function getWebsiteInfo()
     {
+        $this->loadMainWebsiteInfo();
         return $this->websiteInfo;
     }
 
