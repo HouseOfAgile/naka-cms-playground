@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{%- block master_title -%}{%- block title -%}Welcome!{%- endblock -%}- {{ websiteInfo.translatedTitle|default(application_name) }}{%- endblock -%}</title>
 
+    {% block meta_description %}{% endblock %}
+    {% block meta_keywords %}{% endblock %}
+
     {% block master_meta %}
       {% set meta_description_value = block('meta_description')|striptags|trim %}
       {% if meta_description_value is same as('') %}
