@@ -67,15 +67,18 @@ class PlatformAccessControlSubscriber
             return;
         }
 
-        // 2) FUTURE / SCHEDULED MAINTENANCE WARNING (only if environment != 'prod')
+        // 2) FUTURE / SCHEDULED MAINTENANCE WARNING
         if (
             $this->isFutureMaintenanceWarningEnabled &&
-            $this->kernelEnvironment !== 'prod' &&
             $this->maintenanceStartTime &&
             $this->maintenanceDuration
         ) {
-            $session = $request->getSession();
-            if ($session && $session->isStarted()) {
+            if ($request->hasSession()) {
+                $session = $request->getSession();
+                if (!$session->isStarted()) {
+                    $session->start();
+                }
+
                 $maintenanceStart = new \DateTime($this->maintenanceStartTime);
                 $maintenanceEnd   = (clone $maintenanceStart)->modify("+{$this->maintenanceDuration} minutes");
                 $now             = new \DateTime();
