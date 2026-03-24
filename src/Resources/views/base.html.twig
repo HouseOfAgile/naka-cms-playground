@@ -5,15 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{%- block master_title -%}{%- block title -%}Welcome!{%- endblock -%}- {{ websiteInfo.translatedTitle|default(application_name) }}{%- endblock -%}</title>
 
-    {% block meta_description %}{% endblock %}
-    {% block meta_keywords %}{% endblock %}
+    {% set meta_description_block %}
+      {% block meta_description %}{% endblock %}
+    {% endset %}
+    {% set meta_keywords_block %}
+      {% block meta_keywords %}{% endblock %}
+    {% endset %}
 
     {% block master_meta %}
-      {% set meta_description_value = block('meta_description')|striptags|trim %}
+      {% set meta_description_value = meta_description_block|striptags|trim %}
       {% if meta_description_value is same as('') %}
         {% set meta_description_value = websiteInfo.translatedDescription|default('meta.defaultDescription'|trans) %}
       {% endif %}
-      {% set meta_keywords_value = block('meta_keywords')|striptags|trim %}
+      {% set meta_keywords_value = meta_keywords_block|striptags|trim %}
       {% if meta_keywords_value is same as('') %}
         {% set meta_keywords_value = websiteInfo.translatedKeywords|default('meta.defaultKeywords'|trans) %}
       {% endif %}
