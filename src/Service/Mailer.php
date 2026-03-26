@@ -27,6 +27,8 @@ class Mailer
     protected $applicationContactName;
     protected $senderAddress;
     protected $contactAddress;
+    protected int $mailerSendDelayMs;
+    protected ?int $lastMailSentAtMicroseconds = null;
 
     /** @var TranslatorInterface */
     protected $translator;
@@ -46,7 +48,7 @@ class Mailer
         $applicationContactName,
         TranslatorInterface $translator,
         UrlGeneratorInterface $router,
-
+        $mailerSendDelayMs = 0,
     ) {
         $this->mailer                     = $mailer;
         $this->twig                       = $twig;
@@ -61,6 +63,7 @@ class Mailer
         $this->contactAddress             = new Address($applicationContactEmail, $applicationContactName);
         $this->translator                 = $translator;
         $this->router                     = $router;
+        $this->mailerSendDelayMs          = max(0, (int) $mailerSendDelayMs);
     }
 
     public function sendMessageToAddress($fromAddress, $toAddress, $subject, $templateName, $context, $locale = 'en', $addDoNotReply = true)
@@ -77,7 +80,7 @@ class Mailer
         if ($addDoNotReply) {
             $templatedEmail->replyTo($this->applicationDoNotReplyEmail);
         }
-        $this->mailer->send($templatedEmail);
+        $this->dispatchEmail($templatedEmail);
         $this->logger->info(sprintf(
             'New mail sent to %s about %s',
             $toAddress instanceof Address ? $toAddress->toString() : $toAddress,
@@ -172,5 +175,38 @@ class Mailer
         $this->logger->info(sprintf(
             'New member email mail sent to office',
         ));
+    }
+
+    protected function dispatchEmail(TemplatedEmail $email): void
+    {
+        $this->pauseBeforeNextSend();
+        $this->mailer->send($email);
+        $this->lastMailSentAtMicroseconds = $this->currentTimeMicroseconds();
+    }
+
+    protected function pauseBeforeNextSend(): void
+    {
+        if ($this->mailerSendDelayMs <= 0 || null === $this->lastMailSentAtMicroseconds) {
+            return;
+        }
+
+        $requiredGapMicroseconds = $this->mailerSendDelayMs * 1000;
+        $elapsedMicroseconds = $this->currentTimeMicroseconds() - $this->lastMailSentAtMicroseconds;
+
+        if ($elapsedMicroseconds >= $requiredGapMicroseconds) {
+            return;
+        }
+
+        $this->sleepFor($requiredGapMicroseconds - $elapsedMicroseconds);
+    }
+
+    protected function currentTimeMicroseconds(): int
+    {
+        return (int) round(microtime(true) * 1000000);
+    }
+
+    protected function sleepFor(int $microseconds): void
+    {
+        usleep($microseconds);
     }
 }
