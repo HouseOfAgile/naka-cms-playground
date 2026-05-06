@@ -13,9 +13,10 @@ final class MetaExtension extends AbstractExtension
 
 	public function getFilters(): array
     {
+        $safe = ['is_safe' => ['html']];
         return [
-            new TwigFilter('meta_description', [$this, 'metaDescription']),
-            new TwigFilter('og_description', [$this, 'ogDescription']),
+            new TwigFilter('meta_description', [$this, 'metaDescription'], $safe),
+            new TwigFilter('og_description', [$this, 'ogDescription'], $safe),
         ];
     }
 

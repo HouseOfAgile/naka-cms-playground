@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{%- block master_title -%}{%- block title -%}Welcome!{%- endblock -%} - {{ websiteInfo.translatedTitle|default(application_name) }}{%- endblock -%}</title>
+    <title>{%- block master_title -%}{%- block title -%}Welcome!{%- endblock %} - {{ websiteInfo.translatedTitle|default(application_name) }}{%- endblock -%}</title>
 
     {% set meta_description_block %}
       {% block meta_description %}{% endblock %}
