@@ -35,13 +35,27 @@ final class MetaExtension extends AbstractExtension
     {
         $raw = $this->pickFirstNonEmpty($subject);
 
-        $plain = trim(preg_replace('/\s+/u', ' ', strip_tags($raw ?? '')));
+        $plain = $this->normalizePlainText($raw ?? '');
 
-        $short = u($plain)->truncate($limit, '…', false);
+        $short = (string) u($plain)->truncate($limit, '…', false);
 
         return $short !== ''
             ? $short
             : $this->translator->trans('common.defaultMetaDescription');
+    }
+
+    private function normalizePlainText(string $value): string
+    {
+        $plain = strip_tags($value);
+        for ($i = 0; $i < 2; $i++) {
+            $decoded = html_entity_decode($plain, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            if ($decoded === $plain) {
+                break;
+            }
+            $plain = $decoded;
+        }
+
+        return trim(preg_replace('/\s+/u', ' ', $plain));
     }
 
     /** Finds the first usable string from provider or common getters */
