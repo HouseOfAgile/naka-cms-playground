@@ -45,6 +45,80 @@ class DeepLTranslationService
     }
 
     /**
+     * Translate several texts to the same target language.
+     *
+     * Texts are grouped by whether they contain HTML so that DeepL's
+     * `tag_handling=xml` option (which would mangle plain text) is only applied
+     * to HTML fields. This keeps the whole batch to at most two API requests per
+     * target language instead of one request per field.
+     *
+     * @param array<string, string> $texts Keyed list of source texts.
+     * @return array<string, string> Translations keyed exactly like $texts (original order preserved).
+     */
+    public function translateBatch(array $texts, string $sourceLang, string $targetLang): array
+    {
+        if ($texts === []) {
+            return [];
+        }
+
+        if ($this->apiCallDelayMs > 0) {
+            usleep($this->apiCallDelayMs * 1000);
+        }
+
+        $targetLang = $this->updateLanguageCode($targetLang);
+
+        $htmlKeys = [];
+        $plainKeys = [];
+        foreach ($texts as $key => $text) {
+            if ($this->containsHtml((string) $text)) {
+                $htmlKeys[] = $key;
+            } else {
+                $plainKeys[] = $key;
+            }
+        }
+
+        $results = [];
+        foreach ([[$plainKeys, false], [$htmlKeys, true]] as [$group, $isHtml]) {
+            if ($group === []) {
+                continue;
+            }
+            $payload = array_map(static fn ($key) => (string) $texts[$key], $group);
+            $options = [TranslateTextOptions::FORMALITY => $this->formality];
+            if ($isHtml) {
+                $options[TranslateTextOptions::TAG_HANDLING] = 'xml';
+            }
+            $translated = $this->translator->translateText($payload, $sourceLang, $targetLang, $options);
+            foreach ($group as $index => $key) {
+                $results[$key] = $translated[$index]->text;
+            }
+        }
+
+        // Restore the original key order.
+        $ordered = [];
+        foreach (array_keys($texts) as $key) {
+            $ordered[$key] = $results[$key] ?? '';
+        }
+
+        return $ordered;
+    }
+
+    /**
+     * Current DeepL character usage for the account, used to keep within the
+     * free-tier monthly budget.
+     *
+     * @return array{count: int|null, limit: int|null}
+     */
+    public function getCharacterUsage(): array
+    {
+        $usage = $this->translator->getUsage();
+
+        return [
+            'count' => $usage->character?->count,
+            'limit' => $usage->character?->limit,
+        ];
+    }
+
+    /**
      * Checks if a string contains HTML tags.
      *
      * @param string $string The string to check.
