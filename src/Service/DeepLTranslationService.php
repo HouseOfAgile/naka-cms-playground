@@ -2,17 +2,27 @@
 
 namespace HouseOfAgile\NakaCMSBundle\Service;
 
+use DeepL\TranslateTextOptions;
 use DeepL\Translator;
 
 class DeepLTranslationService
 {
     private Translator $translator;
     private int $apiCallDelayMs;
+    private string $formality;
 
-    public function __construct(string $authKey, int $apiCallDelayMs = 0)
+    /**
+     * @param string $formality DeepL formality preference. Defaults to
+     *                          'prefer_less' (informal) because GLS content is
+     *                          written informally; 'prefer_*' variants fall back
+     *                          to the default tone for target languages that do
+     *                          not support formality, so they never error.
+     */
+    public function __construct(string $authKey, int $apiCallDelayMs = 0, string $formality = 'prefer_less')
     {
         $this->translator = new Translator($authKey);
         $this->apiCallDelayMs = $apiCallDelayMs;
+        $this->formality = $formality;
     }
 
     public function translate(string $text, string $sourceLang, string $targetLang): string
@@ -23,13 +33,14 @@ class DeepLTranslationService
         }
 
         $targetLang = $this->updateLanguageCode($targetLang);
+        $options = [
+            TranslateTextOptions::FORMALITY => $this->formality,
+        ];
         if ($this->containsHtml($text)) {
-            $result = $this->translator->translateText($text, $sourceLang, $targetLang, [
-                'tag_handling' => 'xml', // Tells DeepL to preserve HTML/XML tags
-            ]);
-        } else {
-            $result = $this->translator->translateText($text, $sourceLang, $targetLang);
+            $options[TranslateTextOptions::TAG_HANDLING] = 'xml'; // Tells DeepL to preserve HTML/XML tags
         }
+        $result = $this->translator->translateText($text, $sourceLang, $targetLang, $options);
+
         return $result->text;
     }
 
