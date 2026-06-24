@@ -39,7 +39,7 @@ class ContactThreadCrudController extends AbstractCrudController
         // 'Mark as Spam' action
         $markSpam = Action::new ('markSpam', 'Mark as Spam', 'fa fa-ban')
             ->linkToCrudAction('markSpam')
-            ->setCssClass('btn btn-danger')
+            ->asDangerAction()
             ->displayIf(static function ($entity) {
                 return $entity instanceof ContactThread
                 && $entity->getStatus() !== ContactThreadStatus::SPAM;
@@ -48,7 +48,7 @@ class ContactThreadCrudController extends AbstractCrudController
         // 'Answer' action
         $answer = Action::new ('answer', 'Answer', 'fa fa-reply')
             ->linkToCrudAction('answer')
-            ->setCssClass('btn btn-success')
+            ->asSuccessAction()
             ->displayIf(static function ($entity) {
                 return $entity instanceof ContactThread
                 && $entity->getStatus() !== ContactThreadStatus::ANSWERED

@@ -48,17 +48,17 @@ class PageCrudController extends AbstractCrudController implements EventSubscrib
         ];
         $addBlockToPage = Action::new ('addBlockToPage', 'Add Block to Page', 'fa fa-plus')
             ->linkToRoute('add_block_to_page', $pageId)
-            ->addCssClass('btn btn-success text-white');
+            ->asSuccessAction();
         $addPageToMenu = Action::new ('addPageToMenu', 'Add Page to Menu', 'fa fa-plus')
             ->linkToRoute('add_page_to_menu', $pageId)
-            ->addCssClass('btn btn-info text-white');
+            ->asPrimaryAction();
 
         $reorganizeBlocksInPage = Action::new ('configureMenu', 'backend.crud.page.action.reorganizeBlocksInPage', 'fa fa-wheel')
             ->linkToRoute('reorganize_blocks_in_page', $pageId)
             ->displayIf(static function ($entity) {
                 return count($entity->getPageBlockElements()) > 1;
             })
-            ->addCssClass('btn btn-success');
+            ->asSuccessAction();
 
         return $actions
             ->add(Crud::PAGE_INDEX, $addBlockToPage)

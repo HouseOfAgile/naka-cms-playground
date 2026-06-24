@@ -33,7 +33,7 @@ class MenuItemCrudController extends AbstractCrudController
         ];
         $duplicateMenuItem = Action::new('duplicateMenuItem', 'Duplicate Menu Item', 'fa fa-clone')
             ->linkToRoute('duplicate_menu_item', $menuItemId)
-            ->addCssClass('btn btn-warning');
+            ->asWarningAction();
 
         return $actions
             ->add(Crud::PAGE_INDEX, $duplicateMenuItem)

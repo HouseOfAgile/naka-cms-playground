@@ -26,7 +26,7 @@ class MenuCrudController extends AbstractCrudController
         ];
         $configureMenu = Action::new('configureMenu', 'backend.crud.menu.action.reorganizeMenu', 'fa-solid fa-arrow-up-a-z')
             ->linkToRoute('configure_menu', $menuId)
-            ->addCssClass('btn btn-success');
+            ->asSuccessAction();
         if (!$this->isGranted('ROLE_SUPER_ADMIN')) {
             $actions
                 ->remove(Crud::PAGE_INDEX, Action::NEW);

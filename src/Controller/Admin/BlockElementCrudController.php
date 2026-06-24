@@ -45,7 +45,7 @@ class BlockElementCrudController extends AbstractCrudController
         // dd($routeParameters);
         $editBlockElement = Action::new('editBlockElement', 'Edit Block Element', 'fa fa-pen')
             ->linkToRoute('edit_page_element_redir', $blockElementId)
-            ->addCssClass('btn btn-warning text-white');
+            ->asWarningAction();
         return $actions
             ->add(Crud::PAGE_INDEX, $editBlockElement);
     }
